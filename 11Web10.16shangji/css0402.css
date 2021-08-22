@@ -1,0 +1,8 @@
+/* CSS文件的四种引用方式 */
+.int_css3 {
+    font-size: 12px;
+    font-style: italic;
+    font-family: 宋体;
+    display: inline;
+    line-height: 25px;
+}

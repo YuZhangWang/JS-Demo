@@ -1,0 +1,36 @@
+<!-- CSS文件的四种引用方式 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS文件的四种引用方式</title>
+    <link type="text/css" rel="stylesheet" href="css0401.css">
+    <style type="text/css">
+        @import url("css0402.css");
+
+        .int_css1 {
+            font-size: 12px;
+            font-style: italic;
+            font-family: 宋体;
+            display: inline;
+            line-height: 25px;
+        }
+    </style>
+</head>
+<body>
+<div ID="left">
+    <h1 style="font-size: 16px; font-style: italic;font-family: 宋体;text-align: center;color: red;line-height: 25px;">
+        汽车企业季报</h1>
+    <p class="int_css1">根据近日发布的车企季报，一季度几乎所有汽车上市公司的净利润都出现成倍的增长。其中，创下增幅新纪录的当数东风汽车，其一季度净利润为</p>
+    <p class="typeface1">1.86亿元</p>
+    <p class="int_css1">，与去年的</p>
+    <p class="typeface2">几百万</p>
+    <p class="int_css1">元相比，增加了7481．57％。</p>
+    <p class="int_css2">但
+        <a href="002.jpg"> <img src="002.jpg" alt=""></a>
+        利润最高的依然是上海汽车，自去年宣布自主品牌开始盈亏平衡后，上海汽车今年真正迎来了丰收期，一季度净利润达到29亿元，是去年全年净利润65亿的近一半，同比增幅达358.96%。</p>
+    <p class="int_css3">
+        上汽方面表示，利润的增长大部分来自于汽车销量的增长。一汽轿车一季度赚了7亿净利润，增幅也高达181.94％；长安汽车延续去年数十倍的增长态势，增幅达到2684.48%，其中，同比增长229.62%的自主品牌以及长安福特马自达汽车投资收益的增加是主要动力。</p>
+</div>
+</body>
+</html>

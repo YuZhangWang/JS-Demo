@@ -1,0 +1,25 @@
+/* 两行两列 */
+#header {
+    width: 100%;
+    height: 160px;
+    background: #66FFCC;
+}
+
+#subject {
+    width: 100%;
+    height: 520px;
+}
+
+#left {
+    width: 30%;
+    height: 520px;
+    float: left;
+    background: #99FFFF;
+}
+
+#right {
+    width: 70%;
+    height: 520px;
+    float: left;
+    background: #CCFFFF;
+}

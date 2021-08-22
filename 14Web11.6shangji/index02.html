@@ -1,0 +1,36 @@
+<!-- 计算圆的面积 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算圆的面积</title>
+    <link type="text/css" rel="stylesheet" href="css02.css">
+</head>
+<body>
+
+<div class="box">
+    <form name="form1" class="position">
+        <h3>计算圆的面积</h3>
+        半径:<input type="text" id="text1"><br/>
+        面积:<input type="text" id="text2"><br/><br/>
+        <input type="button" onclick="GetCircleArea()" value="计算">
+        &nbsp;&nbsp;
+        <input type="button" onclick="ClearValue()" value="清空">
+    </form>
+</div>
+
+<script type="text/javascript">
+    function GetCircleArea() {
+        var radius = document.getElementById("text1").value;
+        var area = radius * radius * Math.PI;
+        document.getElementById("text2").value = area;
+    }
+
+    function ClearValue() {
+        document.getElementById("text1").value = null;
+        document.getElementById("text2").value = null;
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+/* CSS文件的四种引用方式 */
+.int_css2 {
+    font-size: 12px;
+    font-style: italic;
+    font-family: 宋体;
+    display: inline;
+    line-height: 25px;
+}
+.typeface1{
+    font-size: 12px;
+    font-style: italic;
+    font-family: 宋体;
+    text-decoration: underline;
+    display: inline;
+    line-height: 25px;
+}
+.typeface2{
+    font-size: 12px;
+    font-style: italic;
+    font-family: 宋体;
+    text-decoration: line-through;
+    display: inline;
+    line-height: 25px;
+}
+#left{
+    float: left;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #66CCFF;
+    width: 300px;
+    height: 400px;
+    padding: 8px;
+}
+
+img{
+    float:left;
+}

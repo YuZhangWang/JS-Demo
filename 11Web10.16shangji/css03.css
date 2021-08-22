@@ -1,0 +1,84 @@
+/* 简易W3School教程网页面设计 */
+#navigation {
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    background: #FBFBFB;
+}
+
+#subject {
+    width: 100%;
+    height: 560px;
+}
+
+#left {
+    width: 15%;
+    height: 560px;
+    float: left;
+    background: #EFEFEF;
+    text-align: center;
+}
+
+#middle {
+    width: 70%;
+    height: 560px;
+    float: left;
+    background: white;
+}
+
+#right {
+    width: 15%;
+    height: 560px;
+    float: left;
+    background: #EFEFEF;
+    text-align: center;
+}
+
+#copyright {
+    height: 80px;
+    width: 100%;
+    background: #B6B6B6;
+    line-height: 40px;
+    text-align: center;
+    clear: none;
+}
+
+ul {
+    margin: 0 auto;
+    padding: 0px;
+    display: table;
+}
+
+ul li {
+    height: 30px;
+    width: 150px;
+    list-style: none;
+    float: left;
+    display: inline;
+    color: blue;
+    text-decoration: underline;
+}
+
+.typeface {
+    font-weight: bold;
+    font-size: 16px;
+    text-indent: 30px;
+}
+
+.line {
+    height: 3px;
+    color: gray;
+}
+
+.typeface2 {
+    height: 80px;
+    font-weight: bold;
+    display: inline;
+}
+
+.typeface3 {
+    color: blue;
+    font-weight: bold;
+    text-decoration: underline;
+    display: inline;
+}

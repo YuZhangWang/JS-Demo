@@ -1,0 +1,60 @@
+/* 油画欣赏页面设计 */
+#p1 {
+    background: #A5D1FF;
+    border-style: dashed;
+    padding-left: 650px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-style: italic;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#p2 {
+    text-decoration: underline;
+    font-family: 楷体;
+    font-weight: bold;
+    font-size: 20px;
+    text-indent: 2em;
+}
+
+#p3 {
+    text-decoration: underline;
+    font-family: "Times New Roman";
+    font-size: 20px;
+    font-weight: lighter;
+    text-indent: 2em;
+}
+
+.box1 {
+    width: 100px;
+    height: 100px;
+    border-color: white;
+    padding: 10px;
+    border-style: groove;
+    border-color: #B42D70;
+    border-width: 15px;
+}
+
+.box2 {
+    width: 100px;
+    height: 100px;
+    border-color: white;
+    padding: 10px;
+    border-style: groove;
+    border-color: #BE2525;
+    border-width: 15px;
+}
+
+.box3 {
+    width: 100px;
+    height: 100px;
+    border-color: white;
+    padding: 10px;
+    border-style: groove;
+    border-color: #B42D70;
+    border-width: 15px;
+}
+

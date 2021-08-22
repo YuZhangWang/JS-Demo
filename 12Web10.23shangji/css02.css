@@ -1,0 +1,47 @@
+/* 利用表格布局简化版“江苏教育电子政务网站” */
+#navigation {
+    background: #666699;
+    line-height: 28px;
+}
+
+#copyright {
+    text-align: center;
+}
+
+ul {
+    margin: 0 auto;
+    padding: 0px;
+    display: table;
+}
+
+ul li {
+    height: 30px;
+    width: 170px;
+    list-style: none;
+    float: left;
+    display: inline;
+    color: white;
+}
+
+.typeface1 {
+    color: black;
+    display: block;
+}
+
+.typeface2 {
+    color: red;
+    font-family: 宋体;
+    font-weight: bold;
+    text-align: center;
+}
+
+.typeface3 {
+    text-indent: 2em;
+    line-height: 200%;
+    font-size: 18px;
+    text-align: left;
+}
+
+hr {
+    color: gray
+}

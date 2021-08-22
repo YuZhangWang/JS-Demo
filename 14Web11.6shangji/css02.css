@@ -1,0 +1,13 @@
+/* 计算圆的面积 */
+.box {
+    border-style: groove;
+    border-color: #FF2B2B;
+    border-width: 15px;
+    background-color: #66FFCC;
+    width: 400px;
+    height: 200px;
+}
+
+.position {
+    text-align: center;
+}

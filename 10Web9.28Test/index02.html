@@ -1,0 +1,42 @@
+<!-- P95 7-2-2 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>属性选择器</title>
+    <style type="text/css">
+        [title] {
+            font-size: 18px;
+            color: green;
+        }
+
+        p[name="chu"] {
+            font-style: italic;
+        }
+
+        p[name~="chu"] {
+            font-weight: bold;
+        }
+
+        p[name^="chu"] {
+            text-align: center;
+        }
+
+        p[name$="jiu"] {
+            color: blue;
+        }
+
+        p[name*="jiang"] {
+            color: red;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h3>属性选择器的应用</h3>
+<p title="p1" name="chu">[title][name="chu"]属性和值选择器，绿色、18px、斜体、居中</p>
+<p name="jiu chu">[name="jiu chu"]属性值包括包含指定值的选择器，标粗</p>
+<p name="linchujiu">属性值中以jiu结尾的，蓝色</p>
+<p name="changjianghuanghe">属性值中包含jiang的字符串，红色、下划线</p>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://YuZhangWang.github.io</id>
+    <title>💤YuZhangWang</title>
+    <updated>2020-10-07T14:39:36.174Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://YuZhangWang.github.io"/>
+    <link rel="self" href="https://YuZhangWang.github.io/atom.xml"/>
+    <subtitle>所谓御世制人，就是你可以参透整个世界，却永远无法了解人性</subtitle>
+    <logo>https://YuZhangWang.github.io/images/avatar.png</logo>
+    <icon>https://YuZhangWang.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, 💤YuZhangWang</rights>
+    <entry>
+        <title type="html"><![CDATA[伊甸园献祭平面图]]></title>
+        <id>https://YuZhangWang.github.io/post/yi-dian-yuan-xian-ji-ping-mian-tu/</id>
+        <link href="https://YuZhangWang.github.io/post/yi-dian-yuan-xian-ji-ping-mian-tu/">
+        </link>
+        <updated>2020-07-25T19:26:38.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[尧新2考场科三考试流程]]></title>
+        <id>https://YuZhangWang.github.io/post/yao-xin-2-kao-chang-ke-san-kao-shi-liu-cheng/</id>
+        <link href="https://YuZhangWang.github.io/post/yao-xin-2-kao-chang-ke-san-kao-shi-liu-cheng/">
+        </link>
+        <updated>2020-07-24T16:01:49.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[杀鸡用宰牛刀还是宰牛用小剪刀]]></title>
+        <id>https://YuZhangWang.github.io/post/sha-ji-yong-zai-niu-dao-huan-shi-zai-niu-yong-xiao-jian-dao/</id>
+        <link href="https://YuZhangWang.github.io/post/sha-ji-yong-zai-niu-dao-huan-shi-zai-niu-yong-xiao-jian-dao/">
+        </link>
+        <updated>2020-05-21T15:43:58.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Android软件应用名、显示文本和图标的修改]]></title>
+        <id>
+            https://YuZhangWang.github.io/post/android-ruan-jian-ying-yong-ming-xian-shi-wen-ben-he-tu-biao-de-xiu-gai/
+        </id>
+        <link href="https://YuZhangWang.github.io/post/android-ruan-jian-ying-yong-ming-xian-shi-wen-ben-he-tu-biao-de-xiu-gai/">
+        </link>
+        <updated>2020-05-18T07:52:02.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[第一个Android程序：HelloAndroid]]></title>
+        <id>https://YuZhangWang.github.io/post/di-yi-ge-android-cheng-xu-helloandroid/</id>
+        <link href="https://YuZhangWang.github.io/post/di-yi-ge-android-cheng-xu-helloandroid/">
+        </link>
+        <updated>2020-05-18T06:56:07.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[在list中正序和倒序删除元素区别]]></title>
+        <id>https://YuZhangWang.github.io/post/zai-list-zhong-zheng-xu-he-dao-xu-shan-chu-yuan-su-qu-bie/</id>
+        <link href="https://YuZhangWang.github.io/post/zai-list-zhong-zheng-xu-he-dao-xu-shan-chu-yuan-su-qu-bie/">
+        </link>
+        <updated>2020-05-15T16:48:20.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何利用油猴脚本进行中国MOOC刷课]]></title>
+        <id>https://YuZhangWang.github.io/post/ru-he-li-yong-you-hou-jiao-ben-jin-xing-zhong-guo-mooc-shua-ke/</id>
+        <link href="https://YuZhangWang.github.io/post/ru-he-li-yong-you-hou-jiao-ben-jin-xing-zhong-guo-mooc-shua-ke/">
+        </link>
+        <updated>2020-05-14T11:44:32.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[iO流基本概念]]></title>
+        <id>https://YuZhangWang.github.io/post/io-liu-ji-ben-gai-nian/</id>
+        <link href="https://YuZhangWang.github.io/post/io-liu-ji-ben-gai-nian/">
+        </link>
+        <updated>2020-05-14T11:07:00.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[神级课表软件]]></title>
+        <id>https://YuZhangWang.github.io/post/shen-ji-ke-biao-ruan-jian/</id>
+        <link href="https://YuZhangWang.github.io/post/shen-ji-ke-biao-ruan-jian/">
+        </link>
+        <updated>2020-05-13T19:36:06.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[打败流氓的只有老流氓]]></title>
+        <id>https://YuZhangWang.github.io/post/da-bai-liu-mang-de-zhi-you-lao-liu-mang/</id>
+        <link href="https://YuZhangWang.github.io/post/da-bai-liu-mang-de-zhi-you-lao-liu-mang/">
+        </link>
+        <updated>2020-05-13T19:32:13.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【我的EDC】第五期——电脑]]></title>
+        <id>https://YuZhangWang.github.io/post/wo-de-edc-di-wu-qi-dian-nao/</id>
+        <link href="https://YuZhangWang.github.io/post/wo-de-edc-di-wu-qi-dian-nao/">
+        </link>
+        <updated>2020-05-13T19:23:08.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【我的EDC】第四期——手机]]></title>
+        <id>https://YuZhangWang.github.io/post/wo-de-edc-di-si-qi-shou-ji/</id>
+        <link href="https://YuZhangWang.github.io/post/wo-de-edc-di-si-qi-shou-ji/">
+        </link>
+        <updated>2020-05-13T19:19:38.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【我的EDC】第三期——iPad]]></title>
+        <id>https://YuZhangWang.github.io/post/wo-de-edc-di-san-qi-ipad/</id>
+        <link href="https://YuZhangWang.github.io/post/wo-de-edc-di-san-qi-ipad/">
+        </link>
+        <updated>2020-05-13T19:17:41.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【我的EDC】第二期——戒指]]></title>
+        <id>https://YuZhangWang.github.io/post/wo-de-edc-di-er-qi-jie-zhi/</id>
+        <link href="https://YuZhangWang.github.io/post/wo-de-edc-di-er-qi-jie-zhi/">
+        </link>
+        <updated>2020-05-13T19:16:17.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【我的EDC】第一期——手表]]></title>
+        <id>https://YuZhangWang.github.io/post/wo-de-edc-di-yi-qi-shou-biao/</id>
+        <link href="https://YuZhangWang.github.io/post/wo-de-edc-di-yi-qi-shou-biao/">
+        </link>
+        <updated>2020-05-13T19:14:01.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Android和iOS的选择]]></title>
+        <id>https://YuZhangWang.github.io/post/android-he-ios-de-xuan-ze/</id>
+        <link href="https://YuZhangWang.github.io/post/android-he-ios-de-xuan-ze/">
+        </link>
+        <updated>2020-05-13T19:06:19.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[告别微软计划]]></title>
+        <id>https://YuZhangWang.github.io/post/gao-bie-wei-ruan-ji-hua/</id>
+        <link href="https://YuZhangWang.github.io/post/gao-bie-wei-ruan-ji-hua/">
+        </link>
+        <updated>2020-05-13T19:03:42.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux初体验]]></title>
+        <id>https://YuZhangWang.github.io/post/linux-chu-ti-yan/</id>
+        <link href="https://YuZhangWang.github.io/post/linux-chu-ti-yan/">
+        </link>
+        <updated>2020-05-13T19:00:34.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[什么是真正的情商(二)]]></title>
+        <id>https://YuZhangWang.github.io/post/shi-me-shi-zhen-zheng-de-qing-shang-er/</id>
+        <link href="https://YuZhangWang.github.io/post/shi-me-shi-zhen-zheng-de-qing-shang-er/">
+        </link>
+        <updated>2020-05-13T18:53:00.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[什么是真正的情商(一)]]></title>
+        <id>https://YuZhangWang.github.io/post/shi-me-shi-zhen-zheng-de-qing-shang-yi/</id>
+        <link href="https://YuZhangWang.github.io/post/shi-me-shi-zhen-zheng-de-qing-shang-yi/">
+        </link>
+        <updated>2020-05-13T18:50:32.000Z</updated>
+    </entry>
+</feed>

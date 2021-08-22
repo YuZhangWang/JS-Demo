@@ -1,0 +1,51 @@
+<!-- 完成图1-2 改变网页字号大小 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>改变网页字号大小</title>
+    <link type="text/css" rel="stylesheet" href="css01.css">
+</head>
+<body>
+<h3 class="Textstyle">用JavaScript代码改变网页字号大小</h3>
+<center>
+    选择字号【
+    <div id="div2" onclick="changesmallsize()" class="divstyle2">小</div>
+    <div id="div3" onclick="changemiddlesize()" class="divstyle2">中</div>
+    <div id="div4" onclick="changelargesize()" class="divstyle2">大</div>
+    】
+</center>
+
+<div id="div1" class="divstyle1">
+    JavaScript是一种能让你的网页更加生动活泼的程式语言，也是目前网页中设计中最容易学又最方便的语言。
+    你可以利用JavaScript轻易的做出亲切的欢迎讯息、漂亮的数字钟、有广告效果的跑马灯及简易的选举，还可以显示浏览器停留的时间。
+    让这些特殊效果提高网页的可观性。
+</div>
+
+<script type="text/javascript">
+    function changesmallsize() {
+        var div1 = document.getElementById("div1");
+        var div2 = document.getElementById("div2");
+        div1.style.fontSize = "5px";
+        div2.style.color = "#820382";
+        div2.style.textDecorationColor = "#820382";
+    }
+
+    function changemiddlesize() {
+        var div1 = document.getElementById("div1");
+        var div3 = document.getElementById("div3");
+        div1.style.fontSize = "20px";
+        div3.style.color = "#820382";
+        div3.style.textDecorationColor = "#820382";
+    }
+
+    function changelargesize() {
+        var div1 = document.getElementById("div1");
+        var div4 = document.getElementById("div4");
+        div1.style.fontSize = "40px";
+        div4.style.color = "#820382";
+        div4.style.textDecorationColor = "#820382";
+    }
+</script>
+</body>
+</html>

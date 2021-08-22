@@ -1,0 +1,24 @@
+/* 完成图1-2 改变网页字号大小 */
+.Textstyle {
+    text-align: center;
+}
+
+.divstyle1 {
+    text-indent: 2em;
+    color: #2261C7;
+    background-color: #D5E5EB;
+    border: solid;
+    border-color: #979933;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+}
+
+.divstyle2 {
+    display: inline;
+    text-decoration: underline;
+    color: blue;
+}
+
