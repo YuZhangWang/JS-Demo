@@ -1,0 +1,437 @@
+/* pages/presales/presalesOrder.wxss */
+.payPage {
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-color: #fafafa;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F1F1F1;
+    width: 100%;
+    height: 90rpx;
+    font-size: 35rpx;
+}
+
+.payDetail .order_info_box .header_detail .header_title_box> image{
+ width: 10rpx;
+ height: 10rpx;
+}
+
+.payDetail .order_info_box .header_detail .header_title_box {
+    
+    font-size: 38rpx;
+    font-weight: bold;
+    color: #fd6221;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payDetail .order_info_box  .header_title {
+    margin: 0 10rpx;
+}
+.payDetail .order_info_box .header_detail .header_tips {
+    
+    font-size: 24rpx;
+    color: #868686;
+    text-align: center;
+}
+
+.payDetail .order_info_box .tuan_countDown_box {
+    width: 100%;
+    height: 170rpx;
+    background-size: 100% 170rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box {
+    position: relative;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_box {
+    position: absolute;
+    box-sizing: border-box;
+    width: 64rpx;
+    height: 100%;
+    bottom: -6rpx;
+    letter-spacing: 25rpx;
+    font-size: 30rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_day {
+    left: 235rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_hour {
+    left: 355rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_minute {
+    left: 485rpx;
+}
+
+.payDetail .tuan_countDown_box .countDown_time_box .timer_second {
+    left: 605rpx;
+}
+
+.address {
+    display: flex;
+    /* align-items: center;  */
+    background: #fff;
+    font-size: 0.7rem;
+    padding: 0.6rem 0.4rem;
+    color: #424242;
+}
+.addAddress {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 30rpx;
+    color: #595758;
+    border-top: 1px solid #dddddd;
+    padding: 40rpx 0;
+}
+.addAddress>image {
+    width: 50rpx;
+    height: 50rpx;
+    margin-right: 10rpx;
+}
+.addr_icon{
+  width: 30rpx;
+  height: 38rpx;
+  margin: 10rpx 5rpx 0 10rpx;
+}
+.orderInfoWrap{
+  margin-left: 20rpx;
+  color: #909090;
+  font-size:30rpx;
+  width: 85%;
+
+}
+.receiveTel{
+  margin-left: 50rpx;
+}
+
+
+.odGoodsInfo {
+    background: #fff;
+    font-size: 35rpx;
+    color: #3a3a3a;
+    margin-top: 0.4rem;
+}
+.wrapShop {
+    padding: 20rpx;
+    border-bottom: 1px solid #f6f2f3;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.wrapShop .tuan_shop_logo {
+   width: 47.6rpx;
+   height: 43.4rpx;
+}
+.wrapShop .shopName{
+  height: 47.6rpx;
+  line-height: 47.6rpx;
+  margin-left: 10rpx;
+}
+.goodsImg>image {
+    width: 110rpx;
+    height: 110rpx;
+}
+.odSummary {
+    display: flex;
+    padding: 26rpx;
+}
+.odDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 16rpx;
+}
+.nowPrice {
+    color: #FF0126 !important;
+    font-size: 35rpx !important;
+    font-weight: bold;
+}
+.oldPrice {
+    color: #696969;
+    font-size: 030rpx;
+    position: relative;
+    text-decoration: line-through;
+    margin-left: 20rpx;
+}
+.order_info_box{
+  max-width: 100%;
+  margin-bottom: 80px;
+}
+.payDetail .order_info_box>view {
+    background-color: #fff;
+    max-width: 100%;
+}
+.otherThings {
+    background: #fff;
+    margin-top: 0.4rem;
+    font-size: 28rpx;
+}
+.otherThings .otItem {
+    border-bottom: 1px solid #f6f2f3;
+    padding: 16rpx 26rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.otherThings .otItem input{
+    text-align: left;
+    font-size: 30rpx;
+}
+.otItem span:nth-child(1){
+  color: #000000;
+  font-size: 30rpx;
+  
+}
+.otItem span:nth-child(2){
+  font-size: 28rpx;
+  color:#666;
+  
+}
+.payPart {
+    display: flex;
+    justify-content: space-between;
+    background: #fef6f4;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 222;
+    border-top:1px solid #efefef;
+}
+.payPart .payBtn {
+     display: inline-flex; 
+    flex-direction: column;
+    text-align: center;
+    padding: 8rpx 0;
+    background: #ffffff;
+    align-items: center;
+    justify-content: center;
+    line-height: 40rpx;
+}
+.payPart .payBtn[hidden]{
+  display:none;
+
+}
+.colum-other{
+  display: flex;
+  display: -webkit-flex;
+  padding: 10rpx 26rpx;
+  font-size: 30rpx;
+  align-items: center;
+  justify-content: space-between;
+  color: #000;
+
+}
+.payPart .payInfo {
+    width: 55%;
+}
+.payPart .submit_order_btn, .payPart .pay{
+  width: 30%;
+  background: #E93B3D;
+  background: -webkit-linear-gradient(left,#F3686A 0,#EE3F41 100%);
+  background: linear-gradient(to right,#F3686A 0,#EE3F41 100%);
+  color: #fff;
+}
+.tuan_sucTime_box {
+    padding: 0.2rem 0.4rem;
+    background: #fafafa;
+    font-size: 30rpx;
+    font-weight: bold;
+}
+
+.buyerInfo {
+    background: #fff;
+    padding-top: 2rem;
+}
+.bInfoItem {
+    border-bottom: 1px solid #f6f2f3;
+    padding: 16rpx;
+    display: flex;
+    align-items: center;
+}
+.bInfoItem >span {
+    display: inline-block;
+    width: 180rpx;
+}
+.addrBtns {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+}
+.addrBtns .addrBtn {
+    padding: 0.5rem 0;
+    text-align: center;
+    width: 50%;
+}
+.addrBtns .retBtn {
+    margin: 0;
+    background: #fff;
+}
+#saveAddress {
+    background: #42B035;
+    color: #fff;
+}
+#showCityPicker3{
+  justify-content: space-between;
+}
+textarea {
+padding:0;
+box-sizing:border-box;
+height:100rpx;
+}
+
+
+.picker-view {
+  width: 100%;
+  display: flex;
+  z-index:12;
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  height: 40vh;
+}
+
+.picker-item {
+  line-height: 70rpx;
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+  text-align: center;
+}
+.order_info_wrapper{
+  width: 100%;
+}
+.pickerOp{
+  height:20% ;width:95%;display:flex;justify-content: space-between;
+  align-items: center;
+}
+.pickerOp text{
+  padding:  0 20rpx;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  
+}
+.ecWayType{
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0,0,0,.2);
+  margin-bottom: 0.4rem;
+  padding: 25rpx 0;
+}
+.ecWTItem{
+  width: 20%;
+  text-align: center;
+  color: #999;
+  
+}
+.ecWTItem .ecWTActive{
+  visibility: hidden;
+}
+.ecWTItem.active{
+  color: #333;
+}
+.ecWTItem.active .ecWTActive{
+  visibility: visible;
+  background: #FF0126;
+}
+.ecWTActive{
+  height: 2px;
+}
+
+.getSelfBlock{
+  text-align: center;
+  background: #fff;
+}
+.getSelfTimeHeader{
+  color: #999;
+}
+.toShopAddr{
+  text-align: center;
+  color: #999;
+  background: #fff;
+}
+.toShopBlock{
+  /* padding:30rpx 25rpx; */
+  border-bottom: 5px #f8f8f8 solid;
+}
+.toShopAddrDetail{
+  color: #333;
+  font-size: 30rpx;
+}
+.checkShopMap{
+  color: #3ba8fd;
+  text-decoration:underline;
+}
+.toShopAddr .identity{
+  padding:15rpx 0;
+  margin: 0 25rpx;
+  text-align: left;
+  
+}
+.toShopAddr .identity input{
+  padding-left: 20rpx;
+  width: 85%;
+}
+.toShopAddr .identity:nth-child(2){
+  border-bottom:solid 1px #eee;
+
+}
+
+.checkToShopAddr{
+  color: #3ba8fd;
+  font-size: 24rpx;
+  margin-left: 20rpx;
+}
+.identity{
+  display: flex;
+  align-items: center;
+}
+.identity text{
+  font-size: 26rpx;
+  color: black;
+  white-space: nowrap;
+}
+.order-delivery .address {
+    padding: 6% 20rpx 2.5%;
+    vertical-align: middle;
+    display: flex;
+    min-height: 80rpx;
+   
+}
+
+.order-delivery .address .icon-arr {
+  display:block;
+  width:26rpx;
+  height:26rpx;
+
+  margin-top:4px;
+  position:absolute;
+  right:25rpx;
+
+
+}
+
+.order-delivery .address .icon-ads {
+    display: inline-block;
+    width: 3.7%;
+    height: 42rpx;
+    margin:0rpx 10rpx 0;
+    vertical-align: top;
+    align-self:center;
+
+}

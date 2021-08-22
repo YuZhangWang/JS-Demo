@@ -1,0 +1,118 @@
+/* pages/giftcard//giftcardActivate.wxss */
+@import "./giftcardDetail.wxss";
+
+ .colleItem{
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  margin-bottom: 30rpx;
+  width:100%;
+  color: #333;
+  margin-top: 30rpx;
+
+}
+.colleItem .single-select{
+  display: flex;
+  display: -webkit-flex;
+  width: 100%;
+  align-content: flex-start;
+
+}
+
+.colleItem input{
+  border: 1px #E4E4E4 solid;
+  border-radius: 4px;
+  margin-left: 20rpx;
+  padding-left: 10rpx;
+  margin-right: 20rpx;
+  width: 100%;
+}
+.colleItem .commTxt{
+  min-width: 100rpx;
+  text-align: left;
+  font-size: 28rpx;
+  color: #333;
+  padding-left: 20rpx;
+
+}
+
+
+
+
+
+.toGet, .getBtn {
+    width: 80%;
+    max-width: 350px;
+    height: 85rpx;
+    line-height: 85rpx;
+    border-radius: 50rpx;
+    clear: both;
+    border: 1px solid RGBA(222, 187, 133, 1);
+    -webkit-border-radius: 50rpx;
+    background-color: #debb85;
+    color: #fff;
+    font-size: 32rpx;
+    text-align: center;
+    margin-top: 20rpx;
+}
+
+
+
+/* 单选按钮样式*/
+
+radio .wx-radio-input {
+  width: 30rpx;
+  height: 30rpx;
+  border: 2rpx solid #EEEEEE;
+  border-radius: 100%;
+  background: none;
+}
+
+/*单选按钮选中后内部样式*/
+
+radio .wx-radio-input.wx-radio-input-checked {
+  border: 2rpx solid #debb85!important;
+  background: white;
+}
+
+radio .wx-radio-input.wx-radio-input-checked::before {
+  width: 50%;
+  height: 50%;
+  background: #debb85;
+  border-radius: 100%;
+  content: '';
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+radio-group radio{
+	position:relative !important;
+  left: 0 !important;
+  display: block;
+ 
+  
+
+}
+.radio-group radio:not(:last-child){
+   margin-bottom: 20rpx;
+}
+
+.radio-group radio text{
+  font-size: 26rpx;
+}
+.ridao-flex{
+  display: flex;
+  display: -webkit-flex;
+
+}
+.ridao-flex radio{
+  margin-right: 30rpx;
+  
+}
+radio.disabled .wx-radio-input {
+  width: 30rpx;
+  height: 30rpx;
+  border: 2rpx solid #EEEEEE;
+  border-radius: 100%;
+  background: none;
+}

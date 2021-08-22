@@ -1,0 +1,38 @@
+@import './wheelTpl.wxss';
+@import "../inteCommon/common.wxss";
+.wheelLogoWrap{
+  display: flex;
+  justify-content: center;
+}
+.wheelLogo{
+  width: 603rpx;
+  height: 192rpx;
+}
+.btnsWrap{
+  display: flex;
+  position: relative;
+}
+.btnsWrap button{
+  display: inline-block;
+  background: transparent;
+  width: 160rpx;
+  height: 80rpx;
+  margin: 0;
+  position: absolute;
+}
+.atyRule{
+  left: 64rpx;
+  top: -10rpx;
+}
+.myAward{
+  height: 100rpx;
+  width: 170rpx;
+  right: 35rpx;
+  top: -6rpx;
+}
+.index{
+  overflow: hidden;
+}
+
+
+

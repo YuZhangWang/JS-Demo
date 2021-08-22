@@ -1,0 +1,213 @@
+/* pages/myCollection/myCollection.wxss */
+@import "/youzan/dist/index.wxss";
+@import "../detail/detail.wxss";
+page{
+  background: #f5f7f7 !important;
+}
+.selectStatus{
+  
+  width:21%;
+  text-align:center;
+  background:#f6f6f6;
+  border-radius:10rpx;
+  box-sizing:border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   
+}
+.selectWrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 15rpx;
+}
+.trigger-rights image{
+  height:15px;
+  width:15px;
+  transform: rotate(90deg);
+  vertical-align: middle;
+}
+.search-wrapper{
+  width: 100%;
+  display: flex;
+  background: white;
+  padding: 10px 15px;
+  box-sizing: border-box;
+}
+.search-input-cont{
+  background:#f6f6f6;
+   border-radius:10rpx;
+}
+.search-input-cont .search-btn{
+  background:#f6f6f6;
+  padding:2rpx 0rpx;
+  border-radius:10rpx;
+}
+.search-input-cont .search-input{
+  background:#f6f6f6;
+  padding:2rpx 0rpx;
+}
+.search-wrapper .search-input-cont{
+  margin: 0 20rpx;
+  flex: 0 0 440rpx;
+
+}
+.search-input-cont{
+  border: none !important;
+}
+.operation{
+  line-height: 70rpx;
+  
+}
+.track-list{
+  box-sizing:border-box;
+  width:100%;
+  margin-top:10rpx;
+  display:-webkit-flex;
+  display:-webkit-box;
+  display:flex;
+  -webkit-flex-wrap:wrap;
+  flex-wrap:wrap;
+
+}
+.track-content{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 30rpx 0;
+}
+.track{
+  flex:0 0 100%;
+  box-sizing:border-box;
+  margin-bottom:10rpx;
+  position:relative;
+  overflow:hidden;
+
+  
+}
+.track-select{
+  position: relative;
+  background: transparent !important;
+}
+.track-select view{
+  background: transparent !important;
+}
+.track view{
+  background: white
+}
+.track-goods-img{
+  flex: 0 0 240rpx;
+  overflow:hidden;
+  width: 240rpx;
+  height:240rpx;
+  background-image:url(http://res.xcx.weijuju.com/image/mobile/pic_bg.png);
+  background-size:6px 6px;
+  text-align: center;
+  margin:0px 30rpx;
+
+}
+.track .track-goods-img image{
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+.track-countNum{
+  position:relative;
+  bottom:10rpx;
+
+}
+.track-goods-title{
+  position:relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #2d2d2d;
+  font-size: 28rpx;
+  line-height: 35rpx;
+
+
+}
+.track-goods-price{
+  display:block;
+  color:#f44;
+  font-weight:bold;
+  line-height:30px;
+  height:30px;
+  
+
+}
+.track-msg{
+  height:200rpx;
+  width: 100%;
+  margin-right: 30rpx;
+
+
+}
+.track-info{
+  height: 80%;
+}
+.track-right-bottom{
+  display:flex;
+ justify-content:space-between;
+ align-items: center;
+
+}
+.collect-number{
+  font-size: 26rpx;
+  color: #999;
+}
+.change-price{
+  font-size: 26rpx;
+  color: #ff7100;
+}
+.count-lack{
+  font-size: 26rpx;
+  color: #eb0845;
+}
+
+.cart-icon{
+  width: 32rpx;
+  height: 34rpx;
+}
+.track-footer{
+  display: flex;
+  position:fixed;
+  bottom:0rpx;
+  width:100%;
+  font-size:28rpx;
+  background-color:#fff;
+  z-index:5;
+  height: 50px;
+  box-shadow: -2px -2px 2px #f5f5f5;
+
+}
+.goods-select #all_select{
+  margin-left: 25rpx;
+  margin-top: 15rpx;
+}
+.goods-select>view.j-select-btn {
+    color: #666;
+    font-size: 22px;
+}
+
+.goods-select view.j-select-btn.selected {
+    color: #f44;
+}
+.del{
+  display:inline-block;
+  margin:10px 0;
+  height:30px;
+  padding: 0 20rpx;
+  border-radius: 30rpx;
+  line-height:30px;
+  background: orange;
+  color: white;
+  position:absolute;
+  right:25rpx;
+
+}
+

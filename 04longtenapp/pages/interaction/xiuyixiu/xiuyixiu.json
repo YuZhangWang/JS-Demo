@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "咻一咻奖励",
+  "usingComponents": {
+    "play-ret": "../inteCommon/playRet",
+    "rule-and-award": "../inteCommon/ruleAndAward"
+  }
+}

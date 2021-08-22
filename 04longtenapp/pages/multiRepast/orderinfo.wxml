@@ -1,0 +1,269 @@
+<!-- 优惠券列表 -->
+<import src="../template/couponlist.wxml"/>
+<!-- 会员卡列表 -->
+<import src="../template/cardlist.wxml"/>
+
+<!-- 有赞开关模板 -->
+<import src="../../youzan/dist/switch/index.wxml"/>
+<!-- 公共格式化工具模块 -->
+<wxs src="../../utils/comm.wxs" module="mTool"/>
+<wxs module="m1">
+    // 开关
+    var switchTel = function(shopInfo) {
+    if (shopInfo) {
+    var information = shopInfo.information;
+    return (information & Math.pow(2, 0)) != 0;
+    } else {
+    return false;
+    }
+    }
+    // 格式化
+    var disDiv10 = function(dis) {
+    return parseFloat(dis / 10).toFixed(1);
+    }
+    // 金额格式
+    var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+    return Number(money / 100).toFixed(2);
+    } else {
+    return 0;
+    }
+    }
+    // 获取优惠券折扣
+    var getCouponDiscount = function(selectedCoupon, goodsList, orderData) {
+    if (orderData && orderData.ticketId) {
+    return orderData.ticketPrice;
+    }
+    // 折扣金额
+    var discountMoney = selectedCoupon.money;
+    if (selectedCoupon.useLimitType == 1) {
+    for (var i = 0; i < goodsList.length; i++) {
+    var goods = goodsList[i];
+    if (selectedCoupon.busiId == goods.id) {
+    var discountMoney = selectedCoupon.money;
+    if (discountMoney > goods.price) {
+    discountMoney = goods.price;
+    }
+    }
+    }
+    }
+    return discountMoney;
+    }
+    // 获取所有价格
+    var getAllPrice = function(money, orderData, selectedCoupon, goodsList, enableDeposit, discountCount, deliveryPrice,
+    packingPrice) {
+    var totalMoney = money;
+    if (orderData) {
+    if (orderData.ticketId) {
+    totalMoney = money - orderData.ticketPrice;
+    }
+    };
+    if (selectedCoupon) {
+    totalMoney -= getCouponDiscount(selectedCoupon, goodsList);
+    };
+    if (enableDeposit) {
+    totalMoney -= enableDeposit;
+    };
+    if (discountCount) {
+    totalMoney -= discountCount;
+    };
+    if (deliveryPrice) {
+    totalMoney += deliveryPrice;
+    };
+    if (packingPrice) {
+    totalMoney += packingPrice;
+    }
+    if (totalMoney < 0) {
+    totalMoney = 0;
+    }
+    return totalMoney;
+    }
+    var getStatus=function(status){
+    switch(status){
+    case 1:
+    return "待接单"
+    break;
+    case 2:
+    return "已接单"
+    break;
+    case 3:
+    return "已取消"
+    break;
+    case 4:
+    return "待付款"
+    break;
+    case 5:
+    return "交易完成"
+    break;
+    case 6:
+    return "后台取消"
+    break;
+    }
+    }
+
+    // 模块导出
+    module.exports.getFixedMoney = getFixedMoney;
+    module.exports.getAllPrice = getAllPrice;
+    module.exports.switchTel = switchTel;
+    module.exports.getCouponDiscount = getCouponDiscount;
+    module.exports.disDiv10 = disDiv10;
+    module.exports.getStatus = getStatus;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+    <view class="container" style="padding-bottom: 250rpx;">
+        <view class="multi-content">
+            <!-- 订单状态 -->
+            <view class="detail-status" wx:if="{{fromType}}">
+                订单状态：{{m1.getStatus(receiveData.orderStatus)}}
+            </view>
+            <!-- 订单列表 -->
+            <view class="order-panel" wx:for="{{receiveData.subOrderList}}" wx:for-index="subIndex" wx:for-item="subItem">
+                <!-- 信息总括 -->
+                <view class="order-info-panel padding-30" style="margin-top: 10px;" bindtap="handleUpfold" data-id="{{subItem.id}}">
+                    <view class="highlight-font">第{{subIndex+1}}次下单
+                        <text style="font-weight: normal;color: #AEAEAE;">（{{m1.getStatus(subItem.orderStatus)}}）</text>
+                        <text class="{{currentList==subItem.id ? 'angle-up-icon':'angle-down-icon'}}"></text>
+                    </view>
+                    <text class="select-count" style="color:#FFA04C">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(subItem.orderAmountTotal)}}</text>
+                </view>
+                <view class="order-list" wx:if="{{currentList==subItem.id}}" wx:for="{{subItem.orderItemListGroupByOpenid}}" wx:for-item="classifyItem">
+                    <!-- 微信信息 -->
+                    <view class="wechat-info" wx:if="{{subItem.openid}}">
+                        <image src="{{classifyItem.headPic}}" class="wechat-header"></image>
+                        <text class="wechat-nick">{{classifyItem.nickName}}</text>
+                        <text class="select-count">已选{{classifyItem.cnt}}份菜品</text>
+                    </view>
+                    <view class="wechat-info" wx:else>
+                        <image src='{{staticResPath}}/image/mobile/takeout/waiter.png' class="wechat-header"></image>
+                        <text class="wechat-nick">服务员</text>
+                        <text class="select-count">已选{{classifyItem.cnt}}份菜品</text>
+                    </view>
+                    <view class="order-goods-item" wx:for="{{classifyItem.orderItems}}" wx:for-item="goodsItem">
+                        <view class="goods-left-info">
+                            <view class="goods-image">
+                                <image src="{{mTool.specUrl(extConfig,userImagePath,goodsItem.thumbnail,300)}}"></image>
+                            </view>
+                            <view class="goods-price">
+                                <view>{{goodsItem.title}}</view>
+                                <view wx:if="{{goodsItem.sku}}" style="font-size: 10px;color: #999;">（{{goodsItem.specName}}）</view>
+                                <view class="unit-price">{{m1.getFixedMoney(goodsItem.totalFee)}}</view>
+                            </view>
+                        </view>
+                        <view class="goods-right-info">
+                            <view class="select-count">
+                                x{{goodsItem.buyNum}}
+                            </view>
+                        </view>
+                    </view>
+                    <!-- 订单备注 -->
+                    <view class="order-info-panel border-top">
+                        <text>订单备注</text>
+                        <text class="select-count">{{subItem.remark || '--'}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="microshop-box order-goods" style="border-top: 0px;">
+            <!--共计栏-->
+            <view class="order-extras-info">
+                <view class="order-info-panel padding-15">
+                    <text>就餐位置</text>
+                    <text class="select-count">{{receiveData.tableNo}}</text>
+                </view>
+                <view class="order-info-panel padding-15 border-top">
+                    <text>就餐人数</text>
+                    <text class="select-count">{{receiveData.personCount}}人</text>
+                </view>
+                <view class="order-info-panel padding-15 border-top">
+                    <text>订单总计</text>
+                    <text class="select-count">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(receiveData.goodsAmountTotal)}}</text>
+                </view>
+            </view>
+            <view class="total-money text-black" style="margin-top: 10rpx">
+                <!-- 商品金额-->
+                <!-- wx:if="{{orderData.orderType != 4}}" -->
+                <view class="money_item">
+                    <view class="fleft">
+                        总计金额
+                    </view>
+                    <view class="text-red main-color fright" style="{{app.globalData.customStyleColor}}">
+                        <text class="js-total-money total_price"> ¥{{m1.getFixedMoney(receiveData.goodsAmountTotal)}}</text>
+                    </view>
+                </view>
+                <view class="money_item" wx:if="{{enableDepositChe || receiveData.depositPrice}}">
+                    <view class="fleft">
+                        储值金
+                    </view>
+                    <view class="text-red main-color fright" style="{{app.globalData.customStyleColor}}">
+                        <text class="coupon_price"> - ¥{{enableDepositChe ? m1.getFixedMoney(discountMoney) : m1.getFixedMoney(receiveData.depositPrice)}}</text>
+                    </view>
+                </view>
+
+                <!-- 实付款 -->
+                <view class="money_item" wx:if="{{receiveData.orderStatus!=3 || receiveData.orderStatus!=6}}">
+                    <view class="fleft">
+                        实付款
+                    </view>
+                    <view class="text-red main-color fright" style="{{app.globalData.customStyleColor}}">
+                        <text class="coupon_price"> {{app.globalData.currencySymbol}}{{enableDepositChe ? m1.getFixedMoney(discountTotal) : m1.getFixedMoney(receiveData.orderAmountTotal)}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="total-money text-black" style="margin-top: 10rpx" wx:if="{{receiveData.orderStatus!=4}}">
+                <!-- 商品金额-->
+                <!-- wx:if="{{orderData.orderType != 4}}" -->
+                <view class="money_item">
+                    <view class="fleft">
+                        就餐位置：{{receiveData.tableNo}}
+                    </view>
+                </view>
+                <view class="money_item">
+                    <view class="fleft">
+                        就餐人数：{{receiveData.personCount}}人
+                    </view>
+                </view>
+
+                <view class="money_item">
+                    <view class="fleft">
+                        订单编号：{{receiveData.orderNo}}
+                    </view>
+                </view>
+                <view class="money_item">
+                    <view class="fleft">
+                        首次下单时间：{{mTool.filterTimestamp(receiveData.createTime)}}
+                    </view>
+                </view>
+            </view>
+            <view class="coupon-item-list" wx:if="{{receiveData.orderStatus==4 && receiveData.payStatus!=5 && depositPrice>0}}">
+                <view class="coupon-item text-black enableDepositItem">
+                    <view style='display:inline-block;'>
+                        储值金
+                    </view>
+                    <view class="fright enableDeposit" style='padding-right:5px;'>
+                        <view class="enableDepositVal">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(depositPrice)}}</view>
+                        <template is="zan-switch" data="{{app, disabled: enableDepositItemValue , checked : enableDepositChe, componentId: 'switch1' }}"></template>
+                    </view>
+                </view>
+            </view>
+            <block wx:if="{{receiveData.orderStatus==4}}">
+                <view class="order-btn" id="order_btn">
+                    <text class="bottomRealPay" style="padding: 0 20rpx;flex: none;">实付款：<text style="font-weight: bold;{{app.globalData.customStyleColor}}" class="main-color">{{app.globalData.currencySymbol}}{{enableDepositChe ? m1.getFixedMoney(discountTotal) : m1.getFixedMoney(receiveData.orderAmountTotal)}}</text></text>
+                    <button wx:if="{{wechatPay || offlinePay}}" class="btn-menu order-btn-confirm {{btnLoading?'':'main-color-bg'}}" style="width: 100%;{{app.globalData.customStyleBg}}" formType="submit"
+                            bindtap="handleCashier" data-type="5" data-typeName="{{wechatPay}}" data-orderno="{{receiveData.orderNo}}" data-total="{{receiveData.orderAmountTotal}}" disabled="{{btnLoading}}">{{wechatPay || offlinePay}}
+                    </button>
+                    <button wx:if="{{!wechatPay && !offlinePay}}" style="{{btnLoading ? '':app.globalData.customSubBg}}" class="btn-menu order-btn-confirm {{btnLoading?'':'sub-color-bg'}}" formType="submit"
+                            id="btn_confirm1" bindtap="handleCashier" data-orderno="{{receiveData.orderNo}}" data-type="4" disabled="{{btnLoading}}">线下支付
+                    </button>
+                    <button wx:if="{{!wechatPay && !offlinePay}}" class="btn-menu order-btn-confirm {{btnLoading?'':'main-color-bg'}}" style="{{btnLoading ? '':app.globalData.customStyleBg}}" data-total="{{enableDepositChe ? discountTotal : receiveData.orderAmountTotal}}" bindtap="handleCashier" data-orderno="{{receiveData.orderNo}}" data-type="1" formType="submit"
+                            id="btn_confirm" disabled="{{btnLoading}}">微信支付
+                    </button>
+                </view>
+            </block>
+        </view>
+    </view>
+    <!-- 版权信息 -->
+    <include src="/pages/template/copyright.wxml"/>
+    <!-- 授权样式 -->
+    <include src="/pages/template/authModal.wxml"/>
+</view>

@@ -1,0 +1,166 @@
+/* pages/fenxiao/myRank.wxss */
+page{
+  background-color:rgba(245, 245, 245, 1);
+  box-sizing: border-box;
+  
+}
+.rankcontainer{
+  height: 400rpx;
+  width: 100%;
+  background: #fff6f5;
+  padding:75rpx 25rpx 25rpx;
+  box-sizing: border-box;
+  background-image: url('http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/myrank/back.png');
+  background-size: 100% 100%;
+}
+.rankwrap{
+  height: 100%;
+  width: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 5px 12px #fedbd3;
+  border-radius: 10px;
+}
+.rank-usermsg{
+  width: 45%;
+  height: 100%;
+  padding: 35rpx 0;
+  box-sizing: border-box;
+  text-align: center;
+
+}
+.rank-usermsg image{
+  width: 130rpx;
+  height: 130rpx;
+  border-radius:50%;
+
+}
+.rank-extralmsg{
+  width:55%;
+  height:100%;
+  padding:35rpx 0;
+  box-sizing:border-box;
+  text-align:left;
+
+
+}
+.rank-usermsg text{
+  color: #999;
+  font-size: 24rpx;
+}
+.rank-extralmsg view{
+  font-size: 38rpx;
+  color: #ff5548;
+}
+.rank-extralmsg view span{
+  font-size: 28rpx;
+  color: #666;
+}
+.rank-extralmsg view .img{
+  display: inline-block;
+  position:relative;
+  top:5rpx;
+}
+.rank-extralmsg view .img image{
+  width: 80%;
+  height: 80%;
+}
+
+.rank-extralmsg view{
+ 
+  
+
+}
+
+.ranklist{
+  width: 100%;
+  height: 100%;
+}
+.ranklist-title,.ranklist-item{
+  padding: 0px 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  width:100%;
+  
+}
+.ranklist-title{
+  height: 100rpx;
+  background: #fffbfb;
+}
+.ranklist-item{
+  border-bottom: 1px solid #f5f5f5;
+  height:150rpx;
+  background: white;
+}
+
+.ranking{
+  width: 15%;
+  text-align: center;
+  
+
+}
+.ranking image{
+  width:25px;
+  height:30px;
+  vertical-align:middle;
+
+}
+.promoter1{
+  width: 40%;
+  text-align: center;
+}
+.promoter{
+  width: 40%;
+  display: flex;
+  display: -webkit-flex;
+}
+.promoter-msg text{
+  font-size:24rpx;
+  color:#999;
+
+}
+.promoter image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+view{
+  font-size: 28rpx;
+}
+
+.promoter view{
+  text-align: left;
+}
+.promoter-msg view{
+  white-space:nowrap;
+  word-break:keep-all;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width: 150rpx;
+
+}
+.team{
+  width: 20%;
+  text-align: center;
+}
+.team text{
+  color: #999;
+}
+.commission{
+  width: 25%;
+  text-align: center;
+  
+}
+.text-color{
+color: #ff5548;
+
+}
+.nomore{
+  text-align:center;
+  padding:15rpx 0px;
+  color:#999;
+
+}

@@ -1,0 +1,375 @@
+function fenToYuan(num, type) {
+    if (isNaN(num)) {
+        num = 0;
+    }
+    var number = parseFloat(parseFloat(num) / 100).toFixed(2);
+    var numberSplit = number.split(".");
+    var integer = numberSplit[0];
+    var float = numberSplit[1];
+    if (type == 'integer') {
+        return integer
+    } else if (type == 'float') {
+        return float
+    }else if (type == 'saving') {
+        return parseFloat(parseFloat(num) / 100)
+    } else if (type == 'direct') {
+        var numSales = parseFloat(parseFloat(num) / 100).toFixed(3);
+        return numSales.slice(0,numSales.length-1);
+
+    }else {
+        return parseFloat(parseFloat(num) / 100).toFixed(2);
+    }
+
+}
+
+function mToKm(num) {
+    if (isNaN(num)) {
+        num = 0;
+    }
+    return parseFloat(parseFloat(num) / 1000).toFixed(1);
+}
+
+function randAvator() {
+    return Math.round(Math.random() * 16);
+}
+
+function integralSource(arg) {
+    if (1 == arg) {
+      return "消费赠送";
+    } else if (2 == arg) {
+        return "签到";
+    } else if (3 == arg) {
+        return "交易";
+    } else if (4 == arg) {
+        return "召唤伙伴";
+    } else if (5 == arg) {
+        return "评论赠送";
+    } else if (6 == arg) {
+        return "开通会员卡";
+    } else if (7 == arg) {
+        return "下单抵扣";
+    } else if (8 == arg) {
+        return "订单退货";
+    } else if (9 == arg) {
+        return "管理员赠送";
+    } else if (10 == arg) {
+        return "管理员扣除";
+    } else if (11 == arg) {
+        return "商家导入";
+    } else if (12 == arg) {
+        return "积分商品兑换";
+    } else if(13 == arg){
+      return "外接业务变更";
+    } else if(14 == arg){
+      return "购买商品赠送";
+    }else if(15 == arg){
+      return "新人有礼赠送";
+    }
+    return "未知类型";
+}
+
+function getPayType(pay_type) {
+    if (pay_type == 1) {
+        return "微信支付";
+    } else if (pay_type == 3) {
+        return "货到付款";
+    } else if (pay_type == 4) {
+        return "到店支付";
+    }
+
+    return "-";
+}
+
+function getCardStu(stu) {
+    if (stu == -1) {
+        return "待激活";
+    } else if (stu == 2) {
+        return "已过期";
+    }
+
+    return "";
+}
+
+function specUrl(extConfig, _domainPref, _img, maxWidth) {
+    if (!_img) {
+        return "";
+    }
+    var slimParam = (_img.indexOf("?") != -1 ? "|" : "?") + "imageView2/2/w/" + (maxWidth || 400);
+
+    var oldPic = "http://cdn.xcx.weijuju.com/";
+    if (extConfig && extConfig.dev) {
+        oldPic = "http://imgcdn.youyu.weijuju.com/";
+    }
+    var cur_host = _domainPref;
+    if (cur_host.indexOf("xyz888.org") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018/0") != -1
+            || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 || _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("truesion.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018/0") != -1
+            || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 || _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("dmlapp.cn") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018/0") != -1
+            || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 || _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("huokexia.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018/0") != -1
+            || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 || _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("fomose.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018/0") != -1
+            || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 || _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1
+            || _img.indexOf("2018/6") != -1 || _img.indexOf("2018/7") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("hxtgz.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018/0") != -1
+            || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 || _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1
+            || _img.indexOf("2018/6") != -1 || _img.indexOf("2018/7") != -1 || _img.indexOf("2018/8") != -1 || _img.indexOf("2018/9") != -1 || _img.indexOf("2018/10") != -1
+            || _img.indexOf("2018/11") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("wocloud.com.cn") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018") != -1 || _img.indexOf("2019/0/") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("hui7.cn") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018") != -1
+            || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 || _img.indexOf("2019/2/") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("newsuncs.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018") != -1
+            || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 || _img.indexOf("2019/2/") != -1 || _img.indexOf("2019/3/") != -1 || _img.indexOf("2019/4/") != -1 || _img.indexOf("2019/5/") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("app307.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018/0") != -1
+            || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 || _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("maiduocbd.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018") != -1
+            || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 || _img.indexOf("2019/2/") != -1 || _img.indexOf("2019/3/") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else if (cur_host.indexOf("gzscit.com") != -1) {
+        if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 || _img.indexOf("2018") != -1
+            || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 || _img.indexOf("2019/2/") != -1 || _img.indexOf("2019/3/") != -1
+            || _img.indexOf("2019/4/") != -1 || _img.indexOf("2019/5/") != -1)) {
+            return oldPic + _img + slimParam;
+        }
+    } else {
+      if (_img.indexOf("http") != 0) {
+        if ((_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("/2017/") != -1 || _img.indexOf("2018/0") != -1)) {
+          return oldPic + _img + slimParam;
+        } else {
+          return _domainPref + _img + slimParam;
+        }
+
+      } else {
+        return _img + slimParam;
+      }
+    }
+
+}
+
+function getInderectValue(distributorConfig, goodsData, promoterAccount) {
+    var inderectValue = goodsData.inderectValue || 0;
+    if (goodsData.distriType) {
+        if (goodsData.distriType == 1) {
+            // 按比例
+
+            var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+
+            inderectValue = price * inderectValue / 100
+        }
+    } else {
+        inderectValue = 0;
+
+    }
+    if (distributorConfig) {
+        if (distributorConfig.commissionScope == 1) {
+
+            // 全局分佣
+            var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+            return distributorConfig.indirectValue * price / 100;
+
+        } else if (distributorConfig.commissionScope == 3) {
+
+            //自定义推广员分佣
+            var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+            return promoterAccount.indirectValue * price / 100;
+        } else if (distributorConfig.commissionScope == 4) {
+
+          //自定义推广分组分佣
+          var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+          return promoterAccount.categoryIndirectValue * price / 100;
+
+        } else {
+            return inderectValue;
+        }
+    } else {
+        return inderectValue;
+    }
+}
+
+function getDirectValue(distributorConfig, goodsData, promoterAccount) {
+    var directValue = goodsData.directValue || 0;
+    if (goodsData.distriType) {
+        if (goodsData.distriType == 1) {
+            // 按比例
+            var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+            directValue = price * directValue / 100
+        }
+    } else {
+        directValue = 0;
+
+    }
+    if (distributorConfig) {
+        if (distributorConfig.commissionScope == 1) {
+            // 全局分佣
+            var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+            return distributorConfig.directValue * price / 100;
+
+        } else if (distributorConfig.commissionScope == 3) {
+            //自定义推广员分佣
+            var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+            return promoterAccount.directValue * price / 100;
+        } else if (distributorConfig.commissionScope == 4) {
+          //自定义推广分组分佣
+          var price = goodsData.selectedSku ? goodsData.selectedSku.price : goodsData.price;
+          return promoterAccount.categoryDirectValue * price / 100;
+        } else {
+            return directValue;
+        }
+    } else {
+        return directValue;
+    }
+}
+
+function getTopPVal(top, height) {
+    top = parseInt(top)
+    return top / height * 100;
+}
+
+function isFixedMenu(item) {
+    if (!item || !item.item_type) {
+        return false;
+    }
+    return item.item_type == "shopCartWidget" || item.item_type == "refreshWidget"
+        || item.item_type == "kefutWidget" || item.item_type == "bgMusicWidget" || item.item_type == "publishTopicWidget" || item.item_type == "suspendWidget";
+}
+
+function getGoodsLink(item) {
+    if (item.goods_type && item.goods_type == 3) {
+        return "/pages/yuyue/yydetail";
+    } else if (item.goodsType && item.goodsType == 3) {
+        return "/pages/yuyue/yydetail";
+    } else {
+        return "/pages/detail/detail";
+    }
+}
+
+function htmlEncode(e) {
+    var reg = getRegExp("\n", "g");
+    if (e) {
+        return e.replace(reg, "<br />");
+    } else {
+        return "";
+    }
+}
+
+// 时间戳转换成 yyyy-MM-dd HH:mm:ss
+function filterTimestamp(value) {
+    // 有些特殊 不能使用 new Date()
+    var time = getDate(value);
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date = time.getDate();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    var second = time.getSeconds();
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+    return year + "." + month + "." + date + " " + hour + ":" + minute + ":" + second;
+}
+// 时间戳转换成MM-dd HH:mm
+function filterTime(value) {
+  // 有些特殊 不能使用 new Date()
+  var time = getDate(value);
+  var year = time.getFullYear();
+  var month = time.getMonth() + 1;
+  var date = time.getDate();
+  var hour = time.getHours();
+  var minute = time.getMinutes();
+  var second = time.getSeconds();
+  month = month < 10 ? "0" + month : month;
+  date = date < 10 ? "0" + date : date;
+  hour = hour < 10 ? "0" + hour : hour;
+  minute = minute < 10 ? "0" + minute : minute;
+  second = second < 10 ? "0" + second : second;
+  return + month + "-" + date + " " + hour + ":" + minute;
+}
+
+function filterTimestampYMD(value, type) {
+    // 有些特殊 不能使用 new Date()
+    var time = getDate(value);
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date = time.getDate();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    var second = time.getSeconds();
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+    if (type) {
+        return year + "." + month + "." + date;
+    } else {
+        return year + "-" + month + "-" + date;
+    }
+
+}
+
+function div10(dis) {
+    return parseFloat(dis / 10).toFixed(1);
+}
+
+function splitIndex(source) {
+    if (null == source) {
+        return [];
+    }
+    return source.split(',');
+}
+
+module.exports = {
+    filterTimestamp: filterTimestamp,
+    filterTime: filterTime,
+    fToY: fenToYuan,
+    randA: randAvator,
+    integralSource: integralSource,
+    mToKm: mToKm,
+    getGoodsLink: getGoodsLink,
+    specUrl: specUrl,
+    getInderectValue: getInderectValue,
+    getDirectValue: getDirectValue,
+    getPayType: getPayType,
+    isFixedMenu: isFixedMenu,
+    getCardStu: getCardStu,
+    htmlEncode: htmlEncode,
+    getTopPVal: getTopPVal,
+    div10: div10,
+    timeYYMMDD: filterTimestampYMD,
+    splitIndex: splitIndex
+};

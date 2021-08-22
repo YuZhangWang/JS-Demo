@@ -1,0 +1,141 @@
+<!--pages/fenxiao/become.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="applyPage">
+  <view class="topBannerWrap">
+    <image wx:if="{{pageConfig}}" src="{{pageConfig.custBgDistri}}" class="topBanner"></image>
+    <image class="topBanner" src="{{fxStaticResPath}}banner.jpg" wx:else></image>
+  </view>
+  <view style="background: #fff;">
+    <view class="rowComm" wx:if="{{pageConfig}}">
+        {{pageConfig.applyLabel}}
+    </view>
+    <view class="rowComm" wx:else>
+        申请成为代言人享更多优惠
+    </view>
+  </view>
+  <view style="background: #fff;" wx:if="{{hasThreshold}}">
+    <view class="rowComm" style="display:flex;justify-content:space-between;">
+        <text>申请条件：单笔订单购买满{{app.globalData.currencySymbol}}{{mTool.fToY(thresholdMoney)}}</text>
+        <view wx:if="{{threshol_req}}" style="display:flex;align-items:center;"><view class="zan-icon zan-icon-checked" style="color:#f44;font-size:40rpx;margin-right:5rpx;" ></view><text>已满足</text></view>
+
+        <text wx:else>未满足</text>
+    </view>
+  </view>
+    <view class='reviewTips' wx:if="{{!isDistributor && (state ==0 || state == -1)}}">
+      <image src='{{staticResPath}}/image/admin/review/reviewing.png' class='reviewSign' wx:if="{{state == 0}}"></image>
+      <text class='reviewText' wx:if="{{state == 0}}">您的申请已收到，我们正在加急处理中。。。</text>
+      <image src='{{staticResPath}}/image/admin/review/reviewfail.png' class='reviewSign' wx:if="{{state == -1}}"></image>
+      <text class='reviewText bold' wx:if="{{state == -1}}">审核未通过！</text>
+      <text class='remark' wx:if="{{(state == -1) && applyRemark}}">未通过原因：{{applyRemark}}</text>
+      <text class='reApply' bindtap='reApply' wx:if="{{state == -1}}">重新申请></text>
+    <view>
+
+    </view>
+  </view>
+  <form  wx:if="{{!isDistributor && !state && state != -1 && state != 0}}">
+    <view class="applyPageInfo">
+
+      <view class="rowComm" wx:if="{{showInput}}" wx:for="{{formlist}}" wx:for-item="item" wx:for-index='index'>
+        <text wx:if="{{item.type!='img'}}" class="rowCommTxt">{{item.title}}<text style="color:red;">*</text></text>
+        <view wx:if="{{item.type!='img'}}" class="rowCommData" style="position:relative;">
+          <input name="tel{{index+1}}" bindinput="bindTextInput" id='{{index}}' value='{{item.content}}' placeholder="请填写{{item.title}}" maxlength='40'></input>
+          <block wx:if="{{item.vcode && has_get_vcode != true}}">
+            <view bindtap="tapGetVcode" class="main-color-bg" data-index="{{index}}" style="position: absolute;top: 0;right: 0;z-index:99;padding: 10rpx 28rpx;border-radius: 10rpx;margin-left: 8rpx;{{app.globalData.customStyleBg}}">获取验证码</view>
+          </block>
+          <block wx:if="{{item.vcode && has_get_vcode == true}}">
+            <view class="main-color-bg" style="position: absolute;top: 0;right: 0;padding: 10rpx 28rpx;border-radius: 10rpx;z-index:99;margin-left: 8rpx;{{app.globalData.customStyleBg}}">{{vcodeGetTime||10}}s后重新获取</view>
+          </block>
+        </view>
+        <view style='display:flex;display:-webkit-flex;' wx:if="{{item.type=='img'}}">
+          <view style='line-height:120rpx;width:180rpx;'>{{item.title}}<text style="color:red;">*</text></view>
+            <view class="becomeImg-item" wx:if="{{item.content && item.content != ''}}">
+                <image class='becomeImg' mode="aspectFill" src="{{userImagePath+item.content}}"></image>
+                <view class="becomeImg-item-delete" bindtap='handleDelImg' data-index='{{index}}' index='{{index}}'>×</view>
+            </view>
+            <view class='uploadImg' wx:if="{{item.content==''}}" data-index='{{index}}' bindtap='handUploadImg'>
+          </view>
+        </view>
+
+      </view>
+
+      <view class="rowComm">
+        <view class="zan-icon zan-icon-checked main-color agreeIco" style="{{app.globalData.customStyleColor}}" wx:if="{{1 == agreeCheck}}" bindtap='agreeChange' data-sta="0"></view>
+        <view bindtap='agreeChange' data-sta="1" class="zan-icon zan-icon-check agreeIco" style="color:#ccc;" wx:elif="{{0 == agreeCheck}}"></view>
+        <text>我已经阅读并了解</text>
+        <text style="color:#115592;" bindtap="togglePopup">【申请协议】</text>
+      </view>
+
+
+    </view>
+    <view>
+      <button class="btnBecome main-color-bg" style="{{app.globalData.customStyleBg}}"  bindtap="formSubmit" wx:if="{{pageConfig}}">{{pageConfig.applyBtn}}</button>
+      <button class="btnBecome main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="formSubmit"    wx:else>申请成为代言人</button>
+    </view>
+  </form>
+
+  <view class="alreadyApply"  wx:if="{{applyStatus[1]}}">
+    <image src="{{fxStaticResPath}}rl1.png"></image>
+    <text>您的申请已经收到，我们正在加急处理中...</text>
+  </view>
+
+  <view class="applyIng"  wx:if="{{applyStatus[2]}}">
+    <image src="{{fxStaticResPath}}ing1.png"></image>
+    <view><text>您的申请已经收到，我们正在加急处理中...</text></view>
+  </view>
+
+  <view class="applyFail"  wx:if="{{applyStatus[3]}}">
+
+    <text class="applyTips">审核未通过</text>
+    <view style="width:100%;">未通过原因：属个人未开发类目，请选择企业主体小程序，建议优化展示内容，并去掉商家自营模版</view>
+    <text style="color:#0468FE;">重新申请></text>
+  </view>
+
+  <view class="privilege" wx:if="{{null == pageConfig || 'l0' == pageConfig.defLayout}}">
+    <view class="rowComm">
+      <block wx:if="{{pageConfig}}">
+        {{pageConfig.pLabel}}
+      </block>
+      <block wx:else>
+        代言人特权
+      </block>
+
+    </view>
+    <view class="rowComm" style="padding:10rpx 0;">
+        <image class="ico" src="{{fxStaticResPath}}rl1.png"></image>
+        <view class="rowCommData">
+          <view style="font-weight:bold;">
+            <block wx:if="{{pageConfig}}">
+              {{pageConfig.pDefTxt1}}
+            </block>
+            <block wx:else>
+              销售拿佣金
+            </block>
+
+          </view>
+          <view style="font-size:28rpx;color:#999;">
+            <block wx:if="{{pageConfig}}">
+              {{pageConfig.pDefTxt2}}
+            </block>
+            <block wx:else>
+              成为代言人后卖出商品，您可以获得丰厚奖励
+            </block>
+          </view>
+        </view>
+      </view>
+  </view>
+  <view wx:else>
+    <image class='custImg' mode='widthFix' src='{{userImagePath + pageConfig.custImg}}'></image>
+  </view>
+</view>
+<view class="mPopup" bindtap="togglePopup" hidden="{{!showPopup}}">
+    <view class="mPopupContainer">
+      <view style="margin-bottom:20rpx;">{{pageConfig.applyAgreementTitle ? pageConfig.applyAgreementTitle : applyAgreementTitle}}：</view>
+      <view>
+        {{pageConfig.applyAgreementContent ? pageConfig.applyAgreementContent : applyAgreementContent}}
+      </view>
+    </view>
+</view>
+<include src="/pages/template/copyright.wxml" />
+<include src="/pages/template/authModal.wxml"/>
+</view>

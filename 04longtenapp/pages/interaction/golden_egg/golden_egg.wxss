@@ -1,0 +1,700 @@
+@import "../inteCommon/common.wxss";
+.start_page .rule_tag {
+    width: 194rpx;
+    right: 26rpx;
+    top: 24rpx;
+}
+
+.start_page .title_img{
+  width: 680rpx;
+  top: 80rpx;
+}
+
+.start_page .start_btn{
+  width: 530rpx;
+  top: 942rpx;
+}
+.maxPrize{
+  font-weight: 700;
+}
+
+.game_div{
+	position: relative;
+	width: 100%;
+	height: 1406.1rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/golden_eggs/bg2.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.gd_1{
+	line-height: 70.3rpx;
+	position: absolute;
+    width: 500rpx;
+    height: 140.61rpx;
+    top: 175.76rpx;
+    left: 126rpx;
+	text-align: center;
+	font-size: 42.18rpx;
+	color: #F2EDDD;
+}
+
+.say_box{
+	box-sizing: border-box;
+    padding: 9.37rpx;
+	position: absolute;
+	top: 374.96rpx;
+	left: 234.35rpx;
+	width: 234.35rpx;
+    height: 103.11rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/golden_eggs/image_6.png) no-repeat;
+	background-size: 100%;
+	font-size: 25.78rpx;
+	text-align: center;
+	color: #701317;
+}
+
+#hammer{
+	z-index: 12;
+	position: absolute;
+	top: 351.52rpx;
+	left: 117.17rpx;
+	width: 117.17rpx;
+}
+
+.gd_tip{
+	position: absolute;
+    top: 1078.01rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    padding: 14.06rpx 46.87rpx;
+    font-size: 32.81rpx;
+    text-align: center;
+    color: white;
+    background-color: #E84444;
+    border-radius: 46.87rpx;
+    white-space:nowrap;  
+}
+
+.rule_btn{
+	z-index: 10;
+	position: absolute;
+	top: 23.43rpx;
+	right: 23.43rpx;
+	width: 234.35rpx;
+}
+
+.den{
+	z-index: 10;
+	position: absolute;
+	top: 4.69rpx;
+	width: 562.44rpx;
+	pointer-events:none;
+}
+
+.den1{
+	right: 9.37rpx;
+}
+
+.den2{
+	left: 9.37rpx;
+}
+
+.win_div{
+	position: relative;
+	width: 100%;
+    height: 1406.1rpx;
+    background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/golden_eggs/bg3.jpg) no-repeat;
+    background-size: 100%;
+}
+
+.wd_1{
+    position: absolute;
+    top: 173.42rpx;
+    left: 149.98rpx;
+    width: 421.83rpx;
+    height: 187.48rpx;
+    font-size: 28.12rpx;
+    color: #E30B0A;
+    text-align: center;
+}
+
+.wd1_1{
+	font-size: 35.15rpx;
+}
+
+.wd_2{
+    position: absolute;
+    top: 365.59rpx;
+    right: 135.92rpx;
+    width: 187.48rpx;
+    height: 70.3rpx;
+    font-size: 23.43rpx;
+    text-align: center;
+    color: #701317;
+}
+
+.btns{
+	z-index: 10;
+  position: absolute;
+  top: 913.96rpx;
+  left: 210.91rpx;
+  width: 328.09rpx;
+}
+
+.fail_div{
+	position: relative;
+	width: 100%;
+    height: 1406.1rpx;
+    background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/golden_eggs/bg4.jpg) no-repeat;
+    background-size: 100%;
+}
+
+/* 排行榜 */
+#rankBox{
+    position: relative;
+    margin: -140.61rpx auto 46.87rpx auto;
+    width: 656.18rpx;
+    min-height: 257.78rpx;
+    border: 4.69rpx solid white;
+    background-color: white;
+    padding: 23.43rpx;
+    box-sizing: border-box;
+}
+
+.rb_head{
+	width: 468.7rpx;
+    display: block;
+    margin: 0 auto;
+    margin-top: -117.17rpx;
+    padding: 23.43rpx;
+    border-bottom: 1px solid white;
+    font-size: 37.5rpx;
+    text-align: center;
+    color: white;
+}
+
+#noMessage{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+	color: #E94E5F;
+    font-size: 32.81rpx;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+}
+
+#friendList{
+    font-size: 0;
+}
+
+#friendList view{
+    padding: 23.43rpx 0;
+    border-bottom: 1px solid #ECC285;
+}
+
+.fl_name{
+    max-width: 140.61rpx;
+    font-size: 28.12rpx;
+    margin-right: 14.06rpx;
+}
+
+.fl_label{
+    display: inline-block;
+    width: 93.74rpx;
+    height: 93.74rpx;
+    vertical-align: middle;
+}
+
+.fl_labeltrue{
+    background-image: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/golden_eggs/image_2.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.fl_labelfalse{
+    background-image: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/golden_eggs/image_3.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.fl_mDiv{
+    display: inline-block;
+    padding: 0 23.4rpx;
+    width: 351.52rpx;
+    font-size: 23.43rpx;
+    color: #CECDD2;
+    vertical-align: middle;
+}
+
+.fl_name, .fl_date{
+    max-width: 281.22rpx;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fl_headImg{
+    border: 2px solid white;
+    width: 93.74rpx;
+    height: 93.74rpx;
+    object-fit: cover;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+/* 排行榜样式2 */
+.fl_head{
+	display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.fl_mDiv{
+	font-size: 28.12rpx;
+    width: 328.09rpx;
+    color: #E94E5F;
+}
+
+.fl_name{
+    width: 131.24rpx;
+    margin: 0;
+    display: block;
+    color: #E94E5F;
+    font-weight: normal;
+    font-size: 23.43rpx;
+}
+
+/* 转蛋 */
+
+/* 舞台 */
+.stage{ 
+	position: relative; 
+	left:0;
+	top: 585.88rpx; 
+
+ 	perspective: 1171.75rpx;
+	-webkit-perspective: 1171.75rpx;
+	-moz-perspective: 1171.75rpx;
+	-ms-perspective: 1171.75rpx;
+	-o-perspective: 1171.75rpx; 
+	perspective-origin-y: -46.87rpx;
+	-webkit-perspective-origin-y: -46.87rpx;
+	-ms-perspective-origin-y: -46.87rpx;
+	-moz-perspective-origin-y: -46.87rpx;
+	-o-perspective-origin-y: -46.87rpx;
+}
+
+.container{
+/* 	transform: rotateY(-17.5deg);	 */
+	position: absolute;
+	top:0;
+	left: 0;
+	transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+}
+
+.container view.li{
+	width: 117.17rpx;
+	position: absolute;
+	top: 0;
+	left: 50%;	
+	margin-left: -58.59rpx;
+	transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+}
+
+.container view.li image{
+	width: 100%;	
+	margin-left: 234.35rpx;
+}
+
+/* 静止 */
+.container view:nth-child(1){
+	
+/* 	height: 46.87rpx;
+	background:rgba(0,0,0,0.7); */
+	
+	transform: rotateY(-90deg);	
+	-webkit-transform: rotateY(-90deg);	
+	-ms-transform: rotateY(-90deg);	
+	-moz-transform: rotateY(-90deg);	
+	-o-transform: rotateY(-90deg);	 
+}
+.container view:nth-child(2){
+	transform: rotateY(-18deg);
+	-webkit-transform: rotateY(-18deg);	
+	-ms-transform: rotateY(-18deg);	
+	-moz-transform: rotateY(-18deg);	
+	-o-transform: rotateY(-18deg);	
+}
+.container view:nth-child(3){
+	transform: rotateY(54deg);
+	-webkit-transform: rotateY(54deg);
+	-moz-transform: rotateY(54deg);
+	-o-transform: rotateY(54deg);
+	-ms-transform: rotateY(54deg);
+}
+.container view:nth-child(4){
+	transform: rotateY(126deg);
+	-webkit-transform: rotateY(126deg);
+	-o-transform: rotateY(126deg);
+	-ms-transform: rotateY(126deg);
+	-moz-transform: rotateY(126deg);
+}
+.container view:nth-child(5){
+	transform: rotateY(198deg);
+	-webkit-transform: rotateY(198deg);
+	-o-transform: rotateY(198deg);
+	-ms-transform: rotateY(198deg);
+	-moz-transform: rotateY(198deg);
+}
+
+.container view:nth-child(1) image{
+	transform: rotateY(90deg);
+	-webkit-transform: rotateY(90deg);
+	-o-transform: rotateY(90deg);
+	-ms-transform: rotateY(90deg);
+	-moz-transform: rotateY(90deg);
+}
+.container view:nth-child(2) image{
+	transform: rotateY(18deg);
+	-webkit-transform: rotateY(18deg);
+	-o-transform: rotateY(18deg);
+	-ms-transform: rotateY(18deg);
+	-moz-transform: rotateY(18deg);
+}
+.container view:nth-child(3) image{
+	transform: rotateY(-54deg);
+	-webkit-transform: rotateY(-54deg);
+	-o-transform: rotateY(-54deg);
+	-ms-transform: rotateY(-54deg);
+	-moz-transform: rotateY(-54deg);
+}
+.container view:nth-child(4) image{
+	transform: rotateY(-126deg);
+	-webkit-transform: rotateY(-126deg);
+	-o-transform: rotateY(-126deg);
+	-ms-transform: rotateY(-126deg);
+	-moz-transform: rotateY(-126deg);
+}
+.container view:nth-child(5) image{
+	transform: rotateY(-198deg);
+	-webkit-transform: rotateY(-198deg);
+	-o-transform: rotateY(-198deg);
+	-ms-transform: rotateY(-198deg);
+	-moz-transform: rotateY(-198deg);
+}
+
+/* 动 */
+.container view.liRun:nth-child(1){	
+	-webkit-animation: animation1_1 1s 0s 5 linear both !important;	
+	-moz-animation: animation1_1 1s 0s 5 linear both !important;	
+	-ms-animation: animation1_1 1s 0s 5 linear both !important;	
+	-o-animation: animation1_1 1s 0s 5 linear both !important;	
+	animation: animation1_1 1s 0s 5 linear both !important;	
+} 
+.container view.liRun:nth-child(2){	
+	-webkit-animation: animation1_2 1s 0s 5 linear both !important;	
+	-moz-animation: animation1_2 1s 0s 5 linear both !important;	
+	-ms-animation: animation1_2 1s 0s 5 linear both !important;	
+	-o-animation: animation1_2 1s 0s 5 linear both !important;	
+	animation: animation1_2 1s 0s 5 linear both !important;	
+}
+.container view.liRun:nth-child(3){
+	-webkit-animation: animation1_3 1s 0s 5 linear both !important; 
+	-moz-animation: animation1_3 1s 0s 5 linear both !important;
+	-ms-animation: animation1_3 1s 0s 5 linear both !important;
+	-o-animation: animation1_3 1s 0s 5 linear both !important;
+	animation: animation1_3 1s 0s 5 linear both !important;
+}	
+.container view.liRun:nth-child(4){			
+	-webkit-animation: animation1_4 1s 0s 5 linear both !important; 
+	-moz-animation: animation1_4 1s 0s 5 linear both !important; 
+	-ms-animation: animation1_4 1s 0s 5 linear both !important; 
+	-o-animation: animation1_4 1s 0s 5 linear both !important; 
+	animation: animation1_4 1s 0s 5 linear both !important; 
+}	
+.container view.liRun:nth-child(5){			
+	-webkit-animation: animation1_5 1s 0s 5 linear both !important;
+	-moz-animation: animation1_5 1s 0s 5 linear both !important;
+	-ms-animation: animation1_5 1s 0s 5 linear both !important;
+	-o-animation: animation1_5 1s 0s 5 linear both !important;
+	animation: animation1_5 1s 0s 5 linear both !important;
+} 
+
+.container view.liRun:nth-child(1) image{
+	-webkit-animation: animation2_1 1s 0s 5 linear both;
+	-moz-animation: animation2_1 1s 0s 5 linear both;	
+	-ms-animation: animation2_1 1s 0s 5 linear both;
+	-o-animation: animation2_1 1s 0s 5 linear both;
+	animation: animation2_1 1s 0s 5 linear both;
+}
+.container view.liRun:nth-child(2) image{
+	-webkit-animation: animation2_2 1s 0s 5 linear both;	
+	-ms-animation: animation2_2 1s 0s 5 linear both;	
+	-moz-animation: animation2_2 1s 0s 5 linear both;	
+	-o-animation: animation2_2 1s 0s 5 linear both;	
+	animation: animation2_2 1s 0s 5 linear both;	
+}
+.container view.liRun:nth-child(3) image{
+	-webkit-animation: animation2_3 1s 0s 5 linear both;	
+	-moz-animation: animation2_3 1s 0s 5 linear both;
+	-ms-animation: animation2_3 1s 0s 5 linear both;
+	-o-animation: animation2_3 1s 0s 5 linear both;
+	animation: animation2_3 1s 0s 5 linear both;
+}
+.container view.liRun:nth-child(4) image{
+	-webkit-animation: animation2_4 1s 0s 5 linear both;	
+	-moz-animation: animation2_4 1s 0s 5 linear both;	
+	-ms-animation: animation2_4 1s 0s 5 linear both;	
+	-o-animation: animation2_4 1s 0s 5 linear both;	
+	animation: animation2_4 1s 0s 5 linear both;	
+}
+.container view.liRun:nth-child(5) image{
+	-webkit-animation: animation2_5 1s 0s 5 linear both;	
+	-moz-animation: animation2_5 1s 0s 5 linear both;	
+	-ms-animation: animation2_5 1s 0s 5 linear both;	
+	-o-animation: animation2_5 1s 0s 5 linear both;	
+	animation: animation2_5 1s 0s 5 linear both;	
+}
+
+@-webkit-keyframes animation1_1 {
+	0% {
+		-webkit-transform: rotateY(-90deg);
+		-moz-transform: rotateY(-90deg);
+		-ms-transform: rotateY(-90deg);
+		-o-transform: rotateY(-90deg);
+		transform: rotateY(-90deg);	
+	}
+	100% {
+		-webkit-transform: rotateY(270deg);
+		-moz-transform: rotateY(270deg);
+		-ms-transform: rotateY(270deg);
+		-o-transform: rotateY(270deg);
+		transform: rotateY(270deg);
+	}
+}
+@-webkit-keyframes animation1_2 {
+	0% {
+		-webkit-transform: rotateY(-18deg);
+		-ms-transform: rotateY(-18deg);
+		-moz-transform: rotateY(-18deg);
+		-o-transform: rotateY(-18deg);
+		transform: rotateY(-18deg);
+	}
+	100% {
+		-webkit-transform: rotateY(342deg);
+		-moz-transform: rotateY(342deg);
+		-ms-transform: rotateY(342deg);
+		-o-transform: rotateY(342deg);
+		transform: rotateY(342deg);
+	}
+}
+@-webkit-keyframes animation1_3 {
+	0% {
+		-webkit-transform: rotateY(54deg);
+		-moz-transform: rotateY(54deg);
+		-o-transform: rotateY(54deg);
+		-ms-transform: rotateY(54deg);
+		transform: rotateY(54deg);
+	}
+	100% {
+		-webkit-transform: rotateY(414deg);
+	}
+}
+@-webkit-keyframes animation1_4 {
+	0% {
+		-webkit-transform: rotateY(126deg);
+	}
+	100% {
+		-webkit-transform: rotateY(486deg);
+	}
+}
+@-webkit-keyframes animation1_5 {
+	0% {
+		-webkit-transform: rotateY(198deg);
+	}
+	100% {
+		-webkit-transform: rotateY(558deg);
+	}
+}
+
+@-webkit-keyframes animation2_1 {
+	0% {
+		-webkit-transform: rotateY(90deg);
+	}			
+	100% {
+		-webkit-transform: rotateY(-270deg);
+	}
+}
+@-webkit-keyframes animation2_2 {
+	0% {
+		-webkit-transform: rotateY(18deg);
+	}			
+	100% {
+		-webkit-transform: rotateY(-342deg);
+	}
+}
+@-webkit-keyframes animation2_3 {
+	0% {
+		-webkit-transform: rotateY(-54deg);
+	}
+	100% {
+		-webkit-transform: rotateY(-414deg);
+	}
+}
+@-webkit-keyframes animation2_4 {
+	0% {
+		-webkit-transform: rotateY(-126deg);
+	}
+	100% {
+		-webkit-transform: rotateY(-486deg);
+	}
+}
+@-webkit-keyframes animation2_5 {
+	0% {
+		-webkit-transform: rotateY(-198deg);
+	}
+	100% {
+		-webkit-transform: rotateY(-558deg);
+	}
+}
+
+/*晃动*/
+@-webkit-keyframes swing_1 {
+	0%,100% {
+		-webkit-transform: rotateZ(0deg) rotateY(-90deg);
+	}
+	10%,30%,50%,70%,90%{
+		-webkit-transform: rotateZ(-5deg) rotateY(-90deg);
+	}
+	20%,40%,60%,80%{
+		-webkit-transform: rotateZ(5deg) rotateY(-90deg);
+	}
+}
+@-webkit-keyframes swing_2 {
+	0%,100% {
+		-webkit-transform: rotateY(0deg) rotateY(-18deg);
+	}
+	10%,30%,50%,70%,90%{
+		-webkit-transform: rotateY(-5deg) rotateY(-18deg);
+	}
+	20%,40%,60%,80%{
+		-webkit-transform: rotateY(5deg) rotateY(-18deg);
+	}
+}
+@-webkit-keyframes swing_3 {
+	0%,100% {
+		-webkit-transform: rotateX(0deg) rotateY(54deg);
+	}
+	10%,30%,50%,70%,90%{
+		-webkit-transform: rotateX(-5deg) rotateY(54deg);
+	}
+	20%,40%,60%,80%{
+		-webkit-transform: rotateX(5deg) rotateY(54deg);
+	}
+}
+@-webkit-keyframes swing_4 {
+	0%,100% {
+		-webkit-transform: rotateX(0deg) rotateY(126deg);
+	}
+	10%,30%,50%,70%,90%{
+		-webkit-transform: rotateX(-5deg) rotateY(126deg);
+	}
+	20%,40%,60%,80%{
+		-webkit-transform: rotateX(5deg) rotateY(126deg);
+	}
+}
+@-webkit-keyframes swing_5 {
+	0%,100% {
+		-webkit-transform: rotateY(0deg) rotateY(198deg);
+	}
+	10%,30%,50%,70%,90%{
+		-webkit-transform: rotateY(-5deg) rotateY(198deg);
+	}
+	20%,40%,60%,80%{
+		-webkit-transform: rotateY(5deg) rotateY(198deg);
+	}
+}
+
+/* 锤子动画 */
+@-webkit-keyframes hammer_1 {
+	0% {
+		-webkit-transform: rotateZ(0deg);
+	}
+	30%,90%{
+		-webkit-transform: rotateZ(-10deg);
+	}
+	60%{
+		-webkit-transform: rotateZ(10deg);
+	}
+	100%{
+		-webkit-transform: rotateZ(30deg);
+	}
+}
+
+/*动画暂停*/
+.container view.liRun.pause{
+	animation-play-state: paused !important;
+	-webkit-animation-play-state: paused !important;
+	-moz-animation-play-state: paused !important;
+	-ms-animation-play-state: paused !important;
+	animation-play-state: paused !important;
+}
+.container view.liRun image.pause{
+	animation-play-state: paused !important;
+	-webkit-animation-play-state: paused !important;
+	-moz-animation-play-state: paused !important;
+	-ms-animation-play-state: paused !important;
+	animation-play-state: paused !important;
+}
+
+/*锤子动画*/
+.hammer_run{
+	-webkit-animation: hammer_1 0.5s 0s ease-in both;
+}
+
+
+/*提示语位置*/
+.say_box_1{
+	top: 492.13rpx;
+	left: 140.61rpx;
+}
+.say_box_2{
+	top: 468.7rpx;
+	left: 421.83rpx;
+}
+.say_box_3{
+	top: 468.7rpx;
+	left: 281.22rpx;
+}
+.say_box_4{
+	top: 468.7rpx;
+	left: 46.87rpx;
+}
+.say_box_5{
+	top: 492.13rpx;
+	left: -46.87rpx;
+}
+
+/*蛋的表情*/
+.container view .egg_face{
+	position: absolute;
+	top: 37.5rpx;
+	left: 0.0rpx;
+	width: 70.3rpx;
+	margin-left: 281.22rpx;
+	pointer-events: none;
+}

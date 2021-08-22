@@ -1,0 +1,65 @@
+/* pages/mult/multlist.wxss */
+
+.multShopCont .multAroundAddr .multAroundAddrWrap{
+   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.detailAddr{
+  /* width:270rpx; */
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  word-break:keep-all;
+  color: #fff;
+}
+.multShopCont .multAroundAddr{
+  padding: 20rpx;
+}
+.multAroundAddr form input{
+ background: #FFEAE2;
+ border-radius: 40rpx;
+ padding-left: 50rpx;
+ margin-left: 10rpx;
+}
+.shop_closed{
+  font-size: 22rpx;
+  color: white;
+  background: #8f8f8f;
+  display: inline-block;
+  padding: 0rpx 15rpx;
+  border-radius: 15px;
+  margin-left: 10px;
+
+}
+.formWrap{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.multShopCont .multAroundAddr .searchIco{
+  position: absolute;
+  left: 25rpx;
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.multShopCont .list-item .info-cont .shopName{
+  font-size: 38rpx;
+  line-height: 48rpx;
+  margin-bottom: 20rpx;
+  color: #333;
+  padding-top: 8rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+}
+.multShopCont .list-item .info-cont .shopDesc, .multShopCont .list-item .info-cont .monthSold{
+  font-size:26rpx;
+  line-height:36rpx;
+  color:#8C8C8C;
+
+}
+/* #F98112 #F94810 */

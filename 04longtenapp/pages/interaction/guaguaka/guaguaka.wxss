@@ -1,0 +1,178 @@
+@import "../inteCommon/common.wxss";
+page{
+  background-color: #3a0302;
+}
+.wrapper{
+	width: 640rpx;
+	margin: 0 auto;
+	position: relative;
+	background: url("http://res.xcx.weijuju.com/image/mobile/aty/guaguaka/page_bg.jpg") repeat-y;
+	padding-bottom: 40rpx;
+}
+
+.ka_wrapper {
+    background: url(http://res.xcx.weijuju.com/image/mobile/aty/guaguaka/bg3.jpg) no-repeat center top;
+    background-size: 640rpx auto;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 268rpx;
+}
+
+.cover {
+    width: 640rpx;
+    height: 448rpx;
+    position: relative;
+    background: url(http://res.xcx.weijuju.com/image/mobile/aty/guaguaka/gua2.png) no-repeat center top;
+    background-size: 100% auto;
+}
+
+.changce {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    top: 4rpx;
+    left: 20rpx;
+    font-size: 24rpx;
+    line-height: 40px;
+}
+
+.changce .em {
+    background-color: #000;
+    color: #ffb400;
+    padding: 0px 20rpx;
+    margin: 0px 6rpx;
+}
+
+.view_rule {
+    position: absolute;
+    height: 30px;
+    top: 4rpx;
+    right: 40rpx;
+    font-size: 24rpx;
+    line-height: 80rpx;
+    text-decoration: underline;
+    color: #fff;
+}
+
+.prizehref {
+    color: #ffb400;
+    position: absolute;
+    height: 60rpx;
+    bottom: 8rpx;
+    left: 50%;
+    font-size: 24rpx;
+    line-height: 80rpx;
+    transform: translateX(-50%)
+}
+
+#scratchpad, #prize {
+    position: absolute;
+    width: 604rpx;
+    height: 306rpx;
+    top: 76rpx;
+    left: 18rpx;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40rpx;
+    line-height: 80rpx;
+}
+.gua_info {
+    margin-top: 50rpx;
+    color: #7b7b7b;
+    line-height: 50rpx;
+    font-size: 34rpx;
+}
+.zhongjiang {
+	color: #ef000e;
+	font-size: 46rpx;
+}
+.next_btn {
+    display: block;
+    width: 130rpx;
+    height: 54rpx;
+    line-height: 54rpx;
+    text-align: center;
+    font-weight: 100;
+    font-size: 30rpx;
+    color: white;
+    background: #da4656;
+    margin: 30rpx auto;
+    padding: 0px 30rpx;
+}
+.shouqiMenu{
+  background-color: #6e0003;
+  margin: 0 auto;
+  width: 100%;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  height: 27px;
+  line-height: 27px;
+}
+
+.prize_notice{
+	width: 640rpx;
+	background-color: #260202;
+	color: white;
+}
+
+.prize_notice .ul {
+	border-top: 1px solid #450909;
+}
+.prize_notice .li {
+  position: relative;
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 24rpx;
+  border-bottom: 1px solid #450909;
+  padding: 12rpx 0 10rpx 96rpx;
+}
+.prize_notice .li image
+{
+	display: block;
+	width: 70rpx;
+	height: 70rpx;
+	position: absolute;
+	left: 18rpx;
+	top: 26rpx;
+	border-radius: 70rpx;
+	-webkit-border-radius: 70rpx;
+}
+
+.zhuli-info .em {
+	color: #ffb400;
+}
+.prize_notice .li .prize_name{
+	color: #fdcc0d;
+}
+.showMore {
+	text-align: center;
+	font-size: 24rpx;
+	line-height: 52rpx;
+}
+
+.zhuli_name {
+	color: #fdcc0d;
+	text-overflow: ellipsis;
+	max-width: 160px;
+	overflow: hidden;
+	display: inline-block;
+	white-space: nowrap;
+	vertical-align: middle;
+	margin-top: -6rpx;
+	padding: 0px 6rpx;
+	font-size: 28rpx;
+}
+.view_myaward{
+  color: #0096e2;
+	text-decoration: underline;
+}
+.zhuli_count {
+	color: #fdcc0d;
+	position: absolute;
+	top: 8rpx;
+	right: 24rpx;
+	font-size: 32rpx;
+}
+
+.zhuli_count .em {
+	font-size: 24rpx;
+}

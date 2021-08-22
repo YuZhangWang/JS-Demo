@@ -1,0 +1,34 @@
+<!-- 特权 -->
+<view class="page-panel">
+    <view class="page-header" style="background-image: url('{{staticResPath}}/grade-header.png')">
+        <text class="image-title">等级特权</text>
+    </view>
+    <view class="page-body">
+        <view class="privilege-item">
+            <view class="column-head">等级</view>
+            <view class="column-head">
+                <text>直接奖励</text>
+                <!--<text>直接佣金比例</text>-->
+            </view>
+            <view class="column-head">
+                <text>间接奖励</text>
+                <!--<text>间接佣金比例</text>-->
+            </view>
+        </view>
+        <view class="privilege-item" wx:for="{{gradeList}}">
+            <view class="column-body column-level ">
+                <text class="level-value privilege-value">V{{item.levelNum}}</text>
+                <text class="level-name privilege-name">{{item.levelName}}</text>
+            </view>
+            <view class="column-body direct-th">
+                {{index ? '+':''}}{{item.additionalDirectValue ? item.additionalDirectValue + '%':'无'}}
+            </view>
+            <view class="column-head indirect-th">
+                {{index ? '+':''}}{{item.additionalIndirectValue ? item.additionalIndirectValue + '%':'无'}}
+            </view>
+        </view>
+    </view>
+    <view class="page-footer">
+        <text>·直接/间接奖励：</text>即推广员在原来分佣的基础上，每次分佣可额外获得直接/间接佣金=结算金额*额外直接/间接佣金比例。
+    </view>
+</view>

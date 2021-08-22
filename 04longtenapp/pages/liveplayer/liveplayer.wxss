@@ -1,0 +1,11 @@
+/* pages/liveplayer/liveplayer.wxss */
+page{
+  background: #f5f6f7;
+}
+.notdata{
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+  padding: 30rpx;
+  margin-top: 50px;
+}

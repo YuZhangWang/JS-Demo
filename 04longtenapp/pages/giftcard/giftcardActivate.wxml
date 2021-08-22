@@ -1,0 +1,124 @@
+<!--pages/giftcard//giftcardActivate.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<import src="./giftcardModal.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="view">
+    <view class="cardCntArea">
+      <view class="cardRegion" style="background-image: url({{config.coverShow}});background-size:100% 100%;height:300rpx">
+
+      </view>
+
+      <block>
+        <view class="gift-title">{{config.title}}</view>
+        <!-- <view class="gift-price-wrap">
+          <view class="gift-price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.saleMoney)}}</view>
+          <view class="gift-count">库存：{{config.totalCount}}</view>
+        </view> -->
+        <view wx:if="{{config.type == 2}}" style="margin-bottom:20rpx;" class="gift-card-item">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>面值</view>
+          <view class="item-content">总价值<text class="main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.money)}}</text>，{{config.getUseLimitTxt}}</view>
+
+        </view>
+        <view wx:if="{{config.type == 1}}" class="gift-card-item">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>可兑换商品</view>
+          <view class="giftcard-goods">
+            <image src="{{config.bizMsg}}" style="width:50px;height: 50px;margin-right: 10px;border-radius: 4px;"></image>
+            <view class="gift-card-goods">
+              <view>{{config.bizName || '商品名称'}}</view>
+              <span style="font-size: 12px" class="main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price)}}</span>
+
+            </view>
+          </view>
+
+        </view>
+        <!-- <view class="gift-card-item" style="margin-bottom: 10px;">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>使用期限</view>
+          <view class="item-content">{{config.getTimeLimitTxt}}</view>
+
+        </view> -->
+        <view style="height: 10px; width: 100%;background: #f5f6f7;"></view>
+        <view class="gift-card-item" style="margin-bottom: 10px;margin-top: 20rpx;">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>激活礼品卡</view>
+          <view wx:for="{{collectInfo}}" class="colleItem" wx:if="{{item.isChecked}}">
+            <!-- 激活码 -->
+            <block wx:if="{{item.name == '激活码'}}">
+              <text class="commTxt splTxt">激活码</text>
+              <input placeholder-style="font-size:26rpx;color:#999" data-name="{{item.name}}" data-idx="{{index}}" placeholder="请输入激活码" name="code" bindinput="inputs"></input>
+            </block>
+            <!-- 手机号 -->
+            <block wx:elif="{{item.name == '手机号'}}">
+              <text class="commTxt">手机号</text>
+              <input placeholder-style="font-size:26rpx;color:#999" data-name="{{item.name}}" data-idx="{{index}}" placeholder="请输入手机号" name="userPhone" bindinput="inputs" maxlength='11'></input>
+            </block>
+            <!-- 短信验证 -->
+            <block wx:elif="{{item.name=='短信验证'}}">
+              <text class="commTxt">验证码</text>
+              <input type="text" placeholder="请输入验证码" style="width: 210rpx" placeholder-class="huaer-field_placeholder" value="" bindinput="bindCodeInput" />
+              <block wx:if="{{has_get_vcode != true}}">
+                <view bindtap="tapGetVcode" class="main-color-bg" style="font-size: 26rpx;padding: 10rpx 26rpx;{{app.globalData.customStyleBg}};border-radius: 10rpx;margin-left: 8rpx">获取验证码</view>
+              </block>
+              <block wx:if="{{has_get_vcode == true}}">
+                <view style="font-size: 22rpx;padding: 12rpx 20rpx;background: #ccc;color: #ffffff;border-radius: 10rpx;margin-left: 8rpx;">{{vcodeGetTime}}s后重新获取</view>
+              </block>
+            </block>
+            <block wx:else>
+              <block wx:if="{{item.type != 2 || !item.type}}">
+
+                <text class="commTxt">{{item.name}}</text>
+                <input placeholder-style="font-size:26rpx;color:#999" placeholder="{{item.tips}}" data-name="{{item.name}}" data-idx="{{index}}" name="userPhone" bindinput="inputs"></input>
+              </block>
+              <block wx:if="{{item.type == 2}}">
+                <view class="single-select">
+                  <text  class="commTxt">{{item.name}}</text>
+                  <radio-group data-name="{{item.name}}" data-idx="{{index}}" style="width:410rpx;margin-left: 20rpx;" class="radio-group {{item.options[0].name.length > 5 || item.options.length > 2 ? '':'ridao-flex'}}" bindchange="radioChange">
+
+                    <radio class="radio" wx:for-items="{{item.options}}" wx:key="index" value="{{item.name}}" checked="{{item.checked}}">
+                      <text>{{item.name}}</text>
+                    </radio>
+                  </radio-group>
+                </view>
+
+              </block>
+
+            </block>
+
+          </view>
+
+        </view>
+
+
+      </block>
+
+
+
+
+    </view>
+  </view>
+
+
+  <view class="receiveCard">
+    <block wx:if="{{config.state == 2}}">
+      <button class="zan-btn zan-btn--primary zan-btn--small toGet main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="infoSubmit">确认激活</button>
+    </block>
+
+
+  </view>
+
+
+</view>
+<template is="giftcardModalTpl" data="{{app,config,categoryContClass,count}}"></template>
+<include src="/pages/template/authModal.wxml" />
+<include src="/pages/template/copyright.wxml" />

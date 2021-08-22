@@ -1,0 +1,96 @@
+<!--pages/offline/pay.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getLinkName = function (name) {
+    if(!name){
+      return "";
+    }else if(name.indexOf("其他小程序")==0){
+      return true;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getLinkName = getLinkName;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}" style="background-color: #f5f7f6;padding: 45rpx;overflow: auto">
+<view class="container" style="background-color: #fff;border-radius: 20rpx;padding: 35rpx;">
+  <block wx:if="{{payResult=='success'}}">
+  <view class="header">
+    <!--<icon type="success" size="65" color="green"/>-->
+    <image style='width:150rpx;height: 150rpx' class="logo_img" src='{{staticResPath}}/image/mobile/complete-icon.png'></image>
+    <view style="font-size: 36rpx;color: #333;text-indent: 20rpx">付款成功！</view>
+  </view>
+  <view class="detail-msg">
+    <view class="row">
+      <text class="label">微信支付：</text>
+      <text class="field">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(parOrder.amount)}}</text>
+    </view>
+     <view class="row">
+      <text class="label">储值消费：</text>
+      <text class="field" style="color:red;">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(parOrder.depositPrice)}}</text>
+    </view>
+    <view class="row">
+      <text class="label">礼品卡优惠：</text>
+      <text class="field" style="color:red;">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(parOrder.giftCardPrice)}}</text>
+    </view>
+    <view class="row">
+      <text class="label">收款方：</text>
+      <text class="field">{{parOrder.storeName}}</text>
+    </view>
+    <view class="row">
+      <text class="label">付款时间：</text>
+      <text class="field">{{parOrder.payTime}}</text>
+    </view>
+    <view class="row">
+      <text class="label">订单号：</text>
+      <text class="field">{{parOrder.orderNum}}</text>
+    </view>
+  </view>
+  </block>
+  <block wx:elif="{{payResult=='overdue'}}">
+  <view class="header">
+    <icon type="warn" size="65"/>
+    <view>收款码已失效</view>
+  </view>
+  <view class="detail-msg">
+    <view style='text-align:center;margin:60px auto 0;font-size:18px;'>
+      收款码已失效，请联系商家更新收款码
+    </view>
+  </view>
+
+  </block>
+  <block wx:elif="{{payResult=='disabled'}}">
+  <view class="header">
+    <icon type="warn" size="65"/>
+    <view>暂不支持当面付</view>
+  </view>
+  <view class="detail-msg">
+    <view style='text-align:center;margin:60px auto 0;font-size:18px;'>
+      请与商家联系
+    </view>
+  </view>
+
+  </block>
+  <navigator wx:if="{{payInfo.openSpread && !m1.getLinkName(payInfo.spreadInfo.jumpBusiName)}}" url='{{payInfo.spreadInfo.jumpLink}}'>
+  <image style='width:100%' class="logo_img" src='{{userImagePath+payInfo.spreadInfo.promoteImg}}'></image>
+  </navigator>
+  <navigator wx:if="{{payInfo.openSpread && m1.getLinkName(payInfo.spreadInfo.jumpBusiName) }}" target="miniProgram" open-type="navigate" app-id="{{payInfo.spreadInfo.jumpLink}}">
+  <image style='width:100%' class="logo_img" src='{{userImagePath+payInfo.spreadInfo.promoteImg}}'></image>
+  </navigator>
+  <view wx:if="{{payInfo.jumpMode}}" class="zan-btns" style="margin-left: 0;margin-right: 0;">
+      <navigator wx:if="{{payInfo.jumpMode != 1}}" class="zan-btn" style="border-radius: 60rpx;font-size: 30rpx" url='/pages/index/index'>返回首页</navigator>
+      <navigator wx:if="{{payInfo.jumpMode == 1 && !m1.getLinkName(payInfo.jumpBusiName)}}" class="zan-btn" url='{{payInfo.jumpLink}}'>{{payInfo.jumpName}}</navigator>
+      <navigator class="zan-btn" wx:if="{{payInfo.jumpMode == 1 && m1.getLinkName(payInfo.jumpBusiName)}}" target="miniProgram" open-type="navigate" app-id="{{payInfo.jumpLink}}" path="" extra-data="" version="release">{{payInfo.jumpName}}</navigator>
+   </view>
+   <view wx:if="{{!payInfo.jumpMode}}" class="zan-btns" style="margin-left: 0;margin-right: 0;">
+      <navigator  class="zan-btn main-color main-color-bg" url='/pages/index/index' style="{{app.globalData.customStyleColor}} border-radius: 60rpx;font-size: 30rpx">返回首页</navigator>
+   </view>
+</view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

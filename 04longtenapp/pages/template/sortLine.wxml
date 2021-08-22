@@ -1,0 +1,35 @@
+<wxs module="m1">
+  var getGoodsOrder = function(goodsOrderObj,widgetIndex){
+    var defaultObj = {"orderType":1,"isAsc":false}
+    if(goodsOrderObj){
+      var goodsOrder = goodsOrderObj["w_"+widgetIndex];
+      if(goodsOrder){
+        return goodsOrder;
+      } else {
+        return defaultObj;
+      }
+    } else {
+      return defaultObj;
+    }
+  }
+  module.exports.getGoodsOrder = getGoodsOrder;
+</wxs>
+<view class='sortLine'>
+  <view class='sortAllType {{goodsOrderObj["w_"+widgetIndex].orderType==1?"main-color selected":""}}' style='{{goodsOrderObj["w_"+widgetIndex].orderType==1 ? app.globalData.customStyleColor:""}}' data-index="1" bindtap='changeSortAll' data-widgetindex="{{widgetIndex}}">
+    <span>综合</span>
+    <view class='sortIcon {{goodsOrderObj["w_"+widgetIndex].orderType==1?"sortIcon_blue main-color":""}}' style='{{goodsOrderObj["w_"+widgetIndex].orderType==1?app.globalData.triBorderColor:""}}'></view>
+  </view>
+  <view class='sortCount {{goodsOrderObj["w_"+widgetIndex].orderType==2?"main-color selected":""}}' style='{{goodsOrderObj["w_"+widgetIndex].orderType==2?app.globalData.customStyleColor:""}}' data-index="2" bindtap='changeSortAll' data-widgetindex="{{widgetIndex}}">
+    <span>销量</span>
+    <view class='sortIcon {{goodsOrderObj["w_"+widgetIndex].orderType==2?"sortIcon_blue main-color":""}}' style='{{goodsOrderObj["w_"+widgetIndex].orderType==2?app.globalData.triBorderColor:""}}'></view>
+  </view>
+  <view class='sortPrice {{goodsOrderObj["w_"+widgetIndex].orderType==3?"main-color selected":""}}' style='{{goodsOrderObj["w_"+widgetIndex].orderType==3?app.globalData.customStyleColor:""}}' data-index="3" bindtap='changeSortAll' data-widgetindex="{{widgetIndex}}">
+    <span>价格</span>
+      <view class='sortIcon {{(goodsOrderObj["w_"+widgetIndex].orderType==3 && !goodsOrderObj["w_"+widgetIndex].isAsc)?"sortIcon_blue main-color":""}}' style='{{(goodsOrderObj["w_"+widgetIndex].orderType==3 && !goodsOrderObj["w_"+widgetIndex].isAsc)?app.globalData.triBorderColor:""}}'></view>
+      <view class='sortIcon sortIcon_up {{(goodsOrderObj["w_"+widgetIndex].orderType==3 && goodsOrderObj["w_"+widgetIndex].isAsc)?"sortIcon_blue main-color":""}}' style='{{(goodsOrderObj["w_"+widgetIndex].orderType==3 && goodsOrderObj["w_"+widgetIndex].isAsc)?app.globalData.triBorderColor:""}}'></view>
+  </view>
+  <view class='sortTime {{goodsOrderObj["w_"+widgetIndex].orderType==4?"main-color selected":""}}' style='{{goodsOrderObj["w_"+widgetIndex].orderType==4?app.globalData.customStyleColor:""}}' data-index="4" bindtap='changeSortAll' data-widgetindex="{{widgetIndex}}">
+    <span>上新时间</span>
+    <view class='sortIcon {{goodsOrderObj["w_"+widgetIndex].orderType==4?"sortIcon_blue main-color":""}}' style='{{goodsOrderObj["w_"+widgetIndex].orderType==4?app.globalData.triBorderColor:""}}'></view>
+  </view>
+</view>

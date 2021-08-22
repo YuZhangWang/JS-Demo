@@ -1,0 +1,118 @@
+/* pages/offline/pay.wxss */
+.zan-panel{
+  border: 0;
+}
+.header{
+  text-align: center;
+  margin-top: 20px;
+}
+.header .logo_img{
+  width: 190rpx;
+  height: 190rpx;
+  display: blcok;
+  margin: 0 auto 10px;
+  border-radius: 100%;
+}
+.header .p_txt{
+  font-size: 36rpx;
+  color: #666;
+  line-height:80rpx;
+}
+.money-field .zan-field__title{
+  font-size: 36px;
+  min-width:30px;
+  text-indent: -20rpx;
+  padding-right: 0 !important;
+  font-weight: bold;
+  color: #333
+}
+.money-field .zan-field__input{
+  font-size: 56rpx;
+  /* transform: scale(1.2); */
+  /* height: 60rpx !important;
+  line-height: 60rpx !important; */
+}
+.zan-field--wrapped .zan-field__placeholder{
+  font-size: 42rpx;
+  font-weight: normal;
+  color: #CCC;
+}
+.zan-cell:not(.zan-field){
+  padding:32rpx 0 !important;
+}
+.zan-cell--access{
+  padding: 6rpx 0 !important;
+}
+.cell-text{
+  font-size: 26rpx;
+  color: #333;
+}
+.remark_cont .zan-field__input{
+  color: #999;
+  font-size: 32rpx;
+}
+.enableDepositItem, .enableItem{
+  display: flex;
+  justify-content: space-between;
+}
+.enableDeposit, .enableRow{
+  display:flex;
+  align-items:center;
+}
+.enableDepositVal, .enableVal{
+  margin-right:10rpx;
+}
+.zan-switch,.zan-switch__bg {
+  width:42px !important;
+  height:22px !important;
+}
+.zan-switch__circle {
+  width:20px !important;
+  height:20px !important;
+  top: 2rpx !important;
+}
+
+.itemBorderBot{
+  border-bottom:1rpx solid #F2F2F2;margin-top:0;
+}
+.remark_cont .zan-cell--access{
+  height: 54px;
+}
+.botPay{
+  /*position:fixed;*/
+/*z-index:111;*/
+width:100%;
+  /*border-radius: 30rpx;*/
+/*bottom:0;*/
+}
+.switch-text{
+  font-size: 28rpx !important;
+  color: #666666 !important;
+}
+.remarkInput{
+  margin-left: 100rpx;
+  width: 70%;
+}
+
+.zan-field--wrapped{
+  margin-bottom: 20rpx;
+  border:none;
+  border-bottom: 1rpx solid #F2F2F2;
+  padding-left: 10rpx;
+  border-radius:0 !important;
+  margin: 0 !important;
+  font-size: 56rpx !important;
+  padding: 0 !important;
+}
+.trigger{
+  content:"\020";
+  display:block;
+  width:18px;
+  height:18px;
+  background-image:url("http://res.xcx.weijuju.com/image/mobile/trigger_right.png");
+  background-size:100%;
+  position:absolute;
+  right:10px;
+  top:50%;
+  margin-top:-9px;
+}

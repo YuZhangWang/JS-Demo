@@ -1,0 +1,16 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="pageList">
+  <navigator url="/pages/subCategory/subpage?pageId={{item.id}}" wx:key="id" class="pageItem" wx:for="{{pageList}}">
+    <text>{{item.name}}</text>
+    <text class="cTime">{{item.createTime}}</text>
+    <view class="trigger"></view>
+  </navigator>
+</view>
+<view class="noMore" wx:if="{{isBottom}}">
+  没有更多数据了~
+</view>
+<include src="../template/footer.wxml"/>
+<include src="/pages/template/copyright.wxml"/>
+<!--<include src="/pages/template/authModal.wxml"/>-->
+</view>

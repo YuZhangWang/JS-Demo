@@ -1,0 +1,17 @@
+<view class="auth-container" wx:if="{{showAuthBox}}">
+    <view class="auth-modal-container">
+        <!--<image src='{{appLogo}}' mode='widthFix' class="auth-modal-logo" style='width:120rpx;height:120rpx;'></image>-->
+        <view class="auth-modal-title" style="">您还未登录</view>
+        <view class="auth-modal-title2">请先完成登录再进行操作</view>
+        <image src='{{staticResPath ? staticResPath+"/image/mobile/non-authorize.png":"../../images/non-authorize.png"}}' mode='widthFix' class="auth-modal-logo" style='width:90%;height: auto;'></image>
+        <!--<view class="auth-modal-title">{{appName}}</view>-->
+        <!--<view class="auth-modal-content">此小程序由{{appName}}定制即将会使用您的公开信息（名称、头像等）进入小程序，请您确认</view>-->
+        <view class="auth-btn-container">
+          <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+            <button lang="zh_CN" form-type="submit" class="modal-auth-button" style="background:rgba(26,172,25,1);margin-bottom: 30rpx !important;color:rgba(254,255,254,1);" bindgetuserinfo="userInfoHandler" open-type="getUserInfo" type="primary">立即登录</button>
+              <!--<navigator style="background:rgba(240,240,240,1);color:rgba(26, 172, 25, 1)" class="modal-auth-button" url='/pages/index/index'>暂不登录</navigator>-->
+              <button class="modal-auth-button" style="background:rgba(240,240,240,1);color:rgba(26, 172, 25, 1)" bindtap="notLogin" type="primary">拒绝登录</button>
+          </form>
+        </view>
+    </view>
+</view>

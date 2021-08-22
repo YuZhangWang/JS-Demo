@@ -1,0 +1,14 @@
+<view class="start_page">
+	<view class="rule_tag rule_btn" bindtap="showRule">
+		<image id="rule_tag_img" class="block_img" mode='widthFix' src="{{youyuResPath+templateName}}/start/btn_tag.png?v=1"></image>
+	</view>
+  <view class="title_img titleDown">
+	  <image id="titleImg" class="block_img" mode='widthFix' src="{{youyuResPath +templateName}}/start/title.png"></image>
+  </view>
+  <view class="start_btn" bindtap='handleStartTab'>
+		<image id="startBtnImg" class="block_img startTada" mode='widthFix' src="{{youyuResPath+templateName}}/start/btn_begin.png"></image>
+	</view>
+  <view id="homeBgBox">
+    <image id="homeBg" class="block_img" src="{{youyuResPath+templateName}}/start/start_bg.jpg" mode='widthFix'></image>
+  </view>
+</view>

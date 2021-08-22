@@ -1,0 +1,21 @@
+<!--pages/formRecord/formRecord.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view>
+<!-- 表单记录 -->
+<view class='formRecord'>
+   <navigator url='/pages/formRecord/formRecordDetail?id={{item.id}}' wx:for="{{list}}" class='formlist'>
+      <view  class='formitem'>
+        <view>{{item.formName}}</view>
+        <view>{{mTool.filterTimestamp(item.createTime)}}</view>
+      </view>
+      <view style='color:red;margin-right:10%;position:absolute;right:10%;' wx:if="{{item.payPrice}}">{{app.globalData.currencySymbol}}{{item.payPrice/100}}</view>
+      <view>></view>
+   </navigator>
+</view>
+<view class='emptyForm' wx:if="{{0 == list.length}}">没有相关表单信息</view>
+</scroll-view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>
+

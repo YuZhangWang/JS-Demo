@@ -1,0 +1,63 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<template name="giftcardModalTpl">
+  <view class="{{categoryContClass}}" style='z-index:99999;position:fixed;'>
+    <view class="mod_pop_mask" bindtap="onCloseBuy"></view>
+    <view class="category_main {{app.globalData.isIPhoneX ? 'iPhoneXView':''}}">
+      <!-- 选择数量 -->
+      <view id="control_wrap">
+        <view id="control_info">
+          <view class="category_goods">
+            <view style="width:100px;height:70px" class="left_img">
+              <image src="{{config.coverShow}}" width="80" height="40"></image>
+            </view>
+
+            <view style="margin: 3px 20px 0 108px;" class="right_goods">
+              <view class="goods-name">
+                <text style="display: inline-block;max-width: 300rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;vertical-align: text-top;">{{config.title}}</text>
+              </view>
+              <view class="price main-color" style="{{app.globalData.customStyleColor}}">
+                <text style="font-weight: bold;margin-right: 25px;white-space: nowrap;{{app.globalData.customStyleColor}}" class="item_price i_pri main-color"><text style="font-size:2.2vh;display: inline-block">{{app.globalData.currencySymbol}}</text>
+                <text style='font-size: 2.5vh;'>{{m1.getFixedMoney(config.saleMoney)}}</text></text>
+
+              </view>
+
+            </view>
+            <view class="close_btn" bindtap="onCloseBuy">
+              <view class="zan-icon zan-icon-close"></view>
+            </view>
+          </view>
+          <view class="goods-number">
+            <text style="font-size:28rpx">购买数量：</text>
+            <view class="minus j-minus"  bindtap="minusCount">-</view>
+            <view class="count">
+              <block>
+                <input type="number" class="j-count"  bindchange="bindChange" maxlength="5" value="{{count}}"></input>
+              </block>
+            </view>
+            <view class="plus j-plus"  bindtap="addCount">+</view>
+          </view>
+        </view>
+        <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+          <view class="control_btn" style="border-top:1px solid #efefef">
+            <view class="giftcard-total" >
+               总计：<text class="price main-color" style="{{app.globalData.customStyleColor}}; font-size: 32rpx;font-weight:bold;">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.saleMoney*count)}}</text>
+            </view>
+
+
+            <button form-type='submit' style="{{app.globalData.customStyleBg}}" style="{{app.globalData.customStyleBg}}" class="main-color-bg commonNavButton btn-buynow" catchtap='confirmBuy'>确认购买</button>
+          </view>
+        </form>
+      </view>
+    </view>
+  </view>
+</template>

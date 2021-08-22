@@ -1,0 +1,37 @@
+<!--pages/customization/panorama/index.wxml-->
+<scroll-view class="wrapper" scroll-x="true" bindtap='test'>
+  <view class="main">
+    <image class="cover" src='{{staticResPath}}/customization/panorama/main.jpg?v=14'></image>
+    <view class="music_note"></view>
+    <view class="curtain"></view>
+    <view class="wind"></view>
+    <view class="flower"></view>
+    <view class="water1"></view>
+    <view class="water2"></view>
+    <view class="luowa_title"></view>
+    <navigator url='/pages/index/index' class="btn_border btn_border1"></navigator>
+    <navigator url='/pages/vipcard/vipcard?id=186' class="btn_border btn_border2"></navigator>
+    <navigator url="/pages/subCategory/subpage?pageId=7862" class="btn_border btn_border3"></navigator>
+    <image class="firstHandAni" src='{{staticResPath}}/customization/panorama/hand2.png'></image>
+    <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]}}" wx:for-item="i" class="click_item item{{i}}" data-index="{{i}}" bindtap='showItem'></view>
+  </view>
+  <view class="start" wx:if="{{!showMain}}">
+    <view class="vine"></view>
+    <image class="start_top" src='{{staticResPath}}/customization/panorama/start_top.jpg' mode='widthFix'></image>
+    <image class="open" src='{{staticResPath}}/customization/panorama/open.png?v=2' mode='widthFix' bindtap='showMain' wx:if="{{!doorOpened}}"></image>
+    <image bindtap='showMain' animation="{{animationData}}" class="door {{doorOpened?'opened':''}}" src='{{staticResPath}}/customization/panorama/door.jpg'></image>
+    <image class="start_bottom" src='{{staticResPath}}/customization/panorama/start_bottom.jpg' mode='widthFix'></image>
+  </view>
+</scroll-view>
+
+<view class="dialog dialog_{{i}}" wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14]}}" wx:for-item="i" wx:if="{{showDialog && dialogIndex == i}}">
+  <view class="close_btn" bindtap='handleCloseDialog'></view>
+  <image class="dialog_content" src='{{staticResPath}}/customization/panorama/dialog/{{i}}.png' mode='widthFix'></image>
+  <image wx:if="{{i==13}}" bindtap='handleDialogBtn' class="btn_ok" src='{{staticResPath}}/customization/panorama/btn_ok.png' mode='widthFix'></image>
+  <image wx:else bindtap='handleDialogBtn' class="btn_buy" src='{{staticResPath}}/customization/panorama/btn_buy.png' mode='widthFix'></image>
+</view>
+
+  <image wx:if="{{playMusic}}" class="music_icon play" bindtap='handlePlayMusic' src='{{staticResPath}}/customization/panorama/music_icon.png' mode='widthFix'></image>
+  <image wx:else class="music_icon" src='{{staticResPath}}/customization/panorama/music_icon_off.png' bindtap='handlePlayMusic' mode='widthFix'></image>
+
+  <audio src="http://res.xcx.weijuju.com/customization/panorama/bgmusic.mp3" id="bgMusic" loop></audio>

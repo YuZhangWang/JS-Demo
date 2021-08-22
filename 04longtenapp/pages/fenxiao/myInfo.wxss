@@ -1,0 +1,227 @@
+/* pages/fenxiao/myInfo.wxss */
+page{
+  font-family:Source Han Sans CN;
+  font-weight:400;
+}
+.avator{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.topInfoWrap{
+  display: flex;
+  padding: 0 20rpx;
+  margin: 20rpx 0;
+
+}
+.topInfoWrap .info{
+  margin-left: 20rpx;
+  width: 80%;
+
+}
+.infoTop{
+  display: flex;
+  justify-content: space-between;
+}
+/*.infoTop .grade-label {*/
+  /*display: inline-block;*/
+  /*width:188rpx;*/
+  /*height:40rpx;*/
+  /*background:rgba(255,209,106,1);*/
+  /*border-radius:20rpx;*/
+  /*font-size:24rpx;*/
+  /*font-family:Source Han Sans CN;*/
+  /*font-weight:400;*/
+  /*color:rgba(116,59,0,1);*/
+  /*line-height:40rpx;*/
+  /*text-align: center;*/
+  /*text-shadow:0 1rpx 0 rgba(252,236,174,1);*/
+/*}*/
+
+.infoTop .grade-label {
+  width: auto;
+  height: 40rpx;
+  border: 1rpx solid rgba(255, 201, 80, 1);
+  background: linear-gradient(103deg, rgba(255, 230, 156, 1) 0%, rgba(255, 203, 89, 1) 73%);
+  border-radius: 20px;
+  /* box-shadow: 0 1rpx 0 0 rgba(255, 235, 156, 1); */
+  padding: 2rpx;
+  margin-left: 5rpx;
+  /* box-sizing: border-box; *//* border-radius: 18rpx; *//* background: rgba(255, 209, 106, 1); */
+}
+
+.infoTop .grade-label view {
+  /* width: 151rpx; */
+  width: auto;
+  padding: 0 10rpx;
+  height: 36rpx;
+  border: 1px solid rgba(255, 201, 80, 1);
+  box-shadow: 0px 1px 0px 0px rgba(255, 235, 156, 1);
+  border-radius: 18px;
+  font-family: Source Han Sans CN;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: rgba(116, 59, 0, 1);
+  text-shadow: 0 1rpx 0 rgba(252, 236, 174, 1);
+  text-align: center;
+  margin: 0 auto;
+}
+.helpPop{
+  color: #FF585B;
+  border: 1px solid #FF585B;
+  height: 45rpx;
+  padding: 0 25rpx;
+  border-radius: 25rpx;
+  line-height: 45rpx;
+}
+.topInfoWrap .joinTime{
+  /* margin-top: 20rpx; */
+  font-size: 24rpx;
+  color: #B8B8B8;
+}
+.moneyInfoWrap{
+  /* background: #2FA229; */
+  padding: 30rpx 60rpx;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 10rpx 15rpx;
+}
+.grade-MoneyInfoWrap{
+  padding-bottom: 0;
+}
+.moneyInfo{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.getMoney{
+  margin: 0;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 3px 4px 0px rgba(171,52,54,0.4);
+  border-radius:13px;
+  color: #DB2427;
+  width: 150rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.getMoney-img {
+  width: 146rpx;
+  height: 51rpx;
+}
+.moneyInfoWrap .descTxt{
+  color: #fff;
+
+}
+.moneyInfoWrap .money{
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.awardInfo{
+  display: flex;
+  padding: 20rpx 0;
+}
+/* 等级分销 */
+.grade-panel {
+  height: 201rpx;
+  border-radius: 20rpx;
+  display: flex;
+  font-family:Source Han Sans CN;
+  padding:55rpx 37rpx;
+  box-sizing: border-box;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 0 20rpx;
+}
+.grade-left {
+  flex: 1;
+}
+.grade-left .text-main {
+  font-size:30rpx;
+  font-weight:bold;
+  color:rgba(254,229,199,1);
+}
+.grade-left .text-sub {
+  font-size:24rpx;
+  font-weight:500;
+  color:rgba(202,192,181,1);
+}
+.grade-right {
+  width:88px;
+  flex: none;
+  font-size:30rpx;
+  font-weight:500;
+  color:rgba(232,78,40,1);
+  line-height:42rpx;
+  text-align: right;
+}
+.awardInfo .awardItem{
+  flex-grow: 1;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: #999;
+}
+.awardNum{
+  color: #333;
+  font-size: 30rpx;
+  line-height: 50rpx;
+}
+.awardItem text{
+  font-size: 24rpx;
+}
+.bottomBlock{
+  text-align: center;
+  margin-top: 100rpx;
+  color: #949494;
+}
+.toIndex{
+  display: inline-block;
+  text-decoration:underline;
+  height: 40rpx;
+}
+.menus{
+  display: flex;
+  margin: 50rpx 0;
+}
+.menusItem{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:33.333%;
+  /* flex-grow:1; */
+}
+.menusItem > text{
+  margin-top: 15rpx;
+  font-size: 32rpx;
+}
+.mIco{
+  width: 80rpx;
+  height: 70rpx;
+}
+
+
+.wrapFreeze{
+  display: flex;
+  align-items: center;
+}
+
+.fxHelp{
+  width: 100%;
+  word-break:break-all;
+}
+
+.grade-descTxt {
+    font-size: 30rpx;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: rgba(54, 54, 54, 1) !important;
+}
+.grade-money {
+    font-size:40rpx;
+    font-family:Source Han Sans CN;
+    font-weight:500;
+    color:rgba(54,54,54,1) !important;
+}

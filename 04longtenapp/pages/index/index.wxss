@@ -1,0 +1,1063 @@
+@import "../template/forum/community.wxss";
+@import "../detail/detail.wxss";
+@import "../search/search.wxss";
+.launch_page{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1000000;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+}
+.launch_page .lds-css{
+  margin-top: -30%;
+}
+.launch_page.fadeout{
+  -webkit-animation: launch-fadeout .3s ease-in;
+  animation: launch-fadeout .3s ease-in;
+  animation-fill-mode:forwards;
+}
+@keyframes launch-fadeout {
+  0% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+@keyframes lds-wedges {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes lds-wedges {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.lds-wedges {
+  position: relative;
+}
+.lds-wedges > view > view {
+  -webkit-transform-origin: 100px 100px;
+  transform-origin: 100px 100px;
+  -webkit-animation: lds-wedges 3.3s linear infinite;
+  animation: lds-wedges 3.3s linear infinite;
+  opacity: 0.8;
+}
+.lds-wedges > view > view > view {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 70px 0 0 0;
+  -webkit-transform-origin: 100px 100px;
+  transform-origin: 100px 100px;
+}
+.lds-wedges > view view:nth-child(1) > view {
+  background: #93dbe9;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.lds-wedges > view view:nth-child(1) {
+  -webkit-animation-duration: 0.825s;
+  animation-duration: 0.825s;
+}
+.lds-wedges > view view:nth-child(2) > view {
+  background: #689cc5;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.lds-wedges > view view:nth-child(2) {
+  -webkit-animation-duration: 1.1s;
+  animation-duration: 1.1s;
+}
+.lds-wedges > view view:nth-child(3) > view {
+  background: #5e6fa3;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.lds-wedges > view view:nth-child(3) {
+  -webkit-animation-duration: 1.65s;
+  animation-duration: 1.65s;
+}
+.lds-wedges > view view:nth-child(4) > view {
+  background: #3b4368;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.lds-wedges > view view:nth-child(4) {
+  -webkit-animation-duration: 3.3s;
+  animation-duration: 3.3s;
+}
+.lds-wedges {
+  width: 72px !important;
+  height: 72px !important;
+  -webkit-transform: translate(-36px, -36px) scale(0.36) translate(36px, 36px);
+  transform: translate(-36px, -36px) scale(0.36) translate(36px, 36px);
+}
+.sbargain-list-wrap{
+  background: #fff;
+  padding: 15rpx;
+  border-radius: 15rpx;
+}
+.sbargain-list-wrap .timer_box{
+  background: #b4282d !important;
+}
+
+.sbargainList .infoItem {
+
+  background: #fff;
+  display: flex;
+  padding: 15rpx;
+  box-sizing: border-box;
+
+
+}
+
+.infoItem .goods-img{
+    height: 200rpx;
+    width: 200rpx;
+    border-radius: 15rpx;
+    margin-right: 30rpx;
+}
+
+.list--buttons {
+    max-width: 428rpx;
+    width: 100%;
+}
+.list--ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.list--title {
+    display: block;
+    font-family: "PingFangSC-Regular";
+    font-size: 30rpx;
+    color: #333;
+    line-height: 32rpx;
+}
+.list--status {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 40rpx;
+}
+.list--desc {
+    display: block;
+    font-family: "PingFangSC-Light";
+    color: #999;
+    font-size: 24rpx;
+    line-height: 32rpx;
+    margin-top: 10rpx;
+}
+.list--avatar {
+    display: block;
+    height: 38rpx;
+    width: 38rpx;
+    border-radius: 18rpx;
+    margin-right: 10rpx;
+}
+.list--color999 {
+    color: #999;
+}
+.list--attends {
+    font-size: 24rpx;
+    line-height: 32rpx;
+    font-family: "PingFangSC-Light";
+    color: #ccc;
+}
+.list--prices {
+    flex-direction: column;
+    display: -webkit-flex;
+    display: flex;
+}
+.list--price {
+    display: block;
+    height: 32rpx;
+    line-height: 32rpx;
+    font-size: 28rpx;
+    font-family: "PingFangSC-Light";
+}
+.list--price-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10rpx;
+
+
+}
+.list--red {
+    color: #b4282d;
+    font-family: "PingFangSC-Semibold";
+    font-size: 36rpx;
+}
+.list--origin-price {
+    margin-left: 6rpx;
+    text-decoration: line-through;
+    font-size: 24rpx;
+    margin-top: 8rpx;
+}
+.list--bargin {
+    width: 150rpx;
+    height: 60rpx;
+    background: #b4282d;
+    border-radius: 40rpx;
+    font-size: 28rpx;
+    line-height: 60rpx;
+    font-family: "PingFangSC-Light";
+    color: #fff;
+    text-align: center;
+    margin-left: 0px;
+}
+
+/* 拼团 */
+#indexPage{
+  background: #f5f7f7;
+  padding:20rpx;
+}
+.tuan_goods_list{
+  background: #fff;
+  padding: 15rpx;
+  border-radius: 15rpx;
+}
+#indexPage .act_countDown_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10rpx;
+
+}
+ #indexPage .act_countDown_box_wrap {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+
+}
+#indexPage .act_countDown_box .box-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-right: 25rpx;
+
+}
+#indexPage .countDown_time {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #999;
+
+}
+#indexPage .countDown_time .time_txt {
+  color: #2d2d2d;
+  font-size: 26rpx;
+
+}
+#indexPage .countDown_time .timer_box {
+  background: #FE4543;
+  color: white;
+  display: inline-block;
+  font-size: 22rpx;
+  padding: 0 6rpx;
+  border-radius: 8rpx;
+  margin: 5rpx;
+
+}
+
+
+
+
+
+.tuan_goods_listBg{
+  background: #F7F7F7;
+}
+
+#indexPage .countDown_time_box .timeWrap{
+	display: inline-flex;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300rpx 100rpx;
+  height: 100rpx;
+  justify-content: center;
+  align-items: cente;
+  width: 300rpx;
+  position: relative;
+}
+#indexPage .countDown_time_box .timer_box{
+  position: absolute;
+	color: #fff;
+	font-size: 45rpx;
+	text-align: right;
+  padding-top: 28rpx;
+}
+#indexPage .countDown_time_box .timer_day{
+  left: 18rpx;
+}
+#indexPage .countDown_time_box .timer_hour{
+  left: 94rpx;
+}
+#indexPage .countDown_time_box .timer_minute{
+  left: 165rpx;
+}
+#indexPage .countDown_time_box .timer_second{
+  left: 240rpx;
+}
+#indexPage .countDown_tips_box{
+	display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+}
+#indexPage .countDown_tips_box .line_style{
+	width: 180rpx;
+	height: 1px;
+	border-bottom: 1px solid #e7103b;
+}
+#indexPage .footer_btn_box, #myTuanListPage .footer_btn_box {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100rpx;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 -1px 2px #eee;
+
+}
+#indexPage .footer_btn_box .footer_btn, #myTuanListPage .footer_btn_box .footer_btn {
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 16rpx 0 0;
+    text-align: center;
+    color: #100F0F;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#indexPage .footer_btn_box .footer_btn>image, #myTuanListPage .footer_btn_box .footer_btn>image {
+    height: 40rpx;
+    width: 40rpx;
+    display: block;
+    margin: 0 auto 4rpx;
+}
+#indexPage .footer_btn_box .footer_btn .tuan_menu_txt, #myTuanListPage .footer_btn_box .footer_btn .tuan_menu_txt {
+    font-size: 26rpx;
+    color: #999;
+}
+
+
+.topbar_tuanActEnded {
+    height: 20rpx;
+    background-color: #ef4b41;
+    color: #FFF;
+    font-size: 16px;
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 222;
+    width: 100%;
+     display: none;
+}
+#indexPage .tuan_goods_list .tuan_goods_item {
+  background:#fff;
+  display:flex;
+  padding:15rpx;
+  box-sizing:border-box;
+}
+#indexPage .tuan_goods_item .goods_img {
+  display: inline-block;
+  width: 200rpx;
+  height: 200rpx;
+  flex: 0 0 200rpx;
+  border-radius: 15rpx;
+  margin-right: 30rpx;
+
+}
+#indexPage .tuan_goods_item .goods_info_box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 428rpx;
+
+}
+#indexPage .tuan_goods_item .goods_title {
+  height: 70rpx;
+
+}
+#indexPage .tuan_goods_item .nick_img_box{
+  display: flex;
+  justify-content: space-between;
+  color: #8c8c8c;
+  font-size: 36rpx;
+}
+#indexPage .tuan_goods_item .img_and_qibpao{
+  display: inline-flex;
+}
+#indexPage .goods_info_box .nick_img_box .nick_img>image {
+    display: block;
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    margin-left: 10rpx;
+}
+#indexPage .goods_info_box .goods_price_box{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+#indexPage .goods_info_box .goods_act_price{
+  color: #f44;
+  font-weight: bold;
+  font-size: 36rpx;
+  margin-left: -5rpx;
+
+}
+#indexPage .acty-name{
+  font-size: 24rpx;
+  color: #f44;
+  font-weight: bold;
+  position: relative;
+  bottom: -15rpx;
+
+}
+#indexPage .goods_info_box .goods_price{
+  font-size:24rpx;
+  color: #8c8c8c;
+
+}
+
+#indexPage .goods_info_box .nick_img_box .qipao_box {
+    width: 128rpx;
+    height: 54rpx;
+    background-color: white;
+    background-size: 128rpx 54rpx;
+    font-size: 25rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#indexPage .goods_info_box .nick_img_box .qipao_box text{
+  margin-left: 10rpx
+}
+#indexPage .goods_info_box  .goods_btn{
+  width:150rpx;
+  height:60rpx;
+  color:white;
+  background:#EC4644;
+  border-radius:40rpx;
+  line-height:60rpx;
+  text-align:center;
+  font-size:28rpx;
+  background: #f85032; /* Old browsers */
+  background: linear-gradient(to right, #e73f40 0%,#ec8d6d 100%);
+}
+
+
+
+
+#goodsDetailPage .tuan_detail_wrapper {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    background:#f8f7f7;
+
+}
+#goodsDetailPage .comeBack_btn {
+    position: absolute;
+    z-index: 200;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+}
+#goodsDetailPage .comeBack_btn>image {
+    width: 75rpx;
+    height: 75rpx;
+}
+#goodsDetailPage .swiper {
+  height: 705rpx;
+}
+#goodsDetailPage .wrapBanner image{
+  height: 705rpx;
+}
+#goodsDetailPage .price_info_box{
+  background-size: 100% 100rpx;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  padding: 16rpx 10rpx;
+}
+#goodsDetailPage .price_info_box .price_info{
+  display: inline-flex;
+  align-items: center;
+
+}
+#goodsDetailPage .price_info_box .actual_price_box{
+margin-left: 5rpx;
+}
+#goodsDetailPage .price_info_box .act_countDown_box{
+  color: #ed295d;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+#goodsDetailPage .price_info_box .act_countDown_box .act_time_name{
+  font-size: 26rpx;
+  line-height: 34rpx;
+}
+
+
+
+.tuan_num_box{
+  display: flex;
+  text-align: center;
+  border: 1px solid white;
+  height:32rpx;
+  border-radius:6rpx;
+  margin-right: 16rpx;
+  align-items: center;
+  margin-left:12rpx;
+}
+.actual_price .actualPriceVal{
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    position: relative;
+    text-decoration: line-through;
+    margin-left: 10px;
+}
+.goods_price_box{
+  display: flex;
+  align-items: center;
+  width:100%;
+}
+.tuanpeopleNum{
+  position:relative;
+  padding:0px 2px;
+  font-size:26rpx;
+}
+.tuan_num_box img{
+  vertical-align: middle;
+}
+#goodsDetailPage .price_info_box .goods_price{
+    color: #fff;
+    font-size: 20px;
+}
+#goodsDetailPage .price_info_box .actual_price{
+  text-decoration:line-through;
+
+}
+#goodsDetailPage .price_info_box .actual_price:last-child{
+   font-size: 36rpx;
+}
+#goodsDetailPage .price_info_box .act_countDown_box .timer_box{
+  background: #FC8217;
+  color: #fff;
+  border-radius: 5rpx;
+  padding: 10rpx 6rpx;
+  font-size: 26rpx;
+}
+#goodsDetailPage .price_info_box .act_countDown_box .split{
+  display: inline-block;
+  text-align: center;
+  padding: 0 6rpx;
+  font-size: 26rpx;
+}
+#goodsDetailPage .goods_name_box {
+    margin: 0 0 20rpx;
+    font-size: 35rpx;
+    background: white;
+    padding: 10rpx 20rpx 10rpx;
+}
+
+#goodsDetailPage .goods_name_box .show_goods_name .tuan_num_box {
+    color: #ed3254;
+}
+#goodsDetailPage .goods_name_box .goods_limit_box{
+  display: flex;
+  justify-content: space-between;
+  font-size:26rpx;
+  color: #8c8c8c;
+}
+.goods_name{
+  color: #333;
+  font-size: 28rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 35rpx;
+  overflow: hidden;
+
+}
+#goodsDetailPage .goods_name_box .rule_shuoming_box{
+  text-align: right;
+  padding-top:20rpx;
+
+}
+#goodsDetailPage .goods_name_box .rule_shuoming_box .rule_shuoming_btn{
+  color: #999;
+  font-size: 30rpx;
+}
+#goodsDetailPage .process_title_box .order_num {
+    display: inline-block;
+    text-align: center;
+    width: 40rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    box-sizing: border-box;
+    border: 1px solid #8c8c8c;
+    border-radius: 50%;
+}
+#goodsDetailPage .process_title_box {
+    background: #f5f5f5;
+    display: flex;
+    justify-content: space-around;
+    font-size: 28rpx;
+    color: #8c8c8c;
+    padding: 25rpx;
+    align-items: center;
+}
+.goodsDetailPage .tuan_statu_box {
+    margin-top: 20rpx;
+    background: #fff;
+    margin: 20rpx 0;
+    border-top: 1 solid #dcdcdc;
+    border-bottom: 1 solid #dcdcdc;
+    padding: 20rpx;
+}
+.goodsDetailPage .tuan_statu_box .tuan_statu_header {
+    text-align: center;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_header image{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 10rpx;
+}
+
+#goodsDetailPage .goods_detail_box, #goodsDetailPage .company_detail_box{
+  background: #fff;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+#goodsDetailPage  .goods_detail_header, #goodsDetailPage .company_detail_header {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_header .title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #100F0F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_header .context {
+    color: #8c8c8c;
+    font-size: 28rpx;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_body{
+    margin-top: 10rpx;
+    border-radius: 5rpx;
+
+}
+#goodsDetailPage .nick_img_list_box{
+  display: flex;
+  padding: 20rpx 30rpx;
+  flex-wrap: wrap;
+  justify-content:center;
+}
+#goodsDetailPage .nick_img_list_box .nick_img_item{
+  position: relative;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#goodsDetailPage .nick_img_list .nick_img_item.leader_img_item .leader_tips {
+    position: absolute;
+    background: #fa5058;
+    top: 1rpx;
+    right: -20rpx;
+    padding: 5rpx 15rpx;
+    border-radius: 30rpx;
+    color: #fff;
+    font-size: 22rpx;
+    z-index: 10;
+}
+
+#goodsDetailPage .nick_img_list_box .item_img image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+#goodsDetailPage .nick_img_list_box .leader_img_item .item_img image{
+  width: 100rpx;
+  height: 100rpx;
+  border: 1px solid #fa5058;
+  box-sizing:border-box;
+}
+
+#goodsDetailPage  .left_line>image {
+    width: 120rpx;
+    height: 10rpx;
+    margin-bottom: 5rpx;
+}
+#goodsDetailPage  .right_line>image {
+    transform: rotate(180deg);
+}
+#goodsDetailPage .center_title {
+    margin: 0 10rpx;
+    color: #d50018;
+    font-size: 35rpx;
+}
+
+#goodsDetailPage .commonBody {
+    margin-top: 20rpx;
+}
+.goodsDetailPage .tuan_btn_box{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1111;
+    border-top: 1px solid #efefef;
+}
+.goodsDetailPage .tuan_statu_btn {
+    font-size: 24rpx;
+    background: #fff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 100rpx;
+    line-height: 36rpx;
+
+}
+.goodsDetailPage .tuan_manyuan_btn{
+  display: flex;
+  justify-content: center;
+  background: #ff6428;
+  color: #fff;
+
+}
+.goodsDetailPage .tuan_btn_box .tuan_statu_btn .left_btn {
+    width: 55%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    line-height:36rpx;
+    color:#666;
+}
+.contact_btn{
+  flex: 0 0 120rpx;
+  padding: 0;
+}
+.goodsDetailPage .tuan_btn_box .tuan_statu_btn .right_btn {
+    width: 45%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: none;
+    background: #F44;
+    background: -webkit-linear-gradient(left,#F44 0,#E6585A 100%);
+    background: linear-gradient(to right,#F44 0,#E6585A 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    flex: 1 auto;
+}
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes bounceInDown {
+    from,60%,75%,90%,to {
+        animation-timing-function: cubic-bezier(0.215,0.61,0.355,1);
+    }
+
+    0% {
+        opacity: 0;
+        transform: translate3d(0,-3000px,0);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translate3d(0,25px,0);
+    }
+
+    75% {
+        transform: translate3d(0,-10px,0);
+    }
+
+    90% {
+        transform: translate3d(0,5px,0);
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+    }
+}
+
+@keyframes bounceInDown {
+    from,60%,75%,90%,to {
+        animation-timing-function: cubic-bezier(0.215,0.61,0.355,1);
+    }
+
+    0% {
+        opacity: 0;
+        transform: translate3d(0,-3000px,0);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translate3d(0,25px,0);
+    }
+
+    75% {
+        transform: translate3d(0,-10px,0);
+    }
+
+    90% {
+        transform: translate3d(0,5px,0);
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+    }
+}
+
+.bounceInDown {
+    animation-name: bounceInDown;
+}
+.newsTip_box {
+    box-shadow: 0 0px 8px 0 rgba(0,0,0,0.1);
+    border-radius: 8px;
+    position: fixed;
+    top: 4rpx;
+    left: 20rpx;
+    height: 118rpx;
+    min-width: 700rpx;
+    width: 95%;
+    padding-top: 30rpx;
+    background-color: rgba(255,255,255,0.95);
+    z-index: 999999;
+    box-sizing:border-box;
+}
+
+.newsTip_box image {
+    width: 64rpx;
+    height: 64rpx;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 12rpx;
+}
+
+.newsTip_box_content_left {
+    position: absolute;
+    top: 24rpx;
+    left: 94rpx;
+    width: 500rpx;
+    font-size: 24rpx;
+    color: #555555;
+    letter-spacing: 0;
+    overflow: hidden;
+}
+
+.newsTip_box_content_right {
+  position:absolute;
+  top:32rpx;
+  right:20rpx;
+  text-align:center;
+  color:#0099fc;
+  overflow:hidden;
+  background:#ffffff;
+  font-size:22rpx;
+  line-height:38rpx;
+  padding:8rpx 20rpx;
+  border-radius: 5px;
+  border: 1px solid #0099fc;
+
+}
+
+.addnewtip {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 40rpx;
+    color: #000;
+    font-size: 24rpx;
+}
+
+.addnewtip1 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 22rpx;
+    color: #999999;
+    line-height: 34rpx;
+}
+.loading-wrap{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.loading-wrap image{
+  height: 400rpx;
+  width: 400rpx;
+}
+
+/* 新人有礼弹出框样式 */
+.newUser-mask{
+    flex-direction: column;
+}
+.new-user {
+    box-sizing: border-box;
+    padding-top: 136rpx;
+    /*padding-bottom: 33rpx;*/
+    width: 621rpx;
+    min-height: 412rpx;
+    max-height: 766rpx;
+    flex: none;
+    background-position:top;
+    background-repeat: no-repeat;
+    padding-bottom: 33rpx;
+    border-radius: 35rpx;
+    overflow: hidden;
+
+}
+.new-user.bg-user-1{
+    background-size: 100% 471rpx;
+}
+.new-user.bg-user-2{
+    background-size: 100% 645rpx;
+}
+.new-user.bg-user-3{
+    background-size: 100% 765rpx;
+}
+.new-user .mask-head{
+    font-size:24rpx;
+    font-family:Source Han Sans CN;
+    font-weight:400;
+    color:rgba(173,96,58,1);
+    text-align: center;
+}
+.new-user .reward-content{
+    display: flex;
+    font-family:Source Han Sans CN;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 31rpx;
+}
+.reward-item{
+    width: 530rpx;
+    height: 130rpx;
+    box-sizing: border-box;
+    padding:14rpx 22rpx 14rpx 25rpx;
+    margin-bottom: 13rpx;
+    display: flex;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: 100% 100%;
+}
+.reward-item .reward-head{
+    width: 96rpx;
+    height: 95rpx;
+    flex: none;
+}
+.reward-item .reward-text{
+    flex: 1;
+    margin-left: 11rpx;
+}
+.reward-text .text-title{
+    font-size:30rpx;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+}
+.reward-text .text-content{
+    font-size:22rpx;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+
+     text-overflow: -o-ellipsis-lastline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      max-height: 80rpx;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+}
+.reward-item .handle-btn{
+    width: 108rpx;
+    height: 108rpx;
+    flex: none;
+}
+.new-user .auth-btn{
+    width: 399rpx;
+    margin: 12rpx auto 0;
+    height: 72rpx;
+    border-radius: 50rpx;
+    background-image:linear-gradient(#eb534a,#e96568);
+}
+.new-user .auth-btn button{
+    background: transparent;
+    font-size: 30rpx;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+}
+.mask-close-btn{
+    width: 62rpx;
+    height: 62rpx;
+    flex: none;
+    margin-top: 53rpx;
+}
+.mask-close-btn image {
+    width: 100%;
+    height: 100%;
+}
+

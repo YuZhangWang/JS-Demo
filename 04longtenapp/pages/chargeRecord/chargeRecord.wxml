@@ -1,0 +1,83 @@
+<!--pages/chargeRecord/chargeRecord.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view>
+<!-- 核销员信息 -->
+<view class='userInfo'>
+   <image class='avator' src='{{userMsg.headPic}}'></image>
+   <view class='rightInfo'>
+     <view class='nickName'><text>{{userMsg.nickName}}</text> ID:{{userMsg.id}}</view>
+     <view>{{userMsg.phone}}</view>
+   </view>
+</view>
+<!-- 核销时间 -->
+<view class="section">
+  <view class='section-left'>核销时间</view>
+  <view class='section-right'>
+    <picker mode="date" value="{{date}}"  end="{{date1}}" bindchange="bindDateChange">
+      <view class="picker">
+      {{date}}
+      </view>
+    </picker>
+    <view style='width:100rpx;text-align:center'>至</view>
+    <picker mode="date" value="{{date1}}" start="{{date}}" end="2100-10-1" bindchange="bindDateChange1">
+      <view class="picker">
+      {{date1}}
+      </view>
+    </picker>
+  </view>
+</view>
+<!-- 核销次卡，优惠券，订单 -->
+<view class='section1'>
+  <view class='section1-item'>
+     <text>{{verifiedCouponCount}}</text>
+     <view>优惠券核销</view>
+  </view>
+  <view class='section1-item'>
+      <text>{{verifiedOrderCount}}</text>
+     <view>订单核销</view>
+  </view>
+  <view class='section1-item'>
+     <text>{{verifiedCardCount}}</text>
+     <view>次卡核销</view>
+  </view>
+  <view class='section1-item'>
+     <text>{{verifiedGiftCardCount}}</text>
+     <view>礼品卡核销</view>
+  </view>
+</view>
+<!-- tab -->
+<view class='section2'>
+  <view class='tab-item {{1 == htype ? "active" : ""}}' bindtap='changeHxType' data-htype="1">优惠券</view>
+  <view class='tab-item {{2 == htype ? "active" : ""}}' bindtap='changeHxType' data-htype="2">订单</view>
+  <view class='tab-item {{3 == htype ? "active" : ""}}' bindtap='changeHxType' data-htype="3">次卡</view>
+  <view class='tab-item {{4 == htype ? "active" : ""}}' bindtap='changeHxType' data-htype="4">礼品卡</view>
+</view>
+<view class='itemlist'>
+   <view  class='list' wx:if="{{1 == htype && list.length != 0}}" wx:for="{{list}}" >
+    <view wx:if="{{item.code}}">{{item.title}}({{item.code}})</view>
+    <view wx:if="{{item.usedTime}}">{{mTool.filterTimestamp(item.usedTime)}}</view>
+   </view>
+   <view class='list' wx:if="{{2 == htype && list1.length != 0}}" wx:for="{{list1}}">
+    <view wx:if="{{item.orderNum}}">订单号：{{item.orderNum}}</view>
+    <view wx:if="{{item.verifiedTime}}">{{mTool.filterTimestamp(item.verifiedTime)}}</view>
+   </view>
+   <view  class='list' wx:if="{{3 == htype && list2.length != 0}}" wx:for="{{list2}}">
+    <view wx:if="{{item.cname}}">{{item.cname}}({{item.nickName}})</view>
+    <view wx:if="{{item.createTime}}">{{mTool.filterTimestamp(item.createTime)}}</view>
+   </view>
+   <view class='list' wx:if="{{4 == htype && list3.length != 0}}" wx:for="{{list3}}">
+    <view wx:if="{{item.cname}}">{{item.cname}}({{item.nickName}})</view>
+    <view wx:if="{{item.createTime}}">{{mTool.filterTimestamp(item.createTime)}}</view>
+   </view>
+   <view style="color:#999;text-align:center;" wx:if="{{list.length == 0 || list1.length == 0 || list2.length == 0 || list.length == 0 }}">
+       暂无数据
+   
+   </view>
+  
+</view>
+</scroll-view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>
+

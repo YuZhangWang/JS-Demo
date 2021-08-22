@@ -1,0 +1,47 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+
+  var getTypeText = function(type){
+    if(type == 1){
+      return "直接推广";
+    } else if(type == 2){
+      return "间接推广";
+    } else if(type == 3){
+      return "订单退货倒扣";
+    } else {
+      return "-";
+    }
+  }
+  
+  var getStateText = function(state){
+    if(state == 0){
+      return "冻结中";
+    } else if(state == 1){
+      return "已结算";
+    } else {
+      return "-";
+    }
+  }
+  
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getStateText = getStateText;
+  module.exports.getTypeText = getTypeText;
+</wxs>
+<view class='wrap'>
+  <view class='main'>
+    <view class='tb1'>订单编号：{{detail.busiId}}</view>
+    <view class='tb2'>订单来源：{{detail.fromNickName}}</view>
+    <view class='tb3'>收益类型：{{m1.getTypeText(detail.type)}}</view>
+    <view class='tb4'>收益佣金：{{app.globalData.currencySymbol}}{{m1.getFixedMoney(detail.amount)}}</view>
+    <view class='tb5'>佣金状态：{{m1.getStateText(detail.state)}}</view>
+    <view class='tb8'>购买时间：{{detail.createTime}}</view>
+    <view class='tb6'>直接推广员：{{detail.directPromoterName}}</view>
+    <view class='tb7'>间接推广员：{{detail.indirectPromoterName?detail.indirectPromoterName:"无"}}</view>
+  </view>
+</view>

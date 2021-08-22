@@ -1,0 +1,45 @@
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="game_page">
+  <view id="backfill_panel">
+    <view class="wrapper">
+      <view class="game-title" id="game_title">
+        <image mode='widthFix' src="{{youyuResPath}}/gamepage/xiuyixiu/title.png"></image>
+      </view>
+      <view class="game-subtitle">
+        <view><text id="game_subtitle">{{orgAwardList[0].awardName}}</text></view>
+      </view>
+      <view class="game-info">
+        <view class="info-time" id="info_time">正在疯抢中</view>
+        <view class="info-award">
+          <view id="info_award_txt">共有</view>
+          <view class="number-wrapper" id="number_wrapper">
+            <text class="number"><text class="i">2</text></text>
+          </view>
+          <view>个礼包</view> 
+        </view>
+      </view>
+      <view class="game-start" id="game_start" bindtap='handleXiuyixiu'>
+        <image mode='widthFix' id="xiu_btn" src="{{youyuResPath}}/gamepage/xiuyixiu/start.png"></image>
+        <block wx:if="{{startXiuyixiu}}">
+        <view class="light-ring light-ring-1" style="height:240rpx;width:242rpx;"></view>
+        <view class="light-ring light-ring-2" style="height:240rpx;width:242rpx;"></view>
+        <view class="light-ring light-ring-3" style="height:240rpx;width:242rpx;"></view>
+        </block>
+      </view>
+      <view class="game-rule" id="game_rule" bindtap="showRule">
+        <image mode='widthFix' src="{{youyuResPath}}/gamepage/xiuyixiu/btn_rule.png"></image>
+      </view>
+      <view class="my-prize" id="my_prize" bindtap="showAward">
+        <image mode='widthFix' src="{{youyuResPath}}/gamepage/xiuyixiu/btn_prize.png"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<include src="../inteCommon/commonPage.wxml"></include>
+  <play-ret static-res-path="{{staticResPath}}" bind:playagain="playAgain" is-show="{{isShow}}" have-gift="{{haveGift}}" play-msg="{{playMsg}}" play-desc="{{playDesc}}"></play-ret>
+  <rule-and-award static-res-path="{{staticResPath}}" activity="{{activity}}"  awardlist="{{orgAwardList}}" myawards="{{myAwards}}" show-status="{{showStatus}}" bind:showrule="showRule" bind:showaward="showAward" bind:showawarditem="showAwardItem">
+  </rule-and-award> 
+  <audio src="{{youyuResPath}}/gamepage/xiuyixiu/xiuyixiu.mp3" id="xiuyixiuAudio" loop="{{false}}"></audio>
+  </view>
+

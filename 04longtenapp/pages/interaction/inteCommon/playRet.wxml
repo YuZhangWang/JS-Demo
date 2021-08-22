@@ -1,0 +1,18 @@
+<!--pages/interaction/inteCommon/playRet.wxml-->
+
+<view class="playRetWrap" hidden="{{!isShow}}">
+  <view class="playRetContent">
+  <image class="playRetIco playRetGiftIco" src="{{staticResPath + commonImgUrl}}gift.png" hidden="{{!haveGift}}"></image>
+  <view class="playRetDeatail playRetDeatailGift" style="background-image:url({{staticResPath + commonImgUrl}}popwingift.png);" hidden="{{!haveGift}}">
+    <view class="playMsg playMsgGift">获得<text style="  color: #ef3b42;font-size: 40rpx;">{{playMsg}}</text></view>
+    <view class="playDesc playDescGift">{{playDesc}}</view>
+  </view>
+  <navigator url='/pages/coupon/mycoupon'><image class="playAgain" src="{{staticResPath + commonImgUrl}}btnDetail.png" hidden="{{!haveGift}}"></image></navigator>
+  <image class="playRetIco" src="{{staticResPath + commonImgUrl}}personlihe.png" hidden="{{haveGift}}"></image>
+  <view class="playRetDeatail" style="background-image:url({{staticResPath + commonImgUrl}}popwin.png);" hidden="{{haveGift}}">
+    <view class="playMsg">{{playMsg}}</view>
+    <view class="playDesc">{{playDesc}}</view>
+  </view>
+  <image class="playAgain" src="{{staticResPath + commonImgUrl}}btn-again.png" bindtap="onTap" hidden="{{haveGift}}"></image>
+  </view>
+</view>

@@ -1,0 +1,3 @@
+/* pages/verify/commVer.wxss */
+
+@import "./coupon_verify.wxss";

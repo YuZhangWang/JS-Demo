@@ -1,0 +1,142 @@
+<import src="/youzan/dist/toast/index.wxml" />
+<import src="../template/passwordCheck.wxml"/>
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+  if (typeof(money) !== "undefined") {
+  return Number(money / 100).toFixed(2);
+  } else {
+  return 0;
+  }
+  }
+  var	htmlEncode = function(e) {
+  var reg = getRegExp("\n","g");
+  return e.replace(reg, "<br />");
+  }
+  var getTimeLimitTxt = function(coupon){
+  if(coupon.timeLimitType == 0){
+  return (coupon.effectStartTime?coupon.effectStartTime:"20xx : 00 : 00") + " 至 \n" + (coupon.effectEndTime?coupon.effectEndTime:"20xx : 00 : 00");
+  } else if(coupon.timeLimitType == 1){
+  return "领到券当日开始"+coupon.effectDay+"天内有效";
+  } else if(coupon.timeLimitType == 2){
+  return "领到券次日开始"+coupon.effectDay+"天内有效";
+  }
+  }
+  var	getUseLimitTxt = function(coupon){
+  if(coupon.useLimitType == 0){
+  return "全场通用";
+  } else if(coupon.useLimitType == 1){
+  return "指定商品（"+coupon.busiName+"）";
+  } else if(coupon.useLimitType == 2){
+  return "指定商品分类";
+  } else if(coupon.useLimitType == 3){
+  return "仅当面付可用";
+  }
+  }
+  module.exports.htmlEncode = htmlEncode;
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getTimeLimitTxt = getTimeLimitTxt;
+  module.exports.getUseLimitTxt = getUseLimitTxt;
+</wxs>
+<view wx:if="{{isDone}}" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="container">
+
+    <view class="zoom" style="background-image:url({{coupon.background}});background-size:{{(canUse && coupon.canGiveFriend && !record.fromOpenid && !record.ext4) ? (app.globalData.isIPhoneX ? '100% 120%':'100% 140%'):'100% auto'}}">
+      <view class="m_header" style="height: {{(canUse && coupon.canGiveFriend && !record.fromOpenid && !record.ext4) ? '550rpx':'420rpx'}}">
+        <view class="invalid"></view>
+        <view class="title">{{coupon.title||"优惠券名称"}}</view>
+        <block wx:if="{{coupon.type == 2}}">
+          <view class="money">
+            <text>{{coupon.discount?(coupon.discount/10):"-"}}</text><text style='font-size:30rpx;'>折</text></view>
+        </block>
+        <block wx:elif="{{coupon.type == 4}}">
+          <view class="money goods-name">
+            <text>{{coupon.busiName || "-"}}</text></view>
+        </block>
+        <block wx:elif="{{coupon.type == 6}}">
+          <view class="money common-name">
+            <text>{{coupon.ext2 || "-"}}</text></view>
+        </block>
+        <block wx:else>
+          <view class="money">
+            <text>{{m1.getFixedMoney(coupon.money||0)}}</text><text style='font-size:30rpx;'>元</text></view>
+        </block>
+        <view class="lingqu-btn-box">
+          <block wx:if="{{record}}">
+            <block wx:if="{{record.state==1}}">
+              <view id="btn-lingqu" style="background-color:{{customButton || '#04bd60'}}!important;{{app.globalData.customStyleBg}}" wx:if="{{canUse}}" bindtap='handleUseBtnTap' class="btn-lingqu main-color-bg">立即使用</view>
+              <view id="btn-lingqu" wx:else class="btn-lingqu btn-disabled">不在有效期内</view>
+              <button id="btn-lingqu" style="margin: 20rpx auto ;background-color:{{donationButton || '#FF0000'}}!important;" open-type="share" wx:if="{{canUse && coupon.canGiveFriend && !record.fromOpenid && !record.ext4}}" bindtap='onShareAppMessage' class="btn-lingqu main-color-bg" style="{{app.globalData.customStyleBg}}" >转赠给好友</button>
+            </block>
+            <block wx:elif="{{record.state==2}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已使用</view>
+            </block>
+            <block wx:elif="{{record.state==3}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已失效</view>
+            </block>
+            <block wx:elif="{{record.state==4}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已过期</view>
+            </block>
+          </block>
+
+          <block wx:else>
+            <block wx:if="{{coupon.state==3}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已失效</view>
+            </block>
+            <block wx:elif="{{coupon.state==4}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已过期</view>
+            </block>
+            <block wx:elif="{{coupon.totalCount <= coupon.sendedCount}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已领完</view>
+            </block>
+            <block wx:elif="{{coupon.getLimitCount!=-1 && obtainedNum >= coupon.getLimitCount}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已领取</view>
+            </block>
+            <block wx:elif="{{isExpire}}">
+              <view id="btn-lingqu" class="btn-lingqu btn-disabled">已过期</view>
+            </block>
+            <block wx:else>
+              <view id="btn-lingqu" style='background-color:{{customButton}} !important;' bindtap='handleGetBtnTap' class="btn-lingqu main-color-bg">立即领取</view>
+            </block>
+          </block>
+        </view>
+        <navigator class="backHome" url="/pages/index/index">回到首页</navigator>
+      </view>
+      <view class="header-bg">
+        <block wx:if="{{coupon.type==3}}">
+          <view class="leastCost-tip">满{{m1.getFixedMoney(coupon.leastCost)}}元可用</view>
+        </block>
+        <block wx:elif="{{coupon.type==5}}">
+          <view class="leastCost-tip">可充值到储值余额</view>
+        </block>
+        <block wx:else>
+          <!-- <view class="leastCost-tip">无限制</view> -->
+        </block>
+        <view class="use-date">有效期：{{m1.getTimeLimitTxt(coupon)}}</view>
+        <view class="get-date" wx:if="{{record}}">领取日期：{{record.getTime || ""}}</view>
+        <view class="use-limit-rule">可用范围：{{m1.getUseLimitTxt(coupon)}}</view>
+      </view>
+      <view class="nav" style="margin-top: {{(canUse && coupon.canGiveFriend && !record.fromOpenid && !record.ext4) ? '22px':'0'}}">
+        <view class="a-detail">
+          <view style="font-size: 17px;padding-bottom: 5px;line-height: 30px;">优惠券详情：</view>
+          <view style="line-height:34rpx;"><rich-text nodes="{{m1.htmlEncode(coupon.description)}}" type="text"></rich-text></view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+  <view class="modal-backdrop qrcode-backdrop" bindtap='toggleQrcodeModal' wx:if="{{showQrcodePopup}}">
+    <view class="qrcode-modal" catchtap='handleQrcodeModalTap'>
+      <view class="tips">请向商家出示</view>
+      <image class="qr-img" src='{{userImagePath+appletScene.qrcodeUrl}}'></image>
+      <view class="number">{{orderData.orderNum}}</view>
+      <view wx:if="{{showQrTip}}" class="tips">核销码自动刷新<image bindtap='fetchVerifyQrcodeInfo' style='width:40rpx;height:40rpx' src='http://res.xcx.weijuju.com/hktres/huiketui//mobile/image/fx/refresh.png'></image></view>
+      <view>
+        <button bindtap="switchPasswordCheck" class="pwdCheckBtn">密码核销</button>
+      </view>
+    </view>
+  </view>
+  <template is="zan-toast" data="{{app, zanToast }}"></template>
+  <template is="passwordCheck" data="{{app,showPwdCheck,pcNameErr,pcPwdErr,verId:sceneData.record,uid:sceneData.uid}}"></template>
+  <include src="/pages/template/copyright.wxml"/>
+  <include src="/pages/template/authModal.wxml"/>
+</view>

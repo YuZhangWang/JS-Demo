@@ -1,0 +1,148 @@
+
+<template name="orderListTpl">
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<wxs module="m1">
+  var getOrderStatu = function(siteType,order) {
+    var statu = order.status + "";
+    if(order.orderType == 2){
+      var foodType = order.foodType;
+      if (foodType && (foodType == 1 || foodType == 2)){
+        siteType = "waimai-dd"; // 外卖到店/外卖堂吃
+      } else {
+        siteType = "waimai-wm"; // 外卖送餐
+      }
+    }
+    var siteOrderStatu = {
+      "dianshang":{"1":"未付款","2":"待发货","3":"待收货","4":"交易完成","5":"已取消","6":"已退款","7":"退款中","8":"退款中","9":"退款中"},
+      "waimai-wm":{"1":"未付款","2":"待配送","3":"已配送","4":"已完成","5":"已取消","6":"已退款","7":"退款中","8":"退款中","9":"退款中","10":"未接单"},
+      "waimai-dd":{"1":"未付款","2":"制作中","3":"制作完成","4":"已完成","5":"已取消","6":"已退款","7":"退款中","8":"退款中","9":"退款中","10":"未接单"},
+      "yuyue":{"1":"未付款","2":"待消费","3":"待确认","4":"交易完成","5":"已取消","6":"已退款","7":"退款中","8":"退款中","9":"退款中"},
+      "activity":{"1":"未付款","2":"待发货","3":"待收货","4":"交易完成","5":"已取消","6":"已退款","7":"退款中","8":"退款中","9":"退款中"}
+    };
+    return siteOrderStatu[siteType][statu];
+  }
+  var hasReviewGoods = function(order,goodsId){
+    var hasGoods = false;
+    if(order.reviewGoods){
+      var goods = order.reviewGoods.split(";");
+      for(var i = 0;i < goods.length;i++){
+        if(goods[i] == goodsId){
+          hasGoods = true;
+        }
+      }
+    }
+    return hasGoods;
+  }
+  module.exports.getOrderStatu = getOrderStatu;
+  module.exports.hasReviewGoods = hasReviewGoods;
+</wxs>
+<block wx:if="{{orderList.length>0}}">
+	<!-- 循环订单列表开始 -->
+	<block wx:for="{{orderList}}" wx:key="id">
+		<view class="order-list j-order-list">
+			<view class="order-header">
+				<view class="header-left">订单号：{{item.orderNum}}</view>
+				<view class="header-right">
+					<!-- 判断状态开始 -->
+					<block wx:if="{{item.status==1}}">
+						<view style="{{app.globalData.customStyleColor}}" class="header-txt main-color">未付款</view>
+					</block>
+					<block wx:else>
+						<view class="header-txt main-color" style="{{app.globalData.customStyleColor}}">{{m1.getOrderStatu(siteType,item)}}</view>
+					</block>
+					<!-- 判断状态结束 -->
+				</view>
+			</view>
+			<!-- 循环订单里不同商品开始 -->
+			<block wx:for="{{goodsList[index]}}" wx:for-item="goodsitem" wx:for-index="idx" wx:key="id">
+				<view class="order-item-list">
+					<view class="order-content">
+
+						<navigator class="order-img" open-type="{{pagesLen>=5?'redirect':'navigate'}}" url="{{orderInfoUrl}}?orderid={{item.id}}">
+              <block wx:if="{{goodsitem.selectedSku && goodsitem.selectedSku.img}}">
+                  <image  src="{{mTool.specUrl(extConfig,userImagePath,goodsitem.selectedSku.img)}}"></image>
+              </block>
+              <block wx:else>
+                  <image  src="{{mTool.specUrl(extConfig,userImagePath,goodsitem.cover)}}"></image>
+              </block>
+
+						</navigator>
+            <view class='orderMiddle'>
+						<navigator class="order-left" open-type="{{pagesLen>=5?'redirect':'navigate'}}" url="{{orderInfoUrl}}?orderid={{item.id}}">
+							<text class="order-name">{{goodsitem.name}}</text>
+						</navigator>
+			<view class="order-right" style="width: 100%">
+				<view class="order-info" style="display: flex;justify-content: space-between;align-items: center">
+					<view class="footer_blank" style="display: flex;align-items: center;height: auto;flex: 3;justify-content: flex-start;flex-wrap: wrap">
+						<text style="font-size: 22rpx;color:#999999;line-height: 1.3em" class="order-spec" wx:if="{{goodsitem.spec && goodsitem.spec.names}}">（{{goodsitem.spec.names}}）</text>
+						<block wx:if="{{5 != item.orderType && ('activity' != siteType || item.isTimeDiscountOrder) && item.status == 4 && isOpenComment}}">
+							<view wx:if="{{m1.hasReviewGoods(item,goodsitem.id)}}" class="header-btn j-cancel-order main-color" style="padding:0 15rpx;width: 80rpx;height: 40rpx;line-height: 40rpx;margin-left: 0;{{app.globalData.customStyleColor}}">
+								<!--				  <view class="zan-tag zan-tag&#45;&#45;danger" style="background:#c0c0c0">已评价</view>-->
+								已评价
+							</view>
+							<navigator wx:else class="header-btn j-cancel-order main-color" style="padding:0 15rpx;width: 80rpx;height: 40rpx;line-height: 40rpx;margin-left: 0;{{app.globalData.customStyleColor}}" open-type="redirect" url="../judge/judge?goodsid={{goodsitem.id}}&orderid={{item.id}}&isTimeDiscountOrder={{item.isTimeDiscountOrder || ''}}&activityId={{item.activityId || ''}}">
+								评价
+							</navigator>
+						</block>
+					</view>
+				    <view style="font-size: 22rpx;color:#999999;width: 100%;text-align: right;flex: 1;">
+						<text wx:if="{{5 != item.orderType}}">{{app.globalData.currencySymbol}}{{goodsitem.price}} </text><text style='margin-left:15rpx;' wx:elif="{{5 == item.orderType}}"><text>{{goodsitem.price}} </text>积分</text><text class="mutil">x{{goodsitem.count}}</text>
+					</view>
+				</view>
+			</view>
+          </view>
+					</view>
+				</view>
+			</block>
+			<!-- 循环订单里不同商品结束 -->
+			<view class="order-footer" style="font-size: 22rpx;color: #999999">
+				<text class="footer-right" style="display:inline-block;margin-top: -10rpx;">合计：<text style="font-weight: bold;font-size: 30rpx;color: #333333" wx:if="{{5 != item.orderType}}">{{app.globalData.currencySymbol}}{{mTool.fToY(item.actualPrice)}}</text><text wx:elif="{{5 == item.orderType}}"><text style="font-weight: bold;font-size: 30rpx;color: #333333">{{item.actualPrice}}</text>积分</text></text>
+				<text class="footer-left">共<text style="{{app.globalData.customStyleColor}}"> {{item.totalCount}} </text>件商品<text wx:if="{{item.isDeliveryToStore}}">（运费到付）</text><text wx:elif="{{item.deliveryPrice>0}}">（含运费：<text>{{item.deliveryPrice}}</text>）</text><text wx:elif="{{item.foodType == 3}}">（包邮）</text>
+				</text>
+			</view>
+      <view class='footer_blank'>
+		  <view class='header-btn j-cancel-order' data-orderid="{{item.id}}" bindtap='goToPay'>查看详情</view>
+          <view class='header-btn j-cancel-order' data-cancleid="{{item.id}}" bindtap="modalTap" wx:if="{{m1.getOrderStatu(siteType,item) == '未付款'}}">取消订单</view>
+		  <view class='header-btn j-cancel-order main-color' style="{{app.globalData.customStyleColor}}" data-orderid='{{item.id}}' bindtap='goToPay' wx:if="{{m1.getOrderStatu(siteType,item) == '未付款'}}">去支付</view>
+
+	  </view>
+		</view>
+	</block>
+	<!-- 循环订单列表结束 -->
+</block>
+<block wx:else>
+	<view class="no-goodsList-show">
+    <text> 亲~您还没有任何订单哦，</text>
+    <navigator url="../index/index" style='text-decoration:underline;{{app.globalData.customStyleColor}}' class="main-color"> 快去看看吧</navigator>
+  </view>
+</block>
+</template>
+
+<template name="goodsListTpl">
+	<block>
+		<view class="order-list">
+			<!-- 循环订单里不同商品开始 -->
+			<block>
+				<view class="order-item-list">
+					<view class="order-content">
+						<view class="order-img"><image src="{{}}"></image></view>
+						<view class="order-left">
+							<text class="order-name">{{}}</text>
+							<!-- <text class="order-spec">{{}}</text> -->
+						</view>
+						<view class="order-right">
+							<view class="order-info">
+								<text class="text-red main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}} {{}} </text><text class="mutil">x{{}}</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</block>
+			<!-- 循环订单里不同商品结束 -->
+			<view class="order-footer">
+				<text class="footer-left">共<text> {{}} </text>件商品</text>
+				<text class="footer-right">合计：<text class="text-red main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}} {{}} </text></text>
+			</view>
+		</view>
+	</block>
+</template>

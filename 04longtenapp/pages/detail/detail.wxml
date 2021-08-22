@@ -1,0 +1,272 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var isSpecSelected = function(specGroup,spec,idx){
+    if(specGroup.selectedId){
+      return specGroup.selectedId == spec.id;
+    } else if(idx==0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.isSpecSelected = isSpecSelected;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/decoration.wxml" />
+<import src="../template/goodsCategoryModal.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<!-- 我的足迹  start -->
+<view wx:if="{{showTrack}}" bindtap='showModel' class='track_wrapper'>
+  <view class='track_container'>
+    <view class='track_title'>我的足迹({{currentIndex+1}}/{{trackList.length}})</view>
+    <view class='track_list'>
+      <!-- 左箭头 -->
+      <view  wx:if="{{currentIndex !=0}}" catchtap='prevTrack' class='trigger-left'>
+        <image src="http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/trigger_right.png"></image>
+      </view>
+      <!-- 右箭头 -->
+      <view wx:if="{{(currentIndex+1) != trackList.length}}" class='trigger-right' catchtap='nextTrack'>
+        <image src="http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/trigger_right.png"></image>
+      </view>
+      <!-- 查看更多 -->
+      <navigator url='/pages/myTrack/myTrack?goodsType=1' wx:if="{{trackList.length == (currentIndex+1)}}" class='seeMore'><text>查看更多</text></navigator>
+      <view class="track_item {{currentIndex == index?'actived':''}}" wx:for="{{trackList}}"  style='left:{{(30+45*index)+step}}%'>
+          <navigator url='/pages/detail/detail?id={{item.goodsId}}'>
+            <view class='track_img'><image src='{{mTool.specUrl(extConfig,userImagePath,item.goodsPic,1080)}}'></image></view>
+            <view class='track_goods_name'>{{item.goodsName}}</view>
+            <view class='track_goods_price'>{{app.globalData.currencySymbol}}{{m1.getFixedMoney(item.goodsPrice)}}</view>
+          </navigator>
+      </view>
+    </view>
+  </view>
+  <view class='track_mask'></view>
+</view>
+<!-- 我的足迹 end -->
+<scroll-view class="container {{contClass}}" style="padding-bottom:120rpx;background:#faf9f9;">
+  <!--商品轮播图-->
+  <view class="header-cont">
+    <swiper class="index-banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" style="height:{{mainBannerHeight||562}}rpx" duration="{{1000}}">
+      <block wx:for="{{goodsCover}}" wx:key="index">
+        <swiper-item>
+          <image bindtap="viewImg" data-id="{{index}}" data-type="banner" src="{{mTool.specUrl(extConfig,userImagePath,item,1080)}}" bindload="onMainBannerImgLoad" class="slide-image" />
+        </swiper-item>
+
+      </block>
+    </swiper>
+    <!--商品基本信息-->
+    <view wx:if="{{isDone}}" class="detail-cont">
+      <view class="name" style='width:100%; display: flex; align-items: center; justify-content: space-between;'>
+      	<text style="max-width:560rpx;">{{goodsData.name}}</text>
+      	<view class="collectGoods" bindtap='collectGoods' wx:if="{{!isIntegralGoods}}">
+	      <view style="width:34rpx;height:34rpx;">
+	        <image wx:if="{{isCollected}}" style="width:100%;height:100%;" src="{{staticResPath}}/image/mobile/collected1.png"></image>
+	        <image wx:if="{{!isCollected}}" style="width:100%;height:100%;" src="{{staticResPath}}/image/mobile/cancelCollect1.png"></image>
+	      </view>
+	      <view style="{{isCollected ? 'width: 80rpx;':'width: 60rpx;'}} " class="collect_text">{{isCollected?'已收藏':'收藏'}}</view>
+	    </view>
+      </view>
+      <view style='min-height:50rpx;position: relative'>
+          <!-- 非积分商品且不显示会员价和非会员价 -->
+        <text style="font-size: 15px; font-weight: bold;margin-right: 25px;{{app.globalData.customStyleColor}}" class="item_price i_pri main-color" wx:if="{{false === isIntegralGoods && !showCardPrice}}"><text>{{app.globalData.currencySymbol}}</text><text style='font-size:44rpx;'>{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.price:goodsData.price)}}</text></text>
+        <!-- 非积分商品且显示会员价和非会员价 -->
+        <text class="item_price i_pri main-color" style="{{app.globalData.customStyleColor}}" wx:if="{{false === isIntegralGoods && showCardPrice}}"><text>会员价：{{app.globalData.currencySymbol}}</text><text style='font-size:44rpx;'>{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.memberPrice:memberCardPrice)}}</text></text>
+        <text wx:if="{{showCardPrice}}"  class="express_money_show">非会员价：<text  class="">{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.price:goodsData.price)}}</text></text>
+        <!--积分商品-->
+        <text class="item_price i_pri main-color" style="{{app.globalData.customStyleColor}}" wx:elif="{{true === isIntegralGoods}}"><text style='font-size:44rpx;'>{{goodsData.selectedSku?goodsData.selectedSku.price:goodsData.price}}</text> 积分</text>
+        <block wx:if="{{false === isIntegralGoods}}">
+        <!-- 非积分商品，非定制商品且显示原价且显示会员价 -->
+        <text  wx:if="{{goodsData.originalPrice !=0 && !isBook && showCardPrice }}" style="display:block" class="express_money_show">原价：<text  class="original-price">{{m1.getFixedMoney(goodsData.originalPrice)}}</text></text>
+        <!-- 非积分商品，非定制商品且显示原价且不显示会员价 -->
+        <text  wx:if="{{goodsData.originalPrice !=0 && !isBook && !showCardPrice }}" class="express_money_show">原价：<text  class="original-price">{{m1.getFixedMoney(goodsData.originalPrice)}}</text></text>
+        <!-- 非积分商品，定制商品且显示原价且不显示会员价 -->
+        <text wx:if="{{goodsData.originalPrice !=0 && isBook && !showCardPrice}}" class="item_price i_pri main-color" style='font-size:44rpx;{{app.globalData.customStyleColor}}'>原价：{{m1.getFixedMoney(goodsData.originalPrice)}}</text>
+        </block>
+        <!-- 积分商品 -->
+        <block wx:elif="{{true === isIntegralGoods}}">
+            <text  wx:if="{{goodsData.originalPrice !=0}}" class="express_money_show">原价：<text  class="original-price">{{goodsData.originalPrice}} 积分</text></text>
+        </block>
+        <text class="pointPercentage sub-color commSpinVal" style="{{app.globalData.customSubColor}}" wx:if="{{goodsData.useDeductible}}">积分可抵{{goodsData.deductible}}%</text>
+        <view class='commonGoddsPoster' bindtap='showCommonPoster' data-id="{{goodsData.id}}" wx:if="{{openGoodsShare && !(showFX & isSalesmen) && false === isIntegralGoods && !app.globalData.fromuid && !app.globalData.shopuid}}">
+          <image src='{{staticResPath}}/image/mobile/posterico.png' class='commonPosterIco'></image>
+          <text class='commonText'>推广码</text>
+        </view>
+      </view>
+      <view class="payed_count">
+        <text class="inventory">剩余：{{goodsData.selectedSku?goodsData.selectedSku.inventory:goodsData.totalCount}} {{unitName}}</text>
+        <text class="soldNum">销量：{{goodsData.payedCount + goodsData.virtualPayedCount}} 笔</text>
+        <text class="delivery_txt">{{!isVirtualGoods ? deliveryTxt:''}}</text>
+      </view>
+    </view>
+    <!-- 会员卡入口 -->
+    <navigator wx:if="{{vipCard.vipCard==1}}" url='{{vipCard.card.url}}' class="vip-card-panel main-color-bg panel-style-{{vipCard.card.style}}" style="background-image: url('{{staticResPath}}/image/mobile/card-background.png');{{app.globalData.customStyleBg}}">
+      <image class="vip-image" src='{{staticResPath}}/image/mobile/vip-card{{vipCard.card.style}}.png'></image>
+      <view class="card-tips">{{vipCard.card.tips}}</view>
+      <image wx:if="{{vipCard.card.style==3}}" class="handle-image main-color" style="{{app.globalData.customStyleColor}}" src='{{staticResPath}}/image/mobile/card-right.png'></image>
+      <view wx:else class="handle-text main-color" style="{{app.globalData.customStyleColor}}">立即开通</view>
+    </navigator>
+  </view>
+  <!--商品价格优惠-->
+  <view class="commissionBlock" wx:if="{{false === isIntegralGoods}}">
+    <view class="commission" wx:if="{{(isMainShop && showFX && isSalesmen && !isBook)||(isMainShop && showFX && isSalesmen)}}">
+      <view class="valueBlock" wx:if="{{isMainShop && showFX && isSalesmen && !isBook}}">
+        <image src='{{staticResPath}}/image/mobile/fx/icon_commission_2.png' class="commission_1"></image>
+        <view class="commVal inderectValue">间接奖励</view>{{app.globalData.currencySymbol}}{{mTool.fToY(mTool.getInderectValue(distributorConfig,goodsData,promoterAccount),'direct')}}</view>
+        <view class="valueBlock" wx:if="{{isMainShop && showFX && isSalesmen && !isBook}}">
+        <image src='{{staticResPath}}/image/mobile/fx/icon_commission_1.png' class="commission_2"></image>
+        <view class="commVal directValue">直接奖励</view>{{app.globalData.currencySymbol}}{{mTool.fToY(mTool.getDirectValue(distributorConfig,goodsData,promoterAccount),'direct')}}</view>
+      	<!--
+      	<view class="valueBlock" wx:if="{{!isSalesmen}}">
+        	<text>共享商品</text>
+      	</view>
+      	-->
+      <view class="valueBlock" bindtap="showImgPre" data-id="{{goodsData.id}}" wx:if="{{isMainShop && showFX && isSalesmen}}">
+        <image src="{{staticResPath}}/image/mobile/posterico.png" class="posterIco"></image>
+        <text>商品码</text>
+      </view>
+    </view>
+    <!-- 促销 -->
+    <view class='takeFree' wx:if="{{!isVirtualGoods && (showGoodsCount && goodsType == 1 || showGoodsPrice && goodsType == 1)}}">
+        <view class="cuxiao free sub-color commSpinVal" style="{{app.globalData.customSubColor}}">促销</view>
+        <text class='freeText' wx:if="{{showGoodsCount}}">购满\t{{goodsCount}}\t件包邮\t</text>
+        <text class='freeText' wx:if="{{showGoodsPrice}}">\t购满\t{{mTool.fToY(goodsPrice)>0?mTool.fToY(goodsPrice):0}}\t元包邮</text>
+    </view>
+    <!-- 积分详情 -->
+    <view class='takeFree' style="flex-direction: column;align-items: flex-start;justify-content: center;" wx:if="{{isOpen && isConsumeOk && consumeMoney>0}}">
+      <view>
+        <view class="cuxiao free sub-color commSpinVal" style="{{app.globalData.customSubColor}}">积分赠送</view>
+        <text class='freeText'>每支付\t{{consumeMoney}}\t元，赠送\t{{consumeGet}}\t积分\t</text>
+      </view>
+    </view>
+    <view class='takeFree' style="flex-direction: column;align-items: flex-start;justify-content: center;" wx:if="{{isOpen && isBuyGoodsGift && BuyGoodsMoney>0}}">
+      <view>
+        <view class="cuxiao free sub-color commSpinVal" style="{{app.globalData.customSubColor}}">积分赠送</view>
+        <text class='freeText'>购买可赠送\t{{BuyGoodsMoney}}\t积分\t</text>
+      </view>
+    </view>
+    <!-- 满减 -->
+    <view wx:if="{{showOverReduce && goodsType == 1}}">
+      <view class='overReduce'>
+        <view class="cuxiao free sub-color commSpinVal" style="{{app.globalData.customSubColor}}">满减</view>
+          <view wx:if="{{overReduceType==1}}">
+            <text class='freeText'>购满\t{{overReduceRule[0].over}}\t件，减\t{{overReduceRule[0].reduce}}\t元</text>
+          </view>
+          <view wx:if="{{overReduceType==2}}">
+            <text class='freeText'>购满\t{{overReduceRule[0].over}}\t元，减\t{{overReduceRule[0].reduce}}\t元</text>
+          </view>
+        <image class='jianTou-right' src='{{staticResPath}}/image/mobile/trigger_right.png' bindtap='changeOverReduce'></image>
+      </view>
+      <view class="overReduceDetail {{showOverReduceDetail?'open_over':'close_over'}}">
+        <view wx:for="{{overReduceRule}}">
+          <view wx:if="{{overReduceType==1}}">
+            <text class='freeText'>购满\t{{item.over}}\t件，减\t{{item.reduce}}\t元</text>
+          </view>
+          <view wx:if="{{overReduceType==2}}">
+            <text class='freeText'>购满\t{{item.over}}\t元，减\t{{item.reduce}}\t元</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 首单立减 -->
+    <view wx:if="{{firstOrderDiscount.isOpen == 'true' && firstOrderDiscount.sceneType[0].selected}}">
+      <view class='overReduce'>
+        <view class="cuxiao free sub-color commSpinVal" style="{{app.globalData.customSubColor}}">首单立减</view>
+        <view>
+          <text class='freeText'>首次下单用户立减{{firstOrderDiscount.reduceMoney}}元</text>
+            <text class='freeText' wx:if="{{firstOrderDiscount.isEnjoy == 'true'}}">（同时享受满减）</text>
+            <text class='freeText' wx:if="{{firstOrderDiscount.isEnjoy == 'false'}}">（不同时享受满减）</text>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+  <!--商品规格选择-->
+  <view class="microshop-box" wx:if="{{goodsData.usenewspec}}">
+  <!-- 非积分商品可以加入购物车 -->
+    <view wx:if="{{!goodsData.formIdEnable}}">
+    <view class="goto_shop" bindtap="onAddCart" wx:if="{{!isIntegralGoods}}">
+      <text>选择：{{goodsData.selectedSku.names}}</text>
+      <image class='jianTou-right' src='{{staticResPath}}/image/mobile/trigger_right.png'></image>
+    </view>
+    <view class="goto_shop" bindtap="onBuyNow" wx:elif="{{isIntegralGoods}}"><!-- 积分商品不可以加入购物车 -->
+      <text>选择：{{goodsData.selectedSku.names}}</text>
+      <image class='jianTou-right' src='{{staticResPath}}/image/mobile/trigger_right.png'></image>
+    </view>
+  </view>
+  </view>
+  <!--商品评价-->
+  <view class="microshop-box" style="{{goodsData.usenewspec ? 'margin-top:0;' : ''}}" wx:if="{{isOpenComment && !isIntegralGoods}}">
+    <view class="goto_shop" bindtap="toJudgeList">
+      <text>商品评价(\t{{judgeCount}}\t)</text>
+      <image class='jianTou-right' wx:if="{{judgeCount>0}}" src='{{staticResPath}}/image/mobile/trigger_right.png'></image>
+    </view>
+  </view>
+  <!--商品详情块-->
+  <view class="microshop-box">
+    <view class="goto_shop">
+      <text>商品详情</text>
+    </view>
+  </view>
+  <!--商品描述块-->
+  <view class="detail_decoration">
+    <block wx:for="{{decoration.items}}" wx:key="idx" wx:for-index="idx">
+      <template is="{{item.item_type}}" data="{{app,item:item,userImagePath:userImagePath,staticResPath:staticResPath,bannerHeight:bannerHeight,multInfoArr:multInfoArr,multInfo:multInfo,multInfoAddr:multInfoAddr,shopUid:app.globalData.shopuid,categoryList:categoryList,selectedCatData:selectedCatData,widgetIndex:idx,communityHandleData:communityHandleData,subClsList:subClsList,selectedSubData:selectedSubData,goodsOrderObj:goodsOrderObj,extConfig:extConfig,app:app,seckList,countDownList,playBgMusic,navTabPanelData,shoppingCartCount,microBottomMenu,locationInfo}}" />
+    </block>
+  </view>
+</scroll-view>
+  <!--提示框(加入购买车)-->
+<view>
+  <view class="infodialog {{infoDialogStatu}}" id="infodialog">
+    <view class="infodialog-header main-color-bg" style="{{app.globalData.customStyleBg}}" >
+      <text>提示框</text>
+      <view class="infodialog-close" bindtap="onCloseInfoDialog">×</view>
+    </view>
+    <view class="infodialog-content">
+      已加入购物车
+    </view>
+    <view class="btn-cont">
+      <navigator class="continutebuy sub-color-bg" bindtap="onCloseInfoDialog" style="{{app.globalData.customSubBg}}">继续购物</navigator>
+      <navigator url="/pages/shoppingcar/shoppingcar" open-type="redirect" class="main-color-bg gotoshopcar" style="{{app.globalData.customStyleBg}}" >前往购物车</navigator>
+    </view>
+  </view>
+  <view class="fuzzylayer {{fuzzyLayerStatu}}">
+  </view>
+</view>
+<!-- <view wx-if="{{goodsData.selectedSku?goodsData.selectedSku.inventory==0:goodsData.totalCount==0}}" class='nostock'>该商品售罄啦，看看其他商品吧！</view> -->
+<view wx-if="{{goodsData.totalCount==0}}" class='nostock'>该商品售罄啦，看看其他商品吧！</view>
+    <!-- 弹出框 -->
+  <view class="mask" hidden="{{isShowMask}}" bindtap="hideMask">
+    <view class="collectionInfon">
+      <!-- 内容块 -->
+      <view class="mask-content">
+        <text class="mask-title">购买失败</text>
+        <text class="mask-tips">
+          商品需要特定会员才能购买哦~
+        </text>
+      </view>
+      <!-- 按钮块 -->
+      <view class="mask-btn">
+        <button class="getBtn" bindtap="hideMask">我再想想</button>
+        <button class="getBtn main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="memberIn">成为会员</button>
+      </view>
+    </view>
+
+  </view>
+<!-- 如果没库存 -->
+<!-- <template is="categoryModalTpl" wx-if="{{goodsData.selectedSku?goodsData.selectedSku.inventory==0:goodsData.totalCount==0}}" data="{{userImagePath:userImagePath,staticResPath:staticResPath,nostock:true,app:app,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isDetailPage:true,isCollected:isCollected}}"></template> -->
+<template is="categoryModalTpl" wx-if="{{goodsData.totalCount==0 && isDone}}" data="{{app,limitEnable,limitCount,purchaseCon,startCount,isService:decoration.header_data.service,userImagePath:userImagePath,staticResPath:staticResPath,nostock:true,app:app,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isDetailPage:true,isCollected:isCollected}}"></template>
+<!-- 如果有库存 -->
+<!-- <template is="categoryModalTpl" wx-if="{{goodsData.selectedSku?goodsData.selectedSku.inventory!=0:goodsData.totalCount!=0}}" data="{{userImagePath:userImagePath,staticResPath:staticResPath,goodsData:goodsData,app:app,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isDetailPage:true,isCollected:isCollected, isIntegralGoods}}"></template> -->
+<template is="categoryModalTpl" wx-if="{{goodsData.totalCount!=0 && isDone}}" data="{{app,limitEnable,limitCount,purchaseCon,startCount,isService:decoration.header_data.service,userImagePath:userImagePath,staticResPath:staticResPath,goodsData:goodsData,app:app,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isDetailPage:true,isCollected:isCollected, isIntegralGoods,showCardPrice,memberCardPrice}}"></template>
+<include src="../template/goodsCategoryModal.wxml" />
+<include src="../template/fixedmenu.wxml" />
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

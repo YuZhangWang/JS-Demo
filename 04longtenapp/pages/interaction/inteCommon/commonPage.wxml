@@ -1,0 +1,52 @@
+<view class="mask_page act_end_page" wx:if="{{isGameTimeEnd}}">
+  <view class="view_act_rule" bindtap="showRule">
+    <image src="http://res.xcx.weijuju.com/image/mobile/aty/common/unStart_04.png" mode='widthFix'></image>
+  </view>
+</view>
+<view class="mask_page act_unstart_page" wx:if="{{isGameUnstart}}">
+  <view class="title">活动未开始</view>
+  <view class="sub_title"><view class="zan-icon zan-icon-clock" style='margin-right:10rpx'></view>开始时间：{{gameStartTime}}</view>
+  <view class="sub_title">请稍后再来~</view>
+  <view class="view_act_rule" bindtap="showRule">
+    <image src="http://res.xcx.weijuju.com/image/mobile/aty/common/unStart_04.png" mode='widthFix'></image>
+  </view>
+</view>
+
+
+<view class="mask_page fire_res fire_success" wx:if="{{showSuccessMaskPage}}">
+	<view class="success_bg"></view>
+	<view class="fire_res_light a-rotateL"></view>
+	<view class="fire_res_success"></view>
+	<view class="fire_res_title"><view></view></view>
+	<view class="fire_res_star3"><view></view></view>
+	<view class="fire_res_star2"><view></view></view>
+	<view class="fire_res_star1"><view></view></view>
+	<view class="fire_res_guang"><view></view></view>
+	<view class="p_text_1">获得<text class="score">{{gameScore}}</text>分</view>
+	<view id="resule-status-daylimit" class="p_text_2"><text class="p_text">今天还有<text style="color:#f64f33;">{{actuallyTime}}</text>次抽奖机会</text></view>
+	<view id="resule-status-actlimit" class="p_text_3" style="display:none;"><text class="p_text">你总共还有<text class="actlimit">{{actuallyTime}}</text>次抽奖机会</text></view>
+	<view class="fire_btn_cont">
+		<view bindtap='doLottery' class="fire_btn fire_ress_success_award link_lottery"></view>
+		<view wx:if="{{activityRule.shareType == 0}}" bindtap='handleShareBtn' class="fire_btn fire_ress_success_share share"></view>
+		<button wx:else class="fire_btn fire_ress_success_share share" hover-class='none' open-type='share'></button>
+  </view>
+</view>
+
+<view class="mask_page fire_res fire_fail" wx:if="{{showFailMaskPage}}">
+	<view class="fail_bg"></view>
+	<view class="fire_res_fail"></view>
+	<view class="fire_res_title"><view></view></view>
+	<view class="fire_res_star3"><view></view></view>
+	<view class="fire_res_star2"><view></view></view>
+	<view class="fire_res_star1"><view></view></view>
+	<view class="p_text_1">获得<text class="score">{{gameScore}}</text>分</view>
+	<view id="resule-status-minscore" class="p_text_2"><text class="p_text">需要达到<text class="prize_score">{{activityRule.scoreLimit}}</text>分才能抽奖哦</text></view>
+	<view class="p_text_3"><text class="p_text">你还有{{actuallyTime}}次挑战机会</text></view>
+	<view class="fire_btn_cont" style="top: 703rpx;">
+		<view bindtap='playAgain' class="fire_btn fire_ress_fail_playagain playagain_link"></view>
+		<view wx:if="{{activityRule.shareType == 0}}" bindtap='handleShareBtn' class="fire_btn fire_ress_fail_share share"></view>
+		<button wx:else class="fire_btn fire_ress_fail_share share" hover-class='none' open-type='share'></button>
+	</view>
+</view>
+<view wx:if="{{returnIndex}}" class="fixedhome sub-color" style="{{app.globalData.customSubColor}}" bindtap='backToHome'><view class="zan-icon zan-icon-home sub-color"></view></view>
+<include src="/pages/template/authModal.wxml"/>

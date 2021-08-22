@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "审核结果",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

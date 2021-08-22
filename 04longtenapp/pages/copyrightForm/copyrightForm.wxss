@@ -1,0 +1,56 @@
+/* pages/copyrightForm/copyrightForm.wxss */
+.source-msg{
+  padding: 10px 25px;
+  box-sizing: border-box;
+  color: #949494;
+  font-size: 30rpx;
+  border-bottom: 1px solid #ebebeb;
+}
+.contact{
+  padding: 10px;
+  text-align: center;
+  font-size: 32rpx;
+  border-bottom: 15px solid #ebebeb;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.form-box{
+  padding: 20rpx 25px;
+}
+.form-title{
+  text-align: center;
+  font-size: 36rpx;
+  padding: 15rpx 0;
+  color: #ff6b2e;
+  font-weight: bold;
+}
+.form-line{
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+}
+.form-line span{
+  width: 100rpx;
+  margin-right: 10rpx;
+  font-weight: bold;
+  font-size: 30rpx;
+  
+}
+.form-line input{
+  width: 80%;
+  border-bottom: 1px solid #ebebeb;
+  padding-left: 10px;
+  
+}
+.form-btn{
+  padding: 10px;
+  text-align: center;
+  color:#fff;
+  font-size: 32rpx;
+  background: #ff6b2e;
+  border-radius: 5px;
+  width: 60%;
+  margin: 15px auto;
+
+}

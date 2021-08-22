@@ -1,0 +1,11 @@
+<!--pages/wxpay/wxpaytoken.wxml-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="bindPage">
+<view class="tokenDesc">
+  <text class="bindTxt">为接受商家微信提取方式</text>
+  <text class="bindTxt">需绑定您的个人微信</text>
+</view>
+<button class="comfirmBtn" style="" bindtap="handleToken">确认</button>
+</view>
+<include src="/pages/template/authModal.wxml"/>
+</view>

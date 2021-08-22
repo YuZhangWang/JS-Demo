@@ -1,0 +1,261 @@
+<!--order_pay.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getLinkName = function (name) {
+    if(!name){
+      return "";
+    }else if(name.indexOf("其他小程序")==0){
+      return true;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getLinkName = getLinkName;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="container">
+	<view class="microshop-box">
+		<view class="goods-list">
+			<view class="good-item" wx:for="{{goodsList}}" wx:for-item="goodsData" wx:key="goodsData.id" msg-id="{{goodsData.id}}">
+				<view class="left-img">
+					<image src="{{ (goodsData.selectedSku && goodsData.selectedSku.img) ? userImagePath + goodsData.selectedSku.img: userImagePath+goodsData.cover}}"></image>
+				</view>
+				<view class="right-con">
+					<view class="goodsname">
+						{{goodsData.name}}
+					</view>
+					<view class="category">
+						 {{goodsData.spec?("（"+goodsData.spec.names+"）"):""}}
+					</view>
+					<view>
+						数量：{{goodsData.count}}<text class="main-color" style="{{app.globalData.customStyleColor}}" wx:if="{{false == isIntegralGoods}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goodsData.total_price)}}</text><text class="main-color" style="{{app.globalData.customStyleColor}}" wx:elif="{{true == isIntegralGoods}}">{{goodsData.total_price}} 积分</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view wx:if="{{siteType == 'yuyue'}}" class="microshop-box yytime-cont row-yytime detail block">
+		<view class="yytime-header">
+
+			<text class="tip">预约时间</text>
+		</view>
+		<view class="box-cont yytime_box" style="padding: 8px 5px;">
+			<view class="yytime_con">
+				<text>预约时间：</text>
+				<text class="yytime">{{orderData.bespeakTime}}</text>
+			</view>
+		</view>
+		<view class="box-cont yytime_box" style="padding: 8px 5px;" wx:if="{{orderData.bespeakEndTime}}">
+			<view class="yytime_con">
+				<text>结束时间：</text>
+				<text class="yytime">{{orderData.bespeakEndTime}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="microshop-box address-cont row-address detail block" wx:if="{{fromToStore}}">
+		<view class="address-header">
+
+			<text class="tip">就餐信息</text>
+		</view>
+		<view class="box-cont address" style="padding: 8px 5px;line-height:50rpx;">
+			<view class="user_con">
+				<text>就餐方式：</text>
+				<text class="username">{{orderData.foodType==1?"到店堂吃":"到店自取"}}</text>
+			</view>
+			<view class="address_con" wx:if="{{orderData.foodSiteName}}">
+				<text>就餐位置：</text>
+				<text class="addr">{{orderData.foodSiteName}}</text>
+			</view>
+			<view class="address_con">
+				<text>预计就餐时间：</text>
+				<text class="addr">{{ orderData.bespeakTime || orderData.waitTime +"分钟"}}</text>
+			</view>
+			<view class="address_con" wx:if="{{orderData.tel}}">
+				<text>手机号码：</text>
+				<text class="addr">{{orderData.tel}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="microshop-box address-cont row-address detail block" wx:else>
+		<view class="address-header">
+
+			<text class="tip">{{siteType == 'yuyue' ? '预约人': orderData.wayType == 1 ? '收货信息' : '取货信息'}}</text>
+		</view>
+		<view class="box-cont address" style="padding: 8px 5px;">
+			<view class="user_con">
+				<!--goodsVirtual-->
+				<text>{{siteType == 'yuyue' ? '预约人': orderData.wayType == 1 ? '收货人' : '取货人'}}：</text>
+				<!--虚拟类商品收件人-->
+				<text class="username" wx:if="{{orderData.clientName}}">{{orderData.clientName}}</text>
+				<!--虚拟类商品手机-->
+				<text class="tel" wx:if="{{orderData.tel}}" style="margin-left: 30px;">{{orderData.tel}}</text>
+			</view>
+			<view wx:if="{{showAddr != 'hide' && !goodsVirtual}}" class="address_con" wx:if="{{!goodsVirtual}}">
+				<text>{{addrTitle}}：</text>
+				<text class="addr">{{orderData.address}}</text>
+			</view>
+			<!--虚拟类商品备注-->
+			<view class="address_con" wx:if="{{goodsVirtual}}">
+				<text>备注信息：</text>
+				<text class="addr">{{orderData.remark||'无'}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="main">
+		<view class="block select-block" style="display:none;">
+			<select id="delivery_price">
+			</select>
+		</view>
+		<view class="microshop-box paytype-cont">
+			<view class="qb-header" style="margin-bottom: 0px; padding-bottom: 5px;">
+
+				<text class="tip">选择支付方式</text>
+			</view>
+			<view class="box-cont">
+        <block wx:if="{{false === isIntegralGoods}}">
+			<view class="ul" bindtap="selectPayType" data-type="0" wx:if="{{openWxpay}}">
+				<view class="fn-clear {{selectedPay == 0 ? 'selected' : ''}}" data-value="2">
+					<view wx:if="{{selectedPay == 0}}" class="fleft zan-icon zan-icon-checked main-color"
+						  style="{{app.globalData.customStyleColor}}"></view>
+					<view wx:else class="fleft zan-icon zan-icon-check" style="color:#ccc;"></view>
+					<text class="fleft">微信支付</text>
+					<view class="fright logo">
+						<image src="{{staticResPath}}/image/wx.png"></image>
+					</view>
+				</view>
+			</view>
+			<block wx:if="{{arrivalPay}}">
+				<view class="ul" bindtap="selectPayType" data-type="1"
+					  wx:if="{{openDaofu && orderData.orderType != 4}}">
+					<view class="fn-clear {{selectedPay == 1 ? 'selected' : ''}}" data-value="2">
+						<view wx:if="{{selectedPay == 1}}" class="fleft zan-icon zan-icon-checked main-color"
+							  style="{{app.globalData.customStyleColor}}"></view>
+						<view wx:else class="fleft zan-icon zan-icon-check" style="color:#ccc;"></view>
+						<text class="fleft">货到付款</text>
+						<view class="fright logo">
+							<image src="{{staticResPath}}/image/arrive.jpg"></image>
+						</view>
+					</view>
+				</view>
+			</block>
+			<blcok wx:if="{{toStorePay}}">
+				<view class="ul" bindtap="selectPayType" data-type="2" wx:if="{{openDianfu && orderData.orderType != 4}}">
+					<view class="fn-clear {{selectedPay == 2 ? 'selected' : ''}}" data-value="2">
+						<view wx:if="{{selectedPay == 2}}" class="fleft zan-icon zan-icon-checked main-color"
+							  style="{{app.globalData.customStyleColor}}"></view>
+						<view wx:else class="fleft zan-icon zan-icon-check" style="color:#ccc;"></view>
+						<text class="fleft">到店支付</text>
+						<view class="fright logo">
+							<image src="{{staticResPath}}/image/face.png"></image>
+						</view>
+					</view>
+				</view>
+			</blcok>
+
+        </block>
+        <view class="ul" bindtap="selectPayType" data-type="3" wx:elif="{{true === isIntegralGoods}}">
+					<view class="fn-clear {{selectedPay == 3 ? 'selected' : ''}}" data-value="3">
+          <view wx:if="{{selectedPay == 3}}" class="fleft zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+          <view wx:else class="fleft zan-icon zan-icon-check" style="color:#ccc;"></view>
+					<text class="fleft">积分兑换</text>
+					<view class="fright logo">
+          </view>
+					</view>
+				</view>
+
+			</view>
+		</view>
+		<view class="microshop-box goods-wrapper block">
+			<view class="total">
+				<view class="fee-header">
+
+					<text class="tip">费用详情</text>
+				</view>
+				<view wx:if="{{!orderData.extend.restAmount}}" class="goods-total">
+					<text>总商品金额</text><text class="money total_price main-color" wx:if="{{false === isIntegralGoods}}" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(totalPrice)}}</text><text class="money total_price main-color" wx:if="{{true === isIntegralGoods}}" style="{{app.globalData.customStyleColor}}">{{totalPrice}} 积分</text>
+				</view>
+        <view wx:if="{{orderData.extend.restAmount}}" class="goods-total">
+					<text>尾款</text><text style="{{app.globalData.customStyleColor}}" class="money total_price main-color">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.extend.restAmount*orderData.totalCount)}}</text>
+				</view>
+
+				<view class="hb_content">
+					<text class="hb_price_text"><i class="icon-hb"> </i>奖励优惠金额</text><text style="{{app.globalData.customStyleColor}}" class="money hb_price main-color">- {{app.globalData.currencySymbol}}0.00</text>
+				</view>
+				<view class="point_content">
+					<text class="point_price_text"><i class="icon-point"> </i>积分抵现</text><text style="{{app.globalData.customStyleColor}}" class="money point_price main-color">- {{app.globalData.currencySymbol}}0.00</text>
+				</view>
+				<view class="coupon_content">
+					<text class="coupon_price_text"><i class="icon-coupon"> </i>代金券</text><text style="{{app.globalData.customStyleColor}}" class="money coupon_price main-color">- {{app.globalData.currencySymbol}}0.00</text>
+				</view>
+				<view class="ticket_content" wx:if="{{orderData.ticketId}}">
+					<text class="ticket_price_text"><i class="icon-coupon"> </i>优惠券</text><text style="{{app.globalData.customStyleColor}}" class="money ticket_price main-color">- {{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.ticketPrice)}}</text>
+				</view>
+				<view class="point_redeem_content">
+					<text class="point_redeem_price_text"><i class="icon-coupon"> </i>积分抵扣</text><text style="{{app.globalData.customStyleColor}}" class="money point_redeem_price main-color">- {{app.globalData.currencySymbol}}0.00</text>
+				</view>
+				<view class="discount_content" wx:if="{{cardPrice > 0}}">
+					<text class="discount_price_text"><i class="icon-coupon"> </i>会员折扣</text><text style="{{app.globalData.customStyleColor}}"  class="money discount_price main-color">- {{app.globalData.currencySymbol}}{{m1.getFixedMoney(cardPrice)}}</text>
+				</view>
+        <view class="depositPrice_content" wx:if="{{integralPrice > 0}}">
+					<text class="depositPrice_price_text"><i class="icon-coupon"> </i>{{useIntegral}}积分抵扣</text><text style="{{app.globalData.customStyleColor}}"  class="money depositPrice_price main-color">- {{app.globalData.currencySymbol}}{{m1.getFixedMoney(integralPrice)}}</text>
+				</view>
+        <view class="depositPrice_content" wx:if="{{depositPrice > 0}}">
+					<text class="depositPrice_price_text"><i class="icon-coupon"> </i>储值金</text><text style="{{app.globalData.customStyleColor}}"  class="money depositPrice_price main-color">- {{app.globalData.currencySymbol}}{{m1.getFixedMoney(depositPrice)}}</text>
+				</view>
+        <view class="depositPrice_content" wx:if="{{giftCardDiscountMoney > 0}}">
+					<text class="depositPrice_price_text"><i class="icon-coupon"> </i>礼品卡优惠</text><text style="{{app.globalData.customStyleColor}}"  class="money depositPrice_price main-color">- {{app.globalData.currencySymbol}}{{m1.getFixedMoney(giftCardDiscountMoney)}}</text>
+				</view>
+				<view class="balance_content">
+					<text class="balance_price_text"><i class="icon-balance"> </i>余额</text><text style="{{app.globalData.customStyleColor}}"  class="money balance_price main-color">- {{app.globalData.currencySymbol}}0.00</text>
+				</view>
+				<view wx:if="{{siteType != 'yuyue' && !fromToStore}}" class="delivery_content" style="display: block;">
+					<text class="delivery_price_text">运费</text><text style="{{app.globalData.customStyleColor}}"  class="money delivery_price main-color">{{selectedPay == 2 ?0.00 : deliveryTxt}}</text>
+				</view>
+				<view wx:if="{{siteType != 'yuyue' && orderData.packingPrice > 0}}" class="packing_content" style="display: block;">
+					<text class="delivery_price_text">包装费</text><text style="{{app.globalData.customStyleColor}}"  class="money packing_price main-color">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.packingPrice)}}</text>
+				</view>
+				<view class="reduce_price_content hide" id="reduce_price">
+					<text class="reduce_price_text">满减</text><text style="{{app.globalData.customStyleColor}}"  class="money reduce_price main-color">- {{app.globalData.currencySymbol}}0.00</text>
+				</view>
+				<view class="final-total" style="display:none;">
+					<text class="final_total_text">应付总额</text><text style="{{app.globalData.customStyleColor}}"  class="money final_price main-color">{{app.globalData.currencySymbol}}0.10</text>
+				</view>
+			</view>
+		</view>
+		<view class="submit-box_height">
+
+		</view>
+		<view class="submit-box buy_bar">
+			<!-- <view class="final-total" style="display: inline-block;">
+				  <text class="final_total_text">应付总额</text><text class="money final_price">{{app.globalData.currencySymbol}}{{selectedPay == 2 ?m1.getFixedMoney(noDeliveryPrice) : m1.getFixedMoney(allPrice)}}</text>
+			</view>  -->
+      <view bindtap="onPayOrder" class="tg-btn order-btn main-color-bg" style="{{app.globalData.customStyleBg}}"  disabled="{{btnLoading}}" wx:if="{{false === isIntegralGoods}}">{{selectedPayName}}{{app.globalData.currencySymbol}}{{selectedPay == 2 ?m1.getFixedMoney(noDeliveryPrice) : m1.getFixedMoney(allPrice)}}</view>
+      <view bindtap="onPayOrder" class="tg-btn order-btn main-color-bg" style="{{app.globalData.customStyleBg}}"  disabled="{{btnLoading}}" wx:elif="{{true === isIntegralGoods}}">确定兑换</view>
+		</view>
+	</view>
+</view>
+<!--弹窗-->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <navigator wx:if="{{promotionSwitch==1 && (promotionOrderPrice/100) <= m1.getFixedMoney(allPrice+depositPrice) && showPromotion && !m1.getLinkName(promotionName)}}" url='{{promotionUrl}}'><view class='promotionImg'><image  src='{{promotionImg}}'></image></view></navigator>
+  <navigator wx:if="{{promotionSwitch==1 && (promotionOrderPrice/100) <= m1.getFixedMoney(allPrice+depositPrice) && showPromotion && m1.getLinkName(promotionName)}}" target="miniProgram" open-type="navigate" app-id="{{promotionUrl}}" path="" extra-data="" version="release"><view class='promotionImg'><image  src='{{promotionImg}}'></image></view></navigator>
+
+  <view class="modal-title">温馨提示</view>
+  <view class="modal-content">
+    <view wx:if="{{selectedPay == 1 || selectedPay == 2 }}">下单成功</view>
+    <view wx:if="{{selectedPay == 0}}">支付成功</view>
+    <view wx:if="{{ 3 == selectedPay}}">兑换成功</view>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">我的订单</view>
+    <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+  </view>
+</view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

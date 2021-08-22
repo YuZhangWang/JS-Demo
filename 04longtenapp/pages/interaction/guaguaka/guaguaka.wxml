@@ -1,0 +1,55 @@
+<!--pages/interaction/guaguaka/guaguaka.wxml-->
+<import src="scratch.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="wrapper" wx:if="{{!showAuthBox}}">
+  <view class="ka_wrapper">
+    <view class="cover">
+      <view style='height:76rpx;'></view>
+      <block wx:if="{{(actuallyTime>0 || showPrizeResult)&&!hideScratch}}">
+        <template is = "scratch" data = "{{app,scratch, isScroll,awardStatus}}"></template>
+      </block>
+      <view class="changce">今日您还有<text class="em">{{actuallyTime}}</text>张刮刮卡未使用</view>
+      <view class="view_rule" bindtap='showRule'>活动规则</view>
+      <view class="prizehref" bindtap="showAward">{{myPrizeTxt}}</view>
+
+      <view id="prize" wx:if="{{showPrizeResult || actuallyTime<=0}}">
+        <block wx:if="{{actuallyTime<=0  && !showPrizeResult}}">
+        <view class="gua_info">
+          <view>刮刮卡已用完</view>
+        </view>
+        </block>
+        <block wx:elif="{{haveGift}}">
+        <view class="gua_info">
+          <view>恭喜你中了</view>
+          <view class="zhongjiang">{{prizeAward.awardName}}啦</view>
+          <view>点击<text bindtap='showAward' class="view_myaward">我的奖品</text>即可查看奖品</view>
+        </view>
+        <view class="next_btn" id="next_btn" bindtap='playAgain'>刮下一张</view>
+        </block>
+        <block wx:else>
+        <view class="gua_info">
+          <view>Hi,这次没刮中</view>
+        </view>
+        <view class="next_btn" id="next_btn" bindtap='playAgain'>刮下一张</view>
+        </block>
+      </view>
+    </view>
+    <view class="shouqiMenu">手气王</view>
+    <view class="shouqiList prize_notice">
+      <view class="ul">
+        <view class="li" wx:for="{{activityAwardRecords}}" wx:for-item="record" wx:key="record.id">
+          <image src="{{record.headPic}}"></image>
+          <text class="zhuli_name">{{record.nickName}}</text>
+          <text class="zhuli_count"><text class="em">领取奖品</text>1<text class="em">份</text></text>
+        </view>
+      </view>
+      <view id="moreShouqiInfo" wx:if="{{showMoreAwardRecord}}" bindtap='queryActivityAwardRecords' class="showMore">查看更多</view>
+    </view>
+  </view>
+</view>
+
+<include src="../inteCommon/commonPage.wxml"></include>
+  <play-ret static-res-path="{{staticResPath}}" bind:playagain="playAgain" is-show="{{isShow}}" have-gift="{{haveGift}}" play-msg="{{playMsg}}" play-desc="{{playDesc}}"></play-ret>
+  <rule-and-award bindcloseraa="onCloseraa" static-res-path="{{staticResPath}}" activity="{{activity}}"  awardlist="{{orgAwardList}}" myawards="{{myAwards}}" show-status="{{showStatus}}" bind:showrule="showRule" bind:showaward="showAward" bind:showawarditem="showAwardItem">
+  </rule-and-award>
+</view>

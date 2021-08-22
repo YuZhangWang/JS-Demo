@@ -1,0 +1,1419 @@
+.shareMask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+
+.shareMask-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 210px;
+    background: #fff;
+    font-family: "PingFangSC-Light";
+    color: #333;
+    font-size: 12px;
+}
+.shareMask-middle {
+    height: 156px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.shareMask-icon {
+    width: 42%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.button-reset {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    text-align: center;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.shareFormFlex {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    height: 100%;
+}
+.shareMask-img {
+    display: block;
+    height: 62px;
+    width: 62px;
+    margin-top: 23px;
+}
+
+.shareMask-img {
+    display: block;
+    height: 62px;
+    width: 62px;
+    margin-top: 23px;
+}
+wx-image > div {
+    width: 100%;
+    height: 100%;
+}
+.shareMask-txt {
+    width: 100%;
+    text-align: center;
+    margin-top: -21px;
+    z-index: 1;
+}
+.shareMask-confirm {
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    height: 54px;
+    line-height: 54px;
+    box-sizing: border-box;
+    border-top: 1px solid #d9d9d9;
+}
+.sbBottomWrap{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+    background:#FAFAFA;
+    
+    border-top:1px solid #eaeaea;
+    padding:5rpx 0px;
+
+
+
+}
+.mp_loading_clip{
+	display: none;
+}
+.sTuanPage{
+	width: 100%;
+	z-index: 10;
+	position: relative;
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+  background:transparent;
+}
+.btn_bottom_text{
+  line-height: 22rpx;
+}
+.btn_bottom_text2{
+  font-size: 28rpx;
+}
+.left_btn.home_btn{
+  flex: 0 0 120rpx;
+}
+.copyright-container{
+  background: #fff;
+}
+.tipTopPeople{
+  background: rgba(0,0,0,0.4);
+  color: #ffffff;
+  font-size: 28rpx;
+  display: flex;         
+  border-radius: 0 35rpx 35rpx 0;
+  position: absolute;
+  padding: 5rpx 20rpx;
+  z-index: 10;
+  top: 20rpx;
+  left: 0rpx;
+}
+.top_activityRulesBtn{
+    position: absolute;
+    right: 20rpx;
+    top: 40rpx;
+    width: 80rpx;
+    height: 80rpx;
+    z-index: 10;
+    background-size: 80rpx;
+    background-repeat: no-repeat;
+}
+.top_myOrderBtn{
+    position: absolute;
+    right: 20rpx;
+    top: 160rpx;
+    width: 80rpx;
+    height: 84rpx;
+    z-index: 10;
+    background-size: 80rpx;
+    background-repeat: no-repeat;
+}
+
+.swiper {
+  height: 350rpx;
+  width: 100%;
+}
+.wrapBanner image{
+  width: 100%;
+  height: 350rpx;
+}
+#indexPage{
+ background-size: 100% auto;
+ background-repeat: no-repeat;
+}
+.hei100{
+  height: 100%;
+}
+.indexPageBG100{
+ background-size: 100% 100% !important;
+}
+#indexPage .top_header .countDown_time_box{
+	position: relative;
+	width: 100%;
+	height: 105rpx;
+	background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300rpx;
+  display: flex;
+  justify-content: center;
+
+}
+.tuan_goods_list{
+ 
+  overflow: hidden;
+  background:#f8f7f7;
+
+}
+.tuan_goods_listBg{
+  background: #F7F7F7; 
+}
+
+#indexPage .countDown_time_box .timeWrap{
+	display: inline-flex;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300rpx 100rpx;
+  height: 100rpx;
+  justify-content: center;
+  align-items: cente;
+  width: 300rpx;
+  position: relative;
+}
+#indexPage .countDown_time_box .timer_box{
+  position: absolute;
+	color: #fff;
+	font-size: 45rpx;
+	text-align: right;
+  padding-top: 28rpx;
+}
+#indexPage .countDown_time_box .timer_day{
+  left: 18rpx;
+}
+#indexPage .countDown_time_box .timer_hour{
+  left: 94rpx;
+}
+#indexPage .countDown_time_box .timer_minute{
+  left: 165rpx;
+}
+#indexPage .countDown_time_box .timer_second{
+  left: 240rpx;
+}
+#indexPage .countDown_tips_box{
+	display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+}
+#indexPage .countDown_tips_box .line_style{
+	width: 180rpx;
+	height: 1px;
+	border-bottom: 1px solid #e7103b;
+}
+#indexPage .footer_btn_box, #myTuanListPage .footer_btn_box {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100rpx;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 -1px 2px #eee;
+    
+}
+#indexPage .footer_btn_box .footer_btn, #myTuanListPage .footer_btn_box .footer_btn {
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 16rpx 0 0;
+    text-align: center;
+    color: #100F0F;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#indexPage .footer_btn_box .footer_btn>image, #myTuanListPage .footer_btn_box .footer_btn>image {
+    height: 40rpx;
+    width: 40rpx;
+    display: block;
+    margin: 0 auto 4rpx;
+}
+#indexPage .footer_btn_box .footer_btn .tuan_menu_txt, #myTuanListPage .footer_btn_box .footer_btn .tuan_menu_txt {
+    font-size: 26rpx;
+    color: #999;
+}
+
+
+.topbar_tuanActEnded {
+    height: 20rpx;
+    background-color: #ef4b41;
+    color: #FFF;
+    font-size: 16px;
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 222;
+    width: 100%;
+     display: none; 
+}
+#indexPage .tuan_goods_list .tuan_goods_item {
+  background:#fff;
+  display:flex;
+  padding:20rpx 20rpx;
+  margin:30rpx;
+  box-sizing:border-box;
+}
+#indexPage .tuan_goods_item .goods_img {
+    display: inline-block;
+    width: 280rpx;
+    height: 280rpx;
+    flex: 0 0 280rpx;
+}
+#indexPage .tuan_goods_item .goods_info_box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-size: 34rpx;
+    margin-left: 20rpx;
+    flex:1 auto;
+}
+#indexPage .tuan_goods_item .nick_img_box{
+  display: flex;
+  justify-content: space-between;
+  color: #8c8c8c;
+  font-size: 36rpx;
+}
+#indexPage .tuan_goods_item .img_and_qibpao{
+  display: inline-flex;
+}
+#indexPage .goods_info_box .nick_img_box .nick_img>image {
+    display: block;
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    margin-left: 10rpx;
+}
+#indexPage .goods_info_box .goods_price_box{
+  /* margin-top: 65rpx; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+#indexPage .goods_info_box .goods_act_price{
+  color: #F44;
+  font-size: 30rpx;
+}
+#indexPage .goods_info_box .goods_price{
+  font-size:24rpx;
+  color: #8c8c8c;
+  
+}
+
+#indexPage .goods_info_box .nick_img_box .qipao_box {
+    width: 128rpx;
+    height: 54rpx;
+    background-color: white;
+    background-size: 128rpx 54rpx;
+    font-size: 25rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#indexPage .goods_info_box .nick_img_box .qipao_box text{
+  margin-left: 10rpx
+}
+#indexPage .goods_info_box  .goods_btn{
+  width:140rpx;
+  height:60rpx;
+  color:white;
+  background:#EC4644;
+  border-radius:40rpx;
+  line-height:60rpx;
+  text-align:center;
+  font-size:32rpx;
+  background: #f85032; /* Old browsers */
+background: linear-gradient(to right, #e73f40 0%,#ec8d6d 100%);
+}
+
+
+#goodsDetailPage .tuan_detail_wrapper {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    background:#f8f7f7;
+
+}
+#goodsDetailPage .comeBack_btn {
+    position: absolute;
+    z-index: 200;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+}
+#goodsDetailPage .comeBack_btn>image {
+    width: 75rpx;
+    height: 75rpx;
+}
+#goodsDetailPage .swiper {
+  height: 705rpx;
+}
+#goodsDetailPage .wrapBanner image{
+  height: 705rpx;
+}
+#goodsDetailPage .price_info_box{
+  background-size: 100% 100rpx;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  padding: 16rpx 10rpx;
+}
+#goodsDetailPage .price_info_box .price_info{
+  display: inline-flex;
+  align-items: center;
+  
+}
+#goodsDetailPage .price_info_box .actual_price_box{
+margin-left: 5rpx;
+}
+#goodsDetailPage .price_info_box .act_countDown_box{
+  color: #ed295d;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+#goodsDetailPage .price_info_box .act_countDown_box .act_time_name{
+  font-size: 26rpx;
+  line-height: 34rpx;
+}
+
+
+
+.tuan_num_box{
+  display: flex;
+  text-align: center;
+  border: 1px solid white;
+  height:32rpx;
+  border-radius:6rpx;
+  margin-right: 16rpx;
+  align-items: center;
+  margin-left:12rpx;
+}
+.actual_price .actualPriceVal{
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    position: relative;
+    text-decoration: line-through;
+    margin-left: 10px;
+}
+.goods_price_box{
+  display: flex;
+  align-items: center;
+  width:100%;
+}
+.tuanpeopleNum{
+  position:relative;
+  padding:0px 2px;
+  font-size:26rpx;
+}
+.tuan_num_box img{
+  vertical-align: middle;
+}
+#goodsDetailPage .price_info_box .goods_price{
+    color: #fff;
+    font-size: 20px;
+}
+#goodsDetailPage .price_info_box .actual_price{
+  text-decoration:line-through;
+  
+}
+#goodsDetailPage .price_info_box .actual_price:last-child{
+   font-size: 36rpx;
+}
+#goodsDetailPage .price_info_box .act_countDown_box .timer_box{
+  background: #FC8217;
+  color: #fff;
+  border-radius: 5rpx;
+  padding: 10rpx 6rpx;
+  font-size: 26rpx;
+}
+#goodsDetailPage .price_info_box .act_countDown_box .split{
+  display: inline-block;
+  text-align: center;
+  padding: 0 6rpx;
+  font-size: 26rpx;
+}
+#goodsDetailPage .goods_name_box {
+    margin: 0 0 20rpx;
+    font-size: 35rpx;
+    background: white;
+    padding: 10rpx 20rpx 10rpx;
+}
+
+#goodsDetailPage .goods_name_box .show_goods_name .tuan_num_box {
+    color: #ed3254;
+}
+.stepIcon{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 5rpx;
+}
+#goodsDetailPage .goods_name_box .goods_limit_box{
+  display: flex;
+  justify-content: space-between;
+  font-size:26rpx;
+  color: #8c8c8c;
+}
+#goodsDetailPage .goods_name_box .goods_step_box{
+  display: flex;
+  align-items: center;
+  font-size:26rpx;
+  color: #8c8c8c;
+  flex-wrap: wrap;
+}
+.goods_step_box span{
+  width: 33.33%;
+  display:flex;
+  align-items: center;
+}
+.goods_name{
+    margin: 0 30rpx 12rpx 0;
+    color: #333;
+    font-size: 28rpx;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 44rpx;
+    overflow: hidden;
+    height: 88rpx;
+}
+#goodsDetailPage .goods_name_box .rule_shuoming_box{
+  text-align: right;
+  padding-top:20rpx;
+
+}
+#goodsDetailPage .goods_name_box .rule_shuoming_box .rule_shuoming_btn{
+  color: #999;
+  font-size: 30rpx;
+}
+#goodsDetailPage .process_title_box .order_num {
+    display: inline-block;
+    text-align: center;
+    width: 40rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    box-sizing: border-box;
+    border: 1px solid #8c8c8c;
+    border-radius: 50%;
+}
+#goodsDetailPage .process_title_box {
+    background: #f5f5f5;
+    display: flex;
+    justify-content: space-around;
+    font-size: 28rpx;
+    color: #8c8c8c;
+    padding: 25rpx;
+    align-items: center;
+}
+.goodsDetailPage .tuan_statu_box {
+    margin-top: 20rpx;
+    background: #fff;
+    margin: 20rpx 0;
+    border-top: 1 solid #dcdcdc;
+    border-bottom: 1 solid #dcdcdc;
+    padding: 20rpx;
+}
+.goodsDetailPage .tuan_statu_box .tuan_statu_header {
+    text-align: center;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_header image{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 10rpx;
+}
+
+#goodsDetailPage .goods_detail_box, #goodsDetailPage .company_detail_box{
+  background: #fff;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+#goodsDetailPage  .goods_detail_header, #goodsDetailPage .company_detail_header {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_header .title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #100F0F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_header .context {
+    color: #8c8c8c;
+    font-size: 28rpx;
+}
+#goodsDetailPage .tuan_statu_box .tuan_statu_body{
+    margin-top: 10rpx;
+    border-radius: 5rpx;
+    
+}
+#goodsDetailPage .nick_img_list_box{
+  display: flex;
+  padding: 20rpx 30rpx;
+  flex-wrap: wrap;
+  justify-content:center;
+}
+#goodsDetailPage .nick_img_list_box .nick_img_item{
+  position: relative;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#goodsDetailPage .nick_img_list .nick_img_item.leader_img_item .leader_tips {
+    position: absolute;
+    background: #fa5058;
+    top: 1rpx;
+    right: -20rpx;
+    padding: 5rpx 15rpx;
+    border-radius: 30rpx;
+    color: #fff;
+    font-size: 22rpx;
+    z-index: 10;
+}
+
+#goodsDetailPage .nick_img_list_box .item_img image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+#goodsDetailPage .nick_img_list_box .leader_img_item .item_img image{
+  width: 100rpx;
+  height: 100rpx; 
+  border: 1px solid #fa5058;
+  box-sizing:border-box;
+}
+
+#goodsDetailPage  .left_line>image {
+    width: 120rpx;
+    height: 10rpx;
+    margin-bottom: 5rpx;
+}
+#goodsDetailPage  .right_line>image {
+    transform: rotate(180deg);
+}
+#goodsDetailPage .center_title {
+    margin: 0 10rpx;
+    color: #d50018;
+    font-size: 35rpx;
+}
+
+#goodsDetailPage .commonBody {
+    margin-top: 20rpx;
+}
+.goodsDetailPage .tuan_btn_box{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1111;
+    border-top: 1px solid #efefef;
+}
+.goodsDetailPage .tuan_statu_btn {
+    font-size: 24rpx;
+    background: #fff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 100rpx;
+    line-height: 36rpx;
+
+}
+.goodsDetailPage .tuan_manyuan_btn{
+  display: flex;
+  justify-content: center;
+  background: #ff6428;
+  color: #fff;
+
+}
+.goodsDetailPage .tuan_btn_box .tuan_statu_btn .left_btn {
+    width: 55%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    line-height:36rpx;
+    color:#666;
+}
+.contact_btn{
+  flex: 0 0 120rpx;
+  padding: 0;
+}
+.goodsDetailPage .tuan_btn_box .tuan_statu_btn .right_btn {
+    width: 45%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: none;
+    background: #F44;
+    background: -webkit-linear-gradient(left,#F44 0,#E6585A 100%);
+    background: linear-gradient(to right,#F44 0,#E6585A 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    flex: 1 auto;
+}
+
+#mustKnowPage, #shareActPage, #myOrderPage {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.8);
+    width: 100%;
+    z-index: 202;
+    min-height: 100%;
+}
+#mustKnowPage .musk_know_box{
+  overflow:auto;
+    overflow-x:hidden;
+}
+#mustKnowPage .musk_know_box .musk_know {
+    height: 747.4rpx;
+    background-size: 722rpx 747.4rpx;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+     margin-top: 100rpx; 
+    margin-bottom: 20rpx;
+    padding: 100rpx;
+    padding-bottom: 0;
+    background-position: center;
+    
+}
+#mustKnowPage .musk_know_detail{
+  margin-top: 50rpx;
+  overflow:scroll;
+  height: 600rpx;
+
+}
+#mustKnowPage .musk_know_box .close_btn{
+    width: 50rpx;
+    height: 50rpx;
+    margin: 0 auto;
+     background-size: 50rpx 50rpx; 
+    background-repeat: no-repeat;
+    position:absolute;
+    top:50px;
+    right:20px;
+
+}
+#myTuanListPage .my_tuan_list{
+  padding-top: 10rpx;
+  height: 100%;
+}
+.my_tuan_list_box{
+  background:#f8f7f7;
+  padding: 20rpx;
+  box-sizing: border-box;
+  margin-bottom: 100rpx;
+}
+#myTuanListPage .my_tuan_list .my_tuan_item_box{
+margin-bottom: 10rpx;
+}
+#myTuanListPage .my_tuan_list .my_tuan_item {
+    background: #fff;
+    color: #333333;
+    font-size: 35rpx;
+    padding: 0 15rpx;
+    margin-bottom: 20rpx;  
+    position: relative;
+    overflow:hidden;
+}
+#myTuanListPage .my_tuan_list .my_tuan_item.status_1::after{
+  background-image: url("http://res.xcx.weijuju.com/image/mobile/tuan/tuan_status_1.png");
+  content: " ";
+  right: -20rpx;
+  top: -20rpx;
+  background-size: 160rpx auto;
+  width: 160rpx;
+  height: 160rpx;
+  position: absolute;
+  transform: rotate(-35deg);
+}
+#myTuanListPage .my_tuan_list .my_tuan_item.status_2.ispayed::after{
+  background-image: url("http://res.xcx.weijuju.com/image/mobile/tuan/tuan_status_2.png");
+  content: " ";
+  right: -20rpx;
+  top: -20rpx;
+  background-size: 160rpx auto;
+  width: 160rpx;
+  height: 160rpx;
+  position: absolute;
+  transform: rotate(-35deg);
+}
+#myTuanListPage .top_header {
+    width: 100%;
+    height: 280rpx;
+    background-repeat: no-repeat;
+    background-size: 100% 280rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#myTuanListPage .top_header .nick_img {
+    width:227rpx;
+    height: 177rpx;
+    background-size: 227rpx 177rpx;
+}
+#myTuanListPage .nick_img image{
+  width: 135rpx;
+  height: 135rpx;
+  border-radius: 50%;
+  margin: 18rpx 0 0 30rpx
+}
+#myTuanListPage .top_header .nick_name {
+    text-align: center;
+    color: #fff;
+    font-size: 35rpx;
+    margin-top: 20rpx;
+}
+
+#myTuanListPage .my_tuan_item .order_header {
+    display: flex;
+    border-bottom: 1px solid #f8f7f7;
+    justify-content: space-between;
+    align-items: center;
+}
+.order_statu_box{
+  
+  color:#000;
+  font-size:32rpx;
+  float:right;
+  padding:20rpx 0rpx;
+
+}
+.swiper-tab{  
+    width: 100%;    
+    text-align: center;  
+    line-height: 80rpx;
+    border-top: 1px solid #efefef;
+    display: flex;
+    justify-content:space-around;
+    background: #fff;
+}  
+.swiper-tab-list{  font-size: 30rpx;  
+    display: inline-block;  
+    color: #666;  
+    padding: 0 20rpx;
+    margin: 0 10rpx;
+}  
+.on{ color: #F44;  
+    border-bottom: 5rpx solid #F44;}  
+  
+.swiper-box{ display: block; height: 100%; width: 100%; overflow: hidden; }  
+.order_statu{
+  color:#999;
+  display:inline-block;
+  font-size:26rpx;
+  text-align:right;
+  flex:1;
+}
+#myTuanListPage .order_header .header_left .start_time{
+  font-size: 28rpx;
+  color: #000;
+}
+#myTuanListPage .order_header .header_left .order_time {
+    display: inline-block;
+    margin-left: 15rpx;
+    font-size: 28rpx;
+    margin-top: 0;
+}
+#myTuanListPage .my_tuan_item .order_body {
+    padding: 10rpx 0;
+    border-bottom: 2px solid #f8f7f7;
+    display: flex;
+}
+#myTuanListPage .my_tuan_item .order_body .goods_img{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+#myTuanListPage .my_tuan_item .order_body .goods_img image{
+  width: 180rpx;
+  height: 180rpx;
+}
+#myTuanListPage .order_body .goods_img .img_tips {
+    position: absolute;
+    top: 10rpx;
+    left: 0;
+    color: #fff;
+    font-size: 28rpx;
+    padding: 5rpx 20rpx;
+    border-top-right-radius: 40rpx;
+    border-bottom-right-radius: 40rpx;
+    background: #ff6428;
+    background: -webkit-linear-gradient(left,#ff5945 0,#ff850b 100%);
+    background: linear-gradient(to right,#ff5945 0,#ff850b 100%);
+}
+#myTuanListPage .order_body  .goods_info_box{
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex:1;
+
+}
+#myTuanListPage .goods_price_box .goods_price {
+    color: #F44;
+    font-size: 30rpx;
+}
+#myTuanListPage .goods_price_box .goods_price>span{
+  font-size: 40rpx;
+  color: #F44;
+}
+#myTuanListPage .goods_price_box .yunfei {
+    color: #717171;
+}
+
+#myTuanListPage .order_footer .order_btn_box{
+  display: flex;
+  justify-content: flex-end;
+  padding: 20rpx 0;
+
+}
+#myTuanListPage .order_footer .order_btn_box>view {
+   width:200rpx;
+  border-radius:30rpx;
+  box-sizing:border-box;
+  text-align:center;
+  
+  padding:4rpx 0;
+  box-shadow: 0 1px 2px rgba(204,204,204,.8);
+  margin: 0 10rpx;
+  font-size: 30rpx;
+}
+#myTuanListPage .order_btn_box .btn_style_2.tuan_share_btn{
+  background: linear-gradient(to right, #e73f40 0%,#ec8d6d 100%);
+  color: #fff;
+}
+#myTuanListPage .order_btn_box .btn_style_2 {
+    background: #fff;
+    color: #000;
+    border:none;
+    font-size: 32rpx;
+}
+#myTuanListPage .order_btn_box .btn_style_1 {
+    background:linear-gradient(to right, #e73f40 0%,#ec8d6d 100%);
+    color:#fff;
+    margin: 0;
+    margin-left: 10rpx;
+    font-size: 32rpx;
+   
+}
+#shareActPage{
+  color: #fff;
+}
+#shareActPage .img_box {
+  display: flex;
+  justify-content: flex-end;
+  margin: 40rpx;
+}
+#shareActPage .img_box image{
+width: 200rpx;
+height: 200rpx;
+}
+#shareActPage .shareDesc{
+  text-align: center;
+}
+
+.payPage {
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-color: #f8f7f7;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F1F1F1;
+    width: 100%;
+    height: 90rpx;
+    font-size: 35rpx;
+}
+
+.payDetail .order_info_box .header_detail .header_title_box> image{
+ width: 10rpx;
+ height: 10rpx;
+}
+
+.payDetail .order_info_box .header_detail .header_title_box {
+    
+    font-size: 38rpx;
+    font-weight: bold;
+    color: #fd6221;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payDetail .order_info_box  .header_title {
+    margin: 0 10rpx;
+}
+.payDetail .order_info_box .header_detail .header_tips {
+    
+    font-size: 24rpx;
+    color: #868686;
+    text-align: center;
+}
+
+.payDetail .order_info_box .tuan_countDown_box {
+    width: 100%;
+    height: 170rpx;
+    background-size: 100% 170rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box {
+    position: relative;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_box {
+    position: absolute;
+    box-sizing: border-box;
+    width: 64rpx;
+    height: 100%;
+    bottom: -6rpx;
+    letter-spacing: 25rpx;
+    font-size: 30rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_day {
+    left: 235rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_hour {
+    left: 355rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_minute {
+    left: 485rpx;
+}
+
+.payDetail .tuan_countDown_box .countDown_time_box .timer_second {
+    left: 605rpx;
+}
+
+.address {
+    display: flex;
+    align-items: center; 
+    background: #fff;
+    font-size: 0.7rem;
+    padding: 0.6rem 0.4rem;
+    color: #424242;
+    border-top: 1px solid #dddddd;
+}
+.addAddress {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 30rpx;
+    color: #595758;
+    border-top: 1px solid #dddddd;
+    padding: 40rpx;
+}
+.addAddress>image {
+    width: 43.5rpx;
+    height: 54rpx;
+    margin-right: 10rpx;
+}
+.orderInfoWrap{
+  margin-left: 20rpx;
+}
+.orderAddrWrap{
+  color: #909090;
+}
+
+.odGoodsInfo {
+    background: #fff;
+    font-size: 35rpx;
+    color: #3a3a3a;
+    border-top: 5px solid #f93347;
+}
+.wrapShop {
+    padding: 20rpx;
+    border-bottom: 1px solid #f6f2f3;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.wrapShop .tuan_shop_logo {
+   width: 47.6rpx;
+   height: 43.4rpx;
+}
+.wrapShop .shopName{
+  height: 47.6rpx;
+  line-height: 47.6rpx;
+  margin-left: 10rpx;
+}
+.goodsImg>image {
+    width: 110rpx;
+    height: 110rpx;
+}
+.odSummary {
+    display: flex;
+    padding: 26rpx;
+}
+.odDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 16rpx;
+}
+.nowPrice {
+    color: #FF0126;
+    font-size: 35rpx;
+    font-weight: bold;
+}
+.oldPrice {
+    color: #696969;
+    font-size: 030rpx;
+    position: relative;
+    text-decoration: line-through;
+    margin-left: 20rpx;
+}
+
+.payDetail .order_info_box>view {
+    background-color: #fff;
+}
+.otherThings {
+    background: #fff;
+    margin-top: 0.4rem;
+    font-size: 35rpx;
+}
+.otherThings .otItem {
+    border-bottom: 1px solid #f6f2f3;
+    padding: 16rpx 10rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#payDetail .order_finish_header{
+ background-repeat: no-repeat;
+ height: 120rpx;
+ background-size: 100% 120rpx;
+ display: flex;
+ align-items: center;
+ color: #fff;
+ padding-left: 20rpx;
+ 
+}
+#payDetail .orderFinishDesc{
+  margin: 0 20rpx;
+  margin-right: 80rpx;
+}
+#payDetail .order_finish_header > image{
+  width: 50rpx;
+  height: 50rpx;
+}
+.address>img {
+    width: 0.725rem;
+    height: 0.9rem;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+.tuanOrderInfoWrap >view{
+  padding: 5rpx 10rpx;
+}
+#payDetail .footer_btn_box{
+  display: flex;
+  color: #000;
+}
+#payDetail .footer_btn{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#payDetail .footer_btn image{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+#payDetail .orderDetailBtnWrap{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  padding: 25rpx 0;
+}
+
+.wrapCompleteODBG {
+    text-align: center;
+    margin-top: 100rpx;
+}
+.completeODBG {
+    
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    width: 664.6rpx;
+    height: 789.6rpx;
+    display: inline-block;
+}
+
+.completeODList {
+    margin-top: 230rpx;
+    margin-bottom: 50rpx;
+    color: #000;
+    max-height: 520rpx;
+    overflow: auto;
+    overflow-x: hidden;
+    padding: 0 20rpx;
+}
+.completeODClose{
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 20rpx;
+}
+
+.completeODitem{
+  font-size: 30rpx;
+  background: #fff;
+  padding: 10rpx;
+  margin-bottom: 10rpx;
+  
+}
+.completeODitem .completeODitemTop{
+  text-align: left;
+  position: relative;
+}
+.completeODLogo{
+  position: absolute;
+  width: 124rpx;
+  height: 96rpx;
+  top: 0;
+  right: 0;
+}
+.completeODitemTop{
+display: flex;
+}
+.completeODitem .completeODitemTop >div{
+  display: inline-block;
+  vertical-align: text-top;
+}
+.completeODImg>image{
+  width: 110rpx;
+  height: 110rpx;
+  margin-right: 10rpx;
+  margin-top: 10rpx;
+}
+.completeODInfo view{
+  text-align: left;
+}
+.completeODName{
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.completeODPrice{
+  font-size: 30rpx;
+}
+
+.completeODNo, .completeODTime, .completeODPriceDesc{
+  font-size: 24rpx;
+  color: #717171;
+}
+.completeODitemBottom{
+  text-align: right;
+  /*padding-right: 1rem;*/
+}
+#goodsDetailPage .tuan_btn_box .tuan_soldOut_btn{
+      background: #ff6428;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+
+}
+#goodsDetailPage .tuan_btn_box .tuan_actEnded_btn{
+      background: #8c8c8c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+
+}
+.subStart{
+  height: 100rpx;
+  font-size: 30rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+}
+.formSubStart{
+  position: relative;
+}
+.subStart > view{
+  line-height:36rpx;
+  font-size:28rpx;
+}
+rich-text{
+ box-sizing: border-box;
+}
+.tuan_rulev2 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    overflow: hidden;
+    padding: 15px;
+    background: #fff;
+    position: relative;
+}
+.tuan_rulev2 .step_rule{
+  display: flex !important;
+  align-items: center;
+  width: 100px !important;
+}
+.tuan_rulev2 .step_rule:last-child{
+  display: flex !important;
+  align-items: center;
+  width: 120px !important;
+}
+.tuan_rulev2 .tuan_rulev2_item{
+    display: block;
+    width: 100%;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    text-align: center;
+    position: relative;
+     
+}
+.tuan_rulev2 .tuan_rulev2_item:not(:last-child)::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    background-image: url(http://127.0.0.1:9095//image/mobile/jiantou2.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 0rpx;
+    right: 0;
+}
+.tuan_rulev2_item span{
+    font-size: 12px;
+    color: #333;
+    line-height: 1.2;
+}
+.tuan_title_v2 {
+    height: 41px;
+    line-height: 41px;
+    background: #fff;
+    position: relative;
+    border-bottom: 1px solid #efefef
+}
+.tuan_title_v2 span{
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    margin-left: 10px;
+    display: inline-block;
+}
+.tuan_rulev2_arrow{
+  flex:0 0 50rpx;
+  text-align: center;
+}
+.zan-icon-arrow{
+  font-size: 22rpx;
+  color: #999;
+}
+.buy_self_btn .zan-icon-home{
+  color:#F44;
+  font-size: 40rpx;
+}
+.tuan_title_v2 .link {
+    display: inline-block;
+    font-size: 12px;
+    color: #666;
+    position: absolute;
+    right: 13px;
+    top: 0;
+    text-align: right;
+    width: 170rpx;
+}
+.tuan_title_v2 .link::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+    width: 30px;
+    height: 30px;
+    background-image: url(http://127.0.0.1:9095//image/mobile/jiantou2.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin-left: 5px;
+}
+.actPriceVal, .tuanPriceVal{
+  font-size: 36rpx;
+}
+.show_goods_name{
+  line-height: 44rpx;
+  margin: 6rpx 0 6rpx;
+}
+
+    

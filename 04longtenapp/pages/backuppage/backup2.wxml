@@ -1,0 +1,5 @@
+<!--pages/backuppage/backup2.wxml-->
+<mycheckbox bind:togglecheckbox="toggleCheckbox" checked="{{isCheck}}">
+</mycheckbox>
+<text>ddd</text>
+<checkbox></checkbox>

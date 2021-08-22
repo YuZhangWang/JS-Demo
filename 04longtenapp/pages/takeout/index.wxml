@@ -1,0 +1,529 @@
+<!--pages/takeout/index.wxml-->
+<!-- 评价 -->
+<import src="../template/judgeList.wxml"/>
+<!-- 工具包 -->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<!-- 商品信息处理工具 -->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getGoodsSpec = function(goods) {
+    return JSON.parse(goods.spec);
+  }
+  var getSelectSpecFromSelectedGoods = function(selectedGoods){
+    if(selectedGoods.specData){
+      for(var j=0;j < selectedGoods.specData.length;j++){
+        var spec = selectedGoods.specData[j];
+        if(spec.ids == selectedGoods.selectedSku.ids){
+          return spec;
+        }
+      }
+    }
+    return null;
+  }
+
+
+  // 获取选中分类下的商品总数
+  var getSelectedCatGoodsCount = function(goodsList, catId) {
+    var result = 0;
+    for (var i = 0; i < goodsList.length; i++) {
+      if (!catId || goodsList[i].sitebar == catId) {
+        result++;
+      }
+    }
+    return result;
+  }
+  var isSpecSelected = function(specGroup, spec, idx) {
+    if (specGroup.selectedId) {
+      return specGroup.selectedId == spec.id;
+    } else if (idx == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var isInStr = function(str, subStr) {
+    return 0 <=str.indexOf(subStr);
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getSelectSpecFromSelectedGoods = getSelectSpecFromSelectedGoods;
+  module.exports.getGoodsSpec = getGoodsSpec;
+  module.exports.getSelectedCatGoodsCount = getSelectedCatGoodsCount;
+  module.exports.isSpecSelected = isSpecSelected;
+  module.exports.isInStr = isInStr;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+    <view class="page-container-flex">
+      <view wx:if="{{!showGoods}}" class="content">
+        <!-- 起送 -->
+        <view class="header-info">
+          <view class="header-info-bg" style="background-image:url('{{userImagePath+shoperInfo.logo}}')"></view>
+          <image mode="aspectFill" class="header-info-poi" src="{{userImagePath+shoperInfo.logo}}">
+          </image>
+          <view class="header-info-txt">
+            <view class="header-info-title">
+              {{shoperInfo.name}}
+            </view>
+            <view class="header-info-ad">
+              <view class="mac"></view>{{shoperInfo.description}}
+            </view>
+            <block wx:if="{{!tostore}}">
+            <view class="header-info-row">起送 {{app.globalData.currencySymbol}}{{m1.getFixedMoney(shoperInfo.minMonry)}}
+              <view class="header-info-line"></view>配送 {{app.globalData.currencySymbol}}{{m1.getFixedMoney(shoperInfo.distributionMonty)}}
+              <view class="header-info-line"></view>{{shoperInfo.timeLimit}}分钟
+            </view>
+            </block>
+          </view>
+        </view>
+
+        <!-- 满减 -->
+        <view wx:if="{{showOverReduce}}">
+            <view class='overReduce'>
+              <view class="free">满减</view>
+                <view wx:if="{{overReduceType==1}}">
+                  <text class='freeText'>购满\t{{overReduceRule[0].over}}\t件，减\t{{overReduceRule[0].reduce}}\t元</text>
+                </view>
+                <view wx:if="{{overReduceType==2}}">
+                  <text class='freeText'>购满\t{{overReduceRule[0].over}}\t元，减\t{{overReduceRule[0].reduce}}\t元</text>
+                </view>
+              <image class='jianTou-right' src='{{staticResPath}}/image/mobile/trigger_right.png' bindtap='changeOverReduce'></image>
+            </view>
+            <view class="overReduceDetail {{showOverReduceDetail?'open_over':'close_over'}}">
+              <view wx:for="{{overReduceRule}}">
+                <view wx:if="{{overReduceType==1}}">
+                  <text class='freeText'>购满\t{{item.over}}\t件，减\t{{item.reduce}}\t元</text>
+                </view>
+                <view wx:if="{{overReduceType==2}}">
+                  <text class='freeText'>购满\t{{item.over}}\t元，减\t{{item.reduce}}\t元</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!--tab切换-->
+        <view class="panel-headers">
+          <view wx:for="{{panelTab.list}}" wx:for-item="tab" wx:key="tab.id" wx:for-index="idx" data-index="{{idx}}" class="panel-header {{panelTab.selectedId==tab.id?'panel-header-active main-color':''}}" style="{{panelTab.selectedId==tab.id?app.globalData.customStyleColor:''}}">
+            <view data-id="{{tab.id}}" bindtap="{{tab.id==3 ? 'handleSearch':'handlePanelTabChange'}}" class="panel-header-txt {{tab.id==3 ? 'tab-search':''}}">
+              <image style="margin-right: 10rpx;" wx:if="{{tab.id==3}}" class="search_icon" src="{{staticResPath}}/image/mobile/search_icon.png"></image>{{tab.title}}
+              <view class="after main-color" style="{{app.globalData.customStyleColor}}"></view>
+            </view>
+          </view>
+        </view>
+        <!-- 内容块 -->
+        <view class="main" style='{{showOverReduce ? "top:310rpx": ""}};'>
+          <swiper class="main-swiper" current="{{panelTab.selectedId}}" bindchange="handlePanelContentChange">
+            <!-- 商品 -->
+            <swiper-item class="panel panel-food">
+              <view style="bottom:{{focusOfficial?'135':'48'}}px" class="panel-food-content">
+                <!-- 左侧栏 -->
+                <scroll-view class="type-tab" scroll-with-animation="true" scroll-into-view="head-{{indexSize}}" scroll-y="true">
+                  <block wx:for="{{categoryList}}" wx:for-item="cat" id="head-{{idx}}" wx:for-index="idx" wx:key="cat.id">
+                    <view data-index="{{idx}}" bindtap="handleCatTap" class="cat-box flex-center {{indexSize === idx?'active-type':''}}" data-id="{{cat.id}}">
+                      <view class="cat-item flex-center">
+                        <view class="cat-item-name">
+                          <text class="cat-item-text">{{cat.name}}</text>
+                        </view>
+                      </view>
+                    </view>
+                  </block>
+                </scroll-view>
+                <!-- 右侧栏 -->
+                <!-- <swiper vertical="true"  class="detail-container" bindchange="change" data-id='{{categoryList[indexSize].id}}' current="{{indexSize}}
+            indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" duration="{{duration}}">
+                  <swiper-item wx:for="{{categoryList}}" wx:for-item="item" wx:key="index"> -->
+                    <scroll-view scroll-y="true" class="product-tab detail-container" data-more="{{categoryList[selectedCatIndex].nomoreGoods}}" data-id='{{categoryList[selectedCatIndex].id}}' upper-threshold='20' lower-threshold='20'  bindscrolltolower="scorllBottom" scroll-with-animation="true">
+                        <view class="tab-header">
+                          <view class="active-line main-color-bg" style="{{app.globalData.customStyleBg}}"></view>{{categoryList[selectedCatIndex].name}}
+                        </view>
+                        <view class="tab-item" style="height:{{categoryList[selectedCatIndex].mallGoodsList.length <=3 ? '100%':''}}">
+                          <view wx:if="{{categoryList[selectedCatIndex].mallGoodsList.length==0}}" class="empty-text">暂无商品</view>
+                          <block wx:for="{{categoryList[selectedCatIndex].mallGoodsList}}" wx:for-index="idx" wx:for-item="goods" wx:key="goods.id">
+                            <view data-id="{{goods.id}}" bindtap="handleGoodsItemTap" class="food-item" id="spu-{{goods.id}}">
+                              <view class="food-item-inner">
+                                <view class="food-item-image" style="position: relative;">
+                                  <!-- 商品角标 -->
+                                  <text wx:if="{{goods.cornerMarker.isSwitch}}" class="goods-corner-mark mark-position{{goods.cornerMarker.position}}" style="background: {{goods.cornerMarker.color}};">{{goods.cornerMarker.content}}</text>
+                                  <image mode="aspectFill" class="food-item-img" src="{{mTool.specUrl(extConfig,userImagePath,goods.goodsCover,300)}}">
+                                  </image>
+                                  <view class="isSoldOut" wx:if="{{0 >= goods.totalCount}}">
+                                  <view class="isSoldOutBG"></view>
+                                    <text class="isSoldOutTxtBG"></text>
+                                    <text>已售罄</text>
+                                  </view>
+                                </view>
+                                <view class="food-info-wrap">
+                                  <view class="food-info">
+                                    <view class="food-item-header">
+                                      <text class="food-item-name">{{goods.name}}
+                                      </text>
+                                    </view>
+                                    <view class="food-description"> {{goods.intro?goods.intro:""}} </view>
+                                    <view class="food-item-sales-info" style="display:none;">
+                                      <text class="food-item-sales">月售 -
+                                      </text>
+                                      <text class="food-item-zan">赞-
+                                      </text>
+                                    </view>
+                                    <view class="food-item-price-info">
+                                                                      <text class="soldNum soldNumWidth">销量：{{goods.payedCount+ goods.virtualPayedCount}} 笔
+                                      </text>
+                                      <view class="food-item-price">
+                                      <text class="main-color food-item-price-a" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}</text>
+                                      <text style="{{app.globalData.customStyleColor}}"
+                                            class="main-color {{0 >= goods.totalCount ? 'isSoldOutPriceColor' : ''}}">{{m1.getFixedMoney(goods.price)}}</text>
+
+                                      <text wx:if="{{goods.originalPrice !==0}}" style='text-decoration:line-through;' class='beforeprice' >{{m1.getFixedMoney(goods.originalPrice)}}</text>
+                                      </view>
+
+                                      <view wx:if="{{goods.foodTypeShow && eatTypeTipsShow}}">
+                                        <text class="eatType " wx:if="{{1 == goods.tc  && 3 == foodType}}">堂吃</text>
+                                        <text class="eatType " wx:if="{{1 == goods.zq && 3 == foodType}}">自取</text>
+                                        <text class="eatType " wx:if="{{1 == goods.ta && 4 == foodType}}">外卖</text>
+                                      </view>
+                                    </view>
+                                    <block wx:if="{{goods.usenewspec}}">
+                                      <view data-id="{{goods.id}}" data-action="selectSpec" class="add-foot-choose-box" wx:if="{{0 < goods.totalCount}}">
+                                        <view data-id="{{goods.id}}" catchtap="{{noBusiness ? 'handleBusiness':'handleTabItemTap'}}" data-action="selectSpec" class="add-food-choose main-color-bg" style="{{app.globalData.customStyleBg}}" > 选规格 </view>
+                                        <view class="add-food-choose-num" wx:if="{{goods.selectedNum > 0}}">{{goods.selectedNum}}</view>
+                                      </view>
+                                    </block>
+                                    <block wx:else>
+                                      <view class="choose-num panel-right flex-center" wx:if="{{0 < goods.totalCount}}">
+                                        <block wx:if="{{goods.selectedNum > 0}}">
+                                          <view>
+                                            <image catchtap="handleTabItemTap" data-action="delFood" data-id="{{goods.id}}" src="{{staticResPath}}/image/mobile/takeout/food_del.png" class="remove-food">
+                                            </image>
+                                            <view class="remove-food-box" catchtap="{{noBusiness ? 'handleBusiness':'handleTabItemTap'}}" data-action="delFood" data-id="{{goods.id}}"></view>
+                                            <view class="food-num"> {{goods.selectedNum}} </view>
+                                          </view>
+                                        </block>
+                                        <view catchtap="{{noBusiness ? 'handleBusiness':'handleTabItemTap'}}" class="add-food-box zan-icon zan-icon-add main-color" style="{{app.globalData.customStyleColor}}" data-action="addFood" data-id="{{goods.id}}"></view>
+                                      </view>
+                                    </block>
+                                  </view>
+                                </view>
+                              </view>
+                              <button form-type="submit"  style='position:absolute;left:0;top:0;width:100%;height:100%;' class="commonNavButton"></button>
+                            </view>
+                          </block>
+                          <view class="li-nomore" wx:if="{{categoryList[selectedCatIndex].nomoreGoods}}">没有更多了</view>
+                        </view>
+                      </scroll-view>
+                  <!-- </swiper-item>
+
+                </swiper> -->
+
+
+
+              </view>
+            </swiper-item>
+            <!-- 评价  -->
+            <swiper-item class="panel panel-judge">
+              <scroll-view scroll-y="true"  bindscrolltolower="handleJudgeScrollToBottom">
+                <template is="judgeList" data="{{app,judgeList:judgeList,userImagePath:userImagePath}}"></template>
+              </scroll-view>
+            </swiper-item>
+            <!-- 商家  -->
+            <swiper-item class="panel panel-info">
+              <scroll-view class="scroll-info">
+                <view class="poi-info-row" wx:if="{{shoperInfo}}">
+                  <view class="shop-info-address" bindtap='handleShoperLbs'>
+                    <image src="{{staticResPath}}/image/mobile/takeout/near.png" class="address-icon mr20">
+                    </image>
+                    <view class="address-txt"> 地址：{{shoperInfo.localtion}} </view>
+                  </view>
+                </view>
+                <view class="poi-info-row">
+                  <view class="shop-info-address">
+                    <image src="{{staticResPath}}/image/mobile/takeout/near.png" class="address-icon mr20">
+                    </image>
+                    <view bindtap='handleCallShoper' class="address-txt"> 联系电话：{{shoperInfo.tel}} </view>
+                    <image bindtap='handleCallShoper' src="{{staticResPath}}/image/mobile/takeout/order_info_phone.png" class="call-icon mr20">
+                    </image>
+                  </view>
+                </view>
+                <view class="poi-info-row">
+                  <navigator url="/pages/takeout/qualificationFiles" class="shipping-time">
+                    <image class="clock-icon mr20" src="{{staticResPath}}/image/mobile/takeout/service.png">
+                    </image>
+                    <view> 查看商家资质档案</view>
+                    <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+                  </navigator>
+                </view>
+                <view class="poi-info-row" wx:if="{{!tostore}}">
+                  <view class="shipping-time">
+                    <image class="clock-icon mr20" src="{{staticResPath}}/image/mobile/takeout/clock.png">
+                    </image>
+                    <view wx:if="{{shoperInfo && shoperInfo.businessTime}}"> 配送时间：
+                      <text wx:for="{{shoperInfo.businessTime}}" wx:for-item="busTime">{{busTime.startTime}}-{{busTime.endTime}}  </text>
+                    </view>
+                  </view>
+                </view>
+                <view class="poi-info-row" wx:if="{{!tostore}}">
+                  <view class="shipping-time">
+                    <image class="clock-icon mr20" src="{{staticResPath}}/image/mobile/takeout/service.png">
+                    </image>
+                    <view> 由商家提供配送，约{{shoperInfo.timeLimit}}分钟，配送费{{app.globalData.currencySymbol}}{{m1.getFixedMoney(shoperInfo.distributionMonty)}}，配送范围{{shoperInfo.distributionRange}}公里内 </view>
+                  </view>
+                </view>
+                <include src="/pages/template/copyright.wxml"/>
+              </scroll-view>
+            </swiper-item>
+          </swiper>
+        </view>
+      </view>
+
+      <!-- 规格弹出 -->
+      <view  class="ui-fixed-container flex-center modal-food-container" bindtap="handleSkuModalTap" wx:if="{{selectedGoods.usenewspec && usenewspecShow}}">
+        <view class="ui-modal-backdrop modal-food-backdrop"></view>
+        <view class="ui-modal modal-food">
+          <view class="ui-modal-close" data-action="closeModal"></view>
+          <view class="modal-food-title ellipsis">{{selectedGoods.title}}</view>
+          <scroll-view scroll-y="true" style='height:700rpx' class="modal-food-scroll">
+            <view class="ui-modal-content modal-food-content" wx:for="{{selectedGoods.specJsonArray}}" wx:for-item="specGroup" wx:key="specGroup.id">
+              <view class="modal-food-label"> {{specGroup.name}}: </view>
+              <view data-index="{{idx}}" data-groupid="{{specGroup.id}}" data-id='{{spec.id}}' class="modal-food-btn ellipsis {{m1.isSpecSelected(specGroup,spec,specIndex)?'modal-food-btn-active main-color':''}}" style="{{m1.isSpecSelected(specGroup,spec,specIndex)?app.globalData.customStyleColor:''}}" data-type="sku" wx:for-item="spec" wx:for-index="specIndex" data-action="changeSku"
+                wx:for="{{specGroup.specValue}}">{{spec.name}}</view>
+            </view>
+          </scroll-view>
+
+          <block wx:if="{{m1.getSelectSpecFromSelectedGoods(selectedGoods).selectedNum>0}}">
+            <view class="modal-food-footer">
+              <view class="modal-food-price main-color" style="{{app.globalData.customStyleColor}}"> {{app.globalData.currencySymbol}}{{m1.getFixedMoney(selectedGoods.selectedSku.price)}} </view>
+              <view class="modal-food-footer-attr ellipsis"> （
+                <view class="modal-food-footer-attr-text ui-inline"> {{selectedGoods.selectedSku.names}} </view> ） </view>
+              <image src="{{staticResPath}}/image/mobile/takeout/food_del.png" class="remove-food">
+              </image>
+              <view class="food-num"> {{m1.getSelectSpecFromSelectedGoods(selectedGoods).selectedNum}} </view>
+              <image style='opacity:0;' src="{{staticResPath}}/image/mobile/takeout/food_add.png" class="add-food">
+              </image>
+              <view data-attrs="" data-id="{{selectedGoods.id}}" data-action="removeFood" class="remove-food-box"></view>
+              <view data-attrs="" data-id="{{selectedGoods.id}}" data-action="addFood" class="add-food-box zan-icon zan-icon-add main-color" style="{{app.globalData.customStyleColor}}"></view>
+            </view>
+          </block>
+
+          <block wx:else>
+            <view class="modal-food-footer">
+              <view class="modal-food-price main-color" style="{{app.globalData.customStyleColor}}"> {{app.globalData.currencySymbol}}{{m1.getFixedMoney(selectedGoods.selectedSku.price)}} </view>
+              <view class="modal-food-footer-attr ellipsis"> （
+                <view class="modal-food-footer-attr-text ui-inline"> {{selectedGoods.selectedSku.names}} </view> ） </view>
+              <view class="modal-food-cart main-color-bg" style="{{app.globalData.customStyleBg}}">
+                <view class="cart-img  ui-inline-block zan-icon zan-icon-cart"></view> 加入购物车 </view>
+              <view class="modal-food-cart-click" data-action="addToCart" data-attrs="" data-id="{{selectedGoods.id}}"></view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 底部购物车弹出（即展开购物明细） -->
+      <view  wx:if="{{showShoppingCart}}" bindtap="handleShoppingCartTap">
+        <view data-action="hideShoppingCart" class="modal-backdrop footer-backdrop cart-backdrop"></view>
+        <view class="cart">
+          <view class="cart-show-icon">
+            <view class="cart-img cart-img-normal-active main-color-bg zan-icon zan-icon-cart" style="{{app.globalData.customStyleBg}}"></view>
+            <view class="cart-num flex-center"> {{sumInfo.totalCount}} </view>
+          </view>
+          <view class="cart-head">
+            <icon class="arrow-icon"></icon>
+            <view class="box-fee">购物车({{sumInfo.totalCount}})</view>
+            <view class="cart-bin">
+              <image class="bin-icon" src="/img/icons/bin.png">
+              </image>
+              <text class="clear-cart" data-action="clearShoppingCart">清空购物车
+              </text>
+            </view>
+          </view>
+
+        <view wx:if="{{showOverReduce}}">
+            <view class='overReduce'>
+              <view class="free">满减</view>
+                <view wx:if="{{overReduceType==1}}">
+                  <text class='freeText'>购满\t{{overReduceRule[0].over}}\t件，减\t{{overReduceRule[0].reduce}}\t元</text>
+                </view>
+                <view wx:if="{{overReduceType==2}}">
+                  <text class='freeText'>购满\t{{overReduceRule[0].over}}\t元，减\t{{overReduceRule[0].reduce}}\t元</text>
+                </view>
+              <image class='jianTou-right' src='{{staticResPath}}/image/mobile/trigger_right.png' bindtap='changeOverReduce'></image>
+            </view>
+            <view class="overReduceDetail {{showOverReduceDetail?'open_over':'close_over'}}">
+              <view wx:for="{{overReduceRule}}">
+                <view wx:if="{{overReduceType==1}}">
+                  <text class='freeText'>购满\t{{item.over}}\t件，减\t{{item.reduce}}\t元</text>
+                </view>
+                <view wx:if="{{overReduceType==2}}">
+                  <text class='freeText'>购满\t{{item.over}}\t元，减\t{{item.reduce}}\t元</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 购物明细展开列表 -->
+          <scroll-view style='max-height:348px' scroll-y="true" class="cart-list">
+            <block wx:for="{{takeOutShoppingCart}}" wx:for-item="goods" wx:key="goods.id" wx:for-index="idx">
+              <block wx:if="{{goods.usenewspec}}">
+                <view class="cart-food-item" wx:if="{{spec.selectedNum>0}}" wx:for="{{goods.specData}}" wx:for-item="spec">
+                  <view class="cart-food-item-left">
+                    <view class="cart-food-name"> {{goods.name}} </view>
+                    <view class="cart-food-subdtl" wx:if="{{spec}}"> （{{spec.names}})） </view>
+                  </view>
+                  <view class="cart-food-price"> {{app.globalData.currencySymbol}}{{m1.getFixedMoney(spec.price*spec.selectedNum)}} </view>
+                  <view class="cart-choose-num flex-center">
+                    <image data-action="delFood" data-id="{{goods.id}}" data-specids="{{spec.ids}}" src="{{staticResPath}}/image/mobile/takeout/food_del.png" class="food-remove2" data-attrs="">
+                    </image>
+                    <text class="food-num">{{spec.selectedNum}}
+                    </text>
+                    <view data-action="addFood" data-id="{{goods.id}}" data-specids="{{spec.ids}}"  data-attrs="" class="cart-add-food zan-icon zan-icon-add main-color" style="{{app.globalData.customStyleColor}}">
+                    </view>
+                  </view>
+                </view>
+              </block>
+              <block wx:else>
+                <view class="cart-food-item" wx:if="{{goods.selectedNum>0}}">
+                  <view class="cart-food-item-left">
+                    <view class="cart-food-name"> {{goods.name}} </view>
+                  </view>
+                  <view class="cart-food-price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price*goods.selectedNum)}} </view>
+                  <view class="cart-choose-num flex-center">
+                    <image data-action="delFood" data-id="{{goods.id}}" src="{{staticResPath}}/image/mobile/takeout/food_del.png" class="food-remove2" data-attrs="">
+                    </image>
+                    <text class="food-num">{{goods.selectedNum}}</text>
+                    <view data-action="addFood" data-id="{{goods.id}}" data-attrs="" class="cart-add-food zan-icon zan-icon-add main-color" style="{{app.globalData.customStyleColor}}">
+                    </view>
+                  </view>
+                </view>
+              </block>
+            </block>
+          </scroll-view>
+        </view>
+      </view>
+
+      <view class="product-info-modal" wx:if="{{showGoods}}">
+        <view bindtap='back' style='position:absolute;z-index:22;right:3px;top:2px;{{app.globalData.customStyleBg}}' class="add-food-choose main-color-bg">返回</view>
+        <view class="product-info-wrap flex-center">
+          <swiper class="index-banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" style="height:{{mainBannerHeight||562}}rpx" duration="{{1000}}">
+            <block>
+              <swiper-item>
+                <image src="{{mTool.specUrl(extConfig,userImagePath,showGoods.goodsCover,300)}}" bindload="onMainBannerImgLoad" class="slide-image" />
+              </swiper-item>
+            </block>
+          </swiper>
+
+          <view class="product-info-text">
+            <view class="product-info-name">{{showGoods.name}}{{showGoods.unitName?("（"+showGoods.unitName+"）"):""}}</view>
+            <view class="product-info-month"></view>
+            <view class="product_info_price"><text class="main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(showGoods.price)}}<text style='margin-left:20rpx' wx:if="{{showGoods.originalPrice!=0}}" class='soldNum'><text style='text-decoration:line-through;'>{{m1.getFixedMoney(showGoods.originalPrice)}}
+            </text></text></text>
+
+             <view class='soldNum'><button open-type="contact"><image style='height:25px;width:25px;vertical-align:middle;'  src="{{staticResPath}}/image/mobile/takeout/lxsj.png"></image>联系商家</button></view>
+             </view>
+             <view class='product_info_price'><text class="soldNum">剩余：{{showGoods.totalCount}} </text>
+            <text class="soldNum"style='margin-right:50%'>销量：{{showGoods.payedCount+ showGoods.virtualPayedCount}} 笔</text>
+            <block  wx:if="{{showGoods.usenewspec}}">
+                                <view data-id="{{showGoods.id}}" data-action="selectSpec" class="add-foot-choose-box" wx:if="{{0 < showGoods.totalCount}}">
+                                  <view data-id="{{showGoods.id}}" bindtap="{{noBusiness ? 'handleBusiness':'selectedSpec'}}" style="{{app.globalData.customStyleBg}}" data-action="selectSpec" class="add-food-choose main-color-bg"> 选规格 </view>
+                                  <view class="add-food-choose-num" wx:if="{{showGoods.selectedNum > 0}}">{{showGoods.selectedNum}}</view>
+                                </view>
+                              </block>
+                              <block wx:else>
+                                <view class="choose-num panel-right flex-center" wx:if="{{0 < showGoods.totalCount}}">
+                                  <block wx:if="{{showGoods.selectedNum > 0}}">
+                                    <view>
+                                      <image src="{{staticResPath}}/image/mobile/takeout/food_del.png" class="remove-food">
+                                      </image>
+                                      <view bindtap="{{noBusiness ? 'handleBusiness':'handleTabItemTap'}}" class="remove-food-box" data-action="delFood" data-id="{{showGoods.id}}"></view>
+                                      <view class="food-num"> {{showGoods.selectedNum}} </view>
+                                    </view>
+                                  </block>
+                                  <view bindtap="{{noBusiness ? 'handleBusiness':'handleTabItemTap'}}" style="{{app.globalData.customStyleColor}}" class="add-food-box zan-icon zan-icon-add main-color" data-action="addFood" data-id="{{showGoods.id}}"></view>
+                                </view>
+                              </block></view>
+            <view class="product-info-line">
+              <view class="info-line"></view>
+            </view>
+            <block>
+             <view class="commissionBlock" >
+            <view class="commission">
+              <view class="valueBlock" wx:if="{{isMainShop && showFX && isSalesmen}}">
+                <image src='{{staticResPath}}/image/mobile/fx/icon_commission_2.png' class="commission_1"></image>
+                <view class="commVal inderectValue">间接奖励</view>{{app.globalData.currencySymbol}}{{mTool.fToY(mTool.getInderectValue(distributorConfig,showGoods),'direct')}}       </view>
+              <view class="valueBlock" wx:if="{{isMainShop && showFX && isSalesmen}}">
+                <image src='{{staticResPath}}/image/mobile/fx/icon_commission_1.png' class="commission_2"></image>
+                <view class="commVal directValue">直接奖励</view>{{app.globalData.currencySymbol}}{{mTool.fToY(mTool.getDirectValue(distributorConfig,showGoods),'direct')}}</view>
+              <view class="valueBlock" wx:if="{{!isSalesmen}}">
+                <text>共享商品</text>
+              </view>
+              <view class="valueBlock" data-id='{{showGoods.id}}' bindtap="showImgPre">
+                <image src="{{staticResPath}}/image/mobile/posterico.png" class="posterIco"></image>
+                <text>商品码</text>
+              </view>
+            </view>
+
+          </view>
+                <view class="product-info-line">
+                  <view class="info-line"></view>
+                </view>
+                </block>
+                <view class="product-info-month">商品信息</view>
+                <view style='margin:10px'>
+                  <scroll-view class="product-info-detail" scroll-y="true">
+                    {{showGoods.intro}}
+                  </scroll-view>
+
+                </view>
+              </view>
+            </view>
+          </view>
+      <navigator wx:if="{{fromIndex}}" url='/pages/uniquecenter/uniquecenter' class="uniquecenter_btn">
+        <image src='http://res.xcx.weijuju.com/image/mobile/takeout/takeout_uniquecenter.png?v=2'></image>
+      </navigator>
+      <official-account style="position:fixed;bottom:0px;width:100%;" wx:if="{{focusOfficial}}"></official-account>
+      <!-- 底部购物车块 -- 有商品条件且未弹出购物明细条件下 -->
+      <block wx:if="{{sumInfo.totalMoney>0}}">
+                <view class="footer {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}" style="position:fixed;bottom:{{focusOfficial?'84':'0'}}px">
+                  <view class="cart-icon" catchtap='handleTabItemTap' data-action="showShoppingCart">
+                    <view class="cart-img cart-img-normal-active main-color-bg zan-icon zan-icon-cart {{showShoppingCart?'hidden':''}}" data-action="showShoppingCart" style="{{app.globalData.customStyleBg}}"></view>
+                    <view class="cart-num flex-center" data-action="showShoppingCart">{{sumInfo.totalCount}}</view>
+                  </view>
+                  <block wx:if="{{sumInfo.totalMoney<shoperInfo.minMonry && !tostore}}">
+                    <view class="bill-btn flex-center unavail-btn"> 还差{{m1.getFixedMoney(shoperInfo.minMonry-sumInfo.totalMoney)}}元 </view>
+                  </block>
+                  <block wx:else>
+                    <view class="main-color-bg bill-btn flex-center {{isSubmitIng?'unavail-btn':''}}" bindtap='handleTabItemTap' data-action="submit" style="{{app.globalData.customStyleBg}}"> 去结算 </view>
+                  </block>
+                  <view class="spend {{showShoppingCart?'spend-expand':''}}">
+                    <view class="food-count">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(sumInfo.totalMoney)}}</view>
+                    <view class="fee-count" wx:if="{{!tostore}}"> 另需配送费{{app.globalData.currencySymbol}}{{m1.getFixedMoney(shoperInfo.distributionMonty)}}元起 </view>
+                  </view>
+                </view>
+              </block>
+      <!-- 无商品添加条件下 -->
+      <block wx:else>
+                <view class="footer {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}" style="position:fixed;bottom:{{focusOfficial?'84':'0'}}px">
+                  <view class="cart-icon">
+                    <view class="cart-img cart-img-normal-empty zan-icon zan-icon-cart"></view>
+                  </view>
+                  <view class="bill-btn flex-center unavail-btn" bindtap='handleTabItemTap' data-action="submit"> {{tostore?"去结算": m1.getFixedMoney(shoperInfo.minMonry)+"元起送"}} </view>
+                  <view class="cart-empty">
+                    <view class="cart-empty-txt" wx:if="{{!tostore}}">另需配送费{{app.globalData.currencySymbol}}{{m1.getFixedMoney(shoperInfo.distributionMonty)}}</view>
+                  </view>
+
+                </view>
+
+              </block>
+    </view>
+
+    <include src="/pages/template/openingModal.wxml"/>
+    <include src="/pages/template/authModal.wxml"/>
+
+     <navigator class='uniquecenter_btn' url='/pages/orderlist/orderlist'>
+        <image src='{{staticResPath}}/image/mobile/takeout/takeout_uniquecenter.png?v=2'></image>
+     </navigator>
+
+    <view wx:if="{{returnIndex}}" class="fixedhome sub-color" bindtap='backToHome' style="{{app.globalData.customSubColor}}"><view class="zan-icon zan-icon-home sub-color" style="{{app.globalData.customSubColor}}"></view></view>
+  </form>
+</view>

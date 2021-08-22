@@ -1,0 +1,118 @@
+<!--pages/giftcard//giftcardDetail.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  
+</wxs>
+<import src="./giftcardModal.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="view">
+    <view class="cardCntArea">
+      <view class="cardRegion" style="background-image: url({{config.coverShow}});background-size:100% 100%;height:300rpx">
+
+      </view>
+
+      <block>
+        <view class="gift-title">{{config.title}}</view>
+        <view wx:if="{{config.sendScene == 1}}" class="gift-price-wrap">
+          <view class="gift-price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.saleMoney)}}</view>
+          <view class="gift-count">库存：{{config.totalCount}}</view>
+
+        </view>
+        <view wx:if="{{config.sendScene == 2}}" class="gift-price-wrap">
+          <view class="gift-count">市场价：{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.saleMoney)}}</view>
+        </view>
+        <view wx:if="{{config.type == 2}}" class="gift-card-item">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>面值</view>
+          <view class="item-content">总价值<text class="main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.money)}}</text>，{{config.getUseLimitTxt}}</view>
+
+        </view>
+        <view wx:if="{{config.type == 1}}" class="gift-card-item">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>可兑换商品</view>
+          <view class="giftcard-goods">
+            <image src="{{config.bizMsg}}" style="width:50px;height: 50px;margin-right: 10px;border-radius: 4px;"></image>  
+            <view class="gift-card-goods">
+              <view>{{config.bizName || '商品名称'}}</view>
+              <span style="font-size: 12px" class="main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price)}}</span>
+
+            </view>
+          </view>
+
+        </view>
+        <view class="gift-card-item" style="margin-bottom: 10px">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>使用期限</view>
+          <view class="item-content">{{config.getTimeLimitTxt}}</view>
+
+        </view>
+        <view style="height: 10px; width: 100%;background: #f5f6f7;"></view>
+
+        <view class="vipBlock cardCommRow">
+          <view class="vipBlockHeader" bindtap="handleUseModalShow">
+            <view class="titleRow">
+              <text>使用需知</text>
+              <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+            </view>
+          </view>
+
+        </view>
+        <view class="vipBlock cardCommRow">
+          <view class="vipBlockHeader titleRow" bindtap="callService">
+            <text>客服电话</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+        <view class="vipBlock cardCommRow">
+          <view class="vipBlockHeader titleRow" bindtap="goToIndex">
+            <text>店铺主页</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+      </block>
+
+
+
+
+    </view>
+  </view>
+
+
+  <view class="receiveCard">
+    <block wx:if="{{config.state == 2}}">
+       <button wx:if="{{config.sendScene == 1}}" class="zan-btn zan-btn--primary zan-btn--small toGet main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="giftcardBuy">立即购买</button>
+    <button wx:if="{{config.sendScene == 2}}" class="zan-btn zan-btn--primary zan-btn--small toGet main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="giftcardActivate">立即激活</button>
+    </block>
+    <block wx:if="{{config.state == 3}}">
+      <button  class="toGet" style="background:#999;color:#fff;width:85%">已失效</button>
+
+    </block>
+    <block wx:if="{{config.state == 4}}">
+      <button  class="toGet" style="background:#999;color:#fff;width:85%">已过期</button>
+
+    </block>
+    
+   
+
+  </view>
+
+
+</view>
+<view class="modal-backdrop announce-backdrop" bindtap='handleUseModalClose' wx:if="{{showUseTips}}"></view>
+    <view class="coupon-info-modal tips-info" wx:if="{{showUseTips}}" >
+        <view class="title">使用说明</view>
+        <view class="description">{{config.description || '暂无说明'}}</view>
+        
+       
+        <button bindtap="handleUseModalClose" style="{{app.globalData.customStyleBg}}"  class="main-color-bg zan-btn close-btn">关闭</button>
+    </view>
+<template is="giftcardModalTpl"  data="{{app,config,categoryContClass,count}}"></template>
+<include src="/pages/template/authModal.wxml" />
+<include src="/pages/template/copyright.wxml" />

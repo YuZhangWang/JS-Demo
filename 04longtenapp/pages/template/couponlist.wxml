@@ -1,0 +1,56 @@
+<!-- 金额格式化 -->
+<wxs module="m1">
+    var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+    return Number(money / 100).toFixed(2);
+    } else {
+    return 0;
+    }
+    }
+    module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<template name="couponListTpl">
+    <view class="modal-backdrop announce-backdrop" bindtap='handleCouponModalClose' wx:if="{{showCouponList}}"></view>
+    <view class="coupon-info-modal" wx:if="{{showCouponList}}" bindtap="handleCouponModalTap">
+        <view class="title">店铺优惠</view>
+        <view class='coupon-code'>
+            <input class='coupon-input' placeholder='请输入优惠码' value='{{tocode}}' name="code"
+                   bindinput="changeToCode"></input>
+            <view class='main-color-bg coupon-duihuan' bindtap='convert' style="{{app.globalData.customStyleBg}}" >兑换</view>
+        </view>
+        <scroll-view class="coupon-list" scroll-y="true" bindscrolltolower="loadmore" scroll-top="{{scrollTop}}">
+            <view class="{{selectedGiftCard ?'disabledSelect':''}} coupon" bindtap="{{selectedGiftCard ?'':'handleCouponSelect'}}" class="coupon" wx:if="{{preferenceCodeList.length == 0}}" data-code="coupon"
+                   data-id="{{coupon.id}}" wx:for="{{couponList}}" wx:for-item="coupon"
+                  wx:key="coupon.id">
+                <text class="coupon-text" wx:if="{{coupon.type == 2}}">{{coupon.discount/10}}折：{{coupon.title}}</text>
+                <text class="coupon-text" wx:elif="{{coupon.type == 4}}">{{coupon.busiName}}：{{coupon.title}}</text>
+                <text class="coupon-text" wx:else>{{m1.getFixedMoney(coupon.money||0)}}元：{{coupon.title}}</text>
+                <view class="fright">
+                    <view wx:if="{{coupon.id == selectedCoupon.id}}" class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+                    <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+                </view>
+            </view>
+            <view wx:if="{{preferenceCodeList.length > 0}}" class="{{selectedGiftCard ?'disabledSelect':''}} coupon" data-code="code" bindtap="{{selectedGiftCard ?'':'handleCouponSelect'}}"
+                  data-id="{{code.couponId}}" data-preferencecodeid="{{code.id}}" wx:for="{{preferenceCodeList}}"
+                  wx:for-item="code">
+                <text class="coupon-text" wx:if="{{code.type == 2}}">{{code.discount/10}}折：{{code.codeName}}</text>
+                <text class="coupon-text" wx:elif="{{code.type == 4}}">{{code.limitName}}：{{code.codeName}}</text>
+                <text class="coupon-text" wx:else>{{m1.getFixedMoney(code.money||0)}}元：{{code.codeName}}</text>
+
+                <view class="fright">
+                    <view wx:if="{{code.id == selectedCoupon.preferenceCodeId}}"
+                          class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+                    <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+                </view>
+            </view>
+            <view class="coupon" data-code="coupon" data-id="-1" bindtap='handleCouponSelect'>
+                <text>不使用优惠</text>
+                <view class="fright">
+                    <view wx:if="{{!selectedCoupon}}" class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+                    <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+                </view>
+            </view>
+        </scroll-view>
+        <button data-action="closeModal" style="{{app.globalData.customStyleBg}}"  class="main-color-bg zan-btn zan-btn--large zan-btn--danger">关闭</button>
+    </view>
+</template>

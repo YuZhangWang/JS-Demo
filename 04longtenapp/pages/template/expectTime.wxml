@@ -1,0 +1,30 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<template name="expTimeListTpl">
+<view class="modal-backdrop announce-backdrop" bindtap='handleExpTimeModalClose' wx:if="{{showExpTime}}"></view>
+  <view class="coupon-info-modal" wx:if="{{showExpTime}}" bindtap="handleExpTimeModalTap">
+    <view class="bottomPopModal expTimeModal" scroll-y="true">
+      <view class="expTimeRowOne">
+        <view class="expTimeToday">今天（{{todayWeek}}）</view>
+      </view>
+      <view class="expTimeRowTwo">
+        <view class="expTimeItem {{selectedExpTime == index ? 'expTimeItemActive sub-color' : ''}}" style="{{selectedExpTime == index ? app.globalData.customSubColor:''}}" bindtap="handleExpTimeSelected" wx:for="{{canSelectTimeTA}}" data-idx="{{index}}">
+          <text class="">{{item.sendTime}}</text>
+          <view class="expTimeItemRight">
+          <text style="{{selectedExpTime == index ? '':'color: #999;'}}" wx:if="{{fromTakeout}}">（配送费{{m1.getFixedMoney(distributionMonty)}}元起）</text>
+          <text wx:else>(无配送费)</text>
+          <image wx:if="{{selectedExpTime == index}}" class="expTimeSelected" src="{{staticResPath}}/image/mobile/gou.png"></image> <view class="expTimeSelected" wx:else></view></view>
+        </view>
+      </view>
+    </view>
+    <button data-action="closeModal" class="main-color-bg zan-btn zan-btn--large zan-btn--danger" style="{{app.globalData.customStyleBg}}">关闭</button>
+  </view>
+  </template>

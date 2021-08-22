@@ -1,0 +1,70 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var isSpecSelected = function(specGroup,spec,idx){
+    if(specGroup.selectedId){
+      return specGroup.selectedId == spec.id;
+    } else if(idx==0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.isSpecSelected = isSpecSelected;
+</wxs>
+<template name="categoryModalTpl">
+<view class="{{categoryContClass}} {{isDetailPage?'detailPage':''}}" style='z-index:99999;position:fixed;'>
+  <view class="mod_pop_mask" bindtap="onCloseCategory"></view>
+
+  <view class="category_main">
+      <!-- 选择规格和数量 -->
+      <view id="control_wrap">
+        <view id="control_info">
+          <view class="category_goods">
+            <view class="left_img">
+              <image src="{{(goodsData.selectedSku && goodsData.selectedSku.img) ? userImagePath + goodsData.selectedSku.img : userImagePath+goodsData.goodsCover}}" width="60" height="60"></image>
+            </view>
+            <view class="right_goods">
+              <text class="goods-name">{{goodsData.name}}</text>
+              <view class="price main-color" style="{{app.globalData.customStyleColor}}">
+                <text>{{app.globalData.currencySymbol}}</text>{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.price:goodsData.price)}}</view>
+            </view>
+            <view class="close_btn" bindtap="onCloseCategory">
+              <view class="zan-icon zan-icon-close"></view>
+            </view>
+          </view>
+          <view id="control_sku" wx:if="{{goodsData.usenewspec}}">
+            <scroll-view id="sku_view" scroll-y="true" style="max-height:60vh;">
+              <view class="sku_ul" wx:for="{{specList}}" wx:for-item="specGroup" wx:key="specGroup.id">
+                <view class="sku_ul_title">{{specGroup.name}}</view>
+                <view class='sku_li' wx:for="{{specGroup.specValue}}" wx:for-index="specIndex" wx:for-item="spec" wx:key="spec.id">
+                  <view bindtap='handleSkuTap' style="{{m1.isSpecSelected(specGroup,spec,specIndex) ? app.globalData.customStyleBg:''}}" class="option sku_a {{m1.isSpecSelected(specGroup,spec,specIndex)?'current_sku main-color-bg':''}}" data-groupid="{{specGroup.id}}" data-id='{{spec.id}}'>{{spec.name}}</view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+          <view id="control_count">
+            <text class="left control_tle">购买数量：</text>
+            <view class="good_count_box">
+              <view id="good_sub" class="minus" bindtap="minusCount"></view>
+              <view class="good_num">
+                <input id="total_count" bindchange="bindChange" type="tel" value="{{totalCount}}"></input>
+              </view>
+              <view id="good_add" bindtap="addCount" class="plus"></view>
+            </view>
+            <view class="control_inventory main-color" style="{{app.globalData.customStyleColor}}">库存：{{goodsData.selectedSku?goodsData.selectedSku.inventory:goodsData.totalCount}}{{goodsData.unitName}}</view>
+          </view>
+        </view>
+        <view class="control_btn">
+          <view class="yycustom_buy_now main-color-bg" bindtap="onBuyNowNext" style="{{app.globalData.customStyleBg}}">{{goodsData.customButtonEnable?goodsData.customButtonText:"立刻预约"}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  </template>

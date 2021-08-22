@@ -1,0 +1,110 @@
+<!--pages/presales/presales.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <import src="/youzan/dist/toast/index.wxml" />
+  <canvas style="width:1188rpx;height:1782rpx; position:absolute;top:-1300px;" canvas-id="canvasGB"></canvas>
+  <view hidden="{{true}}">
+    <image src="{{shareQrCodeUrl}}"></image>
+  </view>
+  <view id="indexPage" hidden="{{showPageArr[0]}}" class="sTuanPage indexPage {{goodsList.length < 3 ? 'hei100' :''}} {{cusTxt.isCust ?'indexPageBG100':''}}">
+    <view class="top_header">
+      <view class="wrapBanner">
+        <swiper class="swiper" style="height:{{mainBannerHeight||562}}rpx" indicator-dots="true" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}" id="indexSlide">
+          <block wx:for="{{imgUrls}}" wx:key="index">
+            <swiper-item>
+              <image bindload="onMainBannerImgLoad"    src="{{mTool.specUrl(extConfig,userImagePath,item,1080)}}" class="slide-image" />
+              <!-- {{userImagePath+item}} -->
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+
+    </view>
+    <view class="tuan_goods_list_box">
+      <view class="tuan_goods_list {{!cusTxt.isCust && goodsList.length > 3 ? 'tuan_goods_listBg' :''}}">
+        <view class="tuan_goods_item_box tuan_goods_item_box_" data-typeid="" wx:for="{{goodsList}}" wx:key="index">
+
+          <view class="tuan_goods_item" bindtap="goodsDetailPage" data-tuantype="0" data-goodsid="{{item.id}}" data-showindex="2">
+            <image class="goods_img" src="{{mTool.specUrl(extConfig,userImagePath,item.awardPic,800)}}"></image>
+            <!-- {{userImagePath + item.awardPic}} -->
+            <view class="goods_info_box">
+              <view class="goods_title">
+                <span class="title_tips" style="display: none;">【
+                  <span>{{item.offeredLimitNum}}</span>人拼】</span>
+                <span class="goods_name">{{item.awardName}}</span>
+              </view>
+
+              <view class="goods_price_box" style="margin-top:20rpx">
+                <view class='goods_price_boxWrap'>
+
+                  <view class="goods_act_price">
+
+                    {{app.globalData.currencySymbol}}
+                    <span>{{mTool.fToY(item.preAmount+item.restAmount)}}</span>
+
+
+                  </view>
+
+                </view>
+
+                <view class="goods_btn goods_soldOut_btn" data-tuantype="0" data-goodsid="{{item.id}}" data-showindex="2">{{activity.activityStatusTxt}}</view>
+
+
+              </view>
+              <view class="goods_price_box">
+                <view class='goods_price_boxWrap'>
+
+                  <view class="goods_price">
+
+                    <span style="text-decoration:line-through;">
+                      {{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(item.originalPrice)}}</span>
+                    </span>
+
+                  </view>
+                </view>
+
+
+                <view class="act_countDown_box">
+                  <view class="countDown_time" wx:if="{{activity.activityStatus != 3}}">
+                    <span>{{atyStatusTxt}}</span>
+                    <span class="timer_day timer_box">{{atyTimeShutDown.timerDay}}</span>
+                    <span class="split">天</span>
+                    <span class="timer_box timer_hour">{{atyTimeShutDown.timerHour}}</span>
+                    <span class="split">:</span>
+                    <span class="timer_box timer_minute">{{atyTimeShutDown.timerMinute}}</span>
+                    <span class="split">:</span>
+                    <span class="timer_box timer_second">{{atyTimeShutDown.timerSecond}}</span>
+                  </view>
+                </view>
+
+              </view>
+            </view>
+          </view>
+
+
+        </view>
+      </view>
+    </view>
+    <!-- <view class="top_myOrderBtn" bindtap="showMyOrderPage" style="background-image:url({{staticResPathTuan}}top_order_btn.png)"></view> -->
+    <view class="footer_btn_box {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}">
+      <view class="footer_btn all_tuan_btn" bindtap="topPageSwitch" data-showindex="0">
+        <image src="{{staticResPathTuan}}new_ituan2.png"></image>
+        <view class="tuan_menu_txt" style='color:#e93b3d'>{{cusTxt.bottomLTxt}}</view>
+      </view>
+      <view class="footer_btn my_tuan_btn" bindtap="topPageSwitch" data-showindex="1">
+        <image src="{{staticResPathTuan}}new_ilist1.png"></image>
+        <view class="tuan_menu_txt">{{cusTxt.bottomRTxt}}</view>
+      </view>
+    </view>
+    <include src="/pages/template/copyright.wxml" />
+    <view style="height:100rpx;"></view>
+  </view>
+  <view wx:if="{{returnIndex}}" class="fixedhome sub-color" style="{{app.globalData.customSubColor}}" bindtap='backToHome'>
+    <view class="zan-icon zan-icon-home sub-color" style="{{app.globalData.customSubColor}}"></view>
+  </view>
+</view>
+<include src="/pages/template/authModal.wxml" />
+<!-- <view class="topbar_tuanActEnded">
+  活动已结束，当前仅供预览，将不能进行拼团活动
+</view> -->

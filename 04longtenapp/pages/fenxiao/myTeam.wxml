@@ -1,0 +1,61 @@
+<!--pages/fenxiao/myPerformance.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <scroll-view class="wrap" lower-threshold="100" scroll-y="true" bindscrolltolower="handleScrollToLower">
+    <view class='rankcontainer'>
+
+    </view>
+    <view class='rankwrap'>
+      <view class='rank-usermsg'>
+        <image class="user-img" src='{{distributorTreeNode.headPic}}'></image>
+        <view class="nickname">{{distributorTreeNode.nickName}}</view>
+        <image class="team-bg" src="{{staticResPath}}/image/mobile/fx/team-rgiht-bg.png"></image>
+
+      </view>
+      <view class="header_panel">
+        <view class="sum_info" wx:if="{{nodeId}}">{{distributorTreeNode.nickName}}的粉丝数：{{distributorTreeNode.downNodeNum}}</view>
+        <view class="sum_info_panel" wx:else>
+          <!-- <view class="zan-icon zan-icon-question" bindtap='showTips'></view> -->
+          <view class="sum_info_my"><view>我的粉丝</view><text>{{distributorTreeNode.downNodeNum+indirectDownNode}}</text></view>
+          <view class="sum_info_box">
+            <view class="sum_info">直接粉丝：<text>{{distributorTreeNode.downNodeNum}}</text></view>
+            <view class="sum_info">间接粉丝：<text>{{indirectDownNode}}</text></view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="main_panel">
+      <view class="item_list">
+        <view class="item_box" wx:for="{{detailList}}" wx:for-item="detail" wx:key="detail.id">
+          <view class="header">
+            <image src="{{detail.headPic}}"></image>
+          </view>
+          <view class="detail_info">
+            <view class="nickname">{{detail.nickName}}</view>
+            <view class="subtext">加入时间：{{detail.joinTime}}</view>
+            <view class="subtext">ID：{{detail.id}}</view>
+          </view>
+          <view class="other" wx:if="{{!nodeId}}">
+            <view class="team_sum">团队：{{detail.downNodeNum}}</view>
+            <navigator class="view_team" url='myTeam?nodeId={{detail.id}}'>查看直推</navigator>
+          </view>
+        </view>
+      </view>
+      <view class="nomore" wx:if="{{nomore}}">没有更多了~</view>
+      <view class="nomore" wx:if="{{nodata}}">还没数据哦~</view>
+    </view>
+  </scroll-view>
+  <include src="/pages/template/authModal.wxml" />
+</view>

@@ -1,0 +1,65 @@
+<import src="../template/form.wxml"/>
+<import src="../template/decoration.wxml"/>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<wxs module="m1">
+  var getImgList = function(pic) {
+    if(pic){
+      return pic.split(",");
+    } else {
+      return [];
+    }
+  }
+  module.exports.getImgList = getImgList;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<!--form.wxml-->
+<scroll-view class="container">
+
+	<block wx:for="{{items}}" wx:key="index" wx:for-item="formItem" wx:for-index="index">
+		<block wx:if="{{formItem.item_type == 'singleInputWidget'}}">
+			<template is="huaerForm" data="{{app,data:formItem.data,index:index}}"></template>
+		</block>
+        <block wx:if="{{formItem.item_type == 'telInputWidget'}}">
+            <template is="huaerTell" data="{{app,data:formItem.data,index:index,has_get_vcode:has_get_vcode,vcodeGetTime:vcodeGetTime}}"></template>
+        </block>
+		<block wx:if="{{formItem.item_type == 'multilineInputWidget'}}">
+			<template is="huaerMultiline" data="{{app,num:formItem.num,data:formItem.data,index:index}}"></template>
+		</block>
+		<block wx:elif="{{formItem.item_type == 'imageUpload'}}">
+      <template is="huaerFileUpload" data="{{app,data:formItem.data,index:index,uploadImgList:m1.getImgList(submitItems[index].submitVal),userImagePath:userImagePath}}"></template>
+		</block>
+		<block wx:elif="{{formItem.item_type == 'dateWidget'}}">
+      <template is="huaerDateField" data="{{app,data:formItem.data,index:index,dateTime:dateTime,dateValue:dateValue,submitValue:submitItems[index].submitVal}}"></template>
+		</block>
+    <block wx:elif="{{formItem.item_type == 'selectWidget'}}">
+      <template is="selectW" data="{{app,data:formItem,list:formItem.data.list,index:index,selected:submitItems[index].submitVal}}"></template>
+		</block>
+    <block wx:elif="{{formItem.item_type == 'radioWidget'}}">
+      <template is="radiotW" data="{{app,data:formItem,list:formItem.data.list,index:index,selected:submitItems[index].submitVal}}"></template>
+		</block>
+    <block wx:elif="{{formItem.item_type == 'btnWidget'}}">
+
+		</block>
+		<block wx:elif="{{formItem.item_type == 'addressWidget'}}">
+      <template is="addressWidget" data="{{app,data:formItem.data,index:index,areaVal:submitItems[index].areaVal||['', '', ''],addressVal:submitItems[index].addressVal||''}}"></template>
+		</block>
+    <block wx:else>
+      <template is="{{formItem.item_type}}" data="{{app,item:formItem,userImagePath:userImagePath,staticResPath:staticResPath,bannerHeight:bannerHeight,widgetIndex:index,extConfig:extConfig,app:app}}"></template>
+		</block>
+	</block>
+  <include src="../template/footer.wxml"/>
+  <textarea  hidden='{{true}}'></textarea>
+</scroll-view>
+<include src="/pages/template/copyright.wxml"/>
+<view class="form_btn_box" wx:if="{{btnShow}}" style="bottom:{{app.globalData.bottomMenus && app.globalData.bottomMenus.isShow?'50px':'0px'}};">
+	  <!-- <view style="background: {{btnBgColor}};color:{{btnColor}};" class="formBtn" bindtap="submitFrom">{{btnTitle}}</view>   -->
+   <form class="" data-goodsid="{{goodsDetailInfo.id}}" data-paymoney='{{paymoney}}'>
+      <button class="formBtn" style="background: {{btnBgColor}};color:{{btnColor}};" bindtap="submitFrom" >
+        {{btnTitle}}
+      </button>
+    </form>
+</view>
+<navigator url='/pages/formRecord/formRecord'></navigator>
+<view wx:if="{{returnIndex}}"  style="bottom:{{app.globalData.bottomMenus && app.globalData.bottomMenus.isShow?'240rpx':'140rpx'}};" class="fixedhome sub-color" style="{{app.globalData.customSubColor}}" bindtap='backToHome'><view class="zan-icon zan-icon-home sub-color" style="{{app.globalData.customSubColor}}"></view></view>
+<include src="/pages/template/authModal.wxml"/>
+</view>

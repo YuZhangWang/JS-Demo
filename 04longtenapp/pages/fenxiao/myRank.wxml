@@ -1,0 +1,70 @@
+
+<!--pages/fenxiao/myRank.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view>
+<view class='rankcontainer'>
+   <view class='rankwrap'>
+      <view class='rank-usermsg'>
+        <image src='{{selfRank.head_pic}}'></image>
+        <view>{{selfRank.nick_name}}</view>
+        <text>{{selfRank.phone?selfRank.phone:'--'}}</text>
+
+      </view>
+      <view class='rank-extralmsg'>
+        <view>
+          <view style='width:30rpx;height:38rpx' class='img'><image mode='widthFix' src='{{staticResPath}}/image/mobile/myrank/rank.png'></image></view>
+          <span style="margin-left:10px">排名：</span>{{selfRank.rank}}</view>
+        <view>
+          <view  class='img' style='width:34rpx;height:38rpx'><image mode='widthFix' src='{{staticResPath}}/image/mobile/myrank/comm.png'></image></view>
+          <span style="margin-left:7px">佣金：</span>{{app.globalData.currencySymbol}}{{m1.getFixedMoney(selfRank.total_money)}}
+        </view>
+        <view>
+          <view style='width:44rpx;height:38rpx' class='img'><image mode='widthFix' src='{{staticResPath}}/image/mobile/myrank/team.png'></image></view>
+          <span style="margin-left:4px">团队：</span><span style="color:#000;font-size:40rpx">{{selfRank.teamNum}}</span><text style='font-size:28rpx;color:#666;'>人</text>
+        </view>
+      </view>
+   </view>
+</view>
+<view class='ranklist'>
+ <view class='ranklist-title'>
+  <view class='ranking'>名次</view>
+  <view class='promoter1'>推广员</view>
+  <view class='team'>团队</view>
+  <view class='commission'>佣金</view>
+ </view>
+ <view class='ranklist-item' wx:for="{{rankList}}">
+  <view wx:if="{{index==0}}" class='ranking'><image src='{{staticResPath}}/image/mobile/myrank/rank1.png'></image></view>
+  <view wx:if="{{index==1}}" class='ranking'><image src='{{staticResPath}}/image/mobile/myrank/rank2.png'></image></view>
+  <view wx:if="{{index==2}}" class='ranking'><image src='{{staticResPath}}/image/mobile/myrank/rank3.png'></image></view>
+  <view wx:if="{{index>2}}" style="font-size:18px;" class='ranking'>{{index+1}}</view>
+  <view class='promoter'>
+    <image src='{{item.head_pic}}'></image>
+    <view style='margin-left:20rpx;margin-top:10rpx;' class='promoter-msg'>
+      <view>{{item.nick_name}}</view>
+      <text wx:if="{{50 > index}}">{{item.phone}}</text>
+    </view>
+  </view>
+  <view class='team'>{{item.teamNum?item.teamNum:0}}<text>人</text></view>
+  <view class='commission text-color'>{{app.globalData.currencySymbol}}{{m1.getFixedMoney(item.total_money)}}</view>
+ </view>
+ <view class='nomore'>无更多数据</view>
+ 
+</view>
+  
+  
+
+</scroll-view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

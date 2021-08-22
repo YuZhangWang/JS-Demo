@@ -1,0 +1,94 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getSpecData = function(specData, ids){
+     for( var i = 1; i < specData.length; i++){
+         if(specData[i].ids == ids){
+           return specData[i].inventory
+         }
+     }
+  }
+  var isSpecSelected = function(specGroup,spec,idx){
+    if(specGroup.selectedId){
+      return specGroup.selectedId == spec.id;
+    } else if(idx==0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var goodsLeftCount = function(goodsData){
+    if(!goodsData)return 0;
+    return goodsData.selectedSku?goodsData.selectedSku.inventory:goodsData.totalCount;
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.isSpecSelected = isSpecSelected;
+  module.exports.goodsLeftCount = goodsLeftCount;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<template name="categoryModalTpl">
+  <view class="{{categoryContClass}} {{isDetailPage?'detailPage':''}}" style='z-index:99999;position:fixed;'>
+    <view class="mod_pop_mask" bindtap="onCloseBuy"></view>
+
+    <view class="category_main {{app.globalData.isIPhoneX ? 'iPhoneXView':''}}">
+      <!-- 选择规格和数量 -->
+      <view id="control_wrap">
+        <view id="control_info">
+          <view class="category_goods">
+            <view wx:if="{{goodsData.selectedSku && goodsData.selectedSku.img}}" class="left_img1">
+              <image src="{{mTool.specUrl(extConfig,userImagePath,goodsData.selectedSku.img,1080)}}" width="60" height="60"></image>
+            </view>
+            <view wx:else class="left_img">
+              <image src="{{mTool.specUrl(extConfig,userImagePath,goodsData.goodsCover,1080)}}" width="60" height="60"></image>
+            </view>
+            <view class="right_goods">
+              <view class="goods-name">
+                <text style="display: inline-block;max-width: 300rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;vertical-align: text-top;">{{goodsData.name}}</text>
+              </view>
+              <view class="price main-color" style="{{app.globalData.customStyleColor}}" wx:if="{{false == isIntegralGoods  || undefined == isIntegralGoods}}">
+                <text style="font-size: 15px; font-weight: bold;margin-right: 25px;white-space: nowrap;{{app.globalData.customStyleColor}}" class="item_price i_pri"><text>{{app.globalData.currencySymbol}}</text>
+                <text style='font-size:44rpx;'>{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.timeDisocuntPrice:goodsDetailInfo.timeDiscountGoodsAward.discountPrice)}}</text></text>
+              </view>
+
+            </view>
+            <view class="close_btn" bindtap="onCloseBuy">
+              <view class="zan-icon zan-icon-close"></view>
+            </view>
+          </view>
+          <view id="control_sku" wx:if="{{goodsData.usenewspec}}">
+            <scroll-view id="sku_view" scroll-y="true" style="max-height:60vh;">
+              <view class="sku_ul" wx:for="{{specList}}" wx:for-item="specGroup" wx:key="specGroup.id">
+                <view class="sku_ul_title">{{specGroup.name}}</view>
+                <view class='sku_li' wx:for="{{specGroup.specValue}}" wx:for-index="specIndex" wx:for-item="spec" wx:key="spec.id">
+                  <view bindtap='handleSkuTap' class="option  sku_a {{m1.isSpecSelected(specGroup,spec,specIndex)?'current_sku':''}}"  data-groupid="{{specGroup.id}}" data-id='{{spec.id}}'>{{spec.name}}</view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+          <view id="control_count">
+            <text class="left control_tle">购买数量：</text>
+            <view class="good_count_box">
+              <view id="good_sub" class="minus" style="background: {{( totalBuyCount == 0) ? '#e7e7e7':'#fff'}};" bindtap="minusPreCount">-</view>
+              <view class="good_num">
+                <input id="total_count" bindinput="handleBuyGoodsCountChange" type="tel" value="{{totalBuyCount}}"></input>
+              </view>
+              <view id="good_add" bindtap="addPreCount" style="background: {{(limitEnable && totalBuyCount>=limitCount) ? '#e7e7e7':'#fff'}};" class="plus">+</view>
+            </view>
+            <view class="control_inventory" >剩余：{{m1.goodsLeftCount(goodsData)}}{{goodsData.unitName}}</view>
+          </view>
+        </view>
+        <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+          <view class="control_btn" wx:if="{{!isDetailPage}}">
+            <button  form-type='submit' style="{{app.globalData.customStyleBg}}"  class=" commonNavButton btn-buynow"
+              catchtap='onBuyNowDiscount'> 立刻购买 </button>
+          </view>
+        </form>
+      </view>
+    </view>
+  </view>
+</template>

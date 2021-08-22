@@ -1,0 +1,79 @@
+@import "moon_icon.wxss";
+.communityPublish-wrap{ background-color: #eee; height: 100%;overflow-x: hidden; margin-top: 20rpx}
+.communityPublish-main{ padding: 0 15px; background-color: #fff; border-bottom: 1px solid #d7d7d7;}
+.communityPublish-title-input{padding: 20rpx 0; width: 100%; height: 30px; border: none; border-bottom: 1px solid #e6e6e6; outline: none; }
+.communityPublish-content-input{ width: 100%; height: 100px; border: none;resize: none; outline: none;margin-left:-10px;
+ }
+.communityPublish-img-wrap{ margin-top: 5px; }
+.communityPublish-item, .communityPublish-item-add{ float: left; width: 72px; height: 72px; position: relative; margin-right: 8px; margin-top: 10px; }
+.communityPublish-item > image{ width: 100%; height: 100%; }
+.communityPublish-item-delete{ display: block; width: 18px; height: 18px; text-align: center; line-height: 18px; font-size: 16px; color: #fff; border: 1px solid #fff; border-radius: 11px; background-color: #6d695d; position: absolute; top: 2px; right: 2px; }
+.communityPublish-item-add{
+
+      text-align: center;
+      line-height: 72px;
+      color: #cbcbcb; font-size: 60px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("http://res.xcx.weijuju.com/image/mobile/forum/upload.png");
+      background-size: 100% auto;
+      margin-bottom:10px;
+
+ }
+.communityPublish-tip{ color: #a3a3a3; margin-top: 15px; font-size: 0.6em; }
+.communityPublish-btn{ display: block; width: 90%; height: 50px; border: none; color: #fff; background-color: #3091f2; margin: 0 auto;  margin-top: 20px; line-height: 50px;border-radius: 50rpx}
+.communityPublish-classify-wrap{ margin-top: 20rpx; display: flex;align-items: center;}
+
+
+
+.communityPublish-classify{
+    display:inline-block;
+    width:100%;
+    height:28px;
+    margin-left:10px;
+    padding-left:10px;
+    line-height:28px;
+
+
+}
+.getLocation{
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+.getLocation .zan-icon-location{
+    color:gray;display:inline-block; margin-right:15px;
+}
+.getLocation .location-name{
+    color:#999999;
+}
+.line-blank{
+    height:10px;
+    background:#eee;
+    padding-right:30px;
+    position:relative;
+    left:-15px;
+    width:100%;
+}
+.communityPublish-tel{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+.communityPublish-tel .communityPublish-title-input{
+  border-bottom: none;
+    padding-left:15px;
+    padding-bottom:20rpx
+}
+.communityPublish-tel .zan-icon-phone{
+    color:#999;
+}
+.linkWays{
+    border-bottom: 1px solid #cbcbcb;
+    padding: 10px 0px;
+
+
+}

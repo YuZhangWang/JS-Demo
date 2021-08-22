@@ -1,0 +1,65 @@
+/* pages/queue/queueContain.wxss */
+.queue-update-tip{
+  margin: 0 !important;
+  background: #fff9d9;
+  padding: 5px 10px;
+  color: #d6caa6;
+  font-size: 28rpx;
+}
+.queue-contain-header{
+  width: 100%;
+  margin-left: 0 ;
+  overflow: hidden;
+  padding-top: 5px;
+  color: #a8a8a8;
+  margin-top:10px;
+  background: #ffffff;
+  border-bottom: 1px solid #a8a8a8;
+}
+.queue-contain-header .queue-time{
+  display: inline-block;
+  width: 75%;
+  margin: 0;
+  text-indent: 15px;
+  line-height: 15px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+.queue-contain-header .queue-status{
+  display: inline-block;
+  width: 20%;
+  line-height: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  text-align: right;
+  margin: 0;
+}
+.queue-contain-body{
+  width: 100%;
+  margin: 0;
+  background: #ffffff;
+  overflow: hidden;
+}
+.queue-contain-body .queue-wait{
+  display: inline-block;
+  width: 75%;
+  margin: 0;
+  line-height: 25px;
+  text-indent: 15px;
+  padding-top: 5px;
+  color: #a8a8a8;
+}
+.queue-contain-body .queue-wait .wait-number text{
+  color: #676867;
+}
+.queue-contain-body .queue-wait .wait-time text{
+  color: #676867;
+}
+.queue-contain-body .queue-seat{
+  display: inline-block;
+  width: 20%;
+  line-height: 22px;
+  text-align: right;
+  margin-top:-20px;
+  vertical-align: middle;
+}

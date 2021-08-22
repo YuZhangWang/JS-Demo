@@ -1,0 +1,497 @@
+<!--pages/groupbuy/groupbuyDetail.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <import src="/youzan/dist/toast/index.wxml" />
+  <canvas style="width:1188rpx;height:1782rpx; position:absolute;top:-1300px;" canvas-id="canvasGB"></canvas>
+  <view hidden="{{true}}">
+    <image src="{{shareQrCodeUrl}}"></image>
+  </view>
+  <scroll-view id="goodsDetailPage" class="sTuanPage goodsDetailPage" scroll-y="{{true}}">
+    <view class="top_bgMusicBtn"></view>
+    <view class="tuan_detail_wrapper">
+      <view class="tuan_wrapper">
+        <view class="wrapBanner">
+          <view class="tuan_soldout_mask">
+            <view></view>
+          </view>
+          <view class="tuan_goods_person">
+            <view class="tuan_person_list">
+              <!-- <view class="tuan_person_item">
+							<img src="{{staticResPathTuan}}ilist2.png">
+							<view class="tuan_person_text">兰陵君正在拼这个商品</view>
+						</view> -->
+            </view>
+          </view>
+          <swiper class="swiper" id="detailSlide" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{1000}}" id="indexSlide">
+            <block wx:for="{{goodsDetailInfo.goodsSlider }}" wx:key="index">
+              <swiper-item>
+                <image src="{{mTool.specUrl(extConfig,userImagePath,item,480)}}" class="slide-image" />
+                <!-- {{userImagePath + item}} -->
+              </swiper-item>
+            </block>
+          </swiper>
+        </view>
+        <view class="price_info_box" style="background-image:-webkit-linear-gradient(left, #f94c00, #fcc04e 80%);background-image:linear-gradient(left, #f94c00, #fcc04e 80%)">
+          <view class="price_info">
+
+            <span class="tuan_num_box">
+              <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+              <span wx:if="{{!isStepGb}}" class="tuanpeopleNum">{{goodsDetailInfo.offeredLimitNum}}人拼</span>
+              <span wx:if="{{isStepGb}}" class="tuanpeopleNum">阶梯团</span>
+            </span>
+
+            <view wx:if="{{!isStepGb}}" class="goods_price">
+              <span wx:if="{{!goodsDetailInfo.switchLeadPrice || 0 < goodsDetailInfo.membersNum}}" class="goodsPriceVal">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+              <span wx:if="{{goodsDetailInfo.switchLeadPrice && 0 == goodsDetailInfo.membersNum}}" class="goodsPriceVal">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.leaderPrice)}}</span>
+            </view>
+            <view wx:if="{{isStepGb}}" class="goods_price">
+              <span class="goodsPriceVal">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.stepList[0].price)}}</span>
+
+            </view>
+            <view class="actual_price_box">
+              <view class="actual_price">
+                <span class="actualPriceVal">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.originalPrice)}}</span>
+              </view>
+
+            </view>
+          </view>
+          <view class="act_countDown_box">
+            <view class="act_time_name">{{atyStatusTxt}}</view>
+            <view class="countDown_time">
+              <span class="timer_day timer_box">{{atyTimeShutDown.timerDay}}</span>
+              <span class="split">天</span>
+              <span class="timer_box timer_hour">{{atyTimeShutDown.timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{atyTimeShutDown.timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{atyTimeShutDown.timerSecond}}</span>
+            </view>
+          </view>
+        </view>
+        <view class="goods_name_box">
+          <view class="show_goods_name">
+            {{goodsDetailInfo.awardName}}
+          </view>
+          <view class="goods_limit_box">
+            <span wx:if="{{goodsDetailInfo.limitBuy != -1}}">#每人限购
+              <span class="goodsLimitNum">{{goodsDetailInfo.limitBuy}}</span>{{goodsDetailInfo.unit || "件"}}#</span>
+            <span wx:else>#每人不限购#</span>
+            <span class="left_repertory_box">库存仅剩：
+              <span class="left_repertory_num">{{goodsDetailInfo.sendNum}}</span> {{goodsDetailInfo.unit || "件"}}</span>
+          </view>
+          <view class="goods_step_box" wx:if="{{isStepGb}}">
+            <span wx:for="{{goodsDetailInfo.stepList}}" wx:key="index">
+              <image class="stepIcon" src="{{staticResPathBargain}}stepIcon.png"></image>{{item.num}}人拼{{mTool.fToY(item.price)}}元</span>
+          </view>
+
+        </view>
+
+        <view class="tuan_statu_box" id="tuan_statu_box" hidden="{{!tuanStatuHeader[0]}}">
+          <view class="tuan_statu_header statu_sTuan_will" hidden="{{tuanStatuHeader[0]}}">
+            <view class="title">暂未拼团</view>
+            <view class="context">点击“{{cusTxt.detailBottomRTxt}}”，即有机会享受拼团价优惠</view>
+          </view>
+          <view class="tuan_statu_header statu_sTuan_limitBuy" hidden="{{tuanStatuHeader[1]}}">
+            <view class="title">该商品已达到限购数量</view>
+            <view class="context">该商品限购
+              <span class="limitBuyVal">1</span>{{goodsDetailInfo.unit || "件"}}，请在“我的订单”中查看</view>
+          </view>
+          <view class="tuan_statu_header statu_sTuan_manyuan" hidden="{{tuanStatuHeader[2]}}">
+            <view class="title">该团已满员</view>
+            <view class="context">你可以发起拼团当团长哦~更多宝贝等你拼</view>
+          </view>
+          <view id="statu_sTuan_ing" class="tuan_statu_header statu_sTuan_ing" hidden="{{tuanStatuHeader[3]}}">
+            <view wx:if="{{!isStepGb}}" class="title">还差
+              <span class="leftPeopleNum" style="color: #ed3254;">{{goodsDetailInfo.offeredLimitNum - goodsDetailInfo.membersNum}}</span>
+              人拼团成功，快叫小伙伴参团吧
+            </view>
+            <view wx:if="{{isStepGb}}" class="title">
+              <!-- 第一阶梯 -->
+              <span wx:if="{{currentStepIndex == 0 && currentJoinNum < currentStep.num}}">
+                还差
+                <span class="leftPeopleNum" style="color: #ed3254;">{{currentStep.num - currentJoinNum}}</span>
+                人拼团成功，快叫小伙伴参团吧
+              </span>
+              <!-- 大于第一阶梯 -->
+              <!-- 有关系分享进来 -->
+              <block wx:if="{{!stepStatus}}">
+                <span wx:if="{{currentJoinNum >= currentStep.num && currentJoinNum != goodsDetailInfo.stepList[stepLength-1].num}}">
+                  拼团成功! 再邀请
+                  <span class="leftPeopleNum" style="color: #ed3254;">{{goodsDetailInfo.stepList[currentStepIndex+1].num - currentJoinNum}}</span>
+                  人参团即享
+                  <span class="leftPeopleNum" style="color: #ed3254;">{{mTool.fToY(goodsDetailInfo.stepList[0].price-goodsDetailInfo.stepList[currentStepIndex+1].price)}}</span>元返现！
+                </span>
+
+              </block>
+              <!-- 没有关系分享进来 -->
+              <block wx:if="{{stepStatus}}">
+                <span wx:if="{{currentJoinNum >= currentStep.num && currentJoinNum != goodsDetailInfo.stepList[stepLength-1].num}}">
+                  还差
+                  <span class="leftPeopleNum" style="color: #ed3254;">{{goodsDetailInfo.stepList[currentStepIndex+1].num - currentJoinNum}}</span>
+                  人参团即享
+                  <span class="leftPeopleNum" style="color: #ed3254;">{{mTool.fToY(goodsDetailInfo.stepList[0].price-goodsDetailInfo.stepList[currentStepIndex+1].price)}}</span>元返现,快来参团吧！
+                </span>
+
+              </block>
+
+              <!-- 满阶梯 -->
+              <span wx:if="{{currentStepIndex > 0 && currentJoinNum == goodsDetailInfo.stepList[stepLength-1].num}}">
+                恭喜你拼团成功，成功返现
+                <span class="leftPeopleNum" style="color: #ed3254;">{{mTool.fToY(goodsDetailInfo.stepList[0].price)}}</span>
+                元
+              </span>
+            </view>
+            <view class="context" style="margin-top:0.2rem;">数量有限，先到先得。{{clock}}后结束</view>
+          </view>
+
+          <view class="tuan_statu_header statu_sTuan_finish" hidden="{{tuanStatuHeader[4]}}">
+            <view class="title">
+              <image src="{{staticResPathTuan}}yes_icon_green.png"></image>团长人气太高，已经拼团成功啦</view>
+            <view class="context">数量有限，先到先得。请立即购买</view>
+          </view>
+          <view class="tuan_statu_body" hidden="{{0 == goodsDetailInfo.membersNum}}">
+            <view class="nick_img_list">
+              <view class="nick_img_list_box">
+                <view class="nick_img_item {{index == 0 ?'leader_img_item' : ''}}" wx:key="index" wx:for="{{goodsDetailInfo.members}}">
+                  <view class="item_img">
+                    <image src="{{item.headPic}}" wx:if="{{item.headPic}}"></image>
+                    <image src="{{staticResPathTuan}}nick_img.png" wx:else></image>
+                  </view>
+
+                  <view class="leader_tips" wx:if="{{0 == index}}">团长</view>
+                </view>
+
+
+
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="tuan_title_v2">
+          <span>拼团玩法</span>
+          <view class='link' bindtap="showMustKnowPage">详细规则
+            <text class="zan-icon zan-icon-arrow"></text>
+          </view>
+
+        </view>
+        <view wx:if="{{!isStepGb}}" class="tuan_rulev2">
+
+          <view class='tuan_rulev2_item'>
+            <span>①开团/参团</span>
+          </view>
+          <view class='tuan_rulev2_arrow'>
+            <text class="zan-icon zan-icon-arrow"></text>
+          </view>
+          <view class='tuan_rulev2_item'>
+            <span>②召唤伙伴</span>
+          </view>
+          <view class='tuan_rulev2_arrow'>
+            <text class="zan-icon zan-icon-arrow"></text>
+          </view>
+          <view class='tuan_rulev2_item'>
+            <span>③满员发货</span>
+          </view>
+
+        </view>
+        <view wx:if="{{isStepGb}}" class="tuan_rulev2">
+          <view class='step_rule'>
+            <span>①</span>
+            <view style="font-size:12px">
+              <view>支付第一阶梯</view>
+              <span>金额开团/参团</span>
+            </view>
+          </view>
+          <view style="line-height:70px" class='tuan_rulev2_arrow'>
+            <text class="zan-icon zan-icon-arrow"></text>
+          </view>
+          <view class='step_rule'>
+            <span>②</span>
+            <view style="font-size:12px">
+              <view>召唤伙伴</view>
+              <span>达成拼团条件</span>
+            </view>
+          </view>
+          <view style="line-height:70px" class='tuan_rulev2_arrow '>
+            <text class="zan-icon zan-icon-arrow"></text>
+          </view>
+          <view class='step_rule'>
+            <span>③</span>
+            <view style="font-size:12px">
+              <view>满足条件发货</view>
+              <span>达成情况返还差价</span>
+            </view>
+          </view>
+
+        </view>
+        <view class="tuan_title_v2" style='margin-top:20rpx;'>
+          <span>商品详情</span>
+        </view>
+        <view class="goods_detail_box">
+          <view class="goods_detail_body commonBody">
+            <view class="goods_detail_wrapper">
+              <!-- <template is="wxParse" data="{{wxParseData:article.nodes}}"/> -->
+              <rich-text nodes="{{goodsDetailInfo.description}}" type="text"></rich-text>
+            </view>
+            <view class="goods_detail_footer">
+              <!-- <img class="official_qrcode" src=""> -->
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+
+
+    <view style="height:105rpx;"></view>
+  </scroll-view>
+  <view class='goodsDetailPage'>
+    <view class="tuan_btn_box">
+
+      <view class="tuan_statu_btn_wrap" style="padding-bottom: {{app.globalData.isIPhoneX ? '40rpx':''}}" hidden="{{tuanStatuBtn[0]}}">
+        <!-- 没有拼团的时候 -->
+        <view class="tuan_statu_btn tuan_will_btn">
+          <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+            <view class="act_price_box">
+              <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+            </view>
+            <view class="btn_bottom_text">拼团首页</view>
+          </view>
+          <button class='contact_btn' open-type='contact'>
+            <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+              <view class="act_price_box">
+                <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+              </view>
+              <view class="btn_bottom_text">联系卖家</view>
+            </view>
+          </button>
+          <view class="left_btn buy_self_btn" style='background:#FF8C42;color:white;' bindtap="originPriceBuy">
+            <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+              <span class="act_price actPriceVal">{{mTool.fToY(goodsDetailInfo.originalPrice)}}</span>
+            </view>
+            <view class="btn_bottom_text2">单独购买</view>
+          </view>
+          <form class="right_btn buy_tuan_btn formSubStart">
+            <button data-goodsid="{{goodsDetailInfo.id}}" class="subStart" bindtap="startTuan">
+              <view wx:if="{{!isStepGb}}" class="tuan_price_box">{{app.globalData.currencySymbol}}
+                <span wx:if="{{!goodsDetailInfo.switchLeadPrice}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+                <span wx:if="{{goodsDetailInfo.switchLeadPrice}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.leaderPrice)}}</span>
+              </view>
+              <view wx:if="{{isStepGb}}" class="tuan_price_box">{{app.globalData.currencySymbol}}
+                <span class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.stepList[0].price)}}</span>
+
+              </view>
+              <view class="btn_bottom_text2">{{cusTxt.detailBottomRTxt}}</view>
+            </button>
+          </form>
+        </view>
+      </view>
+
+      <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[1]}}">
+        <!-- 自己拼团中的时候 -->
+        <view class="tuan_statu_btn tuan_self_btn">
+          <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+            <view class="act_price_box">
+              <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+            </view>
+            <view class="btn_bottom_text">拼团首页</view>
+          </view>
+          <button class='contact_btn' open-type='contact'>
+            <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+              <view class="act_price_box">
+                <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+              </view>
+              <view class="btn_bottom_text">联系卖家</view>
+            </view>
+          </button>
+          <view class="left_btn buy_self_btn" style='background:#FF8C42;color:white;' bindtap="originPriceBuy" wx:if="{{!(isNewGb || isStepGb)}}">
+            <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+              <span class="act_price actPriceVal">{{mTool.fToY(goodsDetailInfo.originalPrice)}}</span>
+            </view>
+            <view class="btn_bottom_text2">单独购买</view>
+          </view>
+          <view class="right_btn ">
+            <button bindtap='showShareMasks' class="subStart imgShare">
+              <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+                <span wx:if="{{!isStepGb}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+                <span wx:if="{{isStepGb}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.stepList[0].price)}}</span>
+              </view>
+              <view class="btn_bottom_text2">请伙伴参团</view>
+            </button>
+          </view>
+        </view>
+      </view>
+      <!-- 生成海报  -->
+      <view class="shareMask" hidden='{{showShareMask}}'>
+        <view class="shareMask-body">
+          <view class="shareMask-middle">
+            <view class="shareMask-icon" data-goodsid="{{goodsDetailInfo.id}}">
+              <button open-type="share" style="background:#fff">
+                <image class="shareMask-img" src="{{staticResPathBargain}}icon-wx.png">
+                  <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}icon-wx.png&quot;);"></div>
+                  <span></span>
+                </image>
+              </button>
+              <view class="shareMask-txt">
+                <view>召唤伙伴一起拼</view>
+              </view>
+            </view>
+            <form class="shareMask-icon" data-goodsid="{{goodsDetailInfo.id}}" bindtap="shareByQRCode" report-submit="" wx:if="{{0 == shareType}}">
+              <span>
+                <button class="button-reset" form-type="submit">
+                  <view class="shareFormFlex">
+                    <image class="shareMask-img" src="{{staticResPathBargain}}icon-ps.png">
+                      <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}/icon-ps.png&quot;);"></div>
+                      <span></span>
+                    </image>
+                    <view class="shareMask-txt">
+                      <view>生成海报图</view>
+                    </view>
+                  </view>
+                </button>
+              </span>
+            </form>
+          </view>
+          <view class="shareMask-confirm" bindtap='hideShareMasks'>取消</view>
+        </view>
+      </view>
+      <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[2]}}">
+        <!-- 朋友成功进团后看到的 -->
+        <view class="tuan_statu_btn tuan_friendSelf_btn">
+          <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+            <view class="act_price_box">
+              <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+            </view>
+            <view class="btn_bottom_text">拼团首页</view>
+          </view>
+          <button class='contact_btn' open-type='contact'>
+            <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+              <view class="act_price_box">
+                <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+              </view>
+              <view class="btn_bottom_text">联系卖家</view>
+            </view>
+          </button>
+          <view class="left_btn more_goods_btn" style="" bindtap="topPageSwitch" data-showindex="0">
+            <view>更多优惠</view>
+          </view>
+          <view class="right_btn ">
+            <button bindtap='showShareMasks' class="subStart imgShare">
+              <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+                <span wx:if="{{!isStepGb}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+                <span wx:if="{{isStepGb}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.stepList[0].price)}}</span>
+              </view>
+              <view class="btn_bottom_text2">请伙伴参团</view>
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[3]}}">
+        <!-- 朋友可以进团看到的 -->
+        <view class="tuan_statu_btn tuan_canyu_btn">
+          <view class="left_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">
+            <view>更多优惠</view>
+          </view>
+          <view class="right_btn  buy_canyu_btn" bindtap="helpTuan">
+            <view>马上参团</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[4]}}">
+        <!-- 朋友进来人数已满 -->
+        <view class="tuan_statu_btn tuan_manyuan_btn" bindtap="topPageSwitch" data-showindex="0">
+          <view>更多优惠</view>
+          <!-- <view class="right_btn more_goods_btn">
+          <view>我要当团长</view>
+        </view> -->
+        </view>
+      </view>
+
+      <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[5]}}">
+        <!-- 拼团成功 -->
+        <view class="tuan_statu_btn tuan_finish_btn">
+          <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+            <view class="act_price_box">
+              <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+            </view>
+            <view class="btn_bottom_text">拼团首页</view>
+          </view>
+          <button class='contact_btn' open-type='contact'>
+            <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+              <view class="act_price_box">
+                <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+              </view>
+              <view class="btn_bottom_text">联系卖家</view>
+            </view>
+          </button>
+          <view class="right_btn center_btn buy_now_btn" style='width:64%' bindtap="goToPay">
+            <view>立即购买</view>
+          </view>
+          <!-- <view class="right_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">
+          <view>更多优惠</view>
+        </view> -->
+        </view>
+      </view>
+
+      <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[6]}}">
+        <!-- 拼团商品无库存 -->
+        <view class="tuan_statu_btn tuan_soldOut_btn">
+          <view class="center_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">
+            <view>更多拼团优惠</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[7]}}">
+        <view class="tuan_statu_btn tuan_actEnded_btn">
+          <view class="center_btn act_ended_btn">
+            <view>活动已结束</view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+  <view id="mustKnowPage" hidden="{{mustKnowPage}}" class="sTuanPage mustKnowPage">
+    <view class="musk_know_box">
+      <view class="musk_know" style="background-image:url({{staticResPathTuan}}tuan_tips_box.png)">
+        <view class="musk_know_detail_box">
+          <view class="musk_know_detail">
+            <rich-text nodes="{{mTool.htmlEncode(activity.rule)}}" type="text"></rich-text>
+          </view>
+        </view>
+      </view>
+      <view class="close_btn" bindtap="hideMustKnowPage" style="background-image:url({{staticResPathTuan}}btn_close_icon.png)"></view>
+    </view>
+  </view>
+
+  <view id="shareActPage" hidden="{{!showSharePage}}" class="sTuanPage shareActPage" bindtap="hideShareActPage">
+    <view class="share_style_box share_style_link" hidden="{{!isTxtShare}}">
+      <view class="img_box">
+        <image src="{{staticResPathTuan}}share_icon.png"></image>
+      </view>
+      <view class="shareDesc">宝贝库存正在急剧减少</view>
+      <view class="shareDesc">还差
+        <span class="mustPeopleNum">4</span>人满员，</view>
+      <view class="shareDesc">赶紧叫小伙伴来参团吧~</view>
+    </view>
+    <view class="share_style_box share_style_picture" style="text-align: center;margin-top: 3rem;" hidden="{{isTxtShare}}">
+      <view style="color: #fff; font-size: 0.6rem; margin-bottom: 0.2rem;text-align:center;">长按保存图片，叫小伙伴参团</view>
+      <!-- TODO:画qrcode海报 -->
+      <view class="cvsParent">
+        <canvas id="shareCanvas" style="display:none;"></canvas>
+      </view>
+      <view id="shareview" style="display:none;">
+      </view>
+      <image id="shareImgBargain" src="" alt=""></image>
+    </view>
+  </view>
+
+
+  <view wx:if="{{returnIndex}}" class="fixedhome sub-color" style="{{app.globalData.customSubColor}}" bindtap='backToHome'>
+    <view class="zan-icon zan-icon-home sub-color" style="{{app.globalData.customSubColor}}"></view>
+  </view>
+</view>
+<include src="/pages/template/authModal.wxml" />

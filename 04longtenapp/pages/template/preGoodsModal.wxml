@@ -1,0 +1,85 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+
+  var goodsLeftCount = function(goodsData) {
+    if (!goodsData) return 0;
+    return goodsData.selectedSku ? goodsData.selectedSku.inventory : goodsData.totalCount;
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<template name="categoryModalTpl">
+  <view class="{{categoryContClass}} {{isDetailPage?'detailPage':''}}" style='z-index:99999;position:fixed;'>
+    <view class="mod_pop_mask" bindtap="onCloseBuy"></view>
+    <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+      <view class="buy_bar {{app.globalData.isIPhoneX ? 'iPhoneXFooter':''}}" wx:if="{{isDetailPage}}">
+        <!--因为bug编号7042这个是加{{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' 但是加了会导致bug编号8267  -->
+        <button wx:if="{{isService!='0'}}" class="backtohome" open-type="contact" form-type='submit' send-message-path='/pages/detail/detail?id={{goodsData.id}}' show-message-card="true">
+          <view class="zan-icon zan-icon-chat pre-main-color" style="{{app.globalData.customStyleColor}}"></view>
+          <view class="home_text">客服</view>
+        </button>
+        <navigator class="backtocart" url='/pages/index/index' open-type='redirect'>
+          <view class="zan-icon zan-icon-home"></view>
+          <view class="shoppingcart_text">首页</view>
+        </navigator>
+        <block wx:if="{{preOrder}}">
+          <button wx:if="{{preOrder.status == 1 && goodsData.validityStatus == 1}}"  form-type='submit' class="pre-color-bg commonNavButton">等待支付尾款</button>
+          <button wx:if="{{preOrder.status == 1 && goodsData.validityStatus == 2}}" bindtap="goToPayEnd" form-type='submit' class="pre-main-color-bg commonNavButton">支付尾款</button>
+          <button wx:if="{{preOrder.status == 6}}" form-type='submit' class="pre-color-bg commonNavButton">发货中</button>
+          <button wx:if="{{preOrder.status == 0}}" form-type='submit' bindtap="goToPay" class="pre-main-color-bg commonNavButton">支付定金</button>
+          <block wx:if="{{preOrder.status == 3}}">
+            <button wx:if="{{!categoryContClass}}" form-type='submit' class="pre-main-color-bg commonNavButton" bindtap="onBuyNow">{{goodsData.customButtonEnable ? goodsData.customButtonText : "支付定金"}}</button>
+            <button wx:if="{{categoryContClass}}" form-type='submit' class="pre-main-color-bg commonNavButton" bindtap="goToPayOhterBtn">支付定金</button>
+          </block>
+        </block>
+        <block wx:if="{{!preOrder}}">
+          <block wx:if="{{activity.activityStatus == 2}}">
+            <button wx:if="{{!categoryContClass}}" form-type='submit' class="pre-main-color-bg commonNavButton" bindtap="onBuyNow">{{goodsData.customButtonEnable ? goodsData.customButtonText : "支付定金"}}</button>
+            <button wx:if="{{categoryContClass}}" form-type='submit' class="pre-main-color-bg commonNavButton" bindtap="goToPayOhterBtn">支付定金</button>
+          </block>
+          <button wx:if="{{activity.activityStatus == 1}}" form-type='submit' class="pre-color-bg commonNavButton">未开售</button>
+          <button wx:if="{{activity.activityStatus == 3}}" form-type='submit' class="pre-color-bg commonNavButton">来晚了，活动已结束</button>
+        </block>
+      </view>
+    </form>
+    <view class="category_main {{app.globalData.isIPhoneX ? 'iPhoneXView':''}}">
+      <!-- 选择规格和数量 -->
+      <view id="control_wrap">
+        <view id="control_info">
+          <view class="category_goods">
+
+            <view class="left_img">
+              <image src="{{mTool.specUrl(extConfig,userImagePath,goodsData.awardPic,1080)}}" width="60" height="60"></image>
+            </view>
+            <view class="right_goods">
+              <text class="goods-name">{{goodsData.awardName}}</text>
+              <view class="price pre-main-color">
+                <text>{{app.globalData.currencySymbol}}</text>{{m1.getFixedMoney(goodsData.preAmount)}}</view>
+
+            </view>
+            <view class="close_btn" bindtap="onCloseBuy">
+              <view class="zan-icon zan-icon-close"></view>
+            </view>
+          </view>
+          <view id="control_count">
+            <text class="left control_tle">购买数量：</text>
+            <view class="good_count_box">
+              <view id="good_sub" class="minus" bindtap="minusPreCount">-</view>
+              <view class="good_num">
+                <input id="total_count" bindinput="bindCountInput" type="tel" value="{{totalBuyCount}}"></input>
+              </view>
+              <view id="good_add" bindtap="addPreCount" class="plus">+</view>
+            </view>
+            <view class="control_inventory pre-main-color">剩余：{{goodsData.awardRealNum}}{{goodsData.unit || "件"}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

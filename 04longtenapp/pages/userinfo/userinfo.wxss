@@ -1,0 +1,15 @@
+.container{
+  text-align: center;
+  padding: 0 60rpx;
+  margin-top: 20%;
+}
+.h1{
+  font-size: 40rpx;
+  font-weight: 700;
+  line-height: 80rpx;
+}
+.h2{
+  font-size: 26rpx;
+  line-height: 50rpx;
+  color: #ccc;
+}

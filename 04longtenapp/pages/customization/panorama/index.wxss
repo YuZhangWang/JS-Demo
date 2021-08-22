@@ -1,0 +1,489 @@
+/* pages/customization/panorama/index.wxss */
+page{
+  overflow: scroll;
+}
+.wrapper{
+  overflow: scroll;
+  position: relative;
+  height: 100%;
+}
+.start{
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #fff;
+}
+.start .start_top{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  left: 0;
+}
+.start .start_bottom{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.start .door{
+  position:fixed;
+  width:144rpx;
+  z-index:3;
+  bottom:236rpx;
+  left:371rpx;
+  backface-visibility:hidden;
+  transform-style:preserve-3d;
+  height:249rpx;
+  transition: all 2s;
+}
+.start .door.opened{
+  width: 30rpx;
+}
+.main{
+  width: 6000rpx;
+  height: 1182rpx;
+  position: relative;
+  transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);
+  transition-duration: 0ms;
+  transform: translate(0px, 0px) translateZ(0px);
+}
+.main .click_item{
+  position: absolute;
+  width: 150rpx;
+  height: 220rpx;
+  top: 400rpx;
+  left: 1000rpx;
+  z-index: 2;
+}
+.main .click_item:after{
+  content: " ";
+  width: 34rpx;
+  height: 66rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/hand.png?v=2");
+  background-size: 100% auto;
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%,-50%);
+  animation:blink 1s infinite;
+  background-repeat: no-repeat;
+}
+.main .item7:after{
+  transform: translate(0rpx,-50%);
+  left: 26%;
+}
+.main .item14:after{
+  transform: translate(0rpx,-50%);
+}
+.main .item11:after{
+  transform: translate(-40rpx,-40%);
+  left: 100%;
+}
+.main .item12:after{
+  transform: translate(-40rpx,-40%);
+  left: 100%;
+}
+.main .item1{
+  top:525rpx;
+  left:1011rpx;
+}
+.main .item2{
+  top:393rpx;
+  left:1334rpx;
+}
+.main .item3{
+  top:850rpx;
+  left:1614rpx;
+}
+.main .item4{
+  top:474rpx;
+  left:1825rpx;
+}
+.main .item5{
+  width:120rpx;
+  height:180rpx;
+  top:468rpx;
+  left:2324rpx;
+}
+.main .item6{
+  width:120rpx;
+  height:180rpx;
+  top:490rpx;
+  left:2616rpx;
+}
+.main .item7{
+  width:120rpx;
+  height:200rpx;
+  top:486rpx;
+  left:3349rpx;
+}
+.main .item8{
+  width:140rpx;
+  height:200rpx;
+  top:846rpx;
+  left:3180rpx;
+}
+.main .item9{
+  width:160rpx;
+  height:240rpx;
+  top:626rpx;
+  left:3810rpx;
+}
+.main .item10{
+  width:130rpx;
+  height:160rpx;
+  top:641rpx;
+  left:4331rpx;
+}
+.main .item11{
+  width:300rpx;
+  height:90rpx;
+  top:340rpx;
+  left:4872rpx;
+}
+.main .item12{
+  width:300rpx;
+  height:90rpx;
+  top:470rpx;
+  left:4872rpx;
+}
+.main .item13{
+  width:280rpx;
+  height:250rpx;
+  top:710rpx;
+  left:20rpx;
+}
+.main .item13:after{
+  width: 50rpx;
+  height: 99rpx;
+}
+.main .item14{
+  width:90rpx;
+  height:160rpx;
+  top:515rpx;
+  left:3259rpx;
+}
+
+.main .cover{
+  display: block;
+  width: 100%;
+  height: 1182rpx;
+}
+.start .open{
+  position:fixed;
+  width:138rpx;
+  z-index:4;
+  bottom:328rpx;
+  left:373rpx;
+  animation:handAni ease 1s infinite;
+}
+.start .vine{
+  width: 100%;
+  height: 1136rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/vine.png");
+  position: absolute;
+  left:0rpx;
+  top:0;
+  background-size:4430rpx auto;
+  background-position:-37rpx -36rpx;
+  z-index: 3;
+  background-repeat: no-repeat;
+  animation:vine 1.5s steps(1, start) infinite;
+}
+@keyframes handAni{
+  50%{transform:scale(1.1);transform:scale(1.1);}
+}
+@keyframes leftDoor {
+0%,100% {
+transform-origin: 0% 40%;
+}
+0%{
+transform:perspective(0) rotateY(0);
+}
+100% {
+transform:perspective(600px) rotateY(70deg);
+}
+}
+@keyframes vine
+{
+0%   {background-position: -2937rpx -36rpx;}
+25%  {background-position: -914rpx -36rpx;}
+50%  {background-position: -1833rpx -36rpx;}
+75%  {background-position: -2937rpx -36rpx;}
+100% {background-position: -2937rpx -36rpx;}
+}
+@keyframes blink
+{
+0%   {opacity: 1}
+50%  {opacity: 0}
+100% {opacity: 1}
+}
+.main .music_note{
+  width: 277rpx;
+  height: 288rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/music_note.png");
+  position: absolute;
+  left:497rpx;
+  top:264rpx;
+  background-size: 1107rpx auto;
+  animation:music_note 2s steps(1, start) infinite;
+  background-repeat: no-repeat;
+}
+.main .curtain{
+  width: 400rpx;
+  height: 662rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/curtain.png");
+  position: absolute;
+  left:748rpx;
+  top:71rpx;
+  background-size: 2609rpx auto;
+  animation:curtain 2s steps(1, start) infinite;
+}
+.main .wind{
+  width: 318rpx;
+  height: 662rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/wind.png");
+  position: absolute;
+  left:1627rpx;
+  top:200rpx;
+  background-size: 1671rpx auto;
+  background-position: -190rpx 0;
+  animation:wind 1s steps(1, start) infinite;
+}
+.main .flower{
+  width: 318rpx;
+  height: 662rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/flower.png?v=1");
+  position: absolute;
+  left:2734rpx;
+  top:120rpx;
+  background-size: 1671rpx auto;
+  background-position: -100rpx 0;
+  animation:flower 6s steps(1, start) infinite;
+}
+.main .water1{
+  width: 100rpx;
+  height: 442rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/water1.png");
+  position: absolute;
+  left:3539rpx;
+  top:330rpx;
+  background-size: 1221rpx auto;
+  background-position: -120rpx 0;
+  animation:water1 0.6s steps(1, start) infinite;
+}
+.main .water2{
+  width: 260rpx;
+  height: 650rpx;
+  background-image: url("http://res.xcx.weijuju.com/customization/panorama/water2.png?v=1");
+  position: absolute;
+  left:3844rpx;
+  top:265rpx;
+  background-size: 1163rpx auto;
+  background-position: -54rpx 0;
+  background-repeat: no-repeat;
+  animation:water2 1s steps(1, start) infinite;
+}
+.main .luowa_title{
+  width:330rpx;
+  height:99rpx;
+  background-image:url("http://res.xcx.weijuju.com/customization/panorama/luowa_title.png?v=3");
+  position:absolute;
+  left:4858rpx;
+  top:96rpx;
+  background-size: 100% auto;
+  background-position: 0 0;
+  animation:luowa_title 2s infinite;
+}
+.main .btn_border{
+  width:720rpx;
+  height:170rpx;
+  background-image:url("http://res.xcx.weijuju.com/customization/panorama/btn_border.png?v=10");
+  position:absolute;
+  left:5260rpx;
+  top:217rpx;
+  background-size: 2352rpx auto;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  
+}
+.main .btn_border1{
+  animation:btn_border1 1s steps(1, start) infinite;
+}
+.main .btn_border2{
+  animation:btn_border2 1s steps(1, start) infinite;
+  top: 455rpx;
+}
+.main .btn_border3{
+  animation:btn_border3 1s steps(1, start) infinite;
+  top: 704rpx;
+}
+@keyframes wind
+{
+0%   {background-position: -190rpx 0;}
+33%  {background-position: -690rpx -40rpx;}
+66%  {background-position: -1218rpx -90rpx;}
+100% {background-position: -190rpx 0;}
+}
+@keyframes btn_border1
+{
+0%   {background-position: 0rpx 0;}
+33%  {background-position: -778rpx 0rpx;}
+66%  {background-position: -1562rpx 0rpx;}
+100% {background-position: 0rpx 0;}
+}
+@keyframes btn_border2
+{
+0%   {background-position: 0rpx -264rpx;}
+33%  {background-position: -778rpx -264rpx;}
+66%  {background-position: -1562rpx -264rpx;}
+100% {background-position: 0rpx -264rpx;}
+}
+@keyframes btn_border3
+{
+0%   {background-position: 0rpx -536rpx;}
+33%  {background-position: -778rpx -536rpx;}
+66%  {background-position: -1562rpx -536rpx;}
+100% {background-position: 0rpx -536rpx;}
+}
+@keyframes luowa_title
+{
+0%   {transform: rotate(0deg)}
+25%  {transform: rotate(5deg)}
+50%  {transform: rotate(0deg)}
+75%  {transform: rotate(-5deg)}
+100% {transform: rotate(0deg)}
+}
+@keyframes water1
+{
+0%   {background-position: -120rpx 0;}
+25%  {background-position: -323rpx 0rpx;}
+50%  {background-position: -577rpx 0rpx;}
+75%  {background-position: -863rpx 0rpx;}
+100% {background-position: -120rpx 0;}
+}
+@keyframes water2
+{
+0%   {background-position: -54rpx 0;}
+25%  {background-position: -303rpx 0rpx;}
+50%  {background-position: -576rpx -12rpx;}
+75%  {background-position: -840rpx 0rpx;}
+100% {background-position: -54rpx 0;}
+}
+@keyframes flower
+{
+0%   {background-position: -100rpx 0;}
+17%  {background-position: -340rpx 0rpx;}
+34%  {background-position: -574rpx 0rpx;}
+50%  {background-position: -820rpx -10rpx;}
+67%  {background-position: -1080rpx -10rpx}
+85%  {background-position: -1337rpx -24rpx;}
+100% {background-position: -100rpx 0;}
+}
+@keyframes music_note
+{
+0%   {background-position: 0 0;}
+20%  {background-position: -290rpx 0;}
+40%  {background-position: -550rpx 0;}
+60% {background-position: -830rpx 0;}
+80% {background-position: -1530rpx 0;}
+100% {background-position: 0 0;}
+}
+@keyframes curtain
+{
+0%   {background-position: -62rpx 0;}
+10%  {background-position: -512rpx 0;}
+20%  {background-position: -942rpx 0;}
+45% {background-position: -1352rpx 0;}
+60% {background-position: -1762rpx 0;}
+83% {background-position: -2172rpx 0;}
+100% {background-position: -62rpx 0;}
+}
+
+.firstHandAni{
+  animation:firstHandAni ease both 3s infinite;
+  width: 352rpx;
+  height: 94rpx;
+  bottom: 4%;
+  left: 50rpx;
+  position: absolute;
+}
+
+@keyframes musicRotate{
+  0%{transform: rotate(0deg);}
+  100%{transform: rotate(360deg);}
+}
+@keyframes firstHandAni{
+  0%{transform:translate3d(390rpx,0,0);transform:translate3d(390rpx,0,0);}
+  100%{transform:translate3d(0,0,0);transform:translate3d(0,0,0);}
+}
+
+.dialog{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+.dialog .close_btn{
+  position:fixed;
+  width:100rpx;
+  height:100rpx;
+  top:17rpx;
+  right:37rpx;
+}
+.dialog .btn_ok{
+  position:fixed;
+  width:307rpx;
+  top:938rpx;
+  left:50%;
+  margin-left: -153rpx;
+}
+.dialog .btn_buy{
+  position:fixed;
+  width:307rpx;
+  top:938rpx;
+  left:50%;
+  margin-left: -153rpx;
+}
+.dialog .dialog_content{
+  display: block;
+  width: 674rpx;
+  margin: 30rpx auto 0;
+}
+
+.dialog_2 .btn_buy{
+  top: 910rpx;
+}
+.dialog_4 .btn_buy{
+  top: 973rpx;
+}
+.dialog_7 .btn_buy{
+  top: 910rpx;
+}
+.dialog_9 .btn_buy{
+  top: 910rpx;
+}
+.dialog_10 .btn_buy{
+  top: 910rpx;
+}
+.dialog_14 .btn_buy{
+  top: 910rpx;
+}
+
+.music_icon{
+  position: fixed;
+  right: 30rpx;
+  bottom: 30rpx;
+  z-index: 22;
+  width: 62rpx;
+  
+}
+
+.music_icon.play{
+  animation: musicRotate 2s linear infinite;
+}

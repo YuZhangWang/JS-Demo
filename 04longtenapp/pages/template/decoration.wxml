@@ -1,0 +1,1519 @@
+<wxs module="m1">
+  var getLink = function(item) {
+    return item.url;
+  }
+
+  var arrTostr = function(arr){
+
+    if(arr.length > 0){
+       return arr.join()
+    }
+    return '';
+  }
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var showShoppingCart = function(app, goods) {
+    if (goods.goods_type == 3 || goods.goods_type == 2) {
+      return false;
+    }
+    if (goods.goods_type == 1 && goods.formidenable) {
+      return false;
+    }
+    if (app && app.globalData.mallSite && app.globalData.mallSite.tplType == 4) {
+      return false;
+    }
+    return true;
+  }
+  var specUrl = function(extConfig, _domainPref, _img, maxWidth) {
+    if (!_img) {
+      return "";
+    }
+    var slimParam = (_img.indexOf("?") != -1 ? "|" : "?") + "imageView2/2/w/" + (maxWidth || 400);
+    var oldPic = "http://cdn.xcx.weijuju.com/";
+    if (extConfig && extConfig.dev) {
+      oldPic = "http://imgcdn.youyu.weijuju.com/";
+    }
+    var cur_host = _domainPref;
+    if (cur_host.indexOf("xyz888.org") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018/0") != -1 || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 ||
+          _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("truesion.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018/0") != -1 || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 ||
+          _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("dmlapp.cn") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018/0") != -1 || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 ||
+          _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("huokexia.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018/0") != -1 || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 ||
+          _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("hxtgz.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018/0") != -1 || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 ||
+          _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1 ||
+          _img.indexOf("2018/6") != -1 || _img.indexOf("2018/7") != -1 || _img.indexOf("2018/8") != -1 ||
+          _img.indexOf("2018/9") != -1 || _img.indexOf("2018/10") != -1 || _img.indexOf("2018/11") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("wocloud.com.cn") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018") != -1 || _img.indexOf("2019/0/") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("hui7.cn") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018") != -1 || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 ||
+          _img.indexOf("2019/2/") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("newsuncs.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018") != -1 || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 ||
+          _img.indexOf("2019/2/") != -1 || _img.indexOf("2019/3/") != -1 || _img.indexOf("2019/4/") != -1 ||
+          _img.indexOf("2019/5/") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("fomose.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018/0") != -1 || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 ||
+          _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1 ||
+          _img.indexOf("2018/6") != -1 || _img.indexOf("2018/7") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("app307.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018/0") != -1 || _img.indexOf("2018/1/") != -1 || _img.indexOf("2018/2") != -1 ||
+          _img.indexOf("2018/3") != -1 || _img.indexOf("2018/4") != -1 || _img.indexOf("2018/5") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("maiduocbd.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018") != -1 || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 ||
+          _img.indexOf("2019/2/") != -1 || _img.indexOf("2019/3/") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else if (cur_host.indexOf("gzscit.com") != -1) {
+      if (_img != null && _img.indexOf("http") != 0 && (_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("2017") != -1 ||
+          _img.indexOf("2018") != -1 || _img.indexOf("2019/0/") != -1 || _img.indexOf("2019/1/") != -1 ||
+          _img.indexOf("2019/2/") != -1 || _img.indexOf("2019/3/") != -1 || _img.indexOf("2019/4/") != -1 ||
+          _img.indexOf("2019/5/") != -1)) {
+        return oldPic + _img + slimParam;
+      }
+    } else {
+      if (_img.indexOf("http") != 0) {
+        if ((_img.indexOf("xcx_tpl_img") != -1 || _img.indexOf("/2017/") != -1 || _img.indexOf("2018/0") != -1)) {
+          return oldPic + _img + slimParam;
+        } else {
+          return _domainPref + _img + slimParam;
+        }
+
+      } else {
+        return _img + slimParam;
+      }
+    }
+
+  }
+  var getGoodsLink = function(app, item, eatway) {
+    if (item.goods_type && item.goods_type == 1) {
+      return "/pages/detail/detail?id=" + item.id;
+    } else if (item.goods_type && item.goods_type == 3) {
+      return "/pages/yuyue/yydetail?id=" + item.id;
+    } else if (item.goodsType && item.goodsType == 1) {
+      return "/pages/detail/detail?id=" + item.id;
+    } else if (item.goodsType && item.goodsType == 2) {
+      if (eatway == "0") {
+        return "/pages/takeout/indexDetail?fromIndex=true&id=" + item.id + "&type=ta";
+      } else if (eatway == "1") {
+        return "/pages/takeout/indexDetail?fromIndex=true&id=" + item.id + "&type=tostore";
+      }
+
+    } else if (item.goodsType && item.goodsType == 3) {
+      return "/pages/yuyue/yydetail?id=" + item.id;
+    } else if (item.goods_type == 2) {
+      if (eatway == "0") {
+        return "/pages/takeout/indexDetail?fromIndex=true&id=" + item.id + "&type=ta";
+      } else if (eatway == "1") {
+        return "/pages/takeout/indexDetail?fromIndex=true&id=" + item.id + "&type=tostore";
+      } else {
+        return "/pages/takeout/indexDetail?fromIndex=true&id=" + item.id + "&type=ta";
+      }
+    } else if (app && app.globalData.mallSite && app.globalData.mallSite.tplType == 4) {
+      return "/pages/yuyue/yydetail?id=" + item.id;
+    } else {
+      return "/pages/detail/detail?id=" + item.id;
+    }
+  }
+  var getCategoryTabGoodsLink = function(item) {
+    if (!item) return "";
+    if (1 == item.goodsType || 1 == item.goods_type) {
+      return "/pages/detail/detail?id=" + item.id;
+    } else if (2 == item.goodsType || 2 == item.goods_type) {
+      return "/pages/takeout/indexDetail?fromIndex=true&goodsId=" + item.id + "&type=ta";
+    } else if (3 == item.goodsType || 3 == item.goods_type) {
+      return "/pages/yuyue/yydetail?id=" + item.id;
+    }
+  }
+  var getSelectedCat = function(index, selectedCatData, categoryList) {
+    if (selectedCatData && selectedCatData["cat-" + index]) {
+      var selectedCat = selectedCatData["cat-" + index];
+      for (var i = 0; i <
+        categoryList.length; i++) {
+        if (categoryList[i].id == selectedCat.id) {
+          return categoryList[i];
+        }
+      }
+    } else {
+      if (categoryList && categoryList.length > 0) {
+        return categoryList[0];
+      } else {
+        return {
+          id: -1,
+          goodsListData: []
+        };
+      }
+    }
+  }
+  var getSelectedInfoPage = function(selectedInfoPageId, infoPageList) {
+    if (!infoPageList) {
+      return {
+        id: "-1",
+        subListData: []
+      };
+    }
+    for (var i = 0; i <
+      infoPageList.length; i++) {
+      if (infoPageList[i].id == selectedInfoPageId) {
+        return infoPageList[i];
+      }
+    }
+  }
+
+  var isCategoryNoMoreGoods = function(index, selectedCatData, categoryList) {
+    var selectedCat = getSelectedCat(index, selectedCatData, categoryList);
+    if (selectedCat.hasLoaded) {
+      return selectedCat.goodsListData.length >= selectedCat.total;
+    } else {
+      return false;
+    }
+  }
+  var getSelectedSub = function(index, selectedSubData, subClsList) {
+    if (selectedSubData && selectedSubData["sub-" + index]) {
+      var selectedSub = selectedSubData["sub-" + index];
+      for (var i = 0; i <
+        subClsList.length; i++) {
+        if (subClsList[i].id == selectedSub.id) {
+          return subClsList[i];
+        }
+      }
+    } else {
+      if (subClsList && subClsList.length > 0) {
+        return subClsList[0];
+      } else {
+        return {
+          id: -1,
+          subListData: []
+        };
+      }
+    }
+  }
+  var isNoMoreSubPage = function(index, selectedSubData, subClsList) {
+    var selectedSub = getSelectedSub(index, selectedSubData, subClsList);
+    if (selectedSub.hasLoaded) {
+      return selectedSub.subListData.length >= selectedSub.total;
+    } else {
+      return false;
+    }
+  }
+  var isNoMoreInfoPage = function(selectedInfoPageId, infoPageList) {
+    var infoPage = getSelectedInfoPage(selectedInfoPageId, infoPageList);
+    if (infoPage.hasLoaded) {
+      return infoPage.subListData.length >= infoPage.total;
+    } else {
+      return false;
+    }
+  }
+  var getImgList = function(pic) {
+    if (pic) {
+      return pic.split(",");
+    } else {
+      return [];
+    }
+  }
+  var multStr = "mult";
+  module.exports.getLink = getLink;
+  module.exports.multStr = multStr;
+  module.exports.specUrl = specUrl;
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getGoodsLink = getGoodsLink;
+  module.exports.getSelectedCat = getSelectedCat;
+  module.exports.isCategoryNoMoreGoods = isCategoryNoMoreGoods;
+  module.exports.getSelectedSub = getSelectedSub;
+  module.exports.getSelectedInfoPage = getSelectedInfoPage;
+  module.exports.isNoMoreSubPage = isNoMoreSubPage;
+  module.exports.showShoppingCart = showShoppingCart;
+  module.exports.getImgList = getImgList;
+  module.exports.getCategoryTabGoodsLink = getCategoryTabGoodsLink;
+  module.exports.arrTostr = arrTostr;
+
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+
+<!-- 图片广告 -->
+<template name="img_ad">
+  <block wx:if="{{item.data.data_type==0}}">
+    <swiper class="index-banner eee3" indicator-dots="{{item.data.list.length > 1}}" autoplay="{{true}}" interval="{{4000}}" duration="{{1000}}" data-widgetindex="{{widgetIndex}}" style="height:{{bannerHeight[widgetIndex] || item.data.bannerHeight || 750}}rpx">
+      <block wx:for="{{item.data.list}}" wx:for-index="idx" wx:for-item="imgItem" wx:key="idx">
+        <swiper-item>
+          <navigator class="commonNavigator" target="{{imgItem.target}}" app-id="{{imgItem.link_appid}}" url="{{m1.getLink(imgItem)}}" data-path="{{imgItem.page_path}}" bindtap="onNavTab" data-url="{{m1.getLink(imgItem)}}">
+            <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+              <image lazy-load="true" src="{{m1.specUrl(extConfig,userImagePath,imgItem.img,1080)}}" bindload="onBannerImgLoad" data-bannerindex="{{widgetIndex}}" class="slide-image" />
+            </button>
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+  </block>
+  <block wx:else>
+    <view class="ad-box">
+      <navigator class="commonNavigator ad-img-box" wx:for-item="imgItem" wx:for="{{item.data.list}}" wx:key="index" target="{{imgItem.target}}" data-path="{{imgItem.page_path}}" app-id="{{imgItem.link_appid}}" url="{{m1.getLink(imgItem)}}" bindtap="onNavTab"
+        data-url="{{m1.getLink(imgItem)}}">
+        <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+          <image src="{{m1.specUrl(extConfig,userImagePath,imgItem.img)}}" mode="widthFix"></image>
+        </button>
+      </navigator>
+    </view>
+  </block>
+</template>
+
+<!-- 图片导航 -->
+<template name="img_nav">
+  <view class="index-menu {{item.data.list.length > 4?'column_5':''}}">
+    <navigator class="commonNavigator index-menu-item" wx:for="{{item.data.list}}" wx:key="index" target="{{item.target}}" data-path="{{item.page_path}}" app-id="{{item.link_appid}}" url="{{m1.getLink(item)}}" bindtap="onNavTab" data-url="{{m1.getLink(item)}}">
+      <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+        <image src="{{m1.specUrl(extConfig,userImagePath,item.img)}}"></image>
+        <text>{{item.title}}</text>
+      </button>
+    </navigator>
+  </view>
+</template>
+
+<!-- 搜索框 -->
+<template name="search">
+  <view class="multShopCont searchWrap" style='margin:{{item.data.margin||0}}px 0;background-color:{{item.data.bgColor||"#FFFFFF"}}'>
+    <view class="sAddrWrap" style='padding:0;' id="showCityPicker3" bindtap="selectDistrict" wx:if="{{false}}">
+      <view class="multAroundAddr">
+        <view class="leftBlock">
+          <image class="dwIco" src="{{staticResPath}}/youdian/image/mobile/dzico1.png"></image>
+          <text class="detailAddr">当前：{{areaInfo || multInfoAddr}}</text>
+        </view>
+        <view class="arrow" style=" background-image:url({{staticResPath}}/youdian/image/mobile/arrow1.png);"></view>
+      </view>
+    </view>
+    <view class="search-cont">
+      <view class="city-info" wx:if="{{1 == item.isReq}}" bindtap="selectDistrict">
+
+        {{locationInfo.city}}
+        <view style="background:#fff;border-left-color:#000;right:11px" class="sortIcon"></view>
+      </view>
+      <view class="search-input-cont">
+        <view bindtap="handleSearchTap" data-searchtype="{{item.searchType}}" class="search-btn">
+          <image class="search_icon" src="{{staticResPath}}/image/mobile/icon-sousuo.png"></image>
+        </view>
+        <input type="text" placeholder="{{item.data.tipsTxt||'商品搜索：请输入商品关键字'}}" confirm-type="search" bindinput="handleSearchInput" data-searchtype="{{item.searchType}}" bindconfirm="handleSearchTap" class="search-input" />
+      </view>
+      <view class="search-btn-main" data-searchtype="{{item.searchType}}" bindtap="handleSearchTap" data-isreq="{{1 == item.isReq}}">搜索
+      </view>
+    </view>
+
+    <view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">
+      <view class="pickerOp" style="">
+        <text catchtap="cityCancel">取消</text>
+        <text style="" catchtap="citySureNew">确定</text>
+      </view>
+      <!--"可以显示默认的城市，使用后级联选择城市反应很慢就不使用了-->
+      <picker-view style="width: 100%; height: 380rpx" bindchange="cityChange" value="{{value}}">
+        <picker-view-column>
+          <view wx:for="{{provinces}}" class="picker-item" wx:key="index">
+            {{item.name}}
+          </view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{citys}}" class="picker-item" wx:key="index">
+            {{item.name}}
+          </view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{areas}}" class="picker-item" wx:key="index">
+            {{item.name}}
+          </view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+  </view>
+</template>
+<!-- 二格框 -->
+<template name="two_box">
+  <view class="two-box">
+    <navigator class="commonNavigator box" target="{{item.data.list[0].target}}" data-path="{{item.data.list[0].page_path}}" app-id="{{item.data.list[0].link_appid}}" bindtap="onNavTab" data-url="{{m1.getLink(item.data.list[0])}}" url="{{m1.getLink(item.data.list[0])}}">
+      <view class="info-cont">
+        <view class="title">{{item.data.list[0].title}}</view>
+        <view class="sub_title">{{item.data.list[0].sub_title}}</view>
+      </view>
+      <view class="img-cont">
+        <image src="{{m1.specUrl(extConfig,userImagePath,item.data.list[0].img)}}"></image>
+      </view>
+    </navigator>
+    <navigator class="commonNavigator box" target="{{item.data.list[1].target}}" data-path="{{item.data.list[1].page_path}}" app-id="{{item.data.list[1].link_appid}}" bindtap="onNavTab" data-url="{{m1.getLink(item.data.list[1])}}" url="{{item.data.list[1].url}}">
+      <view class="info-cont">
+        <view class="title">{{item.data.list[1].title}}</view>
+        <view class="sub_title">{{item.data.list[1].sub_title}}</view>
+      </view>
+      <view class="img-cont">
+        <image src="{{m1.specUrl(extConfig,userImagePath,item.data.list[1].img)}}"></image>
+      </view>
+    </navigator>
+  </view>
+</template>
+
+<!-- 三格框 -->
+<template name="three_box">
+  <view class="three-box" style="{{'height:'+((bannerHeight[widgetIndex]||790)/3.18)+'rpx'}}">
+    <view class="box-cont" wx:for-index="idx" wx:for="{{item.data.list}}" wx:key="idx">
+      <navigator class="commonNavigator box" url="{{m1.getLink(item)}}" target="{{item.target}}" data-path="{{item.page_path}}" app-id="{{item.link_appid}}" bindtap="onNavTab" data-url="{{m1.getLink(item)}}">
+        <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+          <image src="{{m1.specUrl(extConfig,userImagePath,item.img)}}" bindload="onBannerImgLoad" wx:if="{{item.img}}" data-bannerindex="{{widgetIndex}}"></image>
+        </button>
+      </navigator>
+    </view>
+  </view>
+</template>
+
+<!-- 四格框 -->
+<template name="four_box">
+  <block wx:if="{{0 == item.data.clickType || !item.data.clickType}}">
+    <!-- 点击 是链接   -->
+    <scroll-view wx:if="{{item.data.type==0}}" scroll-x="true" class="four-box clear-fix four-box-style-{{item.data.type}} {{item.data.list.length > 3?'four-box-more':''}}" style="{{'height:'+(bannerHeight[widgetIndex]||742)/(item.data.list.length > 3 ? 3.34:3.16)+'rpx'}}">
+      <view class="box-cont" wx:for-index="idx" wx:for="{{item.data.list}}" wx:key="idx">
+        <navigator class="commonNavigator box" target="{{item.target}}" data-path="{{item.page_path}}" app-id="{{item.link_appid}}" url="{{m1.getLink(item)}}" bindtap="onNavTab" data-url="{{m1.getLink(item)}}">
+          <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+            <image src="{{m1.specUrl(extConfig,userImagePath,item.img)}}" bindload="onBannerImgLoad" wx:if="{{item.img}}" data-bannerindex="{{widgetIndex}}"></image>
+          </button>
+        </navigator>
+      </view>
+    </scroll-view>
+    <view wx:else class="four-box clearfix">
+      <view class="box-cont" wx:for-index="idx" wx:for="{{item.data.list}}" wx:key="idx">
+        <navigator class="commonNavigator box" target="{{item.target}}" data-path="{{item.page_path}}" app-id="{{item.link_appid}}" url="{{m1.getLink(item)}}" bindtap="onNavTab" data-url="{{m1.getLink(item)}}">
+          <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+            <image src="{{m1.specUrl(extConfig,userImagePath,item.img)}}" wx:if="{{item.img}}" data-bannerindex="{{widgetIndex}}"></image>
+          </button>
+        </navigator>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <!-- 点击图片放大   -->
+    <scroll-view wx:if="{{item.data.type==0}}" scroll-x="true" class="four-box clear-fix four-box-style-{{item.data.type}} {{item.data.list.length > 3?'four-box-more':''}}" style="{{'height:'+(bannerHeight[widgetIndex]||742)/(item.data.list.length > 3 ? 3.34:3.16)+'rpx'}}">
+      <view class="box-cont" bindtap='previewImg' data-arrimg="{{m1.arrTostr(item.imgarrs)}}" data-img="{{m1.specUrl(extConfig,userImagePath,item.img)}}" wx:for-index="idx" wx:for="{{item.data.list}}" wx:key="idx">
+        <navigator class="commonNavigator box" target="{{item.target}}" app-id="{{item.link_appid}}">
+          <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+            <image src="{{m1.specUrl(extConfig,userImagePath,item.img)}}" bindload="onBannerImgLoad" wx:if="{{item.img}}" data-bannerindex="{{widgetIndex}}"></image>
+          </button>
+        </navigator>
+      </view>
+    </scroll-view>
+    <view wx:else class="four-box clearfix">
+      <view class="box-cont" bindtap='previewImg' data-arrimg="{{m1.arrTostr(item.imgarrs)}}" data-img="{{m1.specUrl(extConfig,userImagePath,item.img)}}" wx:for-index="idx" wx:for="{{item.data.list}}" wx:key="idx">
+        <navigator class="commonNavigator box" target="{{item.target}}" app-id="{{item.link_appid}}">
+          <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+            <image src="{{m1.specUrl(extConfig,userImagePath,item.img)}}" wx:if="{{item.img}}" data-bannerindex="{{widgetIndex}}"></image>
+          </button>
+        </navigator>
+      </view>
+    </view>
+  </block>
+
+</template>
+
+<!-- 标题 -->
+<template name="title">
+  <navigator class="commonNavigator btnWidget" target="{{item.data.target}}" data-path="{{item.data.page_path}}" app-id="{{item.data.link_appid}}" data-url="{{m1.getLink(item.data)}}" bindtap='onNavTab' url="{{m1.getLink(item.data)}}">
+  <!--<navigator data-path="{{item.data.page_path}}" app-id="{{item.data.link_appid}}" url="{{m1.getLink(item.data)}}" data-url="{{m1.getLink(item.data)}}" >-->
+  <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+      <view class="dcr_title style_{{item.data.title_style || 1}}" style="background-color:{{item.data.bg_color}};text-align:{{item.data.show_method==2?'right':(item.data.show_method==1?'center':'left')}};margin-top:{{item.data.margin_top||0}}px;margin-bottom:{{item.data.margin_bottom||0}}px;border-style:{{item.data.border_style||'none'}};border-width:{{item.data.border_width||0}}px;border-color:{{item.data.border_color}};box-shadow:{{item.data.box_shadow?((item.data.box_shadow_x||0) + 'px ' + (item.data.box_shadow_y||0) + 'px ' + (item.data.box_shadow_blur||0) + 'px ' + (item.data.box_shadow_color||'#000')):'none'}}">
+        <view class="title_text" style="line-height:normal;border-color:{{item.data.mark_color?item.data.mark_color:''}};color:{{item.data.font_color?item.data.font_color:''}};font-size:{{item.data.font_size?item.data.font_size:'16'}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}}">
+          {{item.data.title}}
+        </view>
+        <view class="before" style="background-color:{{item.data.mark_color?item.data.mark_color:''}}">
+        </view>
+        <view class="sub_title_text" wx:if="{{item.data.sub_title}}" style="color:{{item.data.subtitle_font_color?item.data.subtitle_font_color:''}};font-size:{{item.data.subtitle_font_size?item.data.subtitle_font_size:'11'}}px;font-weight:{{item.data.subtitle_font_bold?'bold':'normal'}}; font-style:{{item.data.subtitle_font_italic?'italic':'normal'}};text-decoration:{{item.data.subtitle_font_underline?'underline':'none'}}">
+          {{item.data.sub_title}}
+        </view>
+      </view>
+    </button>
+  </navigator>
+</template>
+
+<!-- 文本导航 -->
+<template name="text_nav">
+  <view class="text_nav" style="background-color:{{item.data.bg_color}};;margin-top:{{item.data.margin_top||0}}px;margin-bottom:{{item.data.margin_bottom||0}}px;">
+    <navigator class="commonNavigator" wx:for="{{item.data.list}}" wx:for-item="textItem" wx:key="index" target="{{textItem.target}}" data-path="{{item.page_path}}" app-id="{{textItem.link_appid}}" url="{{m1.getLink(textItem)}}" bindtap="onNavTab" data-url="{{m1.getLink(textItem)}}">
+      <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+        <view class="title_text style_{{item.data.title_style || 1}}" style="border-color:{{item.data.mark_color?item.data.mark_color:''}};border-style:{{item.data.border_style||'none'}};border-width:{{item.data.border_width||0}}px;border-color:{{item.data.border_color}};box-shadow:{{item.data.box_shadow?((item.data.box_shadow_x||0) + 'px ' + (item.data.box_shadow_y||0) + 'px ' + (item.data.box_shadow_blur||0) + 'px ' + (item.data.box_shadow_color||'#000')):'none'}};text-align:{{item.data.show_method==2?'right':(item.data.show_method==1?'center':'left')}}">
+          <view class="title" style="color:{{item.data.font_color?item.data.font_color:''}};font-size:{{item.data.font_size?item.data.font_size:'14'}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}};border-color:{{item.data.mark_color?item.data.mark_color:''}};">
+            {{textItem.title}}
+          </view>
+          <view class="arrow zan-icon zan-icon-arrow" style="color:{{item.data.icon_color}}"></view>
+          <view class="story" style="background-color:{{item.data.mark_color?item.data.mark_color:''}}">
+          </view>
+        </view>
+      </button>
+    </navigator>
+  </view>
+</template>
+
+<!-- 橱窗  -->
+<template name="showcaseWidget">
+  <view class="showcase-widget">
+    <view class="box1">
+      <navigator class="commonNavigator" target="{{item.data.list[0].target}}" data-path="{{item.data.list[0].page_path}}" app-id="{{item.data.list[0].link_appid}}" url="{{m1.getLink(item.data.list[0])}}" bindtap="onNavTab" data-url="{{m1.getLink(item.data.list[0])}}">
+        <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+          <image src="{{m1.specUrl(extConfig,userImagePath,item.data.list[0].img)}}"></image>
+        </button>
+      </navigator>
+    </view>
+    <view class="box2">
+      <navigator class="commonNavigator" target="{{item.data.list[1].target}}" data-path="{{item.data.list[1].page_path}}" app-id="{{item.data.list[1].link_appid}}" url="{{m1.getLink(item.data.list[1])}}" bindtap="onNavTab" data-url="{{m1.getLink(item.data.list[1])}}">
+        <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+          <image src="{{m1.specUrl(extConfig,userImagePath,item.data.list[1].img)}}"></image>
+        </button>
+      </navigator>
+      <navigator class="commonNavigator" target="{{item.data.list[2].target}}" data-path="{{item.data.list[2].page_path}}" app-id="{{item.data.list[2].link_appid}}" url="{{m1.getLink(item.data.list[2])}}" bindtap="onNavTab" data-url="{{m1.getLink(item.data.list[2])}}">
+        <button form-type='submit' data-isbtn="true" class='commonNavButton'>
+          <image src="{{m1.specUrl(extConfig,userImagePath,item.data.list[2].img)}}"></image>
+        </button>
+      </navigator>
+    </view>
+  </view>
+</template>
+
+
+<!-- 辅助空白 -->
+<template name="white">
+  <view class="white" style="height:{{item.data.height}}px;background:{{item.data.bgColor}}"></view>
+</template>
+
+<!-- 辅助线 -->
+<template name="dotted_line">
+  <view class="line"></view>
+</template>
+
+<!-- 商品列表 -->
+<template name="mc_goodslist">
+  <view class="goods-list" wx:if="{{item.data.size !=4}}">
+    <view class="goods-item goods-item-{{item.data.size}}" wx:for="{{item.data.list}}" wx:for-item="goods" wx:key="index">
+      <navigator class="commonNavigator" bindtap="onNavTab" url="{{m1.getGoodsLink(app,goods,item.data.eatway)}}" data-url="{{m1.getGoodsLink(app,goods,item.data.eatway)}}">
+        <button form-type='submit' data-isbtn="true" class='commonNavButton goods-link'>
+          <view class="photo-block" style="position: relative">
+            <!-- 商品角标 -->
+            <text wx:if="{{goods.isCornerMarker}}" class="goods-corner-mark mark-position{{goods.position || 0}}" style="background: {{goods.color}};">{{goods.content}}</text>
+            <image style="border-radius: 0" src="{{m1.specUrl(extConfig,userImagePath,goods.img,800)}}"></image>
+          </view>
+          <view class="info">
+            <text class="goods-title">{{goods.name}}</text>
+            <view class="{{item.data.size==3 ? 'countNum3' : 'countNum'}}" style='font-size:22rpx;' wx:if="{{item.data.num == 0}}">销量：{{goods.payedcount+goods.virtualpayedcount}}</view>
+
+          </view>
+          <view class="goods-price-wrap">
+            <text class="goods-price main-color" style="font-size: {{m1.getFixedMoney(goods.price) >= 9999 ? '24rpx !important;':''}} {{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price)}}<text style="color:#aeaeae;text-decoration:line-through;margin-left:15rpx;font-size:{{m1.getFixedMoney(goods.originalprice)>=9999 ? '22rpx !important;':'24rpx;'}}" wx:if="{{item.data.show == 0 && goods.originalprice !=0}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.originalprice)}}</text></text>
+          </view>
+
+          <image src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png" class="goods-buy btn1" data-goodsid="{{goods.id}}" catchtap='onAddCart' wx:if="{{m1.showShoppingCart(app,goods)}}"></image>
+        </button>
+      </navigator>
+    </view>
+  </view>
+  <!-- 滑动小图 -->
+  <scroll-view style="background: #f5f7f7;" scroll-x="true" wx:if="{{item.data.size ==4}}">
+    <view style="-webkit-flex-wrap:nowrap;flex-wrap:nowrap;" class="goods-list">
+      <view class="goods-item goods-item-{{item.data.size}}" wx:for="{{item.data.list}}" wx:for-item="goods" wx:key="goods.id">
+        <navigator class="commonNavigator" bindtap="onNavTab" url="{{m1.getGoodsLink(app,goods,item.data.eatway)}}" data-url="{{m1.getGoodsLink(app,goods,item.data.eatway)}}">
+          <button form-type='submit' data-isbtn="true" class='commonNavButton goods-link'>
+            <view class="photo-block" style="position: relative;">
+              <!-- 商品角标 -->
+              <text wx:if="{{goods.isCornerMarker}}" class="goods-corner-mark mark-position{{goods.position || 0}}" style="background: {{goods.color}};">{{goods.content}}</text>
+              <image style="border-radius: 0" src="{{m1.specUrl(extConfig,userImagePath,goods.img,800)}}"></image>
+            </view>
+            <view class="info">
+              <text class="goods-title">{{goods.name}}</text>
+              <view class="{{item.data.size==3 ? 'countNum3' : 'countNum'}}" style='font-size:22rpx;' wx:if="{{item.data.num == 0}}">销量：{{goods.payedcount+goods.virtualpayedcount}}</view>
+
+            </view>
+            <view class="goods-price-wrap">
+              <view class="goods-price main-color" style="{{app.globalData.customStyleColor}};font-size: {{goods.price>=999900 ? '24rpx !important':''}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price)}}
+                <text style="color:#aeaeae;font-size:{{m1.getFixedMoney(goods.originalprice)>=9999 ? '22rpx !important;':'24rpx;'}} text-decoration:line-through;margin-left:15rpx;" wx:if="{{item.data.show == 0 && goods.originalprice !=0}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.originalprice)}}</text>
+              </view>
+            </view>
+
+            <image src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png" class="goods-buy btn1" data-goodsid="{{goods.id}}" catchtap='onAddCart' wx:if="{{m1.showShoppingCart(app,goods)}}"></image>
+          </button>
+        </navigator>
+      </view>
+    </view>
+  </scroll-view>
+</template>
+
+
+<!-- 积分商品列表 -->
+<template name="mc_goodslist_in">
+  <view class="goods-list">
+    <view class="goods-item goods-item-{{item.data.size}}" wx:for="{{item.data.list}}" wx:for-item="goods" wx:key="goods.id">
+      <navigator class="commonNavigator" bindtap="onNavTab" url='{{"/pages/detail/detail?id="+goods.id}}' data-url='{{"/pages/detail/detail?id="+goods.id}}'>
+        <button form-type='submit' data-isbtn="true" class='commonNavButton goods-link'>
+          <view class="photo-block" style="position:relative;">
+            <image src="{{m1.specUrl(extConfig,userImagePath,goods.img,800)}}"></image>
+          </view>
+          <view class="info">
+            <text class="goods-title">{{goods.name}}</text>
+            <view class="{{item.data.size==3 ? 'countNum3' : 'countNum'}}" style='font-size:22rpx;' wx:if="{{item.data.num == 0}}">销量：{{goods.payedcount+goods.virtualpayedcount}}
+            </view>
+
+          </view>
+          <view class="goods-price-wrap">
+            <text class="goods-price main-color" style="{{app.globalData.customStyleColor}}">{{goods.price}} 积分<text style="color:#aeaeae;font-size:24rpx;text-decoration:line-through;margin-left:15rpx;font-weight:300" wx:if="{{item.data.show == 0 && goods.originalprice !=0}}">{{goods.originalprice}}</text></text>
+          </view>
+
+
+        </button>
+      </navigator>
+    </view>
+  </view>
+</template>
+
+<!-- 商品分组 -->
+<template name="goodslist">
+  <include src="./sortLine.wxml" />
+  <view class="goods-list">
+    <view class="goods-item" wx:for-item="goods" wx:for="{{item.data.list}}" wx:key="index">
+      <navigator class="commonNavigator" url="{{m1.getGoodsLink(app,goods)}}?id={{goods.id}}" bindtap='onNavTab' data-url="{{m1.getGoodsLink(app,goods)}}?id={{goods.id}}">
+        <button form-type='submit' data-isbtn="true" class='commonNavButton goods-link'>
+          <view class="photo-block" style="position: relative;">
+            <!-- 商品角标 -->
+            <text wx:if="{{goods.cornerMarker.isSwitch}}" class="goods-corner-mark mark-position{{goods.cornerMarker.position}}" style="background: {{goods.cornerMarker.color}};">{{goods.cornerMarker.content}}</text>
+            <image src="{{m1.specUrl(extConfig,userImagePath,goods.goodsCover,800)}}"></image>
+          </view>
+          <view class="info">
+            <text class="goods-title">{{goods.name}}</text>
+            <view class="{{item.data.size==3 ? 'countNum3' : 'countNum'}}" style='font-size:22rpx;' wx:if="{{item.data.num1 == 0 || !item.data.num1}}">
+              销量：{{goods.payedCount+goods.virtualPayedCount}}
+            </view>
+
+          </view>
+          <view class="goods-price-wrap">
+            <text class="goods-price main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price)}}<text style="color:#aeaeae;font-size:24rpx;text-decoration:line-through;margin-left:15rpx;font-weight:300" wx:if="{{(item.data.show1 == 0 || !item.data.show1) && goods.originalPrice!==0}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.originalPrice)}}</text></text>
+          </view>
+
+          <image src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png" class="goods-buy btn1" data-goodsid="{{goods.id}}" catchtap='onAddCart' wx:if="{{m1.showShoppingCart(app,goods)}}"></image>
+        </button>
+      </navigator>
+    </view>
+    <view class="loadmore" style='width:100%;' wx:if="{{item.hasLoaded && item.data.list.length < item.data.total}}">
+      <button bindtap='handleGoodListLoadMore' class="zan-btn {{item.loading?'zan-btn--loading':''}}" data-index="{{widgetIndex}}">加载更多
+      </button>
+    </view>
+  </view>
+</template>
+
+<!-- 富文本 -->
+<template name="richtext">
+  <view class="custom-richtext" style="background-color:{{item.data.bg_color}};{{item.data.fullscreen==1?'padding:0;':''}};margin-top:{{item.data.margin_top}}px;margin-left:{{item.data.margin_left}}px">
+    <rich-text nodes="{{item.data.richtext}}" type="text"></rich-text>
+  </view>
+</template>
+
+<!-- 列表 -->
+<template name="listWidget">
+  <view class="list-widget" style='background:{{item.data.bgColor}}'>
+    <navigator style='background:{{item.data.rowBgColor}};margin-bottom:{{item.data.spacing}}px;opacity:{{isNaN(item.data.opacity)?1:item.data.opacity/100}}' form-type='submit' target="{{item.target}}" app-id="{{item.link_appid}}" class='commonNavigator list-item'
+      url="{{m1.getLink(itemName)}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName" wx:for="{{item.data.list}}" bindtap="onNavTab" data-url="{{m1.getLink(itemName)}}">
+      <view class="img-cont" data-img="{{m1.specUrl(extConfig,userImagePath,itemName.img)}}" bindtap='{{m1.getLink(itemName)=="blank"?"handleQrcImg":""}}'>
+        <image src="{{m1.specUrl(extConfig,userImagePath,itemName.img)}}"></image>
+      </view>
+      <view class="info-cont">
+        <view class="title" style='font-size:{{item.data.fontSize}}px;color:{{item.data.fontColor}};margin-left:0px;'>
+          {{itemName.title}}
+        </view>
+        <view class="desc">{{itemName.intro}}</view>
+      </view>
+    </navigator>
+  </view>
+</template>
+
+<template name="videoWidget">
+  <view class="videoCont">
+    <txv-video wx:if="{{item.data.type =='1'}}" vid="{{item.data.vid}}" showMuteBtn="{{true}}" defn="超清" enablePlayGesture="{{true}}" enablePlayGesture="true" usePoster="{{true}}" poster="{{m1.specUrl(extConfig,userImagePath,item.data.img,1080)}}" show-center-play-btn="false" objectFit="fill" playerid="{{item.data.vid}}"></txv-video>
+  </view>
+</template>
+<template name="multShopWidget">
+  <view class="multShopCont" wx:if="{{(!shopUid)}}">
+    <view class="multAroundAddr main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="getMultLocation">
+      <view class="leftBlock">
+        <image class="dwIco" src="{{staticResPath}}/youdian/image/mobile/locationIcon1.png"></image>
+        <text class="detailAddr">当前：{{multInfoAddr}}</text>
+      </view>
+      <!-- <view class="arrow" style=" background-image:url({{staticResPath}}/youdian/image/mobile/arrow1.png);"></view> -->
+    </view>
+    <view class="multListHeader">
+      <text class="rowLine"></text>
+      <text class="multHeaderTitle">{{item.data.customTxt || "附近商家"}}</text>
+      <text class="rowLine"></text>
+    </view>
+    <view class="noMultShop" wx:if="{{(1 == item.data.isOpen && ((multInfoArr[m1.multStr + item.data.pageid][0].distance) > 2000)) || (1 == item.data.isOpen && 0 == (multInfoArr[m1.multStr + item.data.pageid].length)) || (multInfoArr.length==0)}}">
+      <text>你附近2km内暂时还没有店铺，快来申请入驻我们吧</text>
+      <navigator class='' url="{{item.data.linkapplyid ? '/pages/form/form?id='+item.data.linkapplyid : ''}}">
+        申请入驻
+      </navigator>
+    </view>
+
+    <!--<view class="noMultShop" wx:if="{{1 == item.data.isOpen}}"> <text>你附近2km内暂时还没有店铺，快来申请入驻我们吧</text> <navigator class='' url="{{item.data.linkapplyid ? '/pages/form/form?id='+item.data.linkapplyid : ''}}">申请入驻</navigator></view>-->
+    <navigator class='list-item' open-type="navigate" url="/pages/index/index?fromuid={{item.uid}}&shopuid={{item.relationUid}}" wx:for-index="idx" wx:key="idx" wx:for="{{multInfoArr[m1.multStr + item.data.pageid]}}">
+      <view class="img-cont">
+        <image src="{{m1.specUrl(extConfig,userImagePath,item.image)}}"></image>
+      </view>
+      <view class="info-cont">
+        <view class="title">{{item.name}}
+          <span class="shop_closed" wx:if="{{!item.isOpen}}">未营业</span>
+        </view>
+        <view class="desc">
+          {{item.introduction}}
+        </view>
+        <view catchtap="openloaction" data-address="{{item.locaction}}" data-latitude="{{item.latitude }}" data-longitude="{{item.longitude }}" class="disKm">
+          <view class="addWrap">
+            <view class="dwNewIco zan-icon zan-icon-location main-color" style="{{app.globalData.customStyleColor}}"></view>
+            <text style="line-height:40rpx;height:40rpx;">{{item.localtion}}</text>
+          </view>
+          <view>{{item.distance
+            < 1000 ? item.distance + "m" : mTool.mToKm(item.distance)+ "km"}}</view>
+          </view>
+        </view>
+    </navigator>
+    <navigator class='getMultList' url="/pages/mult/multlist?id={{item.data.pageid}}" wx:if="{{5 <= multInfoArr[m1.multStr + item.data.pageid].length}}">
+      <view class="main-color" style="{{app.globalData.customStyleColor}}">查看更多门店 > </view>
+    </navigator>
+    <!--<view class="getMultList" style="text-align: center;opacity: 0.6" wx:if="{{0 == multInfoArr[m1.multStr + item.data.pageid].length}}">-->
+    <!--暂无子店...-->
+    <!--</view>-->
+    </view>
+</template>
+
+<!-- 商品分类 -->
+<template name="categoryTabWidget">
+  <view class="category-tab-content category-style-{{item.data.type}} {{item.data.type == 0?'category-tab-style-top':'category-tab-style-left'}}">
+    <scroll-view class="type-tab" scroll-y="{{item.data.type == 1}}" scroll-x="{{item.data.type == 0}}">
+      <view form-type='submit' data-isbtn="true" style="{{m1.getSelectedCat(widgetIndex,selectedCatData,categoryList).id==cat.id ? app.globalData.customStyleColor:''}}" class="cat-box flex-center {{m1.getSelectedCat(widgetIndex,selectedCatData,categoryList).id==cat.id?'main-color active-type':''}}"
+        wx:for="{{categoryList}}" data-id="{{cat.id}}" data-index="{{widgetIndex}}" bindtap="handleCatTabTap" wx:for-item="cat" wx:key="cat.id">
+        <view class="cat-item-name">
+          <text class="cat-item-text">{{cat.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <scroll-view class="product-tab" scroll-y="true" bindscrolltolower="handleCatgoryTabScrollToLower" lower-threshold="100" data-index="{{widgetIndex}}">
+      <view class="tab-item">
+        <view class="food-item" wx:for="{{m1.getSelectedCat(widgetIndex,selectedCatData,categoryList).goodsListData}}" wx:for-index="goodsIndex" wx:for-item="goods" wx:key="index">
+          <button form-type='submit' bindtap='onNavTab' data-isbtn="true" class='commonNavButton' data-url='{{m1.getCategoryTabGoodsLink(goods)}}'>
+            <view class="food-item-inner">
+              <view class="food-item-image" style="position: relative;">
+                <!-- 商品角标 -->
+                <text wx:if="{{goods.cornerMarker.isSwitch}}" class="goods-corner-mark mark-position{{goods.cornerMarker.position}}" style="background: {{goods.cornerMarker.color}};">{{goods.cornerMarker.content}}</text>
+                <image class="food-item-img" mode='aspectFill' src="{{m1.specUrl(extConfig,userImagePath,goods.goodsCover)}}"></image>
+              </view>
+              <view class="food-info-wrap">
+                <view class="food-info">
+                  <view class="food-item-header">
+                    <view class="food-item-name-info{{item.data.type}}">
+                      <view class="food-item-name{{item.data.type}}">{{goods.name}}</view>
+                      <view class="food-item-count{{item.data.type}}" wx:if="{{item.data.showyx=='0'}}">
+                        销量：{{goods.payedCount+goods.virtualPayedCount}}
+                      </view>
+                    </view>
+
+                    <view class="food-item-price-info food-item-type{{item.data.type}}">
+                      <view style="{{app.globalData.customStyleColor}}" class="food-item-price main-color">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price)}}
+                        <text style="color:#878787;font-size:26rpx; font-weight:400; text-decoration:line-through;margin-left:15px;font-weight:300" wx:if="{{item.data.showyx=='0' && goods.originalPrice!=0}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.originalPrice)}}</text>
+                      </view>
+                    </view>
+
+                  </view>
+                </view>
+              </view>
+            </view>
+          </button>
+        </view>
+        <view wx:if="{{m1.getSelectedCat(widgetIndex,selectedCatData,categoryList).goodsListData.length==0}}" class="empty-text" style='font-size: 28rpx; color: #949494;'>暂无商品
+        </view>
+        <view wx:elif="{{m1.isCategoryNoMoreGoods(widgetIndex,selectedCatData,categoryList)}}" class="empty-text" style='font-size: 28rpx; color: #949494;margin-top:0px;'>没有更多了
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<template name="communityWidget">
+  
+</template>
+<!-- 砍价 -->
+<template name="sbargainWidget">
+  <view id="indexPage" class="sbargainList">
+    <view class="sbargain-list-wrap">
+      <view class="act_countDown_box">
+        <view class="act_countDown_box_wrap">
+          <view class="box-title">砍价活动</view>
+          <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus != 3}}">
+            <span class="time_txt">{{groupbuy['gb'+item.data.activityId+'atyStatusTxt']}}:</span>
+            <span class="timer_day timer_box">{{groupbuy['gb'+item.data.activityId+'time'].timerDay}}</span>
+            <span class="split">:</span>
+            <span class="timer_box timer_hour">{{groupbuy['gb'+item.data.activityId+'time'].timerHour}}</span>
+            <span class="split">:</span>
+            <span class="timer_box timer_minute">{{groupbuy['gb'+item.data.activityId+'time'].timerMinute}}</span>
+            <span class="split">:</span>
+            <span class="timer_box timer_second">{{groupbuy['gb'+item.data.activityId+'time'].timerSecond}}</span>
+          </view>
+          <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 3}}">
+            <span>活动已结束</span>
+          </view>
+        </view>
+        <navigator style="color: #888;font-size: 26rpx;padding-right: 10rpx;" wx:if="{{groupbuy['gb'+item.data.activityId].length>3}}" url="/pages/sbargain/sbargain?activityId={{item.data.activityId}}">
+          查看全部 >
+        </navigator>
+
+      </view>
+      <view class="infoItem" wx:for="{{groupbuy['gb'+item.data.activityId]}}" wx:for-item="sbg" data-activityid="{{sbg.activityId}}" bindtap="goodsDetailPage" wx:if="{{index<3}}" data-bargaintype="0" data-goodsid="{{sbg.id}}" wx:key="index">
+        <image class="goods-img" src="{{m1.specUrl(extConfig,userImagePath,sbg.awardPic)}}"></image>
+        <view class="list--buttons">
+          <span class="list--title list--ellipsis">{{sbg.awardName}}</span>
+          <span class="list--desc list--ellipsis" wx:if='{{sbg.detail}}'>{{sbg.detail}}</span>
+          <view class="list--status">
+            <span class="list--attends">销售量 {{sbg.awardRealNum-sbg.sendNum+sbg.awardVirtualNum}}</span>
+          </view>
+          <view class="list--price-wrap">
+            <view class="list--prices">
+              <span class="list--price list--red">{{app.globalData.currencySymbol}}{{mTool.fToY(sbg.activityPrice)}}</span>
+              <span class="list--price list--color999 list--origin-price">{{app.globalData.currencySymbol}}{{mTool.fToY(sbg.originalPrice)}}</span>
+            </view>
+
+            <view class="list--bargin" data-bargaintype="0" data-goodsid="{{sbg.id}}" hover-class="deep-red">去砍价
+            </view>
+          </view>
+
+
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+
+</template>
+<!-- 拼团 -->
+<template name="groupbuyWidget">
+  <view id='indexPage'>
+    <view class="tuan_goods_list_box">
+      <view class="tuan_goods_list">
+        <view class="act_countDown_box">
+          <view class="act_countDown_box_wrap">
+            <view class="box-title">拼团活动</view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus != 3}}">
+              <span class="time_txt">{{groupbuy['gb'+item.data.activityId+'atyStatusTxt']}}:</span>
+              <span class="timer_day timer_box">{{groupbuy['gb'+item.data.activityId+'time'].timerDay}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_hour">{{groupbuy['gb'+item.data.activityId+'time'].timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{groupbuy['gb'+item.data.activityId+'time'].timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{groupbuy['gb'+item.data.activityId+'time'].timerSecond}}</span>
+            </view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 3}}">
+              <span>活动已结束</span>
+            </view>
+          </view>
+          <navigator style="color: #888;font-size: 26rpx;padding-right: 10rpx;" wx:if="{{groupbuy['gb'+item.data.activityId].length>3}}" url="/pages/groupbuy/groupbuy?activityId={{item.data.activityId}}">
+            查看全部 >
+          </navigator>
+
+        </view>
+        <view class="tuan_goods_item_box tuan_goods_item_box_" data-typeid="" data-index="{{index}}" wx:if="{{index<3}}" wx:for-item="bg" wx:for="{{groupbuy['gb'+item.data.activityId]}}" wx:key="index">
+
+          <view class="tuan_goods_item" bindtap="gbDetailPage" data-activityid="{{bg.activityId}}" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2">
+            <image class="goods_img" src="{{m1.specUrl(extConfig,userImagePath,bg.awardPic)}}"></image>
+            <!-- {{userImagePath + bg.awardPic}}  -->
+            <view class="goods_info_box">
+              <view class="goods_title">
+                <span class="goods_name">{{bg.awardName}}</span>
+              </view>
+              <span class="acty-name">{{bg.offeredLimitNum}}人拼</span>
+
+              <view class="goods_price_box">
+                <view class='goods_price_boxWrap'>
+                  <view class="goods_act_price">
+                    <span>{{app.globalData.currencySymbol}}{{mTool.fToY(bg.activityPrice)}}</span>
+                  </view>
+                  <view class="goods_price">
+                    <span style="font-size:22rpx;">单买价 </span>
+                    <span style="text-decoration:line-through;">
+                      {{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(bg.originalPrice)}}</span>
+                    </span>
+
+                  </view>
+                </view>
+
+
+                <view class="goods_btn goods_soldOut_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:if="{{0 == bg.sendNum}}">去开团
+                </view>
+                <view class="goods_btn goods_buy_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:else>去开团
+                </view>
+              </view>
+            </view>
+          </view>
+
+
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+</template>
+<!-- 新版拼团 -->
+<template name="newgroupbuyWidget">
+  <view id='indexPage'>
+    <view class="tuan_goods_list_box">
+      <view class="tuan_goods_list">
+        <view class="act_countDown_box">
+          <view class="act_countDown_box_wrap">
+            <view class="box-title">拼团活动</view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus != 3}}">
+              <span class="time_txt">{{totalGroup[item.data.activityId]['groupbuy'+item.data.activityId+'atyStatusTxt']}}:</span>
+              <span class="timer_day timer_box">{{totalGroup[item.data.activityId]['groupbuy'+item.data.activityId+'time'].timerDay}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_hour">{{totalGroup[item.data.activityId]['groupbuy'+item.data.activityId+'time'].timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{totalGroup[item.data.activityId]['groupbuy'+item.data.activityId+'time'].timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{totalGroup[item.data.activityId]['groupbuy'+item.data.activityId+'time'].timerSecond}}</span>
+            </view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 3}}">
+              <span>活动已结束</span>
+            </view>
+          </view>
+          <navigator style="color: #888;font-size: 26rpx;padding-right: 10rpx;" wx:if="{{groupbuy['gb'+item.data.activityId].length>3}}" url="/pages/groupbuy/groupbuy?activityId={{item.data.activityId}}">
+            查看全部 >
+          </navigator>
+
+        </view>
+        <view class="tuan_goods_item_box tuan_goods_item_box_" data-typeid="" wx:if="{{index<3}}" wx:for-item="bg" wx:for="{{groupbuy['gb'+item.data.activityId]}}" wx:key="index">
+
+          <view class="tuan_goods_item" bindtap="gbDetailPage" data-activityid="{{bg.activityId}}" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2">
+            <image class="goods_img" src="{{m1.specUrl(extConfig,userImagePath,bg.awardPic)}}"></image>
+            <view class="goods_info_box">
+              <view class="goods_title">
+                <span class="goods_name">{{bg.awardName}}</span>
+              </view>
+              <span class="acty-name">{{bg.offeredLimitNum}}人拼</span>
+
+              <view class="goods_price_box">
+                <view class='goods_price_boxWrap'>
+                  <view class="goods_act_price">
+                    <span>{{app.globalData.currencySymbol}}{{mTool.fToY(bg.activityPrice)}}</span>
+                  </view>
+                  <view class="goods_price">
+                    <span style="font-size:22rpx;">单买价 </span>
+                    <span style="text-decoration:line-through;">
+                      {{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(bg.originalPrice)}}</span>
+                    </span>
+
+                  </view>
+                </view>
+
+
+                <view class="goods_btn goods_soldOut_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:if="{{0 == bg.sendNum}}">去开团
+                </view>
+                <view class="goods_btn goods_buy_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:else>去开团
+                </view>
+              </view>
+            </view>
+          </view>
+
+
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+</template>
+<!-- 阶梯拼团 -->
+<template name="stepgroupbuyWidget">
+  <view id='indexPage'>
+    <view class="tuan_goods_list_box">
+      <view class="tuan_goods_list">
+        <view class="act_countDown_box">
+          <view class="act_countDown_box_wrap">
+            <view class="box-title">阶梯拼团</view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus != 3}}">
+              <span class="time_txt">{{groupbuy['gb'+item.data.activityId+'atyStatusTxt']}}:</span>
+              <span class="timer_day timer_box">{{groupbuy['gb'+item.data.activityId+'time'].timerDay}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_hour">{{groupbuy['gb'+item.data.activityId+'time'].timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{groupbuy['gb'+item.data.activityId+'time'].timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{groupbuy['gb'+item.data.activityId+'time'].timerSecond}}</span>
+            </view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 3}}">
+              <span>活动已结束</span>
+            </view>
+          </view>
+          <navigator style="color: #888;font-size: 26rpx;padding-right: 10rpx;" wx:if="{{groupbuy['gb'+item.data.activityId].length>3}}" url="/pages/groupbuy/groupbuyList?activityId={{item.data.activityId}}">
+            查看全部 >
+          </navigator>
+        </view>
+        <view class="tuan_goods_item_box tuan_goods_item_box_" data-typeid="" wx:if="{{index<3}}" wx:for-item="bg" wx:for="{{groupbuy['gb'+item.data.activityId]}}">
+          <view class="tuan_goods_item" bindtap="gbDetailPage" data-activityid="{{bg.activityId}}" data-tuantype="3" data-goodsid="{{bg.id}}" data-showindex="2">
+            <image class="goods_img" src="{{m1.specUrl(extConfig,userImagePath,bg.awardPic)}}"></image>
+            <view class="goods_info_box">
+              <view class="goods_title">
+                <span class="goods_name">{{bg.awardName}}</span>
+              </view>
+              <span class="acty-name">阶梯团</span>
+              <view class="goods_price_box">
+                <view class='goods_price_boxWrap'>
+                  <view class="goods_act_price">
+                    <span>{{app.globalData.currencySymbol}}{{mTool.fToY(bg.stepList[0].price)}}</span>
+                  </view>
+                  <view class="goods_price">
+                    <span style="font-size:22rpx;">单买价 </span>
+                    <span style="text-decoration:line-through;">
+                      {{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(bg.originalPrice)}}</span>
+                    </span>
+
+                  </view>
+                </view>
+
+
+                <view class="goods_btn goods_soldOut_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:if="{{0 == bg.sendNum}}">去开团
+                </view>
+                <view class="goods_btn goods_buy_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:else>去开团
+                </view>
+              </view>
+            </view>
+          </view>
+
+
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+</template>
+<!-- 预售 -->
+<template name="presalesWidget">
+
+  <view id="indexPage" class="presalesWidget">
+    <view class="tuan_goods_list_box">
+      <view class="tuan_goods_list">
+        <view class="act_countDown_box">
+          <view class="act_countDown_box_wrap">
+            <view class="box-title">预售活动</view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus != 3}}">
+              <span class="time_txt">{{groupbuy['gb'+item.data.activityId+'atyStatusTxt']}}:</span>
+              <span class="timer_day timer_box">{{groupbuy['gb'+item.data.activityId+'time'].timerDay}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_hour">{{groupbuy['gb'+item.data.activityId+'time'].timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{groupbuy['gb'+item.data.activityId+'time'].timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{groupbuy['gb'+item.data.activityId+'time'].timerSecond}}</span>
+            </view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 3}}">
+              <span>活动已结束</span>
+            </view>
+          </view>
+          <navigator style="color: #888;font-size: 26rpx;padding-right: 10rpx;" wx:if="{{groupbuy['gb'+item.data.activityId].length>3}}" url="/pages/presales/presales?activityId={{item.data.activityId}}">
+            查看全部 >
+          </navigator>
+
+        </view>
+        <view class="tuan_goods_item_box tuan_goods_item_box_" data-typeid="" wx:if="{{index<3}}" wx:for-item="bg" wx:for="{{groupbuy['gb'+item.data.activityId]}}">
+
+          <view class="tuan_goods_item" bindtap="prDetailPage" data-activityid="{{bg.activityId}}" data-tuantype="3" data-goodsid="{{bg.id}}" data-showindex="2">
+            <image class="goods_img" src="{{m1.specUrl(extConfig,userImagePath,bg.awardPic)}}"></image>
+            <view class="goods_info_box">
+              <view class="goods_title">
+                <span class="goods_name">{{bg.awardName}}</span>
+              </view>
+              <view class="goods_price_box">
+                <view class='goods_price_boxWrap'>
+                  <view class="goods_act_price">
+
+                    <span>{{app.globalData.currencySymbol}}{{mTool.fToY(bg.preAmount+bg.restAmount)}}</span>
+                  </view>
+                  <view class="goods_price">
+                    <span style="font-size:24rpx;">原价 </span>
+                    <span style="text-decoration:line-through;">
+                      {{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(bg.originalPrice)}}</span>
+                    </span>
+
+                  </view>
+                </view>
+
+
+                <view class="goods_btn goods_soldOut_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:if="{{0 == bg.sendNum}}">付定金
+                </view>
+                <view class="goods_btn goods_buy_btn" data-tuantype="0" data-goodsid="{{bg.id}}" data-showindex="2" wx:else>付定金
+                </view>
+              </view>
+            </view>
+          </view>
+
+
+        </view>
+      </view>
+    </view>
+
+  </view>
+</template>
+<!-- 限时折扣 -->
+<template name="discountWidget">
+
+  <view class="discountWidget">
+    <view class="time-discount-box">
+      <view class="time-discount-list">
+        <view class="act_countDown_box">
+          <view class="act_countDown_box_wrap">
+
+            <view class="box-title">限时抢购</view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus != 3}}">
+              <span class="time_txt">{{groupbuy['gb'+item.data.activityId+'atyStatusTxt']}}:</span>
+              <span class="timer_day timer_box">{{groupbuy['gb'+item.data.activityId+'time'].timerDay}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_hour">{{groupbuy['gb'+item.data.activityId+'time'].timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{groupbuy['gb'+item.data.activityId+'time'].timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{groupbuy['gb'+item.data.activityId+'time'].timerSecond}}</span>
+            </view>
+            <view class="countDown_time" wx:if="{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 3}}">
+              <span>活动已结束</span>
+            </view>
+          </view>
+          <navigator style="color: #888;font-size: 26rpx;padding-right: 10rpx;" wx:if="{{groupbuy['gb'+item.data.activityId].length>3}}" url="/pages/time_discount/time_discount_goodslist?activityId={{item.data.activityId}}">
+            查看全部 >
+          </navigator>
+
+        </view>
+        <view class="time-discount-item" wx:if="{{index<3}}" wx:for-item="bg" wx:for="{{groupbuy['gb'+item.data.activityId]}}" wx:key="index">
+          <view class="time-discount-goods-item" bindtap="discountDetailPage" data-activityid="{{bg.activityId}}" data-goodsid="{{bg.id}}">
+            <image class="goods-img" src="{{m1.specUrl(extConfig,userImagePath,bg.timeDiscountGoodsAward.goods.goodsCover)}}"></image>
+            <view class="goods-info-box">
+              <view class="goods-name">{{bg.timeDiscountGoodsAward.goods.name}}</view>
+              <view class="goods-price-box-wrap">
+                <view class='goods-price-box'>
+                  <view class="goods-act-price">
+                    {{app.globalData.currencySymbol}}{{mTool.fToY(bg.timeDiscountGoodsAward.discountPrice)}}
+                  </view>
+                  <view class="goods-or-price">
+                    <text style="text-decoration: line-through;">{{app.globalData.currencySymbol}}{{mTool.fToY(bg.timeDiscountGoodsAward.salePrice)}}</text>
+                  </view>
+                </view>
+                <view class="goods-buy-btn goods-buy-btn{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 2 && bg.timeDiscountGoodsAward.totalCount == 0 ? '4':groupbuy['gb'+item.data.activityId+'aty'].activityStatus}} goods_soldOut_btn" data-goodsid="{{bg.id}}">{{groupbuy['gb'+item.data.activityId+'aty'].activityStatus == 2 && bg.timeDiscountGoodsAward.totalCount == 0 ? '已抢完':groupbuy['gb'+item.data.activityId+'aty'].activityStatusTxt}}</view>
+              </view>
+            </view>
+          </view>
+
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+</template>
+<template name="subPageWidget">
+  <view class="category-tab-content {{item.data.type == 0?'category-tab-style-top':'category-tab-style-left'}}">
+    <scroll-view class="type-tab" scroll-y="{{item.data.type == 1}}" scroll-x="{{item.data.type == 0}}">
+      <view form-type='submit' data-isbtn="true" class="commonNavButton cat-box flex-center {{m1.getSelectedSub(widgetIndex,selectedSubData,subClsList).id==cat.id?'main-color active-type':''}}" wx:for="{{subClsList}}" data-id="{{cat.id}}" data-index="{{widgetIndex}}"
+        bindtap="handleSubClsTap" wx:for-item="cat" wx:key="cat.id" style="{{m1.getSelectedSub(widgetIndex,selectedSubData,subClsList).id==cat.id ? app.globalData.customStyleColor:''}}">
+        <view class="cat-item-name">
+          <text class="cat-item-text">{{cat.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <scroll-view class="product-tab" scroll-y="true" bindscrolltolower="handleClsIdTabScrollToLower" lower-threshold="100" data-index="{{widgetIndex}}">
+      <view class="tab-item">
+        <view>
+          <button form-type='submit' bindtap='onNavTab' data-url="/pages/subCategory/subpage?pageId={{subPage.id}}" data-isbtn="true" class="commonNavButton pageItem" wx:for="{{m1.getSelectedSub(widgetIndex,selectedSubData,subClsList).subListData}}" wx:for-item="subPage"
+            wx:key="subPage.id">
+            <text>{{subPage.name}}</text>
+            <text class="cTime">{{subPage.createTime}}</text>
+            <view class="trigger"></view>
+          </button>
+        </view>
+        <view wx:if="{{m1.getSelectedSub(widgetIndex,selectedSubData,subClsList).subListData.length==0}}" class="empty-text">暂无页面
+        </view>
+        <view wx:elif="{{m1.isNoMoreSubPage(widgetIndex,selectedSubData,subClsList)}}" class="empty-text" style='font-size: 12px; color: #949494;margin-top:0px;'>没有更多了
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<!-- 资讯组件 -->
+<template name="informationWidget">
+  <view class="information-tab-content category-tab-content category-tab-style-top" style='margin:{{item.data.margin}}px 0;'>
+    <scroll-view class="type-tab" scroll-x="{{true}}" style="background-color:{{item.data.nav_bg_color}}">
+      <button form-type='submit' data-isbtn="true" class="commonNavButton cat-box flex-center {{(info.pageid && (selectedInfoPageIdx==idx))?'active-type':''}}" wx:for="{{item.data.list}}" data-id="{{info.pageid}}" data-idx="{{idx}}" bindtap="handleInfoPageTap"
+        wx:for-index="idx" wx:for-item="info" wx:key="info.pageid" style="background-color:{{(selectedInfoPageIdx==idx)?item.data.nav_bg_color_active:item.data.nav_bg_color}}">
+        <view class="cat-item-name">
+          <text class="cat-item-text" style="color:{{(selectedInfoPageIdx==idx)?item.data.nav_text_color_active:item.data.nav_text_color}}">{{info.title||"资讯"}}</text>
+        </view>
+      </button>
+    </scroll-view>
+    <scroll-view class="product-tab" scroll-y="true" bindscrolltolower="handleInfoTabScrollToLower" lower-threshold="100" data-index="{{widgetIndex}}">
+      <view class="tab-item">
+        <view>
+          <button form-type='submit' bindtap='onNavTab' data-url="/pages/subCategory/subpage?pageId={{subPage.id}}" data-isbtn="true" class="commonNavButton pageItem food-item" wx:for="{{m1.getSelectedInfoPage(selectedInfoPageId,infoPageList).subListData}}" wx:for-item="subPage"
+            wx:key="subPage.id">
+            <view class="icon_cont">
+              <image src='{{m1.specUrl(extConfig,userImagePath,subPage.icon_url)}}' class="icon_url"></image>
+            </view>
+            <view class="info_text_cont">
+              <view class="news-item-title">{{subPage.name}}</view>
+              <view class="news-item-key">{{subPage.title}}</view>
+            </view>
+          </button>
+        </view>
+        <view wx:if="{{!m1.getSelectedInfoPage(selectedInfoPageId,infoPageList).subListData || m1.getSelectedInfoPage(selectedInfoPageId,infoPageList).subListData.length==0}}" class="empty-text">暂无资讯
+        </view>
+        <view wx:elif="{{m1.isNoMoreInfoPage(selectedInfoPageId,infoPageList)}}" class="empty-text" style='font-size: 12px; color: #949494;margin-top:0px;'>没有更多了
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<!-- 海报图片 -->
+<template name="xcxQRCWidget">
+  <view class="xcxQRCWidget" bindtap="handleQrcImg" data-img="{{userImagePath + item.data.img}}">
+    <image class="xcxImg" src="{{userImagePath + item.data.img}}"></image>
+    <text class="xcxTips">{{item.data.ext}}</text>
+  </view>
+</template>
+<!-- webview组件 -->
+<template name="webviewWidget">
+  <web-view class="webviewWidget" src="{{item.data.url}}">
+
+  </web-view>
+</template>
+
+<!-- 购物车 -->
+<template name="shopCartWidget">
+  <view class="fixedmenu fixedshoppingcart" style="{{item.data && item.data.img?'background-image:url('+mTool.specUrl(extConfig,userImagePath,item.data.img)+')':''}}">
+    <navigator class="commonNavigator" url="/pages/shoppingcar/shoppingcar" bindtap='onNavTab'>
+      <button form-type='submit' class='commonNavButton' style='overflow: visible;'>
+        <text class="mallgoodicon main-color-bg" style="{{app.globalData.customStyleBg}}">{{shoppingCartCount||0}}</text>
+      </button>
+    </navigator>
+  </view>
+</template>
+<!-- 刷新按钮 -->
+<template name="refreshWidget">
+  <view data-isbtn="true" class='commonNavButton fixedmenu fixedrefresh' style="{{item.data.img?'background-image:url('+mTool.specUrl(extConfig,userImagePath,item.data.img)+')':''}}" data-isfootertab="true" bindtap='onRefreshPage'>
+  </view>
+</template>
+<template name="publishTopicWidget">
+ 
+</template>
+<!-- 客服按钮 -->
+<template name="kefutWidget">
+  <button style="{{item.data && item.data.img?'background-image:url('+mTool.specUrl(extConfig,userImagePath,item.data.img)+');background-color:transparent;border:none;':''}}" class="fixedmenu fixedcontact" open-type="contact" form-type='submit' bindtap='onNavTab'
+    send-message-path='/pages/index/index' show-message-card="true"></button>
+</template>
+<!-- 背景音乐组件 -->
+<template name="bgMusicWidget">
+  <button wx:if="{{item.data.music}}" form-type='submit' data-isbtn="true" class='commonNavButton fixedmenu {{playBgMusic?"play":""}} fixedbgmusic' style="{{item.data.img?'background-image:url('+mTool.specUrl(extConfig,userImagePath,item.data.img)+')':''}}"
+    open-type='redirect' data-isfootertab="true" bindtap='toggleBgMusic'>
+  </button>
+  <audio wx:if="{{item.data.music}}" src="{{userImagePath+item.data.music}}" id="bgMusic" loop></audio>
+</template>
+
+
+<!-- 公告组件 -->
+<template name="announceWidget">
+  <view style="height: {{(item.data.height||25)}}px;line-height: {{(item.data.height||25)}}px;border-style:{{item.data.border_style||'none'}};border-width:{{item.data.border_width||0}}px;border-color:{{item.data.border_color}};position:relative;z-index:1;box-shadow:{{item.data.box_shadow?((item.data.box_shadow_x||0) + 'px ' + (item.data.box_shadow_y||0) + 'px ' + (item.data.box_shadow_blur||0) + 'px ' + (item.data.box_shadow_color||'#000')):'none'}};background-color:{{item.data.bg_color}};margin-top:{{item.data.margin_top||0}}px;margin-bottom:{{item.data.margin_bottom||0}}px;"
+    class="announce">
+    <view wx:if="{{!item.data.direction || item.data.direction=='h'}}" class="announce-mode">
+      <view class="ico-moon icon-announce{{item.data.icon_style||1}} announce-icon" style="color:{{item.data.mark_color?item.data.mark_color:'#FF0000'}};font-size:{{item.data.font_size?item.data.font_size:'12'}}px;"></view>
+      <view class="scroll-box">
+        <view wx:if="{{!item.data.speed || item.data.speed == 'k'}}" class="scroll-content0" style="animation: scroll 16s linear infinite;">
+          <navigator wx:for="{{item.data.list}}" target="{{announce.target}}" data-path="{{announce.page_path}}" app-id="{{announce.link_appid}}" wx:for-item="announce" wx:key="index" class="announce-content" style="color:{{item.data.font_color?item.data.font_color:'#666'}};font-size:{{item.data.font_size?item.data.font_size:'12'}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}};margin-left:200px"
+            bindtap="onNavTab" data-url="{{m1.getLink(announce)}}" url="{{m1.getLink(announce)}}">
+            {{announce.title||"公告内容"}}
+          </navigator>
+        </view>
+        <view wx:if="{{item.data.speed == 'z'}}" class="scroll-content0" style="animation: scroll 32s linear infinite;">
+          <navigator wx:for="{{item.data.list}}" target="{{announce.target}}" data-path="{{announce.page_path}}" app-id="{{announce.link_appid}}" wx:for-item="announce" wx:key="index" class="announce-content" style="color:{{item.data.font_color?item.data.font_color:'#666'}};font-size:{{item.data.font_size?item.data.font_size:'12'}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}};margin-left:200px"
+            bindtap="onNavTab" data-url="{{m1.getLink(announce)}}" url="{{m1.getLink(announce)}}">
+            {{announce.title||"公告内容"}}
+          </navigator>
+        </view>
+        <view wx:if="{{item.data.speed == 'm'}}" class="scroll-content0" style="animation: scroll 48s linear infinite;">
+          <navigator wx:for="{{item.data.list}}" target="{{announce.target}}" data-path="{{announce.page_path}}" app-id="{{announce.link_appid}}" wx:for-item="announce" wx:key="index" class="announce-content" style="color:{{item.data.font_color?item.data.font_color:'#666'}};font-size:{{item.data.font_size?item.data.font_size:'12'}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}};margin-left:200px"
+            bindtap="onNavTab" data-url="{{m1.getLink(announce)}}" url="{{m1.getLink(announce)}}">
+            {{announce.title||"公告内容"}}
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="announce-mode announce-mode1">
+      <view class="ico-moon icon-announce{{item.data.icon_style||1}} announce-icon" style="color:{{item.data.mark_color?item.data.mark_color:'#FF0000'}};font-size:{{item.data.font_size?item.data.font_size:'12'}}px;"></view>
+      <view style="top:{{item.data.marginTop}}px" class="scroll-box">
+        <navigator class="scroll-content1" target="{{announce.target}}" data-path="{{announce.page_path}}" app-id="{{announce.link_appid}}" style="max-width: 750rpx;color:{{item.data.font_color?item.data.font_color:'#666'}};font-size:{{item.data.font_size?item.data.font_size:'12'}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}}"
+          wx:for="{{item.data.list}}" wx:for-item="announce" wx:key="index" bindtap="onNavTab" data-url="{{m1.getLink(announce)}}" url="{{m1.getLink(announce)}}">
+          {{announce.title||"公告内容"}}
+        </navigator>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 自由组件 -->
+
+<template name="freeWidget">
+  <view class="freeWidgetWrap" style="height:{{item.data.calHeight}}px;background-color:{{item.data.bgColor}};background-image:url({{item.data.img ? userImagePath + item.data.img : ''}});background-repeat:no-repeat;background-size:100% 100%;">
+    <view class="freeItem" wx:for="{{item.data.widgets}}" wx:for-item="fw" wx:key="index" style="left:{{fw.data.leltp}}%;top:{{mTool.getTopPVal(fw.data.top, item.data.height)}}%;">
+      <block wx:if="{{fw.item_type == 'textWidget'}}">
+        <navigator class="commonNavigator textWidget" target="{{fw.data.target}}" data-path="{{fw.data.page_path}}" app-id="{{fw.data.link_appid}}" data-url="{{fw.data.url}}" bindtap='onNavTab' url="{{fw.data.url}}">
+          <text data-url="{{fw.data.url}}" data-txt="{{fw.data.text}}" bindlongpress="longCopy" class="textWidget" url="{{fw.data.url}}" style="word-break: break-all;width:{{fw.data.calWidth}}px;color:{{fw.data.fontColor}};font-size:{{fw.data.fontSize}}px;background-color:{{fw.data.bgColor}};box-shadow:{{fw.data.box_shadow?((fw.data.box_shadow_x||0) + 'px ' + (fw.data.box_shadow_y||0) + 'px ' + (fw.data.box_shadow_blur||0) + 'px ' + (fw.data.box_shadow_color||'#000')):'none'}};font-weight:{{fw.data.font_bold?'bold':'normal'}};opacity:{{isNaN(fw.data.opacity)?1:fw.data.opacity/100}}; font-style:{{fw.data.font_italic?'italic':'normal'}};text-decoration:{{fw.data.font_underline?'underline':'none'}};border-style:{{fw.data.border_style||'none'}};border-width:{{fw.data.border_width||0}}px;border-color:{{fw.data.border_color}};">{{fw.data.text}}</text>
+        </navigator>
+      </block>
+      <block wx:elif="{{fw.item_type == 'imgWidget'}}">
+        <navigator class="commonNavigator btnWidget" target="{{fw.data.target}}" data-path="{{fw.data.page_path}}" app-id="{{fw.data.link_appid}}" data-url="{{fw.data.url}}" bindtap='{{fw.data.tap_event==1?"handleQrcImg":"onNavTab"}}' url="{{fw.data.url}}" data-img="{{fw.data.img ? userImagePath + fw.data.img : staticResPath + 'image/admin/workbench/imgw.png' }}">
+          <image data-url="{{fw.data.url}}" data-isbtn="true" style="width:{{fw.data.calWidth}}px;height:{{fw.data.calHeight}}px;box-shadow:{{fw.data.box_shadow?((fw.data.box_shadow_x||0) + 'px ' + (fw.data.box_shadow_y||0) + 'px ' + (fw.data.box_shadow_blur||0) + 'px ' + (fw.data.box_shadow_color||'#000')):'none'}};opacity:{{isNaN(fw.data.opacity)?1:fw.data.opacity/100}};border-radius:{{isNaN(fw.data.border_radius)?0:fw.data.border_radius}}px;"
+            src="{{fw.data.img ? userImagePath + fw.data.img : staticResPath + 'image/admin/workbench/imgw.png' }}"></image>
+        </navigator>
+      </block>
+      <block wx:elif="{{fw.item_type == 'btnWidget'}}">
+        <navigator class="commonNavigator btnWidget" target="{{fw.data.target}}" data-path="{{item.data.page_path}}" data-path="{{fw.data.page_path}}" app-id="{{fw.data.link_appid}}" data-url="{{fw.data.url}}" bindtap='onNavTab' url="{{fw.data.url}}">
+          <button data-url="{{fw.data.url}}" open-type="{{m1.getLink(fw.data)}}" data-isbtn="true" class="buttonWidget" style="line-height:{{fw.data.calHeight}}px;background-color:{{fw.data.bgColor}};color:{{fw.data.fontColor}};font-size:{{fw.data.fontSize}}px;width:{{fw.data.calWidth}}px;height:{{fw.data.calHeight}}px;box-shadow:{{fw.data.box_shadow?((fw.data.box_shadow_x||0) + 'px ' + (fw.data.box_shadow_y||0) + 'px ' + (fw.data.box_shadow_blur||0) + 'px ' + (fw.data.box_shadow_color||'#000')):'none'}};opacity:{{isNaN(fw.data.opacity)?1:fw.data.opacity/100}};border-radius:{{isNaN(fw.data.border_radius)?0:fw.data.border_radius}}px;font-weight:{{fw.data.font_bold?'bold':'normal'}}; font-style:{{fw.data.font_italic?'italic':'normal'}};text-decoration:{{fw.data.font_underline?'underline':'none'}};border-style:{{fw.data.border_style||'none'}};border-width:{{fw.data.border_width||0}}px;border-color:{{fw.data.border_color}};">
+            {{fw.data.text}}
+          </button>
+        </navigator>
+      </block>
+    </view>
+  </view>
+</template>
+
+<!-- 文本信息-->
+<template name="textWidget">
+  <navigator data-url="{{item.data.url}}" target="{{item.data.target}}" url="{{item.data.url}}" data-txt="{{item.data.text}}" bindlongpress="longCopy" data-isbtn="true" bindtap='onNavTab' class='textWidget' style="word-break: break-all;line-height:{{item.data.calHeight}}px;background-color:{{item.data.bgColor}};color:{{item.data.fontColor}};font-size:{{item.data.fontSize}}px;width:{{item.data.calWidth}}px;height:{{item.data.calHeight}}px;box-shadow:{{item.data.box_shadow?((item.data.box_shadow_x||0) + 'px ' + (item.data.box_shadow_y||0) + 'px ' + (item.data.box_shadow_blur||0) + 'px ' + (item.data.box_shadow_color||'#000')):'none'}};opacity:{{isNaN(item.data.opacity)?1:item.data.opacity/100}};border-radius:{{isNaN(item.data.border_radius)?0:item.data.border_radius}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}};border-style:{{item.data.border_style||'none'}};border-width:{{item.data.border_width||0}}px;border-color:{{item.data.border_color}};">
+    {{item.data.text}}
+  </navigator>
+</template>
+<!-- 图片-->
+<template name="imgWidget">
+  <navigator class="commonNavigator imgWidget" target="{{item.data.target}}" data-path="{{item.data.page_path}}" app-id="{{item.data.link_appid}}" data-isbtn="true" bindtap='{{item.data.tap_event==1?"handleQrcImg":"onNavTab"}}' data-url="{{m1.getLink(item.data)}}"
+    style="position:relative;z-index: 2;display:flex;justify-content:center;height:{{item.data.calHeight}}px;" url="blank" data-img="{{item.data.img ? userImagePath + item.data.img : staticResPath + 'image/admin/workbench/imgw.png' }}">
+    <button style="width:{{item.data.calWidth}}px;height:{{item.data.calHeight}}px;box-shadow:{{item.data.box_shadow?((item.data.box_shadow_x||0) + 'px ' + (item.data.box_shadow_y||0) + 'px ' + (item.data.box_shadow_blur||0) + 'px ' + (item.data.box_shadow_color||'#000')):'none'}};"
+      form-type='submit' data-isbtn="true" class='commonNavButton btnWidget'>
+      <image style="width:{{item.data.calWidth}}px;height:{{item.data.calHeight}}px;opacity:{{isNaN(item.data.opacity)?1:item.data.opacity/100}};border-radius:{{isNaN(item.data.border_radius)?0:item.data.border_radius}}px;" src="{{item.data.img ? userImagePath + item.data.img : staticResPath + 'image/admin/workbench/imgw.png' }}"></image>
+    </button>
+  </navigator>
+</template>
+<!-- 优惠券-->
+<template name="couponWidget">
+  <navigator class="commonNavigator imgWidget" target="{{item.data.target}}" data-path="{{item.data.page_path}}" app-id="{{item.data.link_appid}}" data-isbtn="true" bindtap='onNavTab' data-couponid="{{item.data.pageid}}" data-url="{{m1.getLink(item.data)}}"
+    style="height:{{item.data.calHeight}}px;" url="blank" data-img="{{item.data.img ? userImagePath + item.data.img : staticResPath + 'image/admin/workbench/imgw.png' }}">
+    <button form-type='submit' data-isbtn="true" class='commonNavButton btnWidget'>
+      <image style="width:100%;height:100px" src="{{item.data.img ? userImagePath + item.data.img : staticResPath + 'image/admin/workbench/imgw.png' }}"></image>
+    </button>
+  </navigator>
+</template>
+
+<!-- 按钮-->
+<template name="btnWidget">
+  <navigator class="commonNavigator btnWidget" target="{{item.data.target}}" data-path="{{item.data.page_path}}" app-id="{{item.data.link_appid}}" data-url="{{m1.getLink(item.data)}}" bindtap='onNavTab' url="{{m1.getLink(item.data)}}" style="height:{{item.data.calHeight}}px;">
+    <button form-type='submit' open-type="{{m1.getLink(item.data)}}" data-isbtn="true" class='commonNavButton btnWidget'>
+      <!-- <button class="buttonWidget" style="line-height:{{item.data.calHeight}}px;background-color:{{item.data.bgColor}};color:{{item.data.fontColor}};border-radius:{{isNaN(item.data.border_radius)?0:item.data.border_radius}}px;font-size:{{item.data.fontSize}}px;width:{{item.data.calWidth}}px;height:{{item.data.calHeight}}px;">{{item.data.text}}</button>
+          </button> -->
+      <button class="buttonWidget" style="line-height:{{item.data.calHeight}}px;background-color:{{item.data.bgColor}};color:{{item.data.fontColor}};font-size:{{item.data.fontSize}}px;width:{{item.data.calWidth}}px;height:{{item.data.calHeight}}px;box-shadow:{{item.data.box_shadow?((item.data.box_shadow_x||0) + 'px ' + (item.data.box_shadow_y||0) + 'px ' + (item.data.box_shadow_blur||0) + 'px ' + (item.data.box_shadow_color||'#000')):'none'}};opacity:{{isNaN(item.data.opacity)?1:item.data.opacity/100}};border-radius:{{isNaN(item.data.border_radius)?0:item.data.border_radius}}px;font-weight:{{item.data.font_bold?'bold':'normal'}}; font-style:{{item.data.font_italic?'italic':'normal'}};text-decoration:{{item.data.font_underline?'underline':'none'}};border-style:{{item.data.border_style||'none'}};border-width:{{item.data.border_width||0}}px;border-color:{{item.data.border_color}};">
+        {{item.data.text}}
+      </button>
+    </button>
+  </navigator>
+</template>
+
+<!-- 悬浮按钮-->
+<template name="suspendWidget">
+  <navigator class="commonNavigator suspendWidget" target="{{item.data.target}}" data-path="{{item.data.page_path}}" app-id="{{item.data.link_appid}}" data-url="{{m1.getLink(item.data)}}" bindtap='onNavTab' url="{{m1.getLink(item.data)}}">
+    <button form-type='submit' open-type="{{m1.getLink(item.data)}}" data-isbtn="true" class='commonNavButton fixedmenu suspendWidget'>
+      <image style="width:100%;height:100%;border-radius:50%;" src="{{item.data.img ? userImagePath + item.data.img : staticResPath + 'image/admin/workbench/imgw.png' }}"></image>
+    </button>
+  </navigator>
+</template>
+
+<!-- 微信广告组件 -->
+<template name="advertisementWidget">
+  <ad class="advertisement" unit-id="{{item.data.unitId}}"></ad>
+</template>
+<!-- 关注公众号组件 -->
+<template name="officalaccountWidget">
+  <official-account></official-account>
+</template>
+<!-- 秒杀商品-->
+<template name="seckillWidget">
+
+  <view style='background:{{item.data.bgColor}}' class="secAtyIngList secAtyList">
+    <!--秒杀商品列表-->
+    <view style='background:{{item.data.rowBgColor}}' class="seckWidget-wrap">
+      <view class="seckWidget-container">
+        <view style='background:{{item.data.rowBgColor}}' class="secWidgetTop">
+
+          <view>
+            <text style="color:#333;font-size:36rpx;font-weight:bold;margin-left:10rpx;">限时秒杀</text>
+          </view>
+          <navigator url="/pages/sbargain/seckillList" wx:if="{{item.data.content==1}}">
+            <text style="color:#999">查看全部 ></text>
+          </navigator>
+        </view>
+        <view style='background:{{item.data.rowBgColor}}' class="secGoodsItem" wx:for="{{seckList['skillCur_' + widgetIndex]}}" wx:for-item="itemName" wx:key="index">
+
+          <view class="secGoodsInfo">
+            <view class="secLeft">
+
+              <image src="{{m1.specUrl(extConfig,userImagePath,itemName.eo.awardPic)}}" class="commGoodsImg"></image>
+              <!-- {{userImagePath + itemName.eo.awardPic}} -->
+              <view class="countdownWrap">
+                <text wx:if="{{1 == itemName.status && 0 < itemName.totalAwardNum - itemName.sendAwardNum}}">距结束:</text>
+                <text wx:elif="{{0 == itemName.status && 0 == itemName.totalAwardNum - itemName.sendAwardNum}}">距开始:</text>
+                <text>{{countDownList['skillCur_' + widgetIndex][index].atyTimeShutDown.timerDay1}}:</text>
+                <text>{{countDownList['skillCur_' + widgetIndex][index].atyTimeShutDown.timerHour1}}:</text>
+                <text>{{countDownList['skillCur_' + widgetIndex][index].atyTimeShutDown.timerMinute1}}:</text>
+                <text>{{countDownList['skillCur_' + widgetIndex][index].atyTimeShutDown.timerSecond1}}</text>
+              </view>
+            </view>
+            <view class="secRight">
+              <view style='color:{{item.data.fontColor}};font-size:{{item.data.fontSize}}px' class="secGoodsName">{{itemName.activityName}}</view>
+              <view class="secprice-wrap">
+                <text>秒杀价:</text>
+                <text style="color:#F44;font-weight:bold;">{{app.globalData.currencySymbol}}</text>
+                <text class="secPrice">{{mTool.fToY(itemName.eo.activityPrice)}}</text>
+              </view>
+              <text class="originalPrice">{{app.globalData.currencySymbol}}{{mTool.fToY(itemName.eo.originalPrice)}}</text>
+              <view class="rBottom">
+                <view>
+                  <view class="barWrap">
+                    <view class="bar" style="width:{{0 == itemName.totalAwardNum ? 0 : (itemName.totalAwardNum - itemName.sendAwardNum)/itemName.totalAwardNum *100}}%;"></view>
+                  </view>
+                  <text class="leftNum">剩余：{{itemName.totalAwardNum - itemName.sendAwardNum}}</text>
+                </view>
+                <navigator class="secBtn" wx:if="{{1 == itemName.status && 0 < itemName.totalAwardNum - itemName.sendAwardNum}}" url="/pages/sbargain/seckillGoods?id={{itemName.id}}">立即秒杀
+                </navigator>
+                <navigator style="background: #999999" class="secBtn" url="/pages/sbargain/seckillGoods?id={{itemName.id}}" wx:elif="{{0 == itemName.status && 0 == itemName.totalAwardNum - itemName.sendAwardNum}}">
+                  即将开始
+                </navigator>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+  <view wx-if="{{(item.data.content==1 && 0 == seckList['skillCur_' + widgetIndex].length) || (item.data.content==0 && 0 == item.data.list.length)}}" class="noMore">没有更多数据了~
+  </view>
+</template>
+<template name="liveplayerWidget">
+  <view class="liveplayer-container">
+    <view class="live-list live-list{{item.data.list_style}}">
+      <view class="live{{item.data.list_style}}" wx:for-item="itemName" wx:for="{{liveplayer['list'+kill_index]}}" wx:key="index">
+        <navigator url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{itemName.roomId}}" class="live-container" style="background:url({{item.data.list_style == 1 ? itemName.anchorImg : itemName.coverImg}});background-size:cover">
+          <view class="status status-{{itemName.liveStatus}}">
+            <view class="small-circle"></view>
+            {{liveStatus[itemName.liveStatus]}}
+             <view wx:if="{{itemName.liveStatus == 102}}" class="liver-time">{{mTool.filterTime(itemName.startTime)}}</view>
+
+          </view>
+
+          <view class="live-anchor">
+            <!-- <image class="anchor-img" src="{{itemName.anchorImg}}"></image> -->
+            <text class="anchor-name">主播：{{itemName.anchorName}}</text>
+          </view>
+
+        </navigator>
+        <view class="live-title">
+          <view class="live-title-txt"><text class="txt{{item.data.list_style}}">{{itemName.name}}</text><subscribe wx:if="{{itemName.liveStatus == 102}}" room-id="{{itemName.roomId}}"></subscribe></view>
+          <view class="live-goods-info" wx:if="{{itemName.goodsList.length>0}}">
+             <view class="live-goods-img"><image class="live-goods-img" src="{{itemName.goodsList[0].goodsImg}}"></image></view>
+
+             <view>
+                <view class="live-goods-title{{item.data.list_style}}">{{itemName.goodsList[0].goodsName}}</view>
+                <view class="live-goods-price">{{app.globalData.currencySymbol}}{{itemName.goodsList[0].goodsPrice/100}}</view>
+             </view>
+
+          </view>
+
+        </view>
+      </view>
+
+
+
+    </view>
+
+  </view>
+</template>
+<!-- 底部菜单 [footer.wxml另作处理]-->
+<template name="bottomMenusWidget">
+
+</template>
+<!-- microBottomMenusWidget菜单 [footer.wxml另作处理]-->
+<template name="microBottomMenusWidget">
+
+</template>
+<template name="giftcardList">
+  <view style="background:#f5f6f7">
+    <view class="giftcard-list">
+      <navigator url="/pages/giftcard/giftcardDetail?id={{giftItem.id}}"  data-url="/pages/giftcard/giftcardDetail?id={{giftItem.id}}" class="gift-card" wx:for="{{item.data.list}}" wx:for-item="giftItem" wx:key="index">
+        <view class="main_info">
+          <image src="{{giftItem.img}}"></image>
+          <view class="gift-title">{{giftItem.name}}</view>
+          <view class="gift-money main-color" style="{{app.globalData.customStyleColor}}"><text wx:if="{{giftItem.scenetype == 2}}">市场价:</text> {{app.globalData.currencySymbol}}{{m1.getFixedMoney(giftItem.price)}}</view>
+
+        </view>
+
+      </navigator>
+    </view>
+  </view>
+
+</template>

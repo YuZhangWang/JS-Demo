@@ -1,0 +1,104 @@
+<!--search.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+  if (typeof(money) !== "undefined") {
+  return Number(money / 100).toFixed(2);
+  } else {
+  return 0;
+  }
+  }
+    var getCornerMarker=function(item,type){
+
+    }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getCornerMarker = getCornerMarker;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view style="background:#f5f6f7" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view style="background:#fff" class="container">
+  <view style="background-color: #fff;overflow:hidden;">
+    <view class="search-cont" style='padding:20rpx 20rpx 0 20rpx;'>
+      <view class="search-input-cont">
+        <view bindtap="handleSearchTap" data-searchtype="{{item.searchType}}" class="search-btn">
+          <image class="search_icon" src="{{staticResPath}}/image/mobile/icon-sousuo.png"></image>
+        </view>
+      <input type="text" value="{{keyword}}" placeholder="商品搜索：请输入商品关键字" confirm-type="前往" bindinput="handleSearchInput" bindconfirm="search" class="search-input" />
+      </view>
+      <view class="search-btn-main" bindtap="search">搜索</view>
+    </view>
+
+    <!-- <view class="selAddr" >
+        <span style="color:#909090;" id="showCityPicker3" bindtap="selectDistrict">请选择地区></span>
+        <view class="addrWrap" wx:if="{{areaInfo}}">{{areaInfo}} <span class="closeAddr" bindtap="clearAddr">×</span></view>
+    </view> -->
+      <view class="multShopCont" id="showCityPicker3" bindtap="selectDistrict" wx:if="{{showAddress}}">
+
+        <view class="multAroundAddr">
+          <view class="leftBlock">
+            <image class="dwIco" src="{{staticResPath}}/youdian/image/mobile/dzico1.png"></image>
+            <text class="detailAddr">当前：{{areaInfo}}</text>
+            <!-- <view class="addrWrap" wx:if="{{areaInfo}}">{{areaInfo}} <span class="closeAddr" bindtap="clearAddr">×</span></view> -->
+          </view>
+          <view class="arrow" style=" background-image:url({{staticResPath}}/youdian/image/mobile/arrow1.png);"></view>
+        </view>
+      </view>
+  </view>
+  <include src="../template/sortLine.wxml"/>
+  <block wx:if="{{isComplete}}">
+    <view class="empty-tips" wx:if="{{goodsList.length == 0}}">
+      暂时没有商品记录
+    </view>
+  </block>
+
+  <block wx:if="{{goodsList.length > 0}}">
+    <view class="goods-list">
+      <view class="goods-item goods-item-3" wx:for="{{goodsList}}" wx:for-item="goods" wx:for-index="goodsIndex" wx:key="goods.id">
+        <view class="goods-link" bindtap='toGoodDetail' data-gid="{{goods.id}}" data-gtype="{{goods.goodsType}}">
+          <view class="photo-block" style="position: relative">
+            <!-- 商品角标 -->
+            <text wx:if="{{goods.cornerMarker.isSwitch}}" class="goods-corner-mark mark-position{{goods.cornerMarker.position}}" style="background: {{goods.cornerMarker.color}};">{{goods.cornerMarker.content}}</text>
+            <image src="{{mTool.specUrl(extConfig,userImagePath,goods.goodsCover)}}"></image>
+            <!-- {{userImagePath+goods.goodsCover}} -->
+          </view>
+          <view class="info">
+            <text class="goods-title">{{goods.name}}</text>
+            <view class="countNum">
+              <text class="goods-price main-color" style="{{app.globalData.customStyleColor}}" wx:if="{{false == isGoodsInteral}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.price)}} <text style="color:#aeaeae;font-size:24rpx;text-decoration:line-through;margin-left:15rpx;" wx:if="{{goods.originalPrice !=0}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.originalPrice)}}</text></text>
+              <text class="goods-price main-color" style="{{app.globalData.customStyleColor}}" wx:elif="{{true == isGoodsInteral}}">{{goods.price}} 积分</text>
+              <text class="sales-volume">销量：{{goods.payedCount+goods.virtualPayedCount}}</text>
+            </view>
+            <view class="commission">
+              <text class="commission-direct">直接奖励 {{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.directAmount)}}</text>
+              <text class="commission-indirect">间接奖励 {{app.globalData.currencySymbol}}{{m1.getFixedMoney(goods.inderectAmount)}}</text>
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </block>
+</scroll-view>
+<!--<include src="/pages/template/recommendGoods.wxml"/>-->
+<view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">
+  <view class="pickerOp" style="">
+      <text catchtap="cityCancel">取消</text>
+      <text style="" catchtap="citySure">确定</text>
+  </view>
+  <!--"可以显示默认的城市，使用后级联选择城市反应很慢就不使用了-->
+  <picker-view style="width: 100%; height: 380rpx" bindchange="cityChange" value="{{value}}" wx:key="">
+    <picker-view-column>
+      <view wx:for="{{provinces}}" class="picker-item">
+        {{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{citys}}" class="picker-item" wx:key="">
+        {{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{areas}}" class="picker-item" wx:key="">
+        {{item.name}}</view>
+    </picker-view-column>
+  </picker-view>
+</view>
+<include src="/pages/template/copyright.wxml"/>
+</view>

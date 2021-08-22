@@ -1,0 +1,2 @@
+/* pages/groupbuy/groupbuyList.wxss */
+@import "./groupbuy.wxss";

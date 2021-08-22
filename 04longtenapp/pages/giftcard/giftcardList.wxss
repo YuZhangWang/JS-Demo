@@ -1,0 +1,11 @@
+/* pages/giftcard//giftcardList.wxss */
+/* pages/coupon/coupon.wxss */
+page{
+  background-color: #f5f7f7;
+}
+.no-data-show{
+    padding: 40rpx;
+    text-align: center;
+}
+
+

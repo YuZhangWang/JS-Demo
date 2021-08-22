@@ -1,0 +1,41 @@
+<!--pages/offline/pay.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="container">
+  <block wx:if="{{applyResult=='success'}}">
+  <view class="header">
+    <icon type="success" size="90" color="#04BE02"/>
+    <view style='color:#04BE02;'>提交成功,等待商家审批</view>
+    <view class="detail-msg">
+      <view style='text-align:center;margin:10rpx auto 0;font-size:28rpx;color:#999;'>
+        我们会尽快安排审批,通过后即可访问小程序哟~
+      </view>
+    </view>
+  </view>
+  </block>
+  <block wx:elif="{{applyResult=='fail'}}">
+  <view class="header">
+    <icon type="warn" size="90"/>
+    <view style='font-size:46rpx;'>很抱歉,你未符合商家准入条件</view>
+  </view>
+
+  <view class="zan-btns">
+      <navigator class="zan-btn" url='apply'>再次申请</navigator>
+   </view>
+
+  </block>
+  
+</view>
+<view wx:if="{{uid==37774}}" style='color:#999;font-size:26rpx;padding:0 30rpx;'>请先验证店铺负责人手机，我们将在1-3个工作日内为您开通账户，如需立即审核请联系管理员13380351806</view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

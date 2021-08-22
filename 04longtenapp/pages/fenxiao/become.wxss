@@ -1,0 +1,193 @@
+/* pages/fenxiao/become.wxss */
+.applyPage{
+  background: #F0EFF4;
+}
+.applyPageInfo{
+  background: #fff;
+}
+.topBannerWrap{
+  height: 320rpx;
+  margin-bottom: 20rpx;
+}
+.topBanner{
+  width: 100%;
+  height: 320rpx;
+}
+.rowComm{
+  display: flex;
+  border-bottom: 1px solid #F3F3F3;
+  min-height: 100rpx;
+  margin: 0 20rpx;
+  align-items: center;
+}
+.rowComm .rowCommTxt{
+  width: 180rpx;
+}
+.rowComm .rowCommData{
+  width: 80%;
+}
+.rowComm .rowCommData input{
+  width: 100%;
+}
+.btnBecome{
+  background: #FF4544;
+  margin: 20rpx 20rpx;
+  color: #fff;
+  padding: 10rpx 0;
+}
+.agreeCnt{
+  zoom: 70%;
+}
+.agreeIco{
+  font-size: 38rpx;
+  /* height: 50rpx;
+  line-height: 50rpx; */
+  padding-right: 10rpx;
+  /* padding-top: 5rpx;  */
+}
+.privilege{
+  background: #fff;
+}
+.alreadyApply, .applyIng, .applyFail{
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20rpx;
+  height: 400rpx;
+  color: #727272;
+}
+.alreadyApply >image{
+ width: 100rpx;
+ height: 100rpx;
+ margin-bottom: 20rpx;
+
+}
+.applyIng  >image{
+  width: 194rpx;
+  height: 146rpx;
+  margin-bottom: 20rpx;
+}
+.applyFail{
+  padding: 0 30rpx;
+}
+.applyFail .applyTips{
+ font-weight: bold;
+ margin-bottom: 20rpx;
+}
+.ico{
+  width:80rpx;
+  height: 80rpx;
+  margin-right: 10rpx;
+}
+
+.mPopup{
+  /* display: none; */
+  z-index: 100;
+  position:fixed;
+  background-color:rgba(0, 0, 0,.5);
+  width:100%;
+  height:100%;
+  top:50%;
+  left:50%;
+  transform:translate3d(-50%,-50%,0);
+  transition:.2s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mPopupContainer{
+  background: #fff;
+  width: 90%;
+  border-radius: 10rpx;
+  
+  padding: 20rpx 40rpx;
+  box-sizing: border-box;
+  
+}
+.mPopupContainer>text{
+  font-size: 30rpx;
+}
+.reviewSign{
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+}
+.reviewTips{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-bottom:20rpx solid #F0EFF4;
+  
+}
+.reviewText{
+  margin-top: 25rpx;
+  color: 	#B0B0B0;
+  margin-bottom: 30rpx;
+}
+.bold{
+  font-weight: bold;
+}
+.reApply{
+  color: #1C86EE;
+  margin-bottom: 60rpx;
+}
+.remark{
+  width: 70%;
+  color: 	#B0B0B0;
+  text-align: left;
+}
+.uploadImg{
+    text-align:center;
+    line-height:72px;
+    color:100rpx;
+    font-size:60px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:url("http://res.xcx.weijuju.com/image/mobile/forum/upload.png");
+    background-size:100% auto;
+    height:100rpx;
+    width:100rpx;
+    margin:10rpx;
+
+
+}
+.becomeImg-item{
+  float:left;
+  width:70px;
+  height:70px;
+  position:relative;
+}
+.becomeImg{
+  width:60px;
+  height:60px;
+  margin-top:10px;
+}
+.becomeImg-item-delete{
+  display:block;
+  width:18px;
+  height:18px;
+  text-align:center;
+  line-height:16px;
+  font-size:14px;
+  color:#fff;
+  border:1px solid #fff;
+  border-radius:11px;
+  background-color:#6d695d;
+  position:absolute;
+  top:5px;
+  right:5px;
+}
+
+
+.custImg{
+  width: 100%;
+}
+

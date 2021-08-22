@@ -1,0 +1,67 @@
+/* pages/verify/bind.wxss */
+.zan-panel{
+  border: 0;
+}
+.header{
+  text-align: center;
+  margin-top: 20px;
+}
+.header .logo_img{
+  width: 80px;
+  height: 80px;
+  display: blcok;
+  margin: 0 auto 10px;
+}
+.header .p_txt{
+  font-size: 32rpx;
+  line-height:60rpx;
+}
+
+.center{
+  margin:  150rpx auto 0;
+}
+.center .form_panel{
+  width: 630rpx;
+  border: 1px solid #bfbfbf;
+  margin: 0 auto;
+  padding: 0 10rpx;
+}
+
+.form_panel .field{
+  display: flex;
+  border-bottom: 1px solid #bfbfbf;
+  background: #fff;
+  align-items: center;
+  padding: 10rpx 0;
+}
+.field .icon{
+  flex: 0 0 60rpx;
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.field .icon>image{
+  width: 60rpx;
+  height: 60rpx;
+}
+.field .icon>image.icon-user{
+  width: 50rpx;
+  height: 50rpx;
+}
+.field .zan-field__input{
+  flex: 1;
+}
+.form_disabled,.form_disabled .field, .form_disabled input{
+  background: #e0e0e0;
+}
+.bottom{
+  margin-top:10px;
+}
+.bottom .tips{
+  color:#c0c0c0;margin-top:10px;font-size:24rpx;text-align:center;
+}

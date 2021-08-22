@@ -1,0 +1,138 @@
+/* pages/verify/order_verify.wxss */
+.header{
+  text-align: center;
+  margin-top: 10rpx;
+}
+.header .logo_img{
+  width: 80px;
+  height: 80px;
+  display: blcok;
+  margin: 0 auto 10px;
+}
+.header .p_txt{
+  font-size: 32rpx;
+  line-height:60rpx;
+  color: #04be02;
+  font-weight: bold;
+  margin-top: 8rpx;
+}
+
+.cont_error .header{
+  margin-top: 60rpx;
+}
+.cont_error .header .p_txt{
+  color: #000;
+  margin-top: 20rpx;
+}
+
+.goods_list{
+  padding: 0;
+  border-top:solid 4rpx #eee;
+}
+.record_list{
+  padding: 10rpx 20rpx;
+}
+.coupon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 20rpx;
+  height: 90px;
+  background-color: #fff;
+}
+.coupon .main_info{
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background:-webkit-linear-gradient(0deg, #44b549, #2f9833);
+  flex: 0 0 240rpx;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.coupon.state-2 .main_info{
+ background: #c2c2c2; 
+}
+.coupon.state-3 .main_info{
+ background: #c2c2c2; 
+}
+.zan-loadmore--nomore{
+  margin-top:20px;
+}
+.zan-loadmore--nodata .zan-loadmore__tips {
+  background: transparent;
+}
+.zan-loadmore--nomore .zan-loadmore__tips {
+  background: transparent;
+}
+.main_info .rmb{
+  font-size: 30rpx;
+}
+.main_info .money{
+  line-height: 50rpx;
+  padding-top:40rpx;
+}
+.main_info .money_number{
+  font-size: 80rpx;
+  font-weight: 500;
+}
+.main_info .subtext{
+  font-size: 24rpx;
+  line-height: 54rpx;
+  overflow: hidden;
+  max-width: 90%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.coupon .detail_info{
+  flex: 1 1 auto;
+  justify-content: space-around;
+  padding: 0rpx 20rpx;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+.coupon .detail_info .title{
+  font-size: 28rpx;
+}
+.coupon .detail_info .date{
+  font-size: 24rpx;
+  margin-top: 16px;
+  color: #ccc;
+}
+
+.clerk-detail{
+  margin-top: 10px;
+  padding: 20rpx 60rpx;
+}
+.clerk-detail .field{
+  display: flex;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 26rpx;
+}
+.field .title{
+  flex: 0 0 180rpx;
+  color: #999;
+}
+.field .name{
+  flex: 1;
+}
+
+
+.bottom{
+  margin-top:10px;
+
+}
+
+
+.bottom{
+  margin-top:10px;
+}
+.zan-panel{
+  border: 0;
+}
+

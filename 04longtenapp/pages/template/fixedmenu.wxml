@@ -1,0 +1,6 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view hidden='{{true}}' wx:if="{{app.globalData.haveShopcart}}" class="fixedcontainer" style="bottom:{{app.globalData.bottomMenus && app.globalData.bottomMenus.isShow?'236rpx':'140rpx'}}!important;{{app.globalData.shopCart && app.globalData.shopCart.img?'background-image:url('+mTool.specUrl(extConfig,userImagePath,app.globalData.shopCart.img)+')':''}}">
+    <button form-type='submit' data-isbtn="true" bindtap='onNavTab' class='commonNavButton fixedshopcar' data-url="/pages/shoppingcar/shoppingcar">
+      <text class="mallgoodicon">{{shoppingCartCount||0}}</text>
+    </button>
+</view>

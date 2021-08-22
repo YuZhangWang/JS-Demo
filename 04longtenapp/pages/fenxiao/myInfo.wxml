@@ -1,0 +1,160 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="topInfoWrap">
+    <image wx:if="{{AuthUserInfo}}" src="{{headPic}}" class="avator"></image>
+    <image bindtap="loginUser" wx:else class="avator" src="{{fxStaticResPath}}/user.png"></image>
+    <view class="info">
+      <view class="infoTop">
+        <view style="color:#2D2D2D;font-size:30rpx;display: {{(gradeFX && AuthUserInfo) ? 'flex':'block'}}" bindtap="{{AuthUserInfo ? '':'loginUser'}}">{{AuthUserInfo ? nickName :'点击登录账户'}}
+          <view class="grade-label" wx:if="{{AuthUserInfo && gradeFX}}">
+                    <view>{{"V"+(distributionLevel ||1)}} {{distributionName}}</view>
+                </view>
+          <!--<text class="" wx:if="{{gradeFX}}">V{{distributionLevel}} {{distributionName}}</text>-->
+          <view wx:if="{{!AuthUserInfo}}" style="color:#B8B8B8;font-size:24rpx;margin-top: 5rpx;">登录后即可进行更多操作</view>
+        </view>
+        <span bindtap="togglePopup" class="helpPop">帮助</span>
+      </view>
+      <view wx:if="{{AuthUserInfo}}" class="joinTime">推荐人：{{upNodeName ? upNodeName : "-"}}</view>
+      <view wx:if="{{AuthUserInfo}}" class="joinTime">加入时间：{{createTime}}</view>
+
+    </view>
+  </view>
+
+
+
+  <view class="awardInfo">
+    <view class="awardItem">
+
+      <navigator url="/pages/fenxiao/myPerformance" class="awardNum">{{mTool.fToY(totalMoney)}}</navigator>
+      <text>累计奖励</text>
+    </view>
+    <view class="awardItem">
+      <navigator url="/pages/fenxiao/myPerformance" class="awardNum">{{mTool.fToY(freezeMoney)}}</navigator>
+      <view class="wrapFreeze">
+        <text>冻结的奖励</text>
+        <image class="questionIco" src="{{staticResPath}}/image/admin/help.png" bindtap="toggleFreezePop"></image>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- 等级分销 -->
+  <block wx:if="{{gradeFX}}">
+    <view class="grade-panel" style="background-image: url('{{fxStaticResPath}}/grade/grade-bg.png');">
+      <block wx:if="{{!isReachMaxVipLevel}}">
+          <view class="grade-left">
+              <view class="text-main">
+                  升级到V{{nextLevel.levelNum}}可获得更多奖励
+              </view>
+              <view class="text-sub">
+                  可享受额外直接奖励{{nextLevel.additionalDirectValue}}%，间接奖励{{nextLevel.additionalIndirectValue}}%
+              </view>
+          </view>
+          <navigator url="/pages/fenxiao/grade?id={{gradeId}}" class="grade-right">
+              去升级
+          </navigator>
+      </block>
+        <block wx:else>
+            <view class="grade-left">
+                <view class="text-main">
+                    你已升级到{{"V"+(distributionLevel ||1)}}
+                </view>
+                <view class="text-sub">
+                    现可享受额外直接奖励{{nextLevel.additionalDirectValue}}%，间接奖励{{nextLevel.additionalIndirectValue}}%
+                </view>
+            </view>
+            <!--<navigator url="/pages/fenxiao/grade?id={{gradeId}}" class="grade-right">-->
+                <!--去升级-->
+            <!--</navigator>-->
+        </block>
+
+    </view>
+    <view class="moneyInfoWrap grade-MoneyInfoWrap">
+      <view class="moneyInfo">
+        <view>
+          <view class="descTxt grade-descTxt" style="">可提取</view>
+          <text class="money grade-money" wx:if="{{AuthUserInfo}}">{{app.globalData.currencySymbol}}{{mTool.fToY(enableWithdrawMoney)}}</text>
+          <text class="money" wx:else>{{app.globalData.currencySymbol}}--</text>
+        </view>
+
+        <image src="{{fxStaticResPath}}/grade/extract-btn.png" class="getMoney-img" bindtap="wdDatailPage"></image>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="moneyInfoWrap" style="background-image: url({{fxStaticResPath}}bg.png);">
+
+      <view class="moneyInfo">
+        <view>
+          <view class="descTxt">可提取</view>
+          <text class="money" wx:if="{{AuthUserInfo}}">{{app.globalData.currencySymbol}}{{mTool.fToY(enableWithdrawMoney)}}</text>
+          <text class="money" wx:else>{{app.globalData.currencySymbol}}--</text>
+        </view>
+
+        <button class="getMoney" bindtap="wdDatailPage">提取</button>
+      </view>
+    </view>
+  </block>
+
+  <view class="menus">
+    <navigator class="menusItem" url="/pages/fenxiao/wdDetail">
+      <image mode="aspectFit" src="{{fxStaticResPath}}tiqu2x.png" class="mIco"></image>
+      <text>提取管理</text>
+    </navigator>
+    <navigator class="menusItem" url="/pages/fenxiao/myPerformance">
+      <image mode="aspectFit" src="{{fxStaticResPath}}yeji2x.png" class="mIco"></image>
+      <text>我的业绩</text>
+    </navigator>
+    <navigator class="menusItem" url="/pages/fenxiao/myTeam">
+      <image mode="aspectFit" src="{{fxStaticResPath}}team2x.png" class="mIco"></image>
+      <text>我的团队</text>
+    </navigator>
+  </view>
+  <view class="menus">
+    <navigator class="menusItem" url="/pages/commissionGoods/commissionGoods?keyword=&aId=&aInfo=">
+      <image mode="aspectFit" src="{{fxStaticResPath}}product2x.png" class="mIco"></image>
+      <text>产品</text>
+    </navigator>
+    <navigator class="menusItem" url="/pages/fenxiao/sharePoster">
+      <image mode="aspectFit" src="{{fxStaticResPath}}poster2x.png" class="mIco"></image>
+      <text>海报</text>
+    </navigator>
+    <navigator wx:if="{{showRank}}" class="menusItem" url='/pages/fenxiao/myRank'>
+      <image mode="aspectFit" src="{{fxStaticResPath}}rank2x.png" class="mIco"></image>
+      <text>我的排名</text>
+    </navigator>
+  </view>
+  <view class="menus">
+    <navigator class="menusItem" url="/pages/fenxiao/grade?id={{gradeId}}" wx:if="{{gradeFX}}">
+      <image mode="aspectFit" src="{{fxStaticResPath}}/grade/grade-icon.png" class="mIco"></image>
+      <text>我的等级</text>
+    </navigator>
+    <view bindtap="openMsgNotice" class="menusItem">
+      <image mode="aspectFit" src="{{fxStaticResPath}}notice2x.png" class="mIco"></image>
+      <text>消息提醒</text>
+    </view>
+    <navigator class="menusItem" url="/pages/index/index">
+      <image mode="aspectFit" src="{{fxStaticResPath}}home2x.png" class="mIco"></image>
+      <text>返回店铺</text>
+    </navigator>
+
+  </view>
+
+</view>
+<view class="mPopup" bindtap="togglePopup" hidden="{{!showPopup}}">
+  <view class="mPopupContainer" wx:if="{{pageConfig}}">
+    <rich-text class="fxHelp" nodes="{{pageConfig.fxHelp}}"></rich-text>
+  </view>
+  <view class="mPopupContainer" wx:else>
+    <view>如何获得奖励？</view>
+    <view>将商品海报/链接、个人海报或店铺给小伙伴，小伙伴访问小程序自动成为你队员，小伙伴购买商品你就有机会获得惊喜哦；</view>
+  </view>
+</view>
+<view class="mPopup" bindtap="toggleFreezePop" hidden="{{!freezePop}}">
+  <view class="mPopupContainer">
+    <view class="mPopupTitle">提示</view>
+    <view>您的小伙伴订单未确认收到前，系统将冻结您从未完成的订单获得的奖励，期间产生退款则扣除冻结奖励，订单交易完成，则解冻奖励转入可提取金额。</view>
+    <view style="color:#E85436;">注：单笔订单最多冻结10天，10天内未产生退款自动解冻</view>
+  </view>
+</view>
+<include src="/pages/template/authModal.wxml" />

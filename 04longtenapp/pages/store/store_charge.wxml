@@ -1,0 +1,41 @@
+<!--pages/store/store_charge.wxml-->
+<wxs module="m1">
+    var switchMoney = function(item) {
+    var switchOn = item.switchOn;
+    return (switchOn & Math.pow(2, 0)) != 0;
+    }
+    var switchCard = function(item) {
+    var switchOn = item.switchOn;
+    return (switchOn & Math.pow(2, 1)) != 0;
+    }
+    module.exports.switchMoney = switchMoney;
+    module.exports.switchCard = switchCard;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="tools"/>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}" style="display: flex;flex-direction: column;padding: 0 20rpx 15rpx;">
+    <view class="item_list" style="height: 72%;overflow: auto;">
+        <view class="item {{item.id==selectedItem.id?'selected main-color-bg':'main-color'}}"
+              style="{{item.id==selectedItem.id ? app.globalData.customStyleBg:app.globalData.customStyleColor}}" wx:for="{{itemList}}"
+              wx:for-item="item" wx:key="item.id" bindtap='handleItemTap' data-id="{{item.id}}">
+            <view style="font-size: 40rpx;">{{tools.fToY(item.rechargeCount)}}元</view>
+            <view style="font-size: 26rpx;" wx:if="{{m1.switchMoney(item)}}">赠送{{tools.fToY(item.giftCount)}}元</view>
+            <view style="font-size: 26rpx;" wx:if="{{m1.switchCard(item)}}">赠送“{{item.giftName}}”</view>
+        </view>
+        <view wx:if="{{itemTotal ==  0}}" class="empty_tips">无可用储值项目</view>
+    </view>
+    <view style="flex: 3;padding-left: 19rpx;" wx:if="{{itemList && itemList.length>0}}">
+        <view class="title">储值说明</view>
+        <view class="desc">{{selectedItem.description}}</view>
+    </view>
+    <button wx:if="{{itemTotal>0}}" bindtap='handlePay' style='font-size: 32rpx !important;flex: none;width: 80%;margin: 0 auto;border-radius: 25px;{{app.globalData.customStyleBg}}'
+            class="zan-btn zan-btn--danger main-color-bg primary {{btnLoading?'zan-btn--loading':''}}">
+        {{btnLoading?"":"充值"}}
+    </button>
+    <!--<scroll-view class="wrapper">-->
+        <!--&lt;!&ndash;<view class="title">储值</view>&ndash;&gt;-->
+        <!---->
+        <!---->
+        <!---->
+    <!--</scroll-view>-->
+    <include src="/pages/template/authModal.wxml"/>
+</view>

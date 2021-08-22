@@ -1,0 +1,22 @@
+<!--pages/orderinfo/orderinfosupple.wxml-->
+<import src="../../youzan/dist/switch/index.wxml" />
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}" style="background: #F5F7F6">
+<view class='orderInfoMain' style="background: #fff">
+<view class='header'></view>
+  <block wx:key="index" wx:for="{{orderInfo}}">
+    <view class='orderItem' style="{{item.type!=='txt' && item.type!=='select' && item.type!=='radio' ? 'height:120rpx;':''}}">
+      <text class='orderRele'>{{item.name}}：</text>
+      <view class='orderContent'>
+        <text wx:if="{{item.type=='txt'}}">{{item.value}}</text>
+        <view wx:elif="{{item.type=='select'}}">
+			<text decode="{{true}}" wx:for="{{mTool.splitIndex(item.value)}}" wx:for-item="subItem">{{item.sels[subItem]}}&nbsp;&nbsp;</text>
+		</view>
+        <text wx:elif="{{item.type=='radio'}}">{{item.sels[item.value]}}</text>
+        <image wx:else src='{{userImagePath + item.image}}'></image>
+      </view>
+    </view>
+  </block>
+</view>
+</view>
+<include src="/pages/template/authModal.wxml"/>

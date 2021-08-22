@@ -1,0 +1,10 @@
+<view class="opening_modal" wx:if="{{showOpeningModal}}">
+  <view class="pic_cont">
+    <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+      <button form-type='submit' data-isbtn="true" class="commonNavButton" bindtap='onNavTab' data-url='{{app.globalData.headerData.data.url}}'>
+        <image src='{{mTool.specUrl(extConfig,userImagePath,app.globalData.headerData.data.img,400)}}' mode='aspectFit'></image>
+      </button>
+      <view class="closeBtn" bindtap='closeOpeningModal'></view>
+    </form>
+  </view>
+</view>

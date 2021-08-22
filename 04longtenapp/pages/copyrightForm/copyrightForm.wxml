@@ -1,0 +1,43 @@
+<!--pages/copyrightForm/copyrightForm.wxml-->
+<scroll-view class="container {{contClass}}" style="background:#fff;">
+  <!--轮播广告图-->
+  <view class="header-cont">
+    <swiper class="index-banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" style="height:{{mainBannerHeight||500}}rpx" duration="{{1000}}">
+      <block wx:for="{{app.globalData.copyrightFormConfig.content.bannerList}}" wx:key="index">
+        <swiper-item>
+          <image bindtap="viewImg" data-id="{{index}}" data-type="banner" src="{{item.url}}" bindload="onMainBannerImgLoad" class="slide-image" />
+        </swiper-item>
+
+      </block>
+    </swiper>
+  </view>
+  <!-- 推广来源信息  -->
+  <view class="source-msg">
+    <view>名称：{{app.globalData.copyrightFormConfig.content.name}}</view>
+    <view>电话：{{app.globalData.copyrightFormConfig.content.tel}}</view>
+    <view>地址：{{app.globalData.copyrightFormConfig.content.address}}</view>
+  </view>
+  <view class="contact" bindtap="call" data-tel="{{app.globalData.copyrightFormConfig.content.tel}}">
+    <image style="width:88rpx;height:88rpx;" src="{{staticResPath}}/image/mobile/form_tel.png"></image>
+    <view style="line-height:88rpx;">拨打电话</view>
+  </view>
+  <!-- form -->
+  <view class="form-box">
+    <view class="form-title">请留下电话号码，方便联系您</view>
+    <view class="form-line">
+      <span>姓名</span>
+      <input data-name="name" bindinput="handleInput" placeholder="请输入您的真实姓名"/>
+    </view>
+    <view class="form-line">
+      <span>手机号</span>
+      <input data-name="phone" bindinput="handleInput" placeholder="请输入您的手机号码"/>
+    </view>
+    <view class="form-line">
+      <span>行业</span>
+      <input data-name="business" bindinput="handleInput" placeholder="请输入您所从事的行业"/>
+    </view>
+    <view bindtap="submitForm" class="form-btn">提交</view>
+
+  </view>
+
+</scroll-view>

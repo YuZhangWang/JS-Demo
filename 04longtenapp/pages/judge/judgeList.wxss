@@ -1,0 +1,157 @@
+/* pages/judgeList/judgeList.wxss */
+page{
+  background: #FAF9F9;
+}
+
+.judgeCont {
+  background-color: white;
+  position: relative;
+  border-bottom: 20rpx solid #FAF9F9;
+}
+
+.judgeCont .image {
+  width: 75rpx;
+  height: 75rpx;
+  border: 1rpx solid #ccc;
+  background-size: cover;
+  border-radius: 50%;
+  margin-left: 20rpx;
+  position: relative;
+  top: 20rpx;
+}
+
+.judgeCont .name {
+  font-weight: bold;
+  font-size: 30rpx;
+  position: relative;
+  left: 120rpx;
+  top: -60rpx;
+}
+
+.judgeCont .score {
+  font-size: 24rpx;
+  font-weight: 100;
+  height: 40rpx;
+  border: 1rpx solid dotted;
+  position: relative;
+  top: -65rpx;
+  left: 120rpx;
+}
+
+.judgeCont .score .scoreText {
+  font-size: 35rpx;
+  color: #f44;
+  position: absolute;
+  top: 0rpx;
+  right: 180rpx;
+}
+
+.judgeCont .score .zan-icon-like {
+  color: #f44;
+  font-size: 8px;
+  margin-right: 6px;
+}
+
+.judgeCont .score text {
+  position: absolute;
+  top: 0rpx;
+  right: 50rpx;
+  color: #f44;
+}
+
+.judgeCont .score .judgeIcons {
+  width: 7%;
+  height: 100%;
+  background-size: 42rpx auto;
+  /* background-repeat: no-repeat; */
+  position: absolute;
+  top: 0rpx;
+  left: 100rpx;
+}
+
+.judgeCont .judgeTime {
+  font-size: 24rpx;
+  color: #cdc1c5;
+  height: 40rpx;
+  float: right;
+  position: absolute;
+  right: 20rpx;
+  top: 25rpx;
+}
+
+.judgeCont .judgeList {
+  width: 630rpx;
+  margin-top: -50rpx;
+  margin-left: 120rpx;
+}
+
+.judgeCont .judgeList .jDCont {
+  font-size: 28rpx;
+  margin-right: 20rpx;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.judgeCont .judgeList .judgeImage {
+  position: relative;
+  width: 100%;
+  height: 70%;
+  margin-top: 20rpx;
+}
+
+.judgeCont .judgeList .judgeImage-li {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0rpx;
+  left: 0rpx;
+}
+
+.judgeCont .replyContent {
+  font-size: 28rpx;
+  color:#666666; 
+  position: relative;
+  width: 600rpx;
+  margin-top: 10rpx;
+  margin-left: 120rpx;
+  margin-bottom: 20rpx;
+  border-top: 3rpx solid #FAF9F9;
+  padding-top: 15rpx;
+  word-wrap:break-word;
+  word-break:break-all;
+}
+.judgeCont .replyContent .replyContentHead{
+  color:#FF4444; 
+}
+
+.communityDetail-img {
+  margin-bottom: 20rpx;
+  margin-top: 10px;
+}
+
+.communityDetail-imgli {
+  display: inline-block;
+  width: 185rpx;
+  height: 185rpx;
+  margin: 6rpx;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.communityDetail-imgli-one {
+  width: auto;
+  height: auto;
+}
+
+.communityDetail-imgli-one>image {
+  max-width: 690rpx;
+}
+
+.communityDetail-imgli > image {
+  width: 100%;
+  height: 100%;
+}
+
+.communityDetail-imgli-one>image {
+  max-width: 480rpx;
+}

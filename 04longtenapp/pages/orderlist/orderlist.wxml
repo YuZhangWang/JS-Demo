@@ -1,0 +1,197 @@
+<import src="../template/orderlisttpl.wxml"/>
+<import src="../template/offlineorderlist.wxml"/>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view id="uwrapper" scroll-y="true" style="background: #F5F7F6;height: 100%" bindscrolltolower="scrolltolower">
+	<!-- 内容开始 -->
+	<view class="header">
+        <view class="wxsc-ul nav main-nav" id="main_nav">
+          <view wx:if="{{navDisplay.showCommon}}" class="wxsc-li {{siteType=='dianshang'?'active main-color-bg':''}}" style="{{siteType=='dianshang' ? app.globalData.customStyleBg+'color: #fff !important':''}}" hidden="{{menusSta[0]}}">
+            <view class="wxsc-a" data-type="dianshang" bindtap="handleMainNav">电商</view>
+        </view>
+          <view wx:if="{{navDisplay.showFood}}" class="wxsc-li {{siteType=='waimai'?'active main-color-bg':''}}" style="{{siteType=='waimai'?app.globalData.customStyleBg+'color: #fff !important':''}}" hidden="{{menusSta[1]}}">
+            <view class="wxsc-a" data-type="waimai" bindtap="handleMainNav">外卖</view>
+        </view>
+          <view wx:if="{{navDisplay.showReserve}}" class="wxsc-li {{siteType=='yuyue'?'active main-color-bg':''}}" style="{{siteType=='yuyue'?app.globalData.customStyleBg+'color: #fff !important':''}}"  hidden="{{menusSta[2]}}">
+            <view class="wxsc-a" data-type="yuyue" bindtap="handleMainNav">预约</view>
+        </view>
+          <view wx:if="{{navDisplay.showToStore && !app.globalData.shopuid && !app.globalData.fromuid}}" class="wxsc-li {{siteType=='offline'?'active main-color-bg':''}}" style="{{siteType=='offline'?app.globalData.customStyleBg+'color: #fff !important':''}}" >
+            <view class="wxsc-a" data-type="offline" bindtap="handleMainNav">当面付</view>
+        </view>
+          <view wx:if="{{navDisplay.showActivity && !app.globalData.shopuid && !app.globalData.fromuid}}" class="wxsc-li {{siteType=='activity'?'active main-color-bg':''}}" style="{{siteType=='activity'?app.globalData.customStyleBg+'color: #fff !important':''}}" >
+                    <view class="wxsc-a" data-type="activity" bindtap="handleMainNav">活动</view>
+            <image class="questionIco" src="{{staticResPath}}/image/admin/help.png" bindtap="togglePopup"></image>
+                </view>
+          <view wx:if="{{navDisplay.showIntegral}}" class="wxsc-li {{siteType=='integral' ?'active main-color-bg':''}}" style="{{siteType=='integral'?app.globalData.customStyleBg+'color: #fff !important':''}}" >
+                    <view class="wxsc-a" data-type="integral" bindtap="handleMainNav">积分订单</view>
+                </view>
+          <view wx:if="{{navDisplay.showMultiPer && !app.globalData.shopuid && !app.globalData.fromuid}}" class="wxsc-li {{siteType=='multiplayer' ?'active main-color-bg':''}}" style="{{siteType=='multiplayer'?app.globalData.customStyleBg+'color: #fff !important':''}}" >
+                    <view class="wxsc-a" data-type="multiplayer" bindtap="handleMainNav" hidden="{{menusSta[1]}}">多人点餐</view>
+                </view>
+        </view>
+    <block wx:if="{{siteType=='offline'}}">
+      <view class="wxsc-ul nav  offline_nav" id="nav">
+        <view class="wxsc-li {{!status?'active':''}}">
+          <view class="wxsc-a {{!status?'main-color':''}}" style="{{!status?app.globalData.customStyleColor:''}}" data-status="" bindtap="getOrderList">全部</view>
+        </view>
+        <view class="wxsc-li {{status=='0'?'active':''}}" >
+          <view class="wxsc-a {{status=='0'?'main-color':''}}" style="{{status=='0'?app.globalData.customStyleColor:''}}" data-status="0" bindtap="getOrderList">待支付</view>
+        </view>
+        <view class="wxsc-li {{status=='1'?'active':''}}">
+          <view class="wxsc-a {{status=='1'?'main-color':''}}" style="{{status=='1'?app.globalData.customStyleColor:''}}" data-status="1" bindtap="getOrderList">已完成</view>
+        </view>
+        <view class="wxsc-li {{status=='5'?'active':''}}">
+          <view class="wxsc-a {{status=='5'?'main-color':''}}" style="{{status=='5'?app.globalData.customStyleColor:''}}" data-status="5" bindtap="getOrderList">已关闭</view>
+        </view>
+      </view>
+    </block>
+    <block wx:elif="{{siteType=='dianshang'}}">
+      <view class="wxsc-ul nav" id="nav">
+        <view class="wxsc-li {{!status?'active':''}}">
+          <view class="wxsc-a {{!status?'main-color':''}}" style="{{!status?app.globalData.customStyleColor:''}}" data-status="" bindtap="getOrderList">全部</view>
+        </view>
+        <view class="wxsc-li {{status=='1'?'active':''}}">
+          <view class="wxsc-a {{status=='1'?'main-color':''}}" style="{{status=='1'?app.globalData.customStyleColor:''}}" data-status="1" bindtap="getOrderList">待付款</view>
+        </view>
+        <view class="wxsc-li {{status=='2'?'active':''}}">
+          <view class="wxsc-a {{status=='2'?'main-color':''}}" style="{{status=='2'?app.globalData.customStyleColor:''}}" data-status="2" bindtap="getOrderList">待发货</view>
+        </view>
+        <view class="wxsc-li {{status=='3'?'active':''}}">
+          <view class="wxsc-a {{status=='3'?'main-color':''}}" style="{{status=='3'?app.globalData.customStyleColor:''}}" data-status="3" bindtap="getOrderList">待收货</view>
+        </view>
+        <view class="wxsc-li {{status=='7,8,9'?'active':''}}">
+          <view class="wxsc-a {{status=='7,8,9'?'main-color':''}}" style="{{status=='7,8,9'?app.globalData.customStyleColor:''}}" data-status="7,8,9" bindtap="getOrderList">退款中</view>
+        </view>
+      </view>
+    </block>
+    <block wx:elif="{{siteType=='waimai'}}">
+      <view class="wxsc-ul nav" id="nav" scroll-x="true">
+        <view class="wxsc-li {{!status?'active':''}}">
+          <view class="wxsc-a {{!status?'main-color':''}}" style="{{!status?app.globalData.customStyleColor:''}}" data-status="" bindtap="getOrderList">全部</view>
+        </view>
+        <view class="wxsc-li {{status=='1'?'active':''}}">
+          <view class="wxsc-a {{status=='1'?'main-color':''}}" style="{{status=='1'?app.globalData.customStyleColor:''}}" data-status="1" bindtap="getOrderList">待付款</view>
+        </view>
+        <view class="wxsc-li {{status=='10'?'active':''}}">
+          <view class="wxsc-a {{status=='10'?'main-color':''}}" style="{{status=='10'?app.globalData.customStyleColor:''}}" data-status="10" bindtap="getOrderList">待接单</view>
+        </view>
+        <view class="wxsc-li {{status=='2'?'active':''}}">
+          <view class="wxsc-a {{status=='2'?'main-color':''}}" style="{{status=='2'?app.globalData.customStyleColor:''}}" data-status="2" bindtap="getOrderList">待配送/制作中</view>
+        </view>
+        <view class="wxsc-li {{status=='3'?'active':''}}">
+          <view class="wxsc-a {{status=='3'?'main-color':''}}" style="{{status=='3'?app.globalData.customStyleColor:''}}" data-status="3" bindtap="getOrderList">已配送/制作完成</view>
+        </view>
+        <view class="wxsc-li {{status=='4'?'active':''}}">
+          <view class="wxsc-a {{status=='4'?'main-color':''}}" style="{{status=='4'?app.globalData.customStyleColor:''}}" data-status="4" bindtap="getOrderList">已完成</view>
+        </view>
+        <view class="wxsc-li {{status=='7,8,9'?'active':''}}">
+          <view class="wxsc-a {{status=='7,8,9'?'main-color':''}}" style="{{status=='7,8,9'?app.globalData.customStyleColor:''}}" data-status="7,8,9" bindtap="getOrderList">退款中</view>
+        </view>
+      </view>
+    </block>
+    <block wx:elif="{{siteType=='yuyue'}}">
+      <view class="wxsc-ul nav" id="nav">
+        <view class="wxsc-li {{!status?'active':''}}">
+          <view class="wxsc-a {{!status?'main-color':''}}" style="{{!status?app.globalData.customStyleColor:''}}" data-status="" bindtap="getOrderList">全部</view>
+        </view>
+        <view class="wxsc-li {{status=='1'?'active':''}}">
+          <view class="wxsc-a {{status=='1'?'main-color':''}}" style="{{status=='1'?app.globalData.customStyleColor:''}}" data-status="1" bindtap="getOrderList">待付款</view>
+        </view>
+        <view class="wxsc-li {{status=='2'?'active':''}}">
+          <view class="wxsc-a {{status=='2'?'main-color':''}}" style="{{status=='2'?app.globalData.customStyleColor:''}}" data-status="2" bindtap="getOrderList">待消费</view>
+        </view>
+        <view class="wxsc-li {{status=='3'?'active':''}}">
+          <view class="wxsc-a {{status=='3'?'main-color':''}}" style="{{status=='3'?app.globalData.customStyleColor:''}}" data-status="3" bindtap="getOrderList">待确认</view>
+        </view>
+        <view class="wxsc-li {{status=='7,8,9'?'active':''}}">
+          <view class="wxsc-a {{status=='7,8,9'?'main-color':''}}" style="{{status=='7,8,9'?app.globalData.customStyleColor:''}}" data-status="7,8,9" bindtap="getOrderList">退款中</view>
+        </view>
+      </view>
+    </block>
+    <block wx:elif="{{siteType=='activity'}}">
+      <view class="wxsc-ul nav" id="nav">
+        <view class="wxsc-li {{!status?'active':''}}">
+          <view class="wxsc-a {{!status?'main-color':''}}" style="{{!status?app.globalData.customStyleColor:''}}" data-status="" bindtap="getOrderList">全部</view>
+        </view>
+        <view class="wxsc-li {{status=='1'?'active':''}}">
+          <view class="wxsc-a {{status=='1'?'main-color':''}}" style="{{status=='1'?app.globalData.customStyleColor:''}}" data-status="1" bindtap="getOrderList">待付款</view>
+        </view>
+        <view class="wxsc-li {{status=='2'?'active':''}}">
+          <view class="wxsc-a {{status=='2'?'main-color':''}}" style="{{status=='2'?app.globalData.customStyleColor:''}}" data-status="2" bindtap="getOrderList">待发货</view>
+        </view>
+        <view class="wxsc-li {{status=='3'?'active':''}}">
+          <view class="wxsc-a {{status=='3'?'main-color':''}}" style="{{status=='3'?app.globalData.customStyleColor:''}}" data-status="3" bindtap="getOrderList">待收货</view>
+        </view>
+        <view class="wxsc-li {{status=='7,8,9'?'active':''}}">
+          <view class="wxsc-a {{status=='7,8,9'?'main-color':''}}" style="{{status=='7,8,9'?app.globalData.customStyleColor:''}}" data-status="7,8,9" bindtap="getOrderList">退款中</view>
+        </view>
+      </view>
+    </block>
+    <block wx:elif="{{siteType=='integral'}}">
+      <view class="wxsc-ul nav" id="nav">
+        <view class="wxsc-li {{!status?'active':''}}">
+          <view class="wxsc-a {{!status?'main-color':''}}" style="{{!status?app.globalData.customStyleColor:''}}" data-status="" bindtap="getOrderList">全部</view>
+        </view>
+        <view class="wxsc-li {{status=='1'?'active':''}}">
+          <view class="wxsc-a {{status=='1'?'main-color':''}}" style="{{status=='1'?app.globalData.customStyleColor:''}}" data-status="1" bindtap="getOrderList">待付款</view>
+        </view>
+        <view class="wxsc-li {{status=='2'?'active':''}}">
+          <view class="wxsc-a {{status=='2'?'main-color':''}}" style="{{status=='2'?app.globalData.customStyleColor:''}}" data-status="2" bindtap="getOrderList">待发货</view>
+        </view>
+        <view class="wxsc-li {{status=='3'?'active':''}}">
+          <view class="wxsc-a {{status=='3'?'main-color':''}}" style="{{status=='3'?app.globalData.customStyleColor:''}}" data-status="3" bindtap="getOrderList">待收货</view>
+        </view>
+        <view class="wxsc-li {{status=='7,8,9'?'active':''}}">
+          <view class="wxsc-a {{status=='7,8,9'?'main-color':''}}" style="{{status=='7,8,9'?app.globalData.customStyleColor:''}}" data-status="7,8,9" bindtap="getOrderList">退款中</view>
+        </view>
+      </view>
+    </block>
+      <block wx:if="{{siteType=='multiplayer'}}">
+        <view class="wxsc-ul nav offline_nav" id="nav">
+          <view class="wxsc-li {{!status?'active':''}}">
+            <view class="wxsc-a {{!status?'main-color':''}}" style="{{!status?app.globalData.customStyleColor:''}}" data-status="" bindtap="getOrderList">全部</view>
+          </view>
+          <view class="wxsc-li {{status=='4'?'active':''}}">
+            <view class="wxsc-a {{status=='4'?'main-color':''}}" style="{{status=='4'?app.globalData.customStyleColor:''}}" data-status="4" bindtap="getOrderList">待支付</view>
+          </view>
+          <view class="wxsc-li {{status=='5'?'active':''}}">
+            <view class="wxsc-a {{status=='5'?'main-color':''}}" style="{{status=='5'?app.globalData.customStyleColor:''}}" data-status="5" bindtap="getOrderList">已完成</view>
+          </view>
+          <view class="wxsc-li {{status=='6'?'active':''}}">
+            <view class="wxsc-a {{status=='6'?'main-color':''}}" style="{{status=='6'?app.globalData.customStyleColor:''}}" data-status="6" bindtap="getOrderList">已关闭</view>
+          </view>
+        </view>
+      </block>
+	</view>
+	<view id="order_list_container">
+    <block wx:if="{{siteType=='offline'}}">
+      <template is="offlineOrderListTpl" data="{{app,orderList:orderList,orderListTotal:orderListTotal,staticResPath:staticResPath,userImagePath:userImagePath,siteType:siteType,orderInfoUrl:orderInfoUrl,isOpenComment}}"></template>
+    </block>
+      <block wx:elif="{{siteType=='multiplayer'}}">
+        <template is="multiplayerListTpl" data="{{app,orderList:orderList,orderListTotal:orderListTotal,staticResPath:staticResPath,userImagePath:userImagePath,siteType:siteType,orderInfoUrl:orderInfoUrl,isOpenComment}}"></template>
+      </block>
+    <block wx:else>
+      <template is="orderListTpl" data="{{app,orderList:orderList,goodsList:goodsList,orderListTotal:orderListTotal,staticResPath:staticResPath,userImagePath:userImagePath,siteType:siteType,orderInfoUrl:orderInfoUrl,isOpenComment}}"></template>
+    </block>
+	</view>
+	<!-- 内容结束 -->
+</scroll-view>
+<view class="mPopup" bindtap="togglePopup" hidden="{{!showPopup}}">
+    <view class="mPopupContainer">
+      <view>活动订单：可查看拼团、砍价等营销活动的订单</view>
+    </view>
+</view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>
+<!-- <view class="confirm-dialog" id="confirm_dialog">
+	<view class="confirm-content">
+		<view class="tips-span confirm-dialog-close">×</view>
+		<view class="tips-div"></view>
+		<view class="tips-p"><view class="tips-span">温馨提示：</view>您确认取消订单么？</view>
+	</view>
+	<view class="btn-container tips-ul">
+		<view class="confirm-dialog-close tips-li">取消</view>
+		<view class="confirm-dialog-sure tips-li">确定</view>
+	</view>
+</view>
+<view id="bg_mask" class="maskfadein" style="display: block;"></view> -->

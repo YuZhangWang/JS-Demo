@@ -1,0 +1,43 @@
+<!--pages/queue/queueList.wxml-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view style='margin-bottom: 15rpx;margin-left:15rpx;'>
+    选择排号类型
+  </view>
+  <view class='queueTypeList'>
+    <view class="queueTypeItem queueTypeHeader">
+      <view class='selRow'><view class="zan-icon zan-icon-checked main-color" style='visibility:hidden;{{app.globalData.customStyleColor}}'></view></view>
+      <view class='qtCnt'>类型</view>
+      <view class='qtCnt'>等待数量</view>
+      <view class='qtCnt'>预计等待</view>
+    </view>
+    <view class="queueTypeItem queueTypeBody" bindtap="selectQueue" data-id="{{item.item.id}}" wx:for="{{qTypeList}}">
+      <view class="selRow">
+          <view wx:if="{{item.item.id == selected}}" class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+          <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+      </view>
+      <view class='qtCnt info'>
+        <view>{{item.item.name}}</view>
+        <view class='desc'>{{item.item.description}}</view>
+      </view>
+      <view class='qtCnt'>
+        <text class='waitCount main-color' style="{{app.globalData.customStyleColor}}">{{item.waitCount}}</text> 位
+      </view>
+      <view class='qtCnt'>
+        {{item.fwaitTime}}
+      </view>
+    </view>
+
+
+    <view class="queueTypeItem queueTypeBody passTips">
+      <text style='margin-right:10rpx;'>•</text><text>过号请重新取号</text>
+    </view>
+  </view>
+
+  <view class="botQueueBlock">
+    <form class="botForm">
+      <button bindtap="handleQueue" class="main-color-bg rightNowGet" style="{{app.globalData.customStyleBg}}" wx:if="{{true === isFetch}}">立即取号</button>
+      <button class="stopOnline rightNowGet" wx:elif="{{false === isFetch}}">暂停线上取号</button>
+    </form>
+  </view>
+  <include src="/pages/template/authModal.wxml"/>
+</view>

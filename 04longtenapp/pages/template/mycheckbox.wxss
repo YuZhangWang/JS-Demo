@@ -1,0 +1,23 @@
+/* pages/template/mycheckbox.wxss */
+.cusCheck{
+  display: inline-block;
+  border: 1px solid #D1D1D1;
+  background: #fff;
+  width: 30rpx;
+  height: 30rpx;
+  position: relative;
+}
+.cusChecked{
+  top: 4rpx;
+  left: 11rpx;
+  box-sizing: border-box;
+  width: 10rpx;
+  height: 18rpx;
+  transform: rotate(45deg);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #20BB07;
+  border-top: 0;
+  border-left: 0;
+  position: absolute;
+}

@@ -1,0 +1,60 @@
+/* pages/offline/orderdetail.wxss */
+.header{
+  padding: 10rpx 0 20rpx;
+  text-align: center;
+}
+.header .title{
+  font-size: 36rpx;
+  color: #333333;
+  line-height: 60rpx;
+}
+.header .money{
+  font-size: 72rpx;
+  color: #FE4543;
+}
+.zan-cell-row{
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  padding: 8px 15px;
+}
+.zan-cell-row .zan-cell__bd{
+  margin-bottom: 5px;
+}
+.btn-cont{
+  margin-top: 50rpx;
+  margin-bottom: 18px;
+  text-align: center;
+  padding: 0 8px;
+}
+.zan-cell__bd{
+  font-size: 28rpx;
+  color: #333333;
+}
+.zan-cell__ft{
+  font-size: 28rpx;
+  color: #666666;
+}
+.zan-cell{
+  padding: 20px 15px !important;
+}
+.zan-cell:not(:last-child)::after{
+  border-top: 1rpx solid #F2F2F2;
+}
+.zan-panel{
+  border: none;
+}
+.zan-cell::after{
+  right: 15px;
+}
+.offline-pay{
+  width: 598rpx;
+height: 90rpx;
+line-height: 90rpx;
+border-radius: 50rpx;
+font-size: 30rpx;
+
+}
+/*.zan-cell:last-child:after {*/
+/*  border-top: none !important;*/
+/*}*/

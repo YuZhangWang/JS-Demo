@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "我的礼品卡",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

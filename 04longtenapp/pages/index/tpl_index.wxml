@@ -1,0 +1,43 @@
+<import src="../template/decoration.wxml" />
+<import src="../template/goodsCategoryModal.wxml" />
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+<scroll-view class="container">
+  <block wx:for="{{decoration.items}}" wx:key="idx" wx:for-index="idx">
+    <block wx:if="{{item.item_type == 'nav_tab_panel'}}">
+      <view class="nav-tab-panel-content">
+        <scroll-view class="nav-tab" scroll-x="{{true}}">
+          <button form-type='submit' class="commonNavButton nav-tab-box flex-center {{(navTabPanelData?navTabPanelData['nav-'+idx].selectedIndex:0)==idx_nav?'active-type':''}}" wx:for="{{item.data.list}}" data-idx="{{idx_nav}}" wx:for-index="idx_nav" data-widgetindex="{{idx}}" bindtap="handleNavPanelTabTap" wx:for-item="nav" data-pageid="{{nav.pageid}}" wx:key="index">
+            <view class="nav-tab-item-name">
+              <text class="nav-tab-item-text">{{nav.title}}</text>
+            </view>
+          </button>
+        </scroll-view>
+        <view class="tab-panel-content" style='margin-top:10rpx;' data-widgetindex="{{idx}}">
+          <block wx:for="{{navTabPanelData['nav-'+idx].panelPageData[navTabPanelData['nav-'+idx].selectedIndex].items}}" wx:key="subpage_widgetidx" wx:for-item="subpage_item" wx:for-index="subpage_widgetidx">
+            <template is="{{subpage_item.item_type}}" data="{{app,item:subpage_item,userImagePath:userImagePath,staticResPath:staticResPath,bannerHeight:bannerHeight,multInfoArr:multInfoArr,multInfo:multInfo,multInfoAddr:multInfoAddr,shopUid:app.globalData.shopuid,categoryList:categoryList,widgetIndex:subpage_item.item_type==='seckillWidget' ? subpage_widgetidx : (idx+'_'+navTabPanelData['nav-'+idx].selectedIndex+'_'+subpage_widgetidx),selectedCatData:selectedCatData,communityHandleData:communityHandleData,subClsList:subClsList,selectedSubData:selectedSubData,goodsOrderObj:goodsOrderObj,extConfig:extConfig,app:app,seckList,countDownList,topicArr,categoryArr,locationInfo}}"/>
+          </block>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <template wx:if="{{!mTool.isFixedMenu(item)}}" is="{{item.item_type}}" data="{{app,item:item,userImagePath:userImagePath,staticResPath:staticResPath,bannerHeight:bannerHeight,multInfoArr:multInfoArr,multInfo:multInfo,multInfoAddr:multInfoAddr,shopUid:app.globalData.shopuid,categoryList:categoryList,selectedCatData:selectedCatData,widgetIndex:idx,communityHandleData:communityHandleData,subClsList:subClsList,selectedSubData:selectedSubData,goodsOrderObj:goodsOrderObj,extConfig:extConfig,app:app,seckList,countDownList,playBgMusic,navTabPanelData,shoppingCartCount,topicArr,categoryArr,selectedInfoPageId,selectedInfoPageIdx,infoPageList,animationAddressMenu,addressMenuIsShow,value,provinces,citys,areas,areaInfo,locationInfo}}"/>
+    </block>
+  </block>
+  <include src="../template/footer.wxml"/>
+</scroll-view>
+
+</form>
+<include src="/pages/template/copyright.wxml"/>
+<template is="categoryModalTpl" data="{{app,userImagePath:userImagePath,staticResPath:staticResPath,goodsData:goodsData,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount}}"></template>
+
+<view class="fixedcontainer" style="bottom:{{(microBottomMenu || (app.globalData.bottomMenus && app.globalData.bottomMenus.isShow))?'136rpx':'40rpx'}}!important;">
+<block wx:for="{{decoration.items}}" wx:key="idx" wx:for-index="idx">
+    <template wx:if="{{mTool.isFixedMenu(item)}}" is="{{item.item_type}}" data="{{app,item:item,userImagePath:userImagePath,staticResPath:staticResPath,bannerHeight:bannerHeight,multInfoArr:multInfoArr,multInfo:multInfo,multInfoAddr:multInfoAddr,shopUid:app.globalData.shopuid,categoryList:categoryList,selectedCatData:selectedCatData,widgetIndex:idx,communityHandleData:communityHandleData,subClsList:subClsList,selectedSubData:selectedSubData,goodsOrderObj:goodsOrderObj,extConfig:extConfig,app:app,seckList,countDownList,playBgMusic,navTabPanelData,shoppingCartCount,topicArr,categoryArr,selectedInfoPageId,selectedInfoPageIdx,infoPageList,animationAddressMenu,addressMenuIsShow,value,provinces,citys,areas,areaInfo,locationInfo}}"/>
+</block>
+</view>
+
+<include src="/pages/template/openingModal.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

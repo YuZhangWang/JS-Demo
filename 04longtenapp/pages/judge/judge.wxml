@@ -1,0 +1,60 @@
+<!--pages/judge/judge.wxml-->
+<wxs module="m1">
+  var getScoreText = function(score) {
+    if(score <= 2){
+      return score+"分不满意";
+    } else if(score == 3){
+      return "3分一般";
+    } else if(score == 4){
+      return "4分满意";
+    } else if(score == 5){
+      return "5分很满意";
+    }
+  }
+  module.exports.getScoreText = getScoreText;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="/youzan/dist/toast/index.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view class="wrapper">
+  <view>
+    <navigator class="goods-info" open-type="{{pagesLen>=5?'redirect':'navigate'}}" url="/pages/detail/detail?id={{id}}">
+      <image class="goodsCover" src="{{mTool.specUrl(extConfig,userImagePath,goodsCover)}}"></image>
+      <text class="name">{{goodsName}}</text>
+    </navigator>
+  </view>
+  <view class='perfect'>
+    <text class="p-text"><text class="text-red main-color" style='margin-right:3px;{{app.globalData.customStyleColor}}'>*</text>满意度：</text>
+    <view class="score-icon">
+      <block wx:for="{{[1,2,3,4,5]}}" wx:for-index="idx">
+        <view class="zan-icon zan-icon-like {{score >= idx+1?'main-color':''}}" bindtap='handleScoreTap' data-score="{{idx+1}}" style="color: #CCC;{{score >= idx+1 ? app.globalData.customStyleColor:''}}"></view>
+      </block>
+    </view>
+    <view class="text-red main-color score-text" style="{{app.globalData.customStyleColor}}">{{m1.getScoreText(score)}}</view>
+  </view>
+  <view class='textarea'>
+    <text><text class="text-red main-color" style='margin-right:3px;{{app.globalData.customStyleColor}}'>*</text>评价(100个字以内)：</text>
+    <textarea value='' id="judge" placeholder="请用一段话描述下对商品的评价" maxlength='140' auto-focus='true' bindinput='input'></textarea>
+  </view>
+  <view class="communityPublish-img-wrap">
+      <view class="communityPublish-ul clearfix" id="communityPublish-ul">
+        <view class="communityPublish-item" wx:for="{{uploadImgList}}" wx:for-index="idx" wx:for-item="img">
+            <image mode="aspectFill" src="{{userImagePath+img}}"></image>
+            <view class="communityPublish-item-delete" bindtap='handleDelImg' data-index="{{idx}}">×</view>
+        </view>
+          <view class="communityPublish-item-add" bindtap='handleAddImage' wx:if="{{uploadImgList.length < 6}}">
+            <text class="imgTips">添加图片</text>
+          </view>
+      </view>
+  </view>
+  <view>
+    <button class="submit zan-btn zan-btn--danger {{btnLoading?'zan-btn--loading':'main-color-bg'}}'" style="border:none;{{!btnLoading ? app.globalData.customStyleBg:''}}" bindtap='submit'>提交</button>
+  </view>
+  <view class='integral' wx:if="{{integral}}">
+    <text style="color:#797979;">温馨提示:提交评价可获得\t{{integral}}\t积分,快来发表你的观点吧!</text>
+  </view>
+</scroll-view>
+<template is="zan-toast" data="{{app, zanToast }}"></template>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

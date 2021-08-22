@@ -1,0 +1,79 @@
+<import src="/youzan/dist/toast/index.wxml" />
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<wxs module="pageTools">
+  var refundTo = function(actPrice, desPrice, refund, ratio) {
+    var refundFee;
+    if (parseFloat(refund) < parseFloat(actPrice)) {
+      refundFee = parseFloat(1 + ratio / 100) * actPrice;
+    } else {
+      refundFee = parseFloat(1 + ratio / 100) * actPrice + parseFloat(refund - actPrice);
+    }
+    return refundFee.toFixed(2);
+  }
+  module.exports.refundTo = refundTo;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view id="uwrapper" class="uwrapper">
+    <view class="order-number text-black">
+      <text>订单号<text class="number" id="orderId">{{orderNum}}</text></text>
+    </view>
+    <view class="progress">
+      <view class="status {{status==2?'text-green main-color':'text-black'}}" style="{{status==2 ? app.globalData.customStyleColor: ''}}">待发货</view>
+      <view class="icon-progress" id="icon-progress1">
+        <view class="line-gray"></view>
+      </view>
+      <view class="status {{status==3?'text-green main-color':'text-black'}}" id="progress1" style="{{status==3 ? app.globalData.customStyleColor: ''}}">待收货</view>
+      <view class="icon-progress" id="icon-progress2">
+        <view class="line-gray"></view>
+      </view>
+      <view class="status text-black" id="progress2">签收</view>
+    </view>
+    <view class="remark" style="border-bottom:0;margin-top:15rpx;">注: 确认签收后，商品不再提供无条件退货售后服务！</view>
+    <view class="remark" style="padding-bottom:15rpx;">商家同意后金额原路退还，银行卡预计1~4天到账！</view>
+    <view class="retunInfo" style="padding-bottom:15rpx;" wx:if="{{setConfig.needInfo}}">
+      <view class="infoItem" style="margin-bottom:10rpx;">如需退货，请填写以下退货寄送信息：</view>
+      <view class="infoItem">收件人：{{setConfig.returnName}}</view>
+      <view class="infoItem">联系电话：{{setConfig.returnTel}}</view>
+      <view class="infoItem">收件地址：{{setConfig.returnAddress}}</view>
+    </view>
+    <form bindsubmit="bindFormSubmit">
+      <view class="comment-text rel">
+        <view for="reason-text" class="title text-black" wx:if="{{5 !== orderType}}">
+          <text class="text-red main-color" style="{{app.globalData.customStyleColor}}">* </text>退款金额（最多退款{{app.globalData.currencySymbol}}{{allRefundMoney}}）</view>
+        <view for="reason-text" class="title text-black" wx:elif="{{5 === orderType}}">
+          <text class="text-red main-color" style="{{app.globalData.customStyleColor}}">* </text>退款积分（最多退款 {{allRefundMoney}} 积分）</view>
+        <view class='dataWrap'>
+          <input type='digit' disabled="{{5 == orderType ? true : false}}" bindinput="refundChange" class='refundMoney {{5 == orderType ? "grayBg" : "" }}' name="refundMoney" value='{{refundMoney}}'></input>
+          <button class="btnReAll main-color-bg" bindtap='retAll' style="{{app.globalData.customStyleBg}}">全部</button>
+        </view>
+      </view>
+      <view class="comment-text rel" wx:if="{{5 != orderType && setConfig.isRefundToDeposit}}">
+        <view for="reason-text" class="title text-black">
+          <text class="text-red main-color" style="{{app.globalData.customStyleColor}}">* </text>退款方式</view>
+        <view class='dataWrap'>
+          <radio-group name="refundChannel" class="radio-group" bindchange="refundChannelChange">
+            <label class="radio">
+              <radio color="#FD2A2A" value="1" />原路返回
+              <view class="remark" style="display: inline-block; border-bottom: none;margin-bottom: 2rpx;">商家同意后金额原路退还，银行卡预计1~4天到账</view>
+            </label>
+            <label class="radio">
+              <radio color="#FD2A2A" value="2" />退款到储值金
+              <view wx:if="{{0<setConfig.refundToDepositRatio}}" style="display: inline-block;">(赠{{setConfig.refundToDepositRatio}}%)</view>
+              <view wx:if="{{0<setConfig.refundToDepositRatio}}" class="remark" style="padding-left: 42rpx; text-align: left; border-bottom: none;">商家同意后，实际到账储值金{{app.globalData.currencySymbol}}{{refundWithRatio || pageTools.refundTo(actualPrice, depositPrice, refundMoney, setConfig.refundToDepositRatio)}}</view>
+            </label>
+          </radio-group>
+        </view>
+      </view>
+      <view class="comment-text rel">
+        <view for="reason-text" class="title text-black">
+          <text class="text-red main-color" style="{{app.globalData.customStyleColor}}">* </text>原因</view>
+        <textarea auto-focus name="reasonText" id="reason_text" class="reason-text" cols="15" rows="10" placeholder="请描述下退款原因!" maxlength="300"></textarea>
+        <text class="count text-gray abs" id="count">300字</text>
+      </view>
+      <button form-type="submit" class="btn-submit main-color-bg" style="{{app.globalData.customStyleBg}}" disabled="{{btnLoading}}" id="btn_apply_refund">提交</button>
+    </form>
+  </view>
+  <template is="zan-toast" data="{{app, zanToast }}"></template>
+  <include src="/pages/template/copyright.wxml" />
+  <include src="/pages/template/authModal.wxml" />
+</view>

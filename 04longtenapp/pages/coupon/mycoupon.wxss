@@ -1,0 +1,167 @@
+/* pages/coupon/coupon.wxss */
+page{
+  background-color: #f5f7f7;
+}
+.no-data-show{
+    padding: 40rpx;
+    text-align: center;
+}
+.record_list{
+  padding: 10rpx 20rpx;
+  box-sizing: border-box;
+}
+.coupon-state{
+ 
+  margin: 0 0 20rpx;
+ 
+
+}
+.coupon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200rpx;
+  
+}
+.coupon .main_info{
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  flex: 0 0 250rpx;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+
+}
+.coupon-description{
+  background: #fff;
+  box-shadow: 0px 3px 15px 0px rgba(206,200,225,0.3);
+  padding: 15rpx;
+  font-size:20rpx;
+  font-family:Source Han Sans CN;
+  font-weight:400;
+  color:rgba(188,187,191,1);
+  line-height:44rpx;
+  text-shadow:0px 3px 15px rgba(206,200,225,0.3);
+}
+.coupon.state-2 .main_info{
+ background: #c2c2c2; 
+}
+.coupon.state-3 .main_info{
+ background: #c2c2c2; 
+}
+.zan-loadmore--nomore{
+  margin-top:20px;
+}
+.zan-loadmore--nodata .zan-loadmore__tips {
+  background: transparent;
+}
+.zan-loadmore--nomore .zan-loadmore__tips {
+  background: transparent;
+}
+.main_info .rmb{
+  font-size: 30rpx;
+}
+.main_info .money{
+  line-height: 50rpx;
+  padding-top:40rpx;
+}
+.main_info .money_number{
+  font-size: 80rpx;
+  font-weight: 500;
+}
+.main_info .subtext{
+  font-size: 24rpx;
+  line-height: 54rpx;
+  overflow: hidden;
+  max-width: 90%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.coupon .detail_info{
+  flex: 1 1 auto;
+  padding:0rpx 30rpx;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  background: white;
+  box-sizing: border-box;
+  box-shadow:0px 3px 15px 0px rgba(206,200,225,0.3);
+}
+.coupon .detail_info .title{
+  font-size:32rpx;
+  font-family:Source Han Sans CN;
+  font-weight:500;
+  color:rgba(45,45,45,1);
+  margin-top: 10rpx;
+}
+.coupon .detail_info .date{
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50rpx;
+  margin-top: 20rpx;
+  border-bottom: 1rpx dashed #BCBBBF;
+  padding: 10rpx 0
+
+}
+.coupon .detail_info .date text{
+  font-size:20rpx;
+  font-family:Source Han Sans CN;
+  font-weight:400;
+  color:rgba(188,187,191,1);
+  line-height:44px;
+  text-shadow:0px 3px 15px rgba(206,200,225,0.3);
+}
+.detail_info .date .use-btn{
+  width:120rpx;
+  height:40rpx;
+  border:1rpx solid #eb1f5c;
+  border-radius:19rpx;
+  font-size:22rpx;
+  font-family:Source Han Sans CN;
+  font-weight:400;
+  color:#eb1f5c;
+  text-align: center;
+  line-height: 40rpx;
+
+}
+.coupon-detail{
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 45rpx;
+  
+}
+.coupon-detail text{
+  font-size:20rpx;
+  font-family:Source Han Sans CN;
+  font-weight:400;
+  color:rgba(188,187,191,1);
+  line-height:44px;
+  text-shadow:0px 3px 15px rgba(206,200,225,0.3);
+    
+}
+.coupon-detail .toggle-btn{
+  width:24rpx;
+  height:24rpx;
+  background:rgba(188,187,191,1);
+  border-radius:50%;
+  color: #fff;
+  font-size: 20rpx;
+  text-align: center;
+  line-height: 24rpx;
+}
+.use-status image{
+   width: 80rpx;
+   height: 80rpx;
+   border-radius: 50%;
+   margin-bottom: 30rpx;
+
+}

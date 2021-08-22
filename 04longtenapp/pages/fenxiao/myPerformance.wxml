@@ -1,0 +1,111 @@
+<!--pages/fenxiao/myPerformance.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+
+  var getTypeText = function(type){
+    if(type == 1){
+      return "直接奖励";
+    } else if(type == 2){
+      return "间接奖励";
+    } else if(type == 3){
+      return "订单退货倒扣";
+    } else {
+      return "-";
+    }
+  }
+
+  var getStateText = function(state){
+    if(state == 0){
+      return "冻结中";
+    } else if(state == 1){
+      return "已结算";
+    } else {
+      return "-";
+    }
+  }
+
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getStateText = getStateText;
+  module.exports.getTypeText = getTypeText;
+</wxs>
+<import src="/youzan/dist/tab/index.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view class="wrap" lower-threshold="100" scroll-y="true" style="height: 100%;" bindscrolltolower="handleScrollToLower">
+  <view class="awardInfo">
+   <image class="bg-left" src="{{staticResPath}}/image/mobile/fx/bg-left.png"></image>
+    <view class="awardItem">
+
+      <navigator url="/pages/fenxiao/myPerformance" class="awardNum">{{m1.getFixedMoney(totalMoney)}}</navigator>
+      <text>累计奖励</text>
+    </view>
+    <view class="awardItem">
+      <navigator url="/pages/fenxiao/myPerformance" class="awardNum">{{m1.getFixedMoney(freezeMoney)}}</navigator>
+      <view class="wrapFreeze">
+        <text>冻结的奖励</text>
+        <view class="questionIco" bindtap="toggleFreezePop">?</view>
+      </view>
+
+    </view>
+    <image class="bg-right" src="{{staticResPath}}/image/mobile/fx/bg-right.png"></image>
+
+  </view>
+  <view class="list-panel">
+    <view class="panel-headers">
+      <view wx:for="{{panelTab.list}}" wx:for-item="tab" wx:key="tab.id" wx:for-index="idx" data-index="{{idx}}" style="{{panelTab.selectedId==tab.id?app.globalData.customStyleColor:''}}"  class="panel-header {{panelTab.selectedId==tab.id?'panel-header-active main-color':''}}">
+        <view data-id="{{tab.id}}" bindtap="handlePanelTabChange" class="panel-header-txt">{{tab.title}}
+          <view class="zan-icon zan-icon-question" catchtap='showTips' wx:if="{{tab.id==2}}"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="main">
+      <view class="table">
+        <view class="thead">
+          <view class="row">
+            <view class="td1">来源/单号</view>
+            <view class="td2">状态</view>
+            <view class="td3">收益</view>
+          </view>
+        </view>
+        <view class="tbody">
+          <view class="row tbody-row" wx:for="{{detailList}}" wx:for-item="detail" wx:key="detail.id" data-id='{{detail.id}}' bindtap='orderDetailTap'>
+            <view class="td1">
+              <view>{{detail.fromNickName}}</view>
+              <view class="sub-text">{{m1.getTypeText(detail.type)}}</view>
+            </view>
+            <view class="td2">{{m1.getStateText(detail.state)}}</view>
+            <view class="td3">
+              <view class="main-color money" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(detail.amount)}}</view>
+              <view class="time sub-text">{{detail.createTime}}</view>
+            </view>
+          </view>
+        <view class="nomore" wx:if="{{nomore}}">没有更多了~</view>
+        <view class="nomore" wx:if="{{nodata}}">还没数据哦~</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</scroll-view>
+<view class="mPopup" bindtap="showTips" hidden="{{!freezePop}}">
+    <view class="mPopupContainer">
+      <view class="mPopupTitle">提示</view>
+      <view>您的小伙伴订单未确认收到前，系统将冻结您从未完成的订单获得的奖励，期间产生退款则扣除冻结奖励，订单交易完成，则解冻奖励转入可提取金额。</view>
+      <view style="color:#E85436;">注：单笔订单奖励最多冻结10天，10天内未产生退款自动解冻</view>
+    </view>
+</view>
+<view class="mPopup" bindtap="toggleFreezePop" hidden="{{!freezePop}}">
+  <view class="mPopupContainer">
+    <view class="mPopupTitle">提示</view>
+    <view>您的小伙伴订单未确认收到前，系统将冻结您从未完成的订单获得的奖励，期间产生退款则扣除冻结奖励，订单交易完成，则解冻奖励转入可提取金额。</view>
+    <view style="color:#E85436;">注：单笔订单最多冻结10天，10天内未产生退款自动解冻</view>
+  </view>
+</view>
+<include src="/pages/template/authModal.wxml"/>
+</view>

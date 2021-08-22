@@ -1,0 +1,99 @@
+/* pages/store/mystore.wxss */
+page{
+  background-color: #efefef;
+}
+.zan-loadmore--nomore .zan-loadmore__tips{
+  background: #efefef;
+}
+.zan-loadmore--nodata .zan-loadmore__tips{
+  background: #efefef;
+}
+.header_info{
+  width: 100%;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  color: #fff;
+  background-color: #ff6600;
+}
+
+.header_info .content-panel {
+  background: #fff;
+  padding: 20px 15px;
+  border-radius: 10rpx;
+  position: relative;
+  bottom: -25px;
+  box-shadow: 0 3px 10px #e9e9e9;
+}
+
+.theme-wrapper .footer-panel {
+  background: #F5F7F6;
+  height: 65px;
+  line-height: 92px;
+  padding: 0 40rpx;
+  color: #363A3D;
+  font-size: 30rpx;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-between
+}
+
+.header_info .title{
+  color: #363A3D;
+  font-size: 30rpx;
+  line-height: 50rpx;
+}
+.money_info{
+  display: flex;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  justify-content: space-around;
+  align-items: center;
+}
+.money_info .balance{
+  font-size: 48rpx;
+  flex: 1 1 auto;
+}
+.money_info .charge{
+  font-size: 26rpx;
+  width: 159rpx;
+  height: 49rpx;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  line-height: 52rpx;
+  text-align: center;
+
+}
+
+.record_cont{
+
+}
+.record_cont .record{
+  box-sizing: border-box;
+  display: flex;
+  background-color: #fff;
+  justify-content: space-around;
+  padding: 30rpx 40rpx;
+  border-top: 1px solid #EEF2F0;
+}
+.record_cont .record:first-child{
+  border-top: 0;
+}
+.record_cont .record .name{
+  font-size: 32rpx;
+  flex: 1 1 auto;
+}
+.record_cont .record .info{
+  font-size: 28rpx;
+  flex: 1 1 auto;
+  text-align: right;
+}
+.record .info .amount{
+  line-height: 48rpx;
+  margin-bottom: 14rpx;
+}
+.record .info .datetime{
+  color: #bbb;
+}
+.text-green{
+  color: green;
+}

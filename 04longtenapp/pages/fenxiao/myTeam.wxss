@@ -1,0 +1,172 @@
+/* pages/fenxiao/myTeam.wxss */
+page{
+  background-color:rgba(245, 245, 245, 1);
+  box-sizing: border-box;
+  
+}
+.nomore{ padding: 15px 0; text-align: center; font-size: 12px; color: #949494; }
+.wrap{
+  font-size: 26rpx;
+  background: #f5f6f7;
+}
+.user-img{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: -60rpx;
+  left: 50rpx;
+  border:2px solid #fff;
+
+}
+.rankcontainer{
+  height: 180rpx;
+  width: 100%;
+  box-sizing: border-box;
+  background: #FF585B;
+}
+.rank-usermsg .nickname{
+  margin-left: 180rpx;
+  padding-top: 8px;
+  font-size: 26rpx;
+  color: #333;
+
+}
+.rankwrap{
+  height: 300rpx;
+  background: white;
+  box-shadow: 0 1px 12px #fedbd3;
+  border-radius: 10px;
+  margin-top: -100rpx;
+  margin-left: 10px;
+  margin-right: 10px;
+  position: relative;
+  
+
+}
+
+.team-bg{
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+}
+.header_panel{
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
+.header_panel .sum_info{
+  line-height: 30px;
+  text-align: center;
+  font-size: 28rpx;
+}
+.sum_info_panel{
+  width: 100%;
+  position: relative;
+}
+.sum_info_panel .zan-icon-question{
+  position: absolute;
+  right: 30rpx;
+  top: -16rpx;
+  font-size: 20px;
+  color: #949494;
+}
+.sum_info_panel .sum_info{
+  line-height: 40px;
+}
+.sum_info_panel .sum_info_my{
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+}
+.sum_info_my text{
+  color: #FF585B;
+  font-size: 40rpx;
+}
+.sum_info_panel .sum_info_box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 10px;
+}
+.sum_info_panel .sum_info_box .sum_info{
+  line-height: 30px;
+  font-size: 28rpx;
+  color: #999;
+
+}
+.sum_info text{
+  line-height: 30px;
+  font-size: 28rpx;
+  color: #FF844C;
+
+
+}
+.sum_info_panel .sum_info_box .sum_info:first-child{
+  border-right: 1px solid #eee;
+}
+.sum_info_box .sum_info{
+  flex: 1 1 auto;
+}
+.main_panel{
+  padding: 20rpx;
+  margin-top: 6rpx;
+  background: #f5f6f7;
+}
+.main_panel .item_list{
+  margin: 0;
+}
+.main_panel .item_list .item_box{
+  background: #fff;
+  border-radius: 10px;
+  padding:20rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+
+}
+.item_box .header{
+  flex: 0 0 120rpx;
+  height: 100rpx;
+}
+.item_box .header image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.item_box .subtext{
+  color: #c0c0c0;
+  font-size: 24rpx;
+}
+.item_box .detail_info{
+  flex: 1 1 auto;
+  line-height: 42rpx;
+}
+.item_box .detail_info .nickname{
+  margin-bottom: 10rpx;
+
+}
+.team_sum{
+  font-size: 24rpx;
+  color: #333;
+}
+.item_box .other{
+  flex: 0 0 72px;
+}
+.item_box .other .view_team{
+  font-size: 24rpx;
+  margin-top: 20rpx;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 1px 7px;
+  color: #fff;
+  background:linear-gradient(-90deg,rgba(255,88,91,1) 0%,rgba(255,132,75,1) 97%);
+
+}

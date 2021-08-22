@@ -1,0 +1,762 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/noneAuth.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <canvas style="width:1188rpx;height:1782rpx;position: absolute; top: -1300px;" canvas-id="firstCanvas"></canvas>
+  <view class="sbPage" id="indexPage" style="background: #f4f4f4;" hidden="{{topPageStatus.indexPage}}">
+    <view class="tipTop" hidden="{{userVisit}}">
+      <span>已经有{{(activity.virtualParticipant + activity.activityStatInfo.uv)}}人参加砍价</span>
+    </view>
+    <view class="wrapBanner">
+      <swiper class="swiper" indicator-dots="true" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}" id="indexSlide">
+        <block wx:for="{{indexSlider}}">
+          <swiper-item>
+            <image mode="widthFix" src="{{mTool.specUrl(extConfig,userImagePath,item,480)}}" bindload="onMainBannerImgLoad" class="slide-image" />
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+
+    <view class="goodsList">
+      <!-- goodsItem -->
+      <view class="infoItem" wx:for="{{goodsList}}" data-bargaintype="0" data-goodsid="{{item.id}}" wx:key="index" bindtap="goodsDetailPage">
+        <view class="goodsImg-container">
+          <view class='goodsImg-wrapper'>
+            <image style='width:280rpx;height:280rpx;' src="{{mTool.specUrl(extConfig,userImagePath,item.awardPic)}}"></image>
+            <!-- item.awardPic -->
+          </view>
+        </view>
+        <view class="list--buttons">
+          <span class="list--title list--ellipsis">{{item.awardName}}</span>
+          <span class="list--desc list--ellipsis" wx:if='{{item.detail}}'>{{item.detail}}</span>
+          <view class="list--status">
+            <image class="list--avatar" wx:if="{{item.id%2}}" src="https://yanxuan.nosdn.127.net/78aa67de688926abe351faa50b8f2019.jpg">
+              <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;https://yanxuan.nosdn.127.net/78aa67de688926abe351faa50b8f2019.jpg&quot;);"></div>
+              <virtual></virtual>
+            </image>
+            <image class="list--avatar" src="{{staticResPathBargain}}timg1.jpg">
+              <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}timg1.jpg);"></div>
+              <virtual></virtual>
+            </image>
+
+            <image class="list--avatar" wx:if="{{item.id%2}}" src="https://yanxuan.nosdn.127.net/50b1bcafe1724bc58c32b7f4e2ffbb53.jpg">
+              <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;https://yanxuan.nosdn.127.net/50b1bcafe1724bc58c32b7f4e2ffbb53.jpg&quot;);"></div>
+              <virtual></virtual>
+            </image>
+            <image class="list--avatar" wx:if="{{!item.id%2}}" src="https://yanxuan.nosdn.127.net/ed813d62381f450e020fff31b9f81425.jpg">
+              <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;https://yanxuan.nosdn.127.net/ed813d62381f450e020fff31b9f81425.jpg&quot;);"></div>
+              <virtual></virtual>
+            </image>
+            <view class="list--avatar list--image-ellipsis">
+              <image src="{{staticResPathBargain}}more.png" style='width:38rpx;height:38rpx;'>
+                <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}more.png);"></div>
+                <virtual></virtual>
+              </image>
+            </view>
+            <span class="list--attends">销售量{{item.awardRealNum-item.sendNum+item.awardVirtualNum}}</span>
+          </view>
+          <view class="list--prices">
+            <span wx:if="{{atyIsLive}}" class="list--price list--red">{{app.globalData.currencySymbol}}{{mTool.fToY(item.activityPrice)}}</span>
+            <span wx:if="{{!atyIsLive}}" class="list--price list--gray">{{app.globalData.currencySymbol}}{{mTool.fToY(item.activityPrice)}}</span>
+
+            <span class="list--price list--color999 list--origin-price">原价{{mTool.fToY(item.originalPrice)}}</span>
+          </view>
+
+          <button class="list--bargin" wx:if="{{atyIsLive && item.sendNum > 0}}" data-bargaintype="0" data-goodsid="{{item.id}}" hover-class="deep-red">去砍价
+          </button>
+          <button class="list--bargin1" style="backgroud:#ececec" wx:if="{{!atyIsLive}}" data-bargaintype="0" data-goodsid="{{item.id}}" hover-class="deep-red">已结束
+          </button>
+          <button class="list--bargin1" style="backgroud:#ececec" wx:if="{{ atyIsLive && item.sendNum==0}}" data-bargaintype="0" data-goodsid="{{item.id}}" hover-class="deep-red">已售完
+          </button>
+        </view>
+
+
+      </view>
+      <!-- goodsItem -->
+
+
+      <include src="/pages/template/copyright.wxml" />
+      <view class="" style="height:110rpx;background:#F4F4F4;"></view>
+    </view>
+
+  </view>
+
+  <view class="sbPage" id="detailPage" hidden="{{topPageStatus.detailPage}}">
+    <view class="wrapBanner">
+      <swiper class="swiper" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}" id="indexSlide">
+        <block wx:for="{{goodsDetailInfo.goodsSlider}}">
+          <swiper-item>
+            <image src="{{mTool.specUrl(extConfig,userImagePath,item)}}" class="slide-image" />
+            <!-- {{userImagePath + item}} -->
+          </swiper-item>
+        </block>
+        <view class="status-bar">
+          <view class="countdown" wx:if='{{atyIsLive}}'>
+            <view style="margin-right:7px">砍价结束倒计时</view>
+
+            <view class="detailTime atyIng" hidden="{{indexHeaderSta[0]}}">
+              <span class="wrapTime">
+                <span class="timeBC marginR1 day0" id="">{{atyTimeShutDown.timerDay1 }}</span>
+                <span class="timeBC day1" id="">{{atyTimeShutDown.timerDay2}}</span>
+              </span>
+              <span>天</span>
+              <span class="wrapTime">
+                <span class="timeBC marginR1 hour0" id="">{{atyTimeShutDown.timerHour1 }}</span>
+                <span class="timeBC hour1" id="">{{atyTimeShutDown.timerHour2 }}</span>
+              </span>
+              <span>时</span>
+              <span class="wrapTime">
+                <span class="timeBC marginR1 minute0" id="">{{atyTimeShutDown.timerMinute1}}</span>
+                <span class="timeBC minute1" id="">{{atyTimeShutDown.timerMinute2 }}</span>
+              </span>
+              <span>分</span>
+              <span class="wrapTime">
+                <span class="timeBC marginR1 sec0" id="">{{atyTimeShutDown.timerSecond1 }}</span>
+                <span class="timeBC sec1" id="">{{atyTimeShutDown.timerSecond2 }}</span>
+              </span>
+              <span>秒</span>
+            </view>
+
+          </view>
+          <view class="countdown" wx:if='{{!atyIsLive}}'>
+            <view style="margin-right:7px">砍价活动已结束</view>
+
+
+          </view>
+        </view>
+      </swiper>
+      <view class="rule" bindtap='showRuler'>活动规则</view>
+
+    </view>
+
+    <view class="goods-simple">
+      <view class="title">
+        <view class="title-text" style="">{{goodsDetailInfo.awardName}}</view>
+      </view>
+      <view class="desc" wx:if='{{goodsDetailInfo.detail}}'>{{goodsDetailInfo.detail}}</view>
+      <view class="price">
+        <view class="red" wx:if='{{isProcessing}}' style="margin-left:-4px">
+          {{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.activityPrice)}}
+        </view>
+        <view wx:if='{{!isProcessing}}' style="margin-left:-4px;color:#666;font-size: 36rpx;font-family:'PingFangSC-Light'">
+          {{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.activityPrice)}}
+        </view>
+        <view class="through">原价{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.originalPrice)}}</view>
+        <view class="attend">
+          {{(goodsDetailInfo.awardRealNum-goodsDetailInfo.sendNum)+activity.virtualParticipant}}人参与
+        </view>
+      </view>
+      <view class="progress--container">
+        <view class="progress--status">
+          <view class="progress--bg"></view>
+          <!-- goodsDetailInfo.barPer -->
+          <view class="progress--red" style="width:{{goodsDetailInfo.barPer}}%"></view>
+          <view class="progress--bar-icon" style="left:{{goodsDetailInfo.barPer > 75 ? 75 : goodsDetailInfo.barPer}}%">
+            当前价{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.originalPrice - goodsDetailInfo.barCount)}}
+          </view>
+        </view>
+        <view class="progress--price">
+          <view class="progress--left">原价{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.originalPrice)}}</view>
+          <view class="progress--right">最低{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.activityPrice)}}</view>
+        </view>
+      </view>
+    </view>
+    <!-- 砍价玩法  -->
+    <view class="tuan_title_v2">
+      <span>砍价玩法</span>
+    </view>
+    <view class="tuan_rulev2">
+
+      <view class='tuan_rulev2_item'>
+        <span class="step">①</span>
+        <view style='display:inline-block;'>
+          <span>选择商品 </span>
+          <span style="display:block;">发起砍价</span>
+        </view>
+      </view>
+      <view class='tuan_rulev2_item'>
+        <span class="step">②</span>
+        <view style='display:inline-block;'>
+          <span>召唤小伙伴 </span>
+          <span style="display:block;">帮忙砍价</span>
+        </view>
+
+      </view>
+      <view class='tuan_rulev2_item'>
+        <span class="step">③</span>
+        <view style='display:inline-block;'>
+          <span>价格满意 </span>
+          <span style="display:block;">立即下单</span>
+        </view>
+
+      </view>
+
+    </view>
+
+    <!-- tab  -->
+    <view class="tab">
+      <view class="tab-left" bindtap="tabFun">
+        <view style="width:{{rankList?'33.33':'50'}}%" class="{{tabArr.curHdIndex=='0'? 'active' : ''}}" id="tab-hd01" data-id="0">商品详情
+        </view>
+        <view style="width:{{rankList?'33.33':'50'}}%" class="{{tabArr.curHdIndex=='1'? 'active' : ''}}" id="tab-hd02" data-id="1">砍价记录
+        </view>
+        <view wx:if="{{rankList}}" class="{{tabArr.curHdIndex=='2'? 'active' : ''}}" id="tab-hd03" data-id="2">
+          排行榜
+        </view>
+
+      </view>
+
+      <view class="tab-right">
+        <view class="right-item {{tabArr.curBdIndex=='0'? 'active' : ''}}">
+          <view class="goodsDetailCnt">
+            <rich-text nodes="{{goodsDetailInfo.description}}" type="text"></rich-text>
+          </view>
+        </view>
+        <view class="right-item {{tabArr.curBdIndex=='1'? 'active' : ''}}">
+          <view class="helpBargainList">
+            <view class="hbgItem" style="" wx:for="{{goodsDetailInfo.members}}">
+              <image class="helpBgAvator" src="{{item.headPic}}" alt=""></image>
+              <span class="helpBgName">{{item.nickName}}</span>
+              <view style='display:inline-block;position:absolute;right:25px;'>
+                <span class="helpBargainSub">砍了
+                  <span style="color:#b4282d">{{mTool.fToY(item.result)}}元</span>
+                </span>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="right-item {{tabArr.curBdIndex=='2'? 'active' : ''}}">
+          <view class="rankList">
+            <view class="rankHead">
+              <view class="rankRow">
+                排名
+              </view>
+              <view class="nameRow">
+                姓名
+              </view>
+              <view class="curPriceRow">
+                当前价格
+              </view>
+            </view>
+            <view class="rankBody">
+              <view class="rItem" wx:for="{{goodsDetailInfo.bargainRanking}}">
+                <view class="rank">
+                  <view class="rankIocn">
+                    {{index+1}}
+                  </view>
+                </view>
+                <view class="richName">
+                  <image src="{{item.headPic}}"></image>
+                  <span>{{item.nickName}}</span>
+                </view>
+                <view class="curPrice">
+                  {{mTool.fToY(goodsDetailInfo.originalPrice - item.bargainCount)}}
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+
+    <view class="" style="height:105rpx;background:f1f1f1;"></view>
+    <!-- 阴影部分 -->
+    <!-- 自己砍一刀 -->
+    <view data-flag="firstBargain" bindtap="maskHide" hidden="{{maskStatu[0]}}">
+      <view t_action="1" t_cid="5911" class="alert--container">
+        <view class="alert--body alert--body-first-bargin">
+          <view class="alert--content alert--f-first-bargin">
+            <image class="alert--icon" src="{{staticResPathBargain}}success.png">
+              <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}success.png);"></div>
+              <virtual></virtual>
+            </image>
+            <view class="alert--text-noraml" style="margin:0">成功砍掉
+              <text class="alert--red">{{mTool.fToY(uReShip.result)}}元</text>
+            </view>
+            <view class="alert--text-light">系统帮您砍掉第一步</view>
+            <view class="alert--text-light">给好友多砍几刀吧</view>
+          </view>
+          <view class="alert--share-btn-wrapper">
+            <view class="alert--share-btn" hover-class="share-btn-press">
+              <!-- open-type="share" -->
+              <form bindtap='showShareMasks' class="homeTab--red homeTab--all homeTab--white" data-goodsid="{{goodsDetailInfo.id}}" report-submit="true">
+                <span>
+                  <button t_action="1" t_cid="25841" class="homeTab--button" class="alert--button alert--button-share" data-type="click_progress_startdiscount" form-type="submit" hover-class="deep-red">叫小伙伴</button>
+                </span>
+              </form>
+            </view>
+          </view>
+          <view t_action="1" t_cid="5913" class="alert--icon-close">
+            <image src="{{staticResPathBargain}}cancel.png" style='width:54rpx;height:54rpx;'>
+              <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}cancel.png);"></div>
+              <virtual></virtual>
+            </image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- end自己砍一刀 -->
+    <!-- 点击我自己 点击现在就要 -->
+    <view class="mask bargainRet" bindtap="maskHide" hidden="{{maskStatu[1]}}">
+      <!-- <view class="closeWrap">
+              <image hidden="{{curPriceStatus[1]}}" style="" class="closeIcon" src="{{staticResPathBargain}}close.png" bindtap="maskHide"></image>
+            </view>
+            <view hidden="{{curPriceStatus[0]}}" class="popBargainBG popBargainRet" catchtap="xxxxx" style="background-image:url({{staticResPathBargain}}tanchuang3.png)">
+              <view class="">
+                <span>当前价格</span>
+                <span class="curBargainPrice">{{mTool.fToY(goodsDetailInfo.originalPrice - goodsDetailInfo.barCount)}}</span>
+                <span>元</span>
+              </view>
+              <view class="bargainDesc" style="">
+                <span>还没有到底价噢~</span>
+              </view>
+              <view class="btnAround">
+                <button type="button" name="button" class="btn yellowBtn" id="selfCtnBargain" bindtap="maskHide">继续砍价</button>
+                <button type="button" name="button" data-atyid="{{goodsDetailInfo.activityId}}" data-goodsid="{{goodsDetailInfo.id}}" data-reid="{{theRelationshipDefine.relationId}}" class="btn redBtn" style="margin-left:50rpx;" bindtap="goToPayAtyBtn">现在就要</button>
+              </view>
+            </view>
+            <view hidden="{{curPriceStatus[1]}}" class="popBargainBG popBargainRetOk " style="background-image:url({{staticResPathBargain}}tanchuang3.png)" catchtap="xxxxx">
+              <view class="">
+                <span>当前价格</span>
+                <span class="curBargainPrice">{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+                <span>元</span>
+              </view>
+              <view class="bargainDesc">
+                <span>恭喜到底价了~</span>
+              </view>
+              <view class="btnAround">
+                <button type="button" name="button" data-atyid="{{goodsDetailInfo.activityId}}" data-goodsid="{{goodsDetailInfo.id}}" data-reid="{{theRelationshipDefine.relationId}}" class="btn redBtn" style="margin-left:0;" bindtap="goToPayAtyBtn">现在就要</button>
+              </view>
+            </view> -->
+
+
+    </view>
+    <!-- 点击帮TA砍价  mask-->
+    <view class="mask friendHelpBaginMask" bindtap="maskHide" hidden="{{maskStatu[2]}}">
+      <view t_action="1" t_cid="5911" class="alert--container">
+        <view class="alert--body">
+          <view class="alert--content">
+            <image class="alert--icon" src="{{staticResPathBargain}}success.png">
+              <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}success.png);"></div>
+              <virtual></virtual>
+            </image>
+            <view class="alert--text-noraml" style="margin:0">成功砍掉{{mTool.fToY(helpBargainRet)}}元</view>
+          </view>
+          <view class="alert--bottom">
+            <view class="alert--half alert--button">取消</view>
+            <form class="alert--half alert--btn alert--red" report-submit="">
+              <span>
+                <button t_action="1" t_cid="5914" class="alert--button" form-type="submit">我要砍价</button>
+              </span>
+            </form>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 点击帮TA砍价  mask end-->
+    <view class="mask shareQrCodeBlock" bindtap="maskHide" hidden="{{maskStatu[3]}}">
+      <image class="shareQrCodeImg" src="{{shareQrCodeUrl}}" style="width: 660rpx; height: 990rpx;"></image>
+    </view>
+
+  </view>
+  <!-- 活动规则  -->
+  <view class="mask" bindtap='hideRuler' wx:if="{{acRuler}}">
+    <view style='background-size: 100% 100%;height:4px; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}shape.png);"'></view>
+    <view class="container">
+      <view class="rule-item" wx:for="{{rules}}">
+        <view>{{item}}</view>
+      </view>
+
+    </view>
+    <view class="zan-icon zan-icon-close" style='width:50px;height:50px;font-size:28px;position:relative;left:50%;margin-left:-25px' bindtap='hideRuler'></view>
+  </view>
+  <view class="sbPage" id="personPage" hidden="{{topPageStatus.personPage}}">
+    <!-- tab  -->
+    <view class="swiper-tab">
+      <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">全部</view>
+      <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">砍价中</view>
+      <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">成功</view>
+      <view class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="swichNav">已支付</view>
+    </view>
+    <template is="none-auth" data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'砍价',handleType:'进行'}}"></template>
+    <swiper wx:if="{{!noAuthInfo && 0 < myBargainList.length}}" current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{1.5*winHeight +31}}px" bindchange="bindChange">
+      <!-- 全部 -->
+      <swiper-item style="background:#F4F4F4">
+        <view class="orderList" style="">
+          <view class="odItem" wx:for="{{myBargainList}}">
+            <view class="list" bindtap="beforeDetail" data-goodsid="{{item.award.id}}" data-reid="{{item.relationId}}">
+              <view class="title">
+                <view class="time">{{mTool.filterTimestamp(item.relationshipDefine.createTime)}}</view>
+                <view class="countdown" wx:if="{{!item.isPayed}}">
+                  <view style="margin-right:7px;">倒计时:</view>
+                  <view class="countdown">
+                    <view class="detailTime atyIng" hidden="{{indexHeaderSta[0]}}">
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 day0" id="">{{atyTimeShutDown.timerDay1 }}</span>
+                        <span class="timeBC day1" id="">{{atyTimeShutDown.timerDay2}}</span>
+                      </span>
+                      <span>天</span>
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 hour0" id="">{{atyTimeShutDown.timerHour1 }}</span>
+                        <span class="timeBC hour1" id="">{{atyTimeShutDown.timerHour2 }}</span>
+                      </span>
+                      <span>:</span>
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 minute0" id="">{{atyTimeShutDown.timerMinute1}}</span>
+                        <span class="timeBC minute1" id="">{{atyTimeShutDown.timerMinute2 }}</span>
+                      </span>
+                      <span>:</span>
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 sec0" id="">{{atyTimeShutDown.timerSecond1 }}</span>
+                        <span class="timeBC sec1" id="">{{atyTimeShutDown.timerSecond2 }}</span>
+                      </span>
+
+                    </view>
+
+                  </view>
+                </view>
+              </view>
+              <view t_action="1" t_cid="5967" class="detail" data-gameid="186713">
+                <view class="detail-image-wrapper">
+                  <image class="detail-image" src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}">
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}});"></div>
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <virtual></virtual>
+                  </image>
+                </view>
+                <view class="detail-text">
+                  <view class="name">{{item.award.awardName}}</view>
+                  <view class="desc">{{item.award.detail}}</view>
+                  <view class="price">
+                    <view class="least">{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.activityPrice)}}</view>
+                    <view class="origin">原价:{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.originalPrice)}}</view>
+                  </view>
+                </view>
+                <!-- <view class="bargin-info">
+                                 还差
+                                 <text class="text-red">{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.originalPrice-item.award.barCount)}}</text>元, 再叫14人砍到底价
+                                 <text class="text-red">{{mTool.fToY(item.award.activityPrice)}}</text>元
+                               </view>  -->
+              </view>
+              <view class="status" wx:if="{{item.isPayed}}">
+                <view class="status-text text-green">砍价成功</view>
+                <!-- <view class="status-button btn-gray" data-gameid="186713">订单详情</view> -->
+              </view>
+              <view class="status" wx:if="{{!item.isPayed}}">
+                <view class="status-text text-red">砍价中</view>
+                <view class="status-button btn-red" data-gameid="186713">继续砍价</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </swiper-item>
+      <!-- 砍价中 -->
+      <swiper-item style="background:#F4F4F4">
+        <view class="orderList" style="">
+          <view class="odItem" wx:for="{{myBargainList}}">
+
+
+            <view class="list" bindtap="beforeDetail" wx:if="{{!item.isPayed}}" data-goodsid="{{item.award.id}}" data-reid="{{item.relationId}}">
+              <view class="title">
+                <view class="time">{{mTool.filterTimestamp(item.relationshipDefine.createTime)}}</view>
+                <view class="countdown" wx:if="{{!item.isPayed}}">
+                  <view style="margin-right:7px;">倒计时:</view>
+                  <view class="countdown">
+
+                    <view class="detailTime atyIng" hidden="{{indexHeaderSta[0]}}">
+
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 day0" id="">{{atyTimeShutDown.timerDay1 }}</span>
+                        <span class="timeBC day1" id="">{{atyTimeShutDown.timerDay2}}</span>
+                      </span>
+                      <span>天</span>
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 hour0" id="">{{atyTimeShutDown.timerHour1 }}</span>
+                        <span class="timeBC hour1" id="">{{atyTimeShutDown.timerHour2 }}</span>
+                      </span>
+                      <span>:</span>
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 minute0" id="">{{atyTimeShutDown.timerMinute1}}</span>
+                        <span class="timeBC minute1" id="">{{atyTimeShutDown.timerMinute2 }}</span>
+                      </span>
+                      <span>:</span>
+                      <span class="wrapTime">
+                        <span class="timeBC marginR1 sec0" id="">{{atyTimeShutDown.timerSecond1 }}</span>
+                        <span class="timeBC sec1" id="">{{atyTimeShutDown.timerSecond2 }}</span>
+                      </span>
+
+                    </view>
+
+                  </view>
+                </view>
+              </view>
+              <view t_action="1" t_cid="5967" class="detail" data-gameid="186713">
+                <view class="detail-image-wrapper">
+                  <image class="detail-image" src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}">
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}});"></div>
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <virtual></virtual>
+                  </image>
+                </view>
+                <view class="detail-text">
+                  <view class="name">{{item.award.awardName}}</view>
+                  <view class="desc">{{item.award.detail}}</view>
+                  <view class="price">
+                    <view class="least">{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.activityPrice)}}</view>
+                    <view class="origin">原价:{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.originalPrice)}}</view>
+                  </view>
+                </view>
+                <!-- <view class="bargin-info">
+                                 还差
+                                 <text class="text-red"></text>元, 再叫14人砍到底价
+                                 <text class="text-red">{{mTool.fToY(item.award.activityPrice)}}</text>元
+                               </view>  -->
+              </view>
+              <view class="status" wx:if="{{item.isPayed}}">
+                <view class="status-text text-green">砍价成功</view>
+                <!-- <view class="status-button btn-gray" data-gameid="186713">订单详情</view> -->
+              </view>
+              <view class="status" wx:if="{{!item.isPayed}}">
+                <view class="status-text text-red">砍价中</view>
+                <view class="status-button btn-red" data-gameid="186713">继续砍价</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+      <!-- 成功 -->
+      <swiper-item style="background:#F4F4F4">
+        <view class="orderList" style="">
+          <view class="odItem" wx:for="{{myBargainList}}">
+            <view class="list" bindtap="beforeDetail" wx:if="{{item.isPayed}}" data-goodsid="{{item.award.id}}" data-reid="{{item.relationId}}">
+              <view class="title">
+                <view class="time">{{mTool.filterTimestamp(item.relationshipDefine.createTime)}}</view>
+              </view>
+              <view t_action="1" t_cid="5967" class="detail" data-gameid="186713">
+                <view class="detail-image-wrapper">
+                  <image class="detail-image" src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}">
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}});"></div>
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <virtual></virtual>
+                  </image>
+                </view>
+                <view class="detail-text">
+                  <view class="name">{{item.award.awardName}}</view>
+                  <view class="desc">{{item.award.detail}}</view>
+                  <view class="price">
+                    <view class="least">{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.activityPrice)}}</view>
+                    <view class="origin">原价:{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.originalPrice)}}</view>
+                  </view>
+                </view>
+
+              </view>
+              <view class="status" wx:if="{{item.isPayed}}">
+                <view class="status-text text-green">砍价成功</view>
+                <!-- <view class="status-button btn-gray" data-gameid="186713">订单详情</view> -->
+              </view>
+              <view class="status" wx:if="{{!item.isPayed}}">
+                <view class="status-text text-red">砍价中</view>
+                <view class="status-button btn-red" data-gameid="186713">继续砍价</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+      <!-- 已支付  -->
+      <swiper-item style="background:#F4F4F4">
+        <view class="orderList" style="">
+          <view class="odItem" wx:for="{{myBargainList}}">
+            <view class="list" bindtap="beforeDetail" wx:if="{{item.isPayed}}" data-goodsid="{{item.award.id}}" data-reid="{{item.relationId}}">
+              <view class="title">
+                <view class="time">{{mTool.filterTimestamp(item.relationshipDefine.createTime)}}</view>
+              </view>
+              <view t_action="1" t_cid="5967" class="detail" data-gameid="186713">
+                <view class="detail-image-wrapper">
+                  <image class="detail-image" src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}">
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}});"></div>
+                    <!-- {{userImagePath+item.award.awardPic}} -->
+                    <virtual></virtual>
+                  </image>
+                </view>
+                <view class="detail-text">
+                  <view class="name">{{item.award.awardName}}</view>
+                  <view class="desc">{{mTool.fToY(item.award.detail)}}</view>
+                  <view class="price">
+                    <view class="least">{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.activityPrice)}}包邮</view>
+                    <view class="origin">原价:{{app.globalData.currencySymbol}}{{mTool.fToY(item.award.originalPrice)}}</view>
+                  </view>
+                </view>
+                <!-- <view class="bargin-info">
+                                  还差
+                                  <text class="text-red"><span>44.83</span></text>元, 再叫14人砍到底价
+                                  <text class="text-red"><span>139</span></text>元
+                                </view> -->
+              </view>
+              <view class="status" wx:if="{{item.isPayed}}">
+                <view class="status-text text-green">砍价成功</view>
+                <!-- <view class="status-button btn-gray" data-gameid="186713">订单详情</view> -->
+              </view>
+              <view class="status" wx:if="{{!item.isPayed}}">
+                <view class="status-text text-red">砍价中</view>
+                <view class="status-button btn-red" data-gameid="186713">继续砍价</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+
+    <view class="emptyList" style="" wx:if="{{!noAuthInfo && 0 == myBargainList.length}}">
+      <image style="" src="{{staticResPathBargain}}emptyicon.png" alt=""></image>
+      <view style="">还未参与任何砍价噢~</view>
+    </view>
+
+  </view>
+
+  <!-- 底部菜单  -->
+  <view class="sbBottomWrap">
+    <view class="sbBottomStatus {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}" hidden="{{sbBottomStatus.normal}}">
+      <view class="leftBtn" data-page="indexPage" bindtap="topPageSwtich">
+        <view hidden='{{!hidden}}'>
+          <image class="btnIco" src="{{staticResPathBargain}}shop.png"></image>
+          <text>所有宝贝</text>
+        </view>
+        <view hidden='{{hidden}}'>
+          <image class="btnIco" src="{{staticResPathBargain}}shop(1).png"></image>
+          <text style='color:#D43137'>所有宝贝</text>
+        </view>
+      </view>
+      <div class="rowLines">
+      </div>
+      <view class="rightBtn" data-page="personPage" bindtap="myBargainList">
+        <view hidden='{{!hidden}}'>
+          <image class="btnIco" src="{{staticResPathBargain}}kanji(1).png"></image>
+          <text style='color:#D43137'>我的砍价</text>
+        </view>
+        <view hidden='{{hidden}}'>
+          <image class="btnIco" src="{{staticResPathBargain}}kanjia.png"></image>
+          <text>我的砍价</text>
+        </view>
+      </view>
+    </view>
+    <!-- 底部导航  -->
+    <!-- 未砍价时  -->
+    <view class="bottom {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}" hidden="{{sbBottomStatus.canBargain[0]}}">
+      <view class="homeTab--container">
+        <view t_action="1" t_cid="25840" data-page="indexPage" bindtap="topPageSwtich" class="homeTab--home" hover-class="gray">
+          <image class="btnIco" style='width:40rpx;height:40rpx;' src="{{staticResPathBargain}}home1.png"></image>
+          <view class="homeTab--home-text">首页</view>
+        </view>
+        <view class="homeTab--action">
+          <form class="homeTab--red homeTab--all homeTab--white" data-goodsid="{{goodsDetailInfo.id}}">
+            <span>
+              <button data-goodsid="{{goodsDetailInfo.id}}" t_action="1" t_cid="25841" class="homeTab--button" data-type="click_progress_startdiscount" bindtap="startBargain" hover-class="deep-red">发起砍价</button>
+            </span>
+          </form>
+        </view>
+      </view>
+    </view>
+    <!-- 发起砍价后  -->
+    <view class="bottom {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}" hidden="{{sbBottomStatus.canBargain[1]}}">
+      <view class="homeTab--container">
+        <view t_action="1" t_cid="25840" data-page="indexPage" bindtap="topPageSwtich" class="homeTab--home" hover-class="gray">
+          <image class="btnIco" style='width:40rpx;height:40rpx;' src="{{staticResPathBargain}}home1.png"></image>
+          <view class="homeTab--home-text">首页</view>
+        </view>
+        <view class="homeTab--action">
+          <form class="homeTab--red homeTab--all homeTab--white" data-atyid="{{goodsDetailInfo.activityId}}" data-goodsid="{{goodsDetailInfo.id}}" data-reid="{{theRelationshipDefine.relationId}}" bindtap='goToPayAtyBtn' report-submit="true">
+            <span>
+              <button t_action="1" t_cid="25841" class="homeTab--button" data-type="click_progress_startdiscount" form-type="submit" style='background:#fafafa;color:#666;' hover-class="deep-red">当前价购买</button>
+            </span>
+          </form>
+          <form class="homeTab--red homeTab--all homeTab--white" bindtap='showShareMasks' report-submit="true">
+            <span>
+              <button t_action="1" t_cid="25841" class="homeTab--button" data-type="click_progress_startdiscount" form-type="submit" hover-class="deep-red">找人帮砍</button>
+            </span>
+          </form>
+        </view>
+      </view>
+    </view>
+    <!-- 生成海报  -->
+    <view class="shareMask" hidden='{{showShareMask}}'>
+      <view class="shareMask-body {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}">
+        <view class="shareMask-middle">
+          <view class="shareMask-icon" data-goodsid="{{goodsDetailInfo.id}}">
+            <button open-type="share" style="background:#fff">
+              <image class="shareMask-img" src="{{staticResPathBargain}}icon-wx.png">
+                <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}icon-wx.png&quot;);"></div>
+                <span></span>
+              </image>
+            </button>
+            <view class="shareMask-txt">
+              <view>召唤伙伴帮砍价</view>
+            </view>
+          </view>
+          <form class="shareMask-icon" data-goodsid="{{goodsDetailInfo.id}}" bindtap='shareByQRCode' report-submit="" wx:if="{{0 == shareType}}">
+            <span>
+              <button class="button-reset" form-type="submit">
+                <view class="shareFormFlex">
+                  <image class="shareMask-img" src="{{staticResPathBargain}}icon-ps.png">
+                    <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}/icon-ps.png&quot;);"></div>
+                    <span></span>
+                  </image>
+                  <view class="shareMask-txt">
+                    <view>生成海报图</view>
+                  </view>
+                </view>
+              </button>
+            </span>
+          </form>
+        </view>
+        <view class="shareMask-confirm" bindtap='hideShareMasks'>取消</view>
+      </view>
+    </view>
+    <!-- 朋友，朋友进入砍价时  -->
+    <view class="bottom {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}" hidden="{{sbBottomStatus.canBargain[2]}}">
+      <view class="homeTab--container">
+        <view t_action="1" t_cid="25840" data-page="indexPage" bindtap="topPageSwtich" class="homeTab--home" hover-class="gray">
+          <image class="btnIco" style='width:40rpx;height:40rpx;' src="{{staticResPathBargain}}home1.png"></image>
+          <view class="homeTab--home-text">首页</view>
+        </view>
+        <view class="homeTab--action">
+          <form class="homeTab--red homeTab--all homeTab--white" data-goodsid="{{goodsDetailInfo.id}}" bindsubmit="startBargain" report-submit="true">
+            <button t_action="1" t_cid="25841" class="homeTab--button" data-type="click_progress_startdiscount" form-type="submit" style='background:#fafafa;color:#666;' hover-class="deep-red">我要砍价
+            </button>
+          </form>
+          <form class="homeTab--red homeTab--all homeTab--white" data-goodsid="{{goodsDetailInfo.id}}" bindsubmit="helpBargain" report-submit="true">
+            <button t_action="1" t_cid="25841" class="homeTab--button" data-type="click_progress_startdiscount" form-type="submit" hover-class="deep-red">帮TA砍价
+            </button>
+          </form>
+        </view>
+      </view>
+    </view>
+
+    <!-- 砍价成功  -->
+    <view class="bottom {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}" hidden="{{sbBottomStatus.canBargain[3]}}">
+      <view class="homeTab--container">
+        <view t_action="1" t_cid="25840" data-page="indexPage" bindtap="topPageSwtich" class="homeTab--home" hover-class="gray">
+          <image class="btnIco" style='width:40rpx;height:40rpx;' src="{{staticResPathBargain}}home1.png"></image>
+          <view class="homeTab--home-text">首页</view>
+        </view>
+        <view class="homeTab--action">
+          <form class="homeTab--red homeTab--all homeTab--white" data-atyid="{{goodsDetailInfo.activityId}}" data-goodsid="{{goodsDetailInfo.id}}" data-reid="{{theRelationshipDefine.relationId}}" bindtap='goToPayAtyBtn' report-submit="true">
+            <span>
+              <button t_action="1" t_cid="25841" class="homeTab--button" data-type="click_progress_startdiscount" form-type="submit" hover-class="deep-red">砍价成功，立即购买</button>
+            </span>
+          </form>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{returnIndex}}" class="fixedhome sub-color" style="{{app.globalData.customSubColor}}" bindtap='backToHome'>
+    <view class="zan-icon zan-icon-home sub-color" style="{{app.globalData.customSubColor}}"></view>
+  </view>
+  <include src="/pages/template/authModal.wxml" />
+</view>

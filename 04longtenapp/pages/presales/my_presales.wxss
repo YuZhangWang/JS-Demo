@@ -1,0 +1,9 @@
+/* pages/presales/my_presales.wxss */
+@import "./presales.wxss";
+.preAount{
+  font-size: 26rpx;
+  color: #999;
+}
+.preAount span{
+  margin-right: 20rpx;
+}

@@ -1,0 +1,26 @@
+<import src="./wheelTpl.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="index" style="background-image:url({{wheelStaticRes}}bg.jpg);background-size:100%;width:100%;height:100%;">
+  <view class="index" style="background-image:url({{wheelStaticRes}}2.png);background-size:100%;width:100%;height:100%;">
+    <view class="wheelLogoWrap">
+      <image src="{{wheelStaticRes}}bt.png" class="wheelLogo"></image>
+    </view>
+    <view style="color:#fff;text-align:center;">
+      <!--今天还剩<text style="font-weight:bold;">{{actuallyTime}}</text>次抽奖机会-->
+        今日还剩<text style="font-weight:bold;">{{actuallyTime}}</text>次抽奖机会，总抽奖机会剩余<text style="font-weight:bold;">{{allLimitTime}}</text>次
+    </view>
+
+    <template is = "wheel" data="{{...wheel,wheelStaticRes,wheelBGsuffix,awardList,flashDotHid,app}}"></template>
+    <view class="btnsWrap">
+      <button class="atyRule" bindtap="showRAA"></button>
+      <button class="myAward" bindtap="showAward" data-mark="hasCache"></button>
+    </view>
+      <play-ret static-res-path="{{staticResPath}}" bind:playagain="playAgain" is-show="{{isShow}}" have-gift="{{haveGift}}" play-msg="{{playMsg}}" play-desc="{{playDesc}}"></play-ret>
+     <rule-and-award static-res-path="{{staticResPath}}" activity="{{activity}}"  awardlist="{{orgAwardList}}" myawards="{{myAwards}}" show-status="{{showStatus}}">
+     </rule-and-award>
+     <audio    src="{{wheelStaticRes}}/wheel_button_down.mp3" id="btnAudio" bindended="wheelAudioPlay"></audio>
+     <audio    src="{{wheelStaticRes}}/wheel_rot_start.mp3" id="wheelAudio" loop="true"></audio>
+  </view>
+</view>
+<include src="../inteCommon/commonPage.wxml"></include>
+</view>

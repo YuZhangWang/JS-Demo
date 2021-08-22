@@ -1,0 +1,543 @@
+/* pages/giftcard//giftcardDetail.wxss */
+@import "../detail/detail.wxss";
+page {
+  background: #f5f7f7;
+}
+
+.theme-wrapper {
+  height: auto;
+  background: #f5f7f7;
+}
+
+.vipContent {
+  display: flex;
+  justify-content: center;
+}
+
+.view {
+  margin: 0;
+}
+
+.cardCommRow:not(:last-child) {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.cardCommRow {
+  margin: 0 30rpx;
+}
+
+.copyright-container {
+  background: #f5f7f7;
+}
+
+.cardCntArea {
+  width: 100%;
+  background: #fff;
+  overflow: auto;
+  margin-bottom: 150rpx;
+}
+
+.tips-info{
+  border-radius: 8px 8px 0 0;
+  padding: 30rpx 50rpx;
+  box-sizing: border-box;
+
+}
+.close-btn{
+  border-radius: 25px;
+  height: 45px;
+  line-height: 45px;
+  font-size: 30rpx;
+
+}
+.tips-info .title{
+  font-size: 30rpx;
+  color: #333;
+}
+.tips-info .description{
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 30rpx;
+  min-height: 350rpx
+}
+
+.userWrap {
+  display: flex;
+  background: #fff;
+  padding: 15rpx;
+  border-bottom: 30rpx solid #f5f7f7;
+}
+
+.vipcard-logo {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: transparent;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.membershipHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: 100% 50%;
+  margin: 10px 35% 0 35%;
+  background-repeat: no-repeat;
+}
+
+.userWrap .userItem {
+  border-right: 1px solid #f5f5f5;
+  flex-grow: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.userWrap .userItem .val {
+  font-size: 16px;
+  color: rgba(222, 187, 133, 1);
+}
+
+.userInfo {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  margin-left: 20rpx;
+}
+
+.vipUserName {
+  font-size: 16px;
+}
+
+.userAvator {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50rpx;
+}
+
+.vipUserNo {
+  font-size: 14px;
+}
+
+.cardRegion {
+  background-color: transparent;
+  padding: 40rpx;
+  margin: 30rpx;
+  border-radius: 10px;
+  color: #fff;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: cover;
+  /* box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.16); */
+}
+.giftcard-goods{
+  display: flex;
+  margin-top:20rpx;
+  align-items: center
+}
+.cardRegion .cardHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60rpx;
+}
+
+.cardRegion .shopInfo {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cardRegion .shopName {
+  font-size: 40rpx;
+  color: rgba(222, 187, 133, 1);
+  margin-left: 16rpx;
+}
+
+.cardRegion .vipCardContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.vLogo {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+}
+
+.cardRegion .qrCode {
+  width: 25px;
+  height: 25px;
+  margin-top: 15rpx;
+  float: right;
+}
+
+.vipType {
+  margin-bottom: 20rpx;
+}
+
+.vipType .vipTypeName {
+  font-size: 30rpx;
+  line-height: 48rpx;
+  height: 48rpx;
+  margin-left: 16rpx;
+}
+
+.vipCardContent {
+  font-size: 14px;
+}
+
+.membershipRegion {
+  overflow: hidden;
+  background-color: #fff;
+  display: block;
+  position: relative;
+  font-size: 14px;
+  border-bottom: 30rpx solid #f5f7f7;
+  padding-bottom: 20rpx;
+}
+
+.membershipRegion .membershipHeader, .vipBlock .vipBlockHeader, .memberDeposit {
+  padding: 30rpx 0;
+  font-size: 15px;
+}
+
+.vipBlock .vipBlockHeader .needKnow {
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+.membershipRegion .membership {
+  display: flex;
+  color: #333;
+  justify-content: flex-start;
+}
+
+.membershipRegion .membership .membershipItem {
+  /* display: none; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+  display: flex;
+  width: 25%;
+}
+
+.shipDetail {
+  border-top: 1px solid #e8f1ff;
+  margin: 0 50rpx;
+  padding-top: 20rpx;
+}
+
+.membershipRegion .membershipCnt {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(42, 48, 59, 1);
+}
+
+.membershipRegion .membership .membershipItem .membershipItemName {
+  margin-top: 10px;
+}
+
+.membershipRegion .membership .membershipItemIcon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 100rpx;
+}
+
+.vipBlock {
+  background: #fff;
+}
+
+.vipKnowBlock {
+  background: #fff;
+}
+
+.receiveCard {
+  position: fixed;
+  background: #fff;
+  width: 100%;
+  text-align: center;
+  padding: 20rpx 0;
+  bottom: 0;
+  z-index: 11;
+}
+
+
+.isGet {
+  background-color: #ed702d;
+  border-color: #ed702d;
+}
+
+.mask {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.collectionInfon {
+  margin-top: 40%;
+  background: #fff;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60%;
+  width: 90%;
+  border-radius: 4px;
+}
+
+.collectionInfonH430 {
+  height: 460rpx;
+}
+
+.collectionInfon .colleItem {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 20rpx;
+  justify-content: center;
+  width: 100%;
+}
+
+.collectionInfon .colleItem input {
+  border: 1px #e4e4e4 solid;
+  border-radius: 4px;
+  margin-left: 20rpx;
+  padding-left: 10rpx;
+  width: 400rpx;
+}
+
+.collectionInfon .colleItem .commTxt {
+  width: 135rpx;
+  text-align: right;
+}
+
+.cardform {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.getBtn {
+  margin: 0;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardArrow {
+  width: 10rpx;
+  height: 22rpx;
+}
+
+.collectionInfon .btnGet {
+  margin-bottom: 0;
+}
+
+.toGet, .getBtn {
+  width: 85%;
+  max-width: 350px;
+  height: 82rpx;
+  line-height: 82rpx;
+  border-radius: 50rpx;
+  clear: both;
+  border: 1px solid;
+  -webkit-border-radius: 50rpx;
+  font-size: 32rpx;
+  text-align: center;
+  margin-top: 10rpx;
+}
+
+.getBtn {
+  font-size: 14px;
+  height: 75rpx;
+  line-height: 75rpx;
+  width: 80%;
+  margin-top: 20rpx;
+}
+
+
+
+
+
+/* 单选按钮样式*/
+
+radio .wx-radio-input {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #eee;
+  border-radius: 100%;
+  background: none;
+}
+
+/*单选按钮选中后内部样式*/
+
+radio .wx-radio-input.wx-radio-input-checked {
+  border: 2rpx solid #debb85 !important;
+  background: white;
+}
+
+radio .wx-radio-input.wx-radio-input-checked::before {
+  width: 50%;
+  height: 50%;
+  background: #debb85;
+  border-radius: 100%;
+  content: '';
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+radio-group radio {
+  position: relative !important;
+  left: 0 !important;
+}
+
+radio.disabled .wx-radio-input {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #eee;
+  border-radius: 100%;
+  background: none;
+}
+
+.gift-price:first-letter {
+  font-size: 28rpx;
+}
+.gift-title{
+  padding: 5px 2px;
+  color: #333;
+  margin: 0 30rpx;
+  font-size: 32rpx;
+
+}
+.gift-price {
+  font-size: 38rpx;
+  color: #fa4645;
+  font-weight: bold;
+}
+
+.gift-price-wrap {
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2px;
+  box-sizing: border-box;
+  margin: 0 30rpx;
+}
+
+.gift-count {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.gift-card-item {
+  padding: 10rpx 5rpx;
+  color: #333;
+  margin: 0 30rpx;
+}
+
+.gift-card-item .item-title {
+  font-size: 30rpx;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+
+}
+
+.gift-card-item .item-content {
+  font-size: 28rpx;
+  margin-top: 8rpx;
+}
+
+.gift-card-tag {
+  height: 30rpx;
+  width: 4px;
+  margin-right: 5px;
+  background: #fa4646;
+  display: inline-block;
+}
+view.goods-number {
+    display: flex;
+    padding: 40rpx 0;
+    align-items: center;
+    margin-left: 30rpx;
+   
+
+}
+.giftcard-total{
+  font-size: 28rpx;
+  line-height: 45px;
+  margin-left: 30rpx;
+  width: 50%;
+}
+
+view.goods-number>view {
+    display: flex;
+    height: 60rpx;
+    width: 64rpx;
+    align-items: center;
+    justify-content: center;
+}
+
+view.goods-number view.minus {
+    border: 1rpx solid #DDDEE0;
+     width: 60rpx;
+     height: 60rpx;
+     text-align: center;
+     line-height:60rpx;
+     font-size: 14px;
+     border-radius: 5px 0 0px 5px;
+}
+
+view.goods-number view.minus:active {
+    color: #f44;
+}
+
+view.goods-number view.count {
+    border-top: 1rpx solid #DDDEE0;
+    border-bottom: 1rpx solid #DDDEE0;
+    color: #363A3D;
+    
+}
+
+view.goods-number view.count input {
+    font-size: 27rpx;
+    text-align: center;
+    height: 60rpx;
+    width: 64rpx;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+view.goods-number view.plus {
+     border: 1rpx solid #DDDEE0;
+     width: 60rpx;
+     height: 60rpx;
+     text-align: center;
+     line-height: 60rpx;
+     font-size: 14px;
+     border-radius: 0px 5px 5px 0px;
+}
+
+view.goods-number view.plus:active {
+     color: #f44;
+}

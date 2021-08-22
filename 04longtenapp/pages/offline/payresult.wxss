@@ -1,0 +1,49 @@
+/* pages/offline/payresult.wxss */
+.header{
+  text-align: center;
+  margin-top: 20px;
+  line-height: 60px;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: cneter;
+  font-weight: 700;
+  flex-direction: column;
+}
+.header icon{
+  width: 65px;
+  height: 65px;
+}
+navigator image{
+  width: 600rpx !important;
+  height: 197rpx !important;
+  border-radius: 10rpx;
+}
+.detail-msg{
+  margin: 25px auto 0;
+  height: 200px;
+}
+.detail-msg .row{
+  height: 38px;
+  display: flex;
+  line-height: 38px;
+  font-size: 32rpx;
+  color: #000;
+  border-bottom: 1rpx solid #F2F2F2;
+}
+.detail-msg .row:last-child{
+  border-bottom: none
+}
+.detail-msg .row .label{
+  flex: 0 0 46%;
+  text-align: left;
+  font-size: 28rpx;
+  color: #333;
+}
+.detail-msg .row .field{
+  color: #666;
+  font-size: 28rpx;
+  flex: 1 1 auto;
+  text-align: right;
+}

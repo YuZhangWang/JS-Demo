@@ -1,0 +1,117 @@
+<!--pages/fenxiao//grade.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<!-- 等级分销 -->
+<scroll-view class="page-panel" scroll-y>
+    <view class="page-header" style="background-image:url('{{staticResPath}}/head-label-bg.png')">
+        <!-- 头部左边 -->
+        <view class="header-left">
+            <view class="header-img">
+                <image class="user-headImg" src="{{nodeLevelInfo.headPic}}"></image>
+            </view>
+            <view class="user-info">
+                <text class="user-nick">{{userInfo.nickName}}</text>
+                <view class="user-grade">
+                    <view>{{"V"+(distributionLevel ||1)}} {{nodeLevelInfo.distributionName}}</view>
+                </view>
+            </view>
+        </view>
+        <navigator hover-class="none" url='/pages/fenxiao/privilege' class="header-right">了解等级特权</navigator>
+    </view>
+    <view class="page-body" style="height:100%}}">
+        <!-- 当前等级特权 -->
+        <view class="grade-panel" wx:if="{{distributionLevel > 1}}">
+            <navigator hover-class="none" url='/pages/fenxiao/privilege' class="grade-title">
+                <text>当前等级V{{distributionLevel || 1}}特权</text>
+                <image src="{{quiz}}" class="quiz-icon"></image>
+            </navigator>
+            <view class="grade-body">
+                <view class="grade-item">
+                    <image mode="aspectFit" style="width: 51.8rpx;height: 54.5rpx" class="direct-icon" src="{{staticResPath}}/direct1.png"></image>
+                    <view class="grade-text">
+                        <text class="main-text">直接奖励</text>
+                        <text class="sub-text">+<text class="value-text">{{currentLevel.additionalDirectValue || 0}}%</text></text>
+                    </view>
+                </view>
+                <view class="grade-item">
+                    <image mode="aspectFit" style="width: 68.2rpx;height: 58.6rpx" class="indirect-icon" src="{{staticResPath}}/indirect1.png"></image>
+                    <view class="grade-text">
+                        <text class="main-text">间接奖励</text>
+                        <text class="sub-text">+<text class="value-text">{{currentLevel.additionalIndirectValue || 0}}%</text></text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 下一级等级特权 -->
+        <view class="grade-panel" wx:if="{{!isReachMaxVipLevel}}">
+            <navigator hover-class="none" url='/pages/fenxiao/privilege' class="grade-title">
+                <text>下一等级V{{(distributionLevel || 1)+1}}特权</text>
+                <image src="{{quiz}}" class="quiz-icon"></image>
+            </navigator>
+            <view class="grade-body">
+                <view class="grade-item">
+                    <image mode="aspectFit" class="direct-icon" style="width: 50.3rpx;height: 46.6rpx;" src="{{staticResPath}}/direct2.png"></image>
+                    <view class="grade-text">
+                        <text class="main-text">直接比例</text>
+                        <text class="sub-text">+<text class="value-text next-value-text">{{nextLevel.additionalDirectValue || 0}}%</text></text>
+                    </view>
+                </view>
+                <view class="grade-item">
+                    <image mode="aspectFit" class="indirect-icon" style="width: 56.3rpx;height: 55.6rpx;" src="{{staticResPath}}/indirect2.png"></image>
+                    <view class="grade-text">
+                        <text class="main-text">间接比例</text>
+                        <text class="sub-text">+<text class="value-text next-value-text">{{nextLevel.additionalIndirectValue || 0}}%</text></text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 升级条件 -->
+        <view class="upgrade-panel" wx:if="{{!isReachMaxVipLevel}}">
+            <navigator hover-class="none" url='/pages/fenxiao/condition'  class="upgrade-title">
+                <text>升级条件</text>
+                <image src="{{quiz}}" class="quiz-icon"></image>
+            </navigator>
+            <view class="upgrade-body">
+                <view class="upgrade-item" wx:if="{{conditionComm}}">
+                    <image mode="aspectFit" style="width: 78.4rpx;height: 88.5rpx" class="upgrade-image1" src="{{staticResPath}}/brokerage.png"></image>
+                    <view class="upgrade-text">
+                        <text class="text-main">累计奖励{{app.globalData.currencySymbol}}{{mTool.fToY(nextLevel.commissionThreshold)}}元</text>
+                        <text class="text-sub" wx:if="{{gapCommission>0}}">还差{{app.globalData.currencySymbol}}{{mTool.fToY(gapCommission || 0)}}</text>
+                        <text class="text-sub" wx:else>已完成</text>
+                    </view>
+                    <navigator hover-class="none" wx:if="{{gapCommission>0}}" class="upgrade-btn" url="/pages/commissionGoods/commissionGoods?keyword=&aId=&aInfo=">去完成</navigator>
+                    <button hover-class="none" wx:else class="upgrade-btn">已完成</button>
+                </view>
+                <view class="upgrade-item" wx:if="{{conditionFans}}">
+                    <image mode="aspectFit" style="width: 79.4rpx;height: 75.5rpx" class="upgrade-image2" src="{{staticResPath}}/fans.png"></image>
+                    <view class="upgrade-text">
+                        <text class="text-main">累计直接推广粉丝{{nextLevel.downNodeNumThreshold}}个</text>
+                        <text class="text-sub" wx:if="{{gapFans>0}}">还差{{gapFans}}个粉丝</text>
+                        <text class="text-sub" wx:else>已完成</text>
+                    </view>
+                    <navigator hover-class="none" wx:if="{{gapFans>0}}" class="upgrade-btn" url="/pages/fenxiao/sharePoster">去完成</navigator>
+                    <button hover-class="none" wx:else class="upgrade-btn">已完成</button>
+                </view>
+                <view class="upgrade-item" wx:if="{{conditionGoods}}">
+                    <image mode="aspectFit" style="width: 78.4rpx;height: 78.6rpx" class="upgrade-image3" src="{{staticResPath}}/buyGoods.png"></image>
+                    <view class="upgrade-text">
+                        <text class="text-main">购买指定商品</text>
+                        <text class="text-sub" wx:if="{{!assignGoodsBuyed}}">还需购买{{nextLevel.goodsName}}</text>
+                        <text class="text-sub" wx:else>已购买</text>
+                    </view>
+                    <view class="upgrade-btn" wx:if="{{!assignGoodsBuyed}}" bindtap="toGoodDetail">去下单</view>
+                    <view class="upgrade-btn" wx:else>已购买</view>
+                </view>
+                <view class="upgrade-item" wx:if="{{conditionMonetary}}">
+                    <image mode="aspectFit" style="width: 76.4rpx;height: 78.4rpx" class="upgrade-image4" src="{{staticResPath}}/monetary.png"></image>
+                    <view class="upgrade-text">
+                        <text class="text-main">累计消费金额{{app.globalData.currencySymbol}}{{mTool.fToY(nextLevel.consumeMoneyThreshold)}}元</text>
+                        <text class="text-sub" wx:if="{{gapMonetary>0}}">累计消费金额还差￥{{app.globalData.currencySymbol}}{{mTool.fToY(gapMonetary)}}</text>
+                        <text class="text-sub" wx:else>已完成</text>
+                    </view>
+                    <navigator hover-class="none" wx:if="{{gapMonetary>0}}" class="upgrade-btn" url="/pages/index/index">去完成</navigator>
+                    <button hover-class="none" wx:else class="upgrade-btn" url="/pages/index/index">去完成</button>
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>

@@ -1,0 +1,62 @@
+<!--pages/sbargain/seckillList.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view style="background:#f5f7f7" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="secAtySta">
+    <view class="secAtyIng {{ secListStatus == 1 ? 'active' : ''}}" bindtap="changeList" data-list="1">
+      进行中
+      <view class="triangle"></view>
+    </view>
+    <view class="secAtyReady {{ secListStatus == 0 ? 'active' : ''}}" bindtap="changeList" data-list="0">
+      即将开始
+      <view class="triangle"></view>
+    </view>
+  </view>
+
+
+  <view style="background:#f5f7f7" class="secAtyIngList secAtyList">
+    <view class="secGoodsItem" wx:for="{{pageList}}">
+      
+      <view class="secGoodsInfo">
+        <view class="secLeft">
+          <image src="{{mTool.specUrl(extConfig,userImagePath,item.eo.awardPic)}}" class="commGoodsImg"></image>
+          <view class="countdownWrap">
+        <text style='color:#fff;font-size:22rpx;'>{{1 == secListStatus ? "距结束:" : "距开始:"}}</text>
+        <text>{{countDownList[index].atyTimeShutDown.timerDay1}}:</text>
+          <text>{{countDownList[index].atyTimeShutDown.timerHour1}}:</text>
+          <text>{{countDownList[index].atyTimeShutDown.timerMinute1}}:</text>
+          <text>{{countDownList[index].atyTimeShutDown.timerSecond1}}</text>
+      </view>
+        </view>
+        <view class="secRight">
+          <text class="secGoodsName">{{item.activityName}}</text>
+          <view class="secprice-wrap">
+            <text style='color:#666;font-size:28rpx;'>秒杀价:</text>
+            <text style="color:#FF4A05;">{{app.globalData.currencySymbol}}</text>
+            <text class="secPrice">{{mTool.fToY(item.eo.activityPrice)}}</text>
+            
+          </view>
+          <text class="originalPrice">{{app.globalData.currencySymbol}}{{mTool.fToY(item.eo.originalPrice)}}</text>
+          <view class="rBottom">
+            <view>
+              <view class="barWrap">
+                <view wx:if="{{1 == secListStatus}}" class="bar" style="width:{{0 == item.totalAwardNum ? 0 : (item.totalAwardNum - item.sendAwardNum)/item.totalAwardNum *100}}%;"></view>
+                <view wx:elif="{{0 == secListStatus}}" class="bar" style="width:100%;"></view>
+              </view>
+
+
+              <text class="leftNum" wx:if="{{1 == secListStatus}}">剩余：{{item.totalAwardNum - item.sendAwardNum}}</text>
+              <text class="leftNum" wx:if="{{secListStatus != 1}}">库存：{{item.totalAwardNum}}</text>
+            </view>
+            <navigator class="secBtn" url="/pages/sbargain/seckillGoods?id={{item.id}}" wx:if="{{1 == secListStatus && 0 != item.totalAwardNum - item.sendAwardNum}}">立即秒杀</navigator>
+            <navigator class="secBtn soldOutBtn" wx:elif="{{1 == secListStatus && 0 == item.totalAwardNum - item.sendAwardNum}}">抢光了</navigator>
+            <navigator class="secBtn raedyBtn" url="/pages/sbargain/seckillGoods?id={{item.id}}" wx:elif="{{0 == secListStatus && 0 == item.totalAwardNum - item.sendAwardNum}}">即将开始</navigator>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="noMore" wx:if="{{isBottom}}">
+    没有更多数据了~
+  </view>
+  <include src="/pages/template/authModal.wxml" />
+</view>

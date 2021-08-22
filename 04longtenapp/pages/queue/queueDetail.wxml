@@ -1,0 +1,26 @@
+<!--pages/queue/queueDetail.wxml-->
+<view class='theme-wrapper app-theme-{{app.globalData.themeId}}'>
+  <view class="queueDetailWrap">
+    <view class='num'>{{number}}</view>
+    <view class='name'>{{name}}</view>
+    <view class='info'>
+      <view class='iItem main-color' style="{{app.globalData.customStyleColor}}">您前面还有{{waitCount}}位在排队...</view>
+      <view class='iItem'>
+        <view>取号时间：</view>
+        <view>{{fetchTime}}</view>
+      </view>
+      <view class='iItem'>
+        <view>已等待：</view>
+        <view>{{waitTime}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='opts'>
+    <form class="botForm" bindsubmit="handleBack" report-submit="true">
+      <button class='clearBtn' bindtap='onNavTab' form-type='submit'>
+        <text class='toIndex'>回到首页</text>
+      </button>
+    </form>
+  </view>
+  <include src="/pages/template/authModal.wxml"/>
+</view>

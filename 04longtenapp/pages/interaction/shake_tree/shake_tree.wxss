@@ -1,0 +1,157 @@
+/* 摇一摇奖励  */
+@import "../inteCommon/common.wxss";
+ page {
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-size: 100% auto;
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/gamepage/newshakeredpack/bg.jpg");
+}
+.game-rule {
+    z-index: 3;
+    display: block;
+    position: absolute;
+    top: 19.92rpx;
+    right: 0;
+    width: 155.84rpx;
+}
+.game-title {
+    z-index: 15;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 621.03rpx;
+    top: 73rpx;
+}
+#coins_canvas{
+  width: 100%;
+  height: 100%;
+}
+.game-title image {
+    display: block;
+}
+.tree {
+    z-index: 1;
+    position: absolute;
+    top: 168.73rpx;
+    left: 0;
+    width: 100%;
+    height: 913.96rpx;
+    background: url("http://res.xcx.weijuju.com/image/mobile/aty/gamepage/newshakeredpack/tree.png") no-repeat center 0/100%;
+}
+.tree .money-wrapper {
+    position: absolute;
+    top: 187.48rpx;
+    left: 50%;
+    margin-left: -281.22rpx;
+    width: 562.44rpx;
+}
+.tree .money-wrapper .money {
+    position: absolute;
+    height: 117.17rpx;
+    width: 167.56rpx;
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-size: 100% auto;
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/gamepage/newshakeredpack/redback.png");
+    transform-origin: center 0;
+    -webkit-transform-origin: center 0;
+    -webkit-animation: shake-redpack 2s ease-in-out 0s infinite both;
+    animation: shake-redpack 2s ease-in-out 0s infinite both;
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+}
+.tree .money-wrapper .money-1 {
+    top: 0;
+    left: 0;
+}
+.tree .money-wrapper .money-2 {
+    top: 0;
+    right: 0;
+}
+.tree .money-wrapper .money-3 {
+    top: 199.2rpx;
+    left: 0;
+}
+.tree .money-wrapper .money-4 {
+    top: 199.2rpx;
+    right: 0;
+}
+.tree .money-wrapper .money>view {
+    padding-top: 65.62rpx;
+    width: 167.56rpx;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 28.12rpx;
+    color: #ffea40;
+}
+.tree .shake {
+    position: absolute;
+    bottom: 86.71rpx;
+    left: 50%;
+    margin-left: -101.71rpx;
+    height: 203.42rpx;
+    width: 203.42rpx;
+    background: url("http://res.xcx.weijuju.com/image/mobile/aty/gamepage/newshakeredpack/shake3.png") no-repeat center 0/100%;
+}
+.tree .shake .shake-phone {
+    position: absolute;
+    top: 32.81rpx;
+    left: 50%;
+    margin-left: -22.26rpx;
+    height: 89.05rpx;
+    width: 44.53rpx;
+    background: url("http://res.xcx.weijuju.com/image/mobile/aty/gamepage/newshakeredpack/shake_phone.png") no-repeat center 0/100%;
+    -webkit-animation: shake-phone 1s ease-in-out 1s infinite both;
+    animation: shake-phone 1s ease-in-out 2s infinite both;
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+}
+.tree .my-prize {
+    position: absolute;
+    right: 16.4rpx;
+    bottom: 87.88rpx;
+    width: 166.39rpx;
+}
+.coins-wrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+/* animation start */
+ @keyframes shake-phone {
+    0%, 12.5%, 25%, 43.75% {
+        -webkit-transform: rotateZ(0deg);
+        transform: rotateZ(0deg);
+    }
+    6.25%, 31.25% {
+        -webkit-transform: rotateZ(-45deg);
+        transform: rotateZ(-45deg);
+    }
+    18.75% {
+        -webkit-transform: rotateZ(45deg);
+        transform: rotateZ(45deg);
+    }
+}
+@-webkit-keyframes shake-phone {
+    0%, 12.5%, 25%, 43.75% {
+        -webkit-transform: rotateZ(0deg);
+        transform: rotateZ(0deg);
+    }
+    6.25%, 31.25% {
+        -webkit-transform: rotateZ(-45deg);
+        transform: rotateZ(-45deg);
+    }
+    18.75% {
+        -webkit-transform: rotateZ(45deg);
+        transform: rotateZ(45deg);
+    }
+}
+@keyframes shake-redpack{0%{transform:scale3d(1,1,1)}
+  10%,20%{transform:scale3d(.98,.98,.98) rotate3d(0,0,1,-3deg)}
+  30%,50%,70%,90%{transform:scale3d(1.03,1.03,1.03) rotate3d(0,0,1,3deg)}
+  40%,60%,80%{transform:scale3d(1.03,1.03,1.03) rotate3d(0,0,1,-3deg)}
+  100%{transform:scale3d(1,1,1)}
+}
+

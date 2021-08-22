@@ -1,0 +1,152 @@
+<wxs src="../../utils/comm.wxs" module="mTool"/>
+<wxs module="m1">
+    var toFixed2 = function(num) {
+    return num.toFixed(2);
+    };
+    module.exports = {
+    toFixed2: toFixed2,
+    }
+</wxs>
+<import src="../template/noneAuth.wxml" />
+<scroll-view>
+    <view class='listWrap'>
+        <view class='listType'>
+            <view class='listBtn {{"l1" == listType ? "active" : ""}}' bindtap='changeList' data-type="l1">次卡购买</view>
+            <view class='listBtn {{"l2" == listType ? "active" : ""}}' bindtap='changeList' data-type="l2">我的次卡</view>
+        </view>
+        <view class='list' style=" background:rgba(248,248,248,1);">
+            <view wx:if="{{'l1' == listType || !noAuthInfo}}" style='height:100rpx; line-height:100rpx;align-self: flex-start;margin-left: 36rpx;display: flex;align-items: center;'>
+                <text style="font-size:28rpx;font-weight:400;color:rgba(27,27,32,1);">{{"l1" == listType ?
+                    '可购买次卡':'我的次卡'}}
+                </text>
+                <text style="font-size:24rpx;font-weight:300;color:rgba(65,65,78,1);">{{listTips}}张</text>
+            </view>
+            <block wx:if='{{"l1" == listType}}'>
+                <view class='cardItem' wx:for="{{list}}">
+                    <view class="view-panel" style="margin-bottom: 32rpx;">
+                        <view class="item-first item-cardName" style="width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{item.name || item.cname}}</view>
+                        <view class="item-next item-cardPrice">
+                            <text class="price-integer">{{mTool.fToY(item.price,'integer')}}.</text>
+                            <text class="price-float">{{mTool.fToY(item.price,'float')}}</text>
+                            <text style="font-size: 28rpx;">元</text>
+                            <view style="font-size: 22rpx;margin-top: -20rpx;">共{{item.enableCount}}次</view>
+                        </view>
+                    </view>
+                    <view class="view-panel">
+                        <view class="item-first item-cardTime">
+                            <view>有效时间</view>
+                            <view wx:if="{{2 == item.timeLimitType}}">
+                                {{mTool.timeYYMMDD(item.effectStartTime,'.')}}-{{mTool.timeYYMMDD(item.effectEndTime,'.')}}
+                            </view>
+                            <view wx:if="{{1 == item.timeLimitType}}">永久有效</view>
+                            <view wx:if="{{3 == item.timeLimitType}}">购买后{{item.effectDay}}天有效</view>
+                        </view>
+                        <view class="item-next" bindtap='buyOrValidCard' data-idx="{{index}}">
+                            <image class="item-cardButton"
+                                   src="http://res.xcx.weijuju.com/image/mobile/cardBuy.png"></image>
+                        </view>
+                    </view>
+
+                </view>
+            </block>
+            <block wx:else>
+                <view wx:if="{{!noAuthInfo}}" class="{{item.state == 2 || (item.state == 1 && item.enableCount == 0)?'cardItem1':'cardItem'}}" wx:for="{{list}}" bindtap='buyOrValidCard' data-idx="{{index}}">
+                    <view class="detail-name-panel" style="width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+                        {{item.name || item.cname}}
+                    </view>
+                    <view wx:if="{{item.state == 2 || (item.state == 1 && item.enableCount == 0)}}" data-recordid="{{item.id}}" catchtap="deleteTCard" class="timeCard-delete">
+
+                    </view>
+                    <view wx:if="{{item.state == 2 || (item.state == 1 && item.enableCount == 0)}}" class="timeCard-state{{item.state}}">
+
+                    </view>
+                    <view class="detail-enable-panel">
+                        剩余
+                        <text style="font-size: 64rpx;">{{item.enableCount}}</text>
+                        次
+                    </view>
+                    <view class="detail-count-panel" style="font-size:22rpx">
+                        <view>购买次数{{item.totalCount}}次</view>
+                        <view style="display: flex;justify-content: space-between">
+                            <text>核销次数{{item.totalCount-item.enableCount}}次</text>
+                            <view style="margin-right: 20rpx">
+                                有效时间：{{mTool.timeYYMMDD(item.effectStartTime,'.')}}-{{mTool.timeYYMMDD(item.effectEndTime,'.')}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <template is="none-auth" data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'会员次卡'}}"></template>
+            </block>
+        </view>
+    </view>
+
+
+    <view wx:if="{{isBottom && !noAuthInfo}}" style='font-size:14px;color:#999;text-align:center;position: relative;top: -24rpx;'>
+        无再多数据
+    </view>
+
+    <view class="mMask" hidden="{{!buyModal}}">
+        <view class="mModal">
+            <view class="mHeader">
+                <view class="mTitle">次卡购买</view>
+            </view>
+            <form bindsubmit="purchaseCard">
+                <view class="mBody">
+                    <!--  购买次卡信息填写 -->
+                    <view class="user-info-panel">
+                        <view style='font-weight:bold;margin-bottom: 12rpx'>请填写以下信息：</view>
+                        <view class="info-name" wx:for="{{extendInfo}}" wx:if="{{item.isChecked}}">
+                            <text>{{item.name}}：</text><input data-type="{{item.field}}" bindinput="changeExtend" type="text"></input>
+                        </view>
+                    </view>
+                    <view>
+                        <text style='font-weight:bold;'>购买说明：\n</text>
+                        购买{{curCard.name}}（{{curCard.enableCount}}次），有效期为
+                        <text hidden='{{!(1 === curCard.timeLimitType)}}'>永久有效</text>
+                        <text hidden='{{!(2 === curCard.timeLimitType)}}'>
+                            {{mTool.timeYYMMDD(curCard.effectStartTime)}}至{{mTool.timeYYMMDD(curCard.effectEndTime)}}有效
+                        </text>
+                        <text hidden='{{!(3 === curCard.timeLimitType)}}'>购买后{{curCard.effectDay}}天有效</text>
+                        ，所需金额为
+                        <text style='color:red;'>{{mTool.fToY(curCard.price)}}元</text>
+                        。
+                    </view>
+
+                    <view>
+                        <text style='font-weight:bold;'>使用说明：\n</text>
+                        <view class='textScroll'>
+                            <text>{{curCard.intro}}</text>
+                        </view>
+                    </view>
+
+                </view>
+                <view class="mBottom">
+                    <button class="mCancelBtn" bindtap="hideLabelModal">取消</button>
+                    <button class="mConfirmBtn" formType="submit">确定购买</button>
+                </view>
+            </form>
+        </view>
+    </view>
+
+    <view class="mMask" hidden="{{!cardModal}}">
+        <view class="cardValid" style="position:relative;border-radius: 20rpx">
+            <view class='secName'>{{curCard.cname}}次卡</view>
+            <view>
+                <image class='validQrCode' src='{{userImagePath + qrCodeUrl}}'></image>
+            </view>
+            <view class="cardId">{{curCard.id}}</view>
+            <view class="cardEnableTimes">可用{{curCard.enableCount}}次</view>
+            <view class='useTips'>
+                <view class='useTitle'>使用说明</view>
+                <view class='tips'>
+                    <view class='tItem' wx:for="{{intro}}">{{item}}</view>
+                </view>
+            </view>
+            <!-- 取消 -->
+            <view style="position:absolute;right: 0;top: 0;">
+                <view style="margin-top: 0;" class='closeIco' bindtap='hideLabelModal'>×</view>
+            </view>
+        </view>
+    </view>
+    <include src="/pages/template/authModal.wxml"/>
+</scroll-view>

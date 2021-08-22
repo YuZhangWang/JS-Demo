@@ -1,0 +1,25 @@
+/* pages/wxpay/wxpaytoken.wxss */
+
+.tokenDesc{
+  text-align: center;
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 5rpx;
+  padding: 30rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 1px 0 rgba(206,213,219,0.15);
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+}
+.bindTxt{
+}
+.comfirmBtn{
+  background:#09BB07;
+  color:#fff;
+  margin: 20rpx;
+}
+.bindPage{
+  height: 100%;
+  background: #EFF1EE;
+}

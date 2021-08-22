@@ -1,0 +1,98 @@
+<!--pages/verify//giftcard_verify.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<block wx:if="{{showLoading}}">
+  <view class="container" style='display:none;'>
+  <view class="header" style='margin-top:30%;'>
+    <icon type="waiting" size="65" color="#04be02"/>
+    <view class="p_txt">加载中...</view>
+  </view>
+</view>
+</block>
+<block wx:else>
+<view class="container" style="background:#fff" wx:if="{{verifiedClerk && !showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">是否核销该礼品卡？</view>
+    <view style="font-size:24rpx;color:#999;margin-top:10px;">核销完成后礼品不可再次使用</view>
+  </view>
+  <view class="center order-goods" style='margin-top:18px;'>
+    <view class="detail-item">
+       <view class="detail-title">礼品卡名称</view>
+       <view class="detail-content">{{config.title}}</view>
+    
+    </view>
+    <view class="detail-item">
+       <view class="detail-title">持卡用户</view>
+       <view class="detail-content"><image class="user-img" src="{{config.head}}"></image><text>{{config.nickName}}</text></view>
+    
+    </view>
+    <block wx:if="{{config.type == 2}}">
+       <view class="detail-item">
+       <view class="detail-title">礼品卡余额</view>
+       <view class="detail-content"><text style="position: relative;{{app.globalData.customStyleColor}}" class="gift-card-tag main-color">{{app.globalData.currencySymbol}}{{mTool.fToY(config.money)}}</text></view>
+    
+    </view>
+    <view class="detail-item">
+       <view class="detail-title">核销金额</view>
+       <view class="detail-content"><input placeholder-style="font-size:26rpx;color:#999" placeholder="请输入核销金额" bindinput="getMoney"></input></view>
+    
+    </view>
+    </block>
+    <block wx:if="{{config.type == 1}}">
+    <view class="detail-item" style="padding-bottom:0px;">
+       <view class="detail-title">礼品卡兑换商品</view>
+    </view>
+    <view wx:if="{{goods}}" class="detail-item" style="justify-content:flex-start;border:none;">
+       <image class="goods-img" src="{{config.bizMsg}}"></image>
+       <view>
+          <view class="goods-name">{{goods.name}}</view>
+          <view class="goods-price">当前售价：{{app.globalData.currencySymbol}}{{mTool.fToY(goods.price)}}</view>
+       
+       
+       </view>
+       
+    </view>
+    
+    
+    </block>
+    
+    <view class="clerk-detail">
+      <view class="field">
+        <view class="title">核销员</view>
+        <view class="name">{{verifiedClerk.name}}</view>
+      </view>
+      <view class="field">
+        <view class="title">操作时间</view>
+        <view class="name">{{nowTime}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel bottom">
+    <view class="zan-btns">
+      <button style="border-radius:25px" bindtap='handleSubmit' class="zan-btn zan-btn--primary {{btnLoading?'zan-btn--loading':''}}">确定核销</button>
+    </view>
+  </view>
+</view>
+<view class="container" style="display: flex;align-items: center;justify-content: center;margin-top: 50%;" wx:elif="{{verifiedClerk && showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">核销成功！</view>
+  </view>
+
+  <!-- <view class="center" style='margin-top:20px;text-align:center;'>
+      <view style='line-height:70rpx;padding:0 10rpx;font-size:26rpx;'>订单号：{{orderData.orderNum}}</view>
+  </view> -->
+</view>
+<view class="container cont_error" wx:else>
+  <view class="header">
+    <icon type="clear" size="65" color="#f00"/>
+    <view class="p_txt">您没有核销权限！</view>
+  </view>
+  <view class="center">
+
+  </view>
+</view>
+</block>
+<include src="/pages/template/authModal.wxml"/>
+</view>

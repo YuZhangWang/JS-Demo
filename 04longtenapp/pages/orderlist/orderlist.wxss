@@ -1,0 +1,420 @@
+a.clearfix {
+    color: #7D7D7D;
+    display: block;
+}
+
+.header {
+    width: 100%;
+}
+.moneyhl {
+    color: #F44;
+}
+.header .wxsc-ul.nav {
+    margin: 0 auto;
+    overflow: hidden;
+}
+.header #nav{
+  /* border-bottom: 8rpx solid #eee;
+  border-top: 8rpx solid #eee; */
+  /* width: 100%; */
+  white-space:nowrap;
+  overflow: auto;
+  display: flex;
+  padding: 20rpx;
+}
+.header #main_nav{
+  display: flex;
+  padding: 20rpx;
+    background: #fff;
+  white-space:nowrap;
+overflow:auto;
+/* width:100%; */
+
+
+}
+.header #main_nav .wxsc-li{
+  width:70px;
+}
+.header .wxsc-ul.nav.offline_nav .wxsc-li{
+  width:25%;
+}
+.header .wxsc-ul.nav>.wxsc-li {
+    text-align: center;
+    padding: 10rpx 25rpx;
+    margin: 0 10rpx;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: #444444;
+}
+.main-nav > .wxsc-li{
+    border: none !important;
+    border-radius: 45rpx;
+}
+.header .wxsc-ul.nav>.wxsc-li[hidden]{
+  display:none;
+}
+.header .wxsc-ul.nav>.wxsc-li .wxsc-a {
+    font-size: 26rpx;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    -webkit-user-select: none;
+}
+.header .wxsc-ul.main-nav>.wxsc-li .wxsc-a{
+    font-size: 28rpx !important;
+}
+
+.header .wxsc-ul.nav .wxsc-li:last-child .wxsc-a {
+    border-right: none;
+}
+
+.header .wxsc-ul.nav .active {
+    color: #f44;
+}
+.header #main_nav .active {
+    /*border: 1rpx solid #f44;*/
+    color: #fff !important;
+    border-radius: 50rpx;
+}
+.header .wxsc-ul.main-nav .active .wxsc-a{
+    border: none !important;
+}
+.offline-item-list .order-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.offline-item-list .order-content .order-left{
+    height: auto !important;
+}
+.header .wxsc-ul.nav .active .wxsc-a {
+border-bottom: 6rpx solid #f44;
+}
+
+.order-list {
+    background-color: #fff;
+    padding: 8rpx 28rpx 20rpx;
+     /* border-bottom: 15rpx solid #E0E1E3;  */
+    font-size: 28rpx;
+    margin: 0 20rpx;
+    border-radius: 20rpx;
+    overflow: hidden;
+    margin-bottom: 35rpx;
+}
+.order-list:last-child{
+    border-bottom: none;
+}
+
+.order-header {
+    /* border-bottom: 1px solid #D3D3D3; */
+    font-size: 24rpx;
+    padding: 12rpx 0 0;
+    overflow: hidden;
+}
+
+.order-header .header-left {
+    float: left;
+    /* margin-left: 3.6%; */
+    color: #999999;
+    font-size: 24rpx;
+    margin-top:4rpx;
+}
+
+.order-header .header-right {
+    float: right;
+    font-size: 24rpx;
+    /* margin-right: 14rpx; */
+    text-align: center;
+}
+
+.header-btn {
+    /* padding: 6rpx 30rpx; */
+    font-size: 24rpx;
+    color: #333333;
+    border: 1px solid #E4E4E4;
+    -webkit-border-radius: 30rpx;
+    -moz-border-radius: 30rpx;
+    border-radius:30rpx;
+    float:left;
+    width: 150rpx;
+    text-align: center;
+    /* margin-right: 12rpx; */
+    height: 54rpx;
+    line-height: 54rpx;
+    margin-left: 22rpx;
+}
+
+.order-header .header-right .header-other-btn {
+    background-color: #FF8A00;
+    padding: 2rpx 10rpx;
+    color: #fff;
+    border: 1px solid #FF8A00;
+    -webkit-border-radius: 14rpx;
+    -moz-border-radius: 14rpx;
+    border-radius: 14rpx;
+}
+
+.order-header .header-right .header-txt {
+    display: inline-block;
+    color: #444444;
+    float:right;
+    margin-left:10rpx;
+    margin-top:4rpx;
+}
+
+.order-content {
+    position: relative;
+    /* background-color: #F9FAF9; */
+    overflow: hidden;
+    padding:24rpx 0;
+    margin-bottom: 10rpx;
+}
+
+.order-item-list .order-content:LAST-CHILD {
+    margin-bottom: 0;
+    /* border-bottom: 1px solid #E0E1E3; */
+}
+
+.order-content .order-img {
+    float: left;
+    margin-right: 22rpx;
+    /* margin-left: 4%; */
+}
+
+.order-content .order-img image {
+    display: inline-block;
+    height:120rpx;
+    width:120rpx;
+}
+
+.order-content .order-left {
+    float: left;
+    /* margin-left: 3%; */
+    height: 80rpx;
+}
+.order-content .order-left .order-name {
+    /* margin-top: 14rpx; */
+    margin-top: -5rpx;
+    padding-left: 10rpx;
+    line-height: 1.5em;
+    color: #333333;
+    display:block;
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    display:-webkit-box; 
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2; 
+}
+.offline-item-list .order-content{
+  padding:12rpx 0;
+
+}
+.offline-item-list .order-content .order-left .order-name{
+  /* margin-top: 38rpx; */
+  font-size: 30rpx;
+}
+
+.order-content .order-left .order-spec {
+    margin-top: 8rpx;
+    color: #BCBCBC;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.order-content .order-right {
+    float: right;
+}
+
+.order-content .order-right .order-info {
+    /* margin: 44rpx 30rpx 0 4rpx; */
+}
+
+.order-content .order-right .order-info .mutil {
+    /* color: #444444; */
+}
+
+.order-content .order-right .order-info .info-money {
+    color: #E24058;
+}
+
+.order-content .order-right .order-pj {
+    text-align: center;
+    margin-top: -30rpx;
+    float: right;
+    width: 150rpx;
+    max-height: 54rpx;
+    line-height: 54rpx;
+    background-color: #f44;
+    color: #fff;
+    -webkit-border-radius: 0 0 0 14rpx;
+    -moz-border-radius: 0 0 0 14rpx;
+    border-radius: 0 0 0 14rpx;
+}
+
+.order-footer {
+    overflow: hidden;
+    padding: 0 0 18rpx 0;
+    color: #7D7D7D;
+    /* border-bottom: 1rpx solid #E0E1E3; */
+    /* background-color: #F9FAF9; */
+}
+
+.order-footer .footer-left {
+    float: right;
+    margin-right: 40rpx;
+}
+
+.order-footer .footer-left>text {
+    color: #E24058;
+}
+
+.order-footer .footer-right {
+    float: right;
+    /* margin-right: 30rpx; */
+}
+
+.order-footer .footer-right .total-money {
+    color: #E24058;
+}
+.footer_blank{
+  display: flex;
+  justify-content: flex-end;
+  height: 80rpx;
+  align-items: center;
+}
+.nodata-tips {
+    font-size: 24rpx;
+    text-align: center;
+    color: #929292;
+    padding: 24rpx 0;
+}
+.no-goodsList-show{
+    padding: 40rpx;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 30%;
+}
+.text-spec{
+  font-size: 24rpx;
+  color: #bbb;
+}
+/*评价  */
+.zan-tag--danger{
+  width: 120rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 28rpx;
+  color: white;
+  background: #F44;
+  position: relative;
+  border-radius: 0 0 0 5px;
+  text-indent: 10rpx;
+  margin: 0 auto;
+  text-align: center;
+}
+.judge-button{
+  position: absolute;
+  top: 0;
+  right: 0rpx;
+}
+.orderMiddle{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 120rpx;
+  line-height: 1;
+  
+}
+
+/*------提示框-------*/
+/* #confirm_dialog {
+    overflow: hidden;
+    z-index: 101;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    max-width: 540rpx;
+    max-height: 420rpx;
+    margin-left: -270rpx;
+    background-color: #fff;
+    opacity: 1;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+#confirm_dialog .confirm-content {
+    position: relative;
+    max-height: 210rpx;
+    max-width: 510rpx;
+    padding: 75rpx 15rpx 30rpx 15rpx;
+    text-align: center;
+    color: #353535;
+    font-size: 33rpx;
+}
+#confirm_dialog .confirm-content>.tips-span {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 15rpx;
+    width: 60rpx;
+    height: 60rpx;
+    font-size: 54rpx;
+}
+#confirm_dialog .confirm-content>.tips-div {
+    display: inline-block;
+    margin-left: -30rpx;
+    height: 90rpx;
+    width: 90rpx;
+    vertical-align: top;
+    background: url(http://127.0.0.1:9068/image/mobile/warn.png) no-repeat center 0/100% 100%;
+}
+#confirm_dialog .confirm-content>.tips-p {
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 6rpx;
+    max-height: 210rpx;
+    max-width: 330rpx;
+    font-size: 30rpx;
+    line-height: 42rpx;
+}
+#confirm_dialog .confirm-content>.tips-p .tips-span {
+    float: left;
+    font-weight: bold;
+}
+#confirm_dialog .btn-container {
+    height: 90rpx;
+    width: 100%;
+    border-top: 3rpx solid #ddd;
+}
+#confirm_dialog .tips-ul.btn-container .tips-li.confirm-dialog-close, #confirm_dialog .tips-ul.btn-container .tips-li.confirm-dialog-close:active {
+    float: left;
+    list-style: none;
+    height: 90rpx;
+    width: 270rpx;
+    color: #353535;
+    font-size: 33rpx;
+    line-height: 84rpx;
+    text-align: center;
+    -webkit-user-select: none;
+    border-bottom-left-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -moz-border-bottom-left-radius: 8px;
+}
+#confirm_dialog .tips-ul.btn-container .tips-li:LAST-CHILD {
+    border-left: 3rpx solid #ddd;
+    color: #ED5030;
+}
+#bg_mask {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 100;
+    -webkit-animation-fill-mode: both;
+} */

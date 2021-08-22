@@ -1,0 +1,849 @@
+<import src="../template/couponlist.wxml" />
+<import src="../template/cardlist.wxml" />
+<import src="../template/giftcardlist.wxml" />
+<import src="../template/dineWay.wxml" />
+<import src="../template/expectTime.wxml" />
+<import src="../template/passwordCheck.wxml" />
+<import src="../../youzan/dist/switch/index.wxml" />
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<wxs module="m1">
+  var switchTel = function(shopInfo) {
+    if (shopInfo) {
+      var information = shopInfo.information;
+      return (information & Math.pow(2, 0)) != 0;
+    } else {
+      return false;
+    }
+  }
+  var disDiv10 = function(dis) {
+    return parseFloat(dis / 10).toFixed(1);
+  }
+  var switchFoodType = function(shopInfo, type) {
+    if (shopInfo) {
+      var foodType = shopInfo.foodType;
+      return (foodType & Math.pow(2, type)) != 0;
+    } else {
+      return false;
+    }
+  }
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getCouponDiscount = function(selectedCoupon, goodsList, orderData) {
+    if (orderData && orderData.ticketId) {
+      return orderData.ticketPrice;
+    }
+    var discountMoney = selectedCoupon.money;
+    if (selectedCoupon.useLimitType == 1) {
+      for (var i = 0; i < goodsList.length; i++) {
+        var goods = goodsList[i];
+        if (selectedCoupon.busiId == goods.id) {
+          var discountMoney = selectedCoupon.money;
+          if (discountMoney > goods.price) {
+            discountMoney = goods.price;
+          }
+        }
+      }
+    }
+    return discountMoney;
+  }
+  var getAllPrice = function(money, orderData, selectedCoupon, goodsList, enableDeposit, discountCount, deliveryPrice,
+    packingPrice) {
+    var totalMoney = money;
+    if (orderData) {
+      if (orderData.ticketId) {
+        totalMoney = money - orderData.ticketPrice;
+      }
+    };
+    if (selectedCoupon) {
+      totalMoney -= getCouponDiscount(selectedCoupon, goodsList);
+    };
+    if (enableDeposit) {
+      totalMoney -= enableDeposit;
+    };
+    if (discountCount) {
+      totalMoney -= discountCount;
+    };
+    if (deliveryPrice) {
+      totalMoney += deliveryPrice;
+    };
+    if (packingPrice) {
+      totalMoney += packingPrice;
+    }
+    if (totalMoney < 0) {
+      totalMoney = 0;
+    }
+    return totalMoney;
+  }
+
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getAllPrice = getAllPrice;
+  module.exports.switchTel = switchTel;
+  module.exports.getCouponDiscount = getCouponDiscount;
+  module.exports.disDiv10 = disDiv10;
+</wxs>
+<!--
+ *goodsType字段----
+ ecWayType字段----
+ getSelfTimeTxt字段----
+ goodsVirtual字段---- 是否为虚拟商品
+orderData字段-----
+-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="container">
+    <!--预下单-- 商品Tab切换-->
+    <view wx:if="{{(goodsType === 1 || goodsType === 5) && openToShop && !orderData && !isVirtualGoods}}" class='ecWayType'>
+      <view class='ecWTItem {{1 == ecWayType ? "active" : ""}}' bindtap='changeEcWayType' data-wtype="1">
+        <text>快递配送</text>
+        <view class='ecWTActive main-color-bg' style="{{app.globalData.customStyleBg}}"></view>
+      </view>
+      <view class='ecWTItem {{3 == ecWayType ? "active" : ""}}' bindtap='changeEcWayType' data-wtype="3">
+        <text>到店自提</text>
+        <view class='ecWTActive main-color-bg' style="{{app.globalData.customStyleBg}}"></view>
+      </view>
+    </view>
+    <!--预下单-- 自提内容输入块-->
+    <view class='getSelfBlock' wx:if="{{3 == ecWayType && getSelfTimeTxt && !isVirtualGoods}}">
+      <view class='getSelfTimeHeader'>自提时间</view>
+      <view>
+        <text>{{getSelfTimeTxt}}</text>
+      </view>
+    </view>
+    <view wx:if="{{3 == ecWayType && !isVirtualGoods}}" class='toShopAddr order-delivery'>
+      <view class="address hide_address" bindtap="onSelfAddress">
+        <view class="zan-icon zan-icon-location icon-ads" style="align-self:flex-start;"></view>
+        <view class="address-message text-black">
+          <view style='color:#000;text-align:left;margin-bottom:15rpx;'>
+            {{address!='请选择自提点'?selfAddressName:address}}
+          </view>
+          <view wx:if="{{address!='请选择自提点'}}" style='color:#959595;text-align:left;margin-left:10rpx;' class="address-text" bindtap='showToShopAddr'>取货地址：{{address}}
+          </view>
+        </view>
+        <image src="http://static.resource.fenxiaov3.weijuju.com/image/mobile/umall/orderdetail/arrow-right.png" class="icon-arr" alt="详情图标"></image>
+        <view class="clear"></view>
+      </view>
+      <view class='title text-black identity'>
+        <text>姓名</text>
+        <input placeholder='请填写取货人姓名' disabled="{{orderId == null ? showInput:!showInput}}" value='{{toShopName}}' name="toShopName" bindchange="changeToShopName"></input>
+      </view>
+      <view class='title text-black identity'>
+        <text>手机</text>
+        <input placeholder='请填写取货人手机' disabled="{{orderId == null? showInput:!showInput}}" value='{{toShopTel}}' name="toShopTel" bindchange="changeToShopTel"></input>
+      </view>
+    </view>
+    <!-- 订单详情-- 商品到店自取货码 -->
+    <view style="display: flex;flex-direction: column;align-items: center;padding: 10rpx 0;border-bottom: 1rpx solid #F0F0F0;background: #fff" wx:if="{{orderData && fromToStore && orderData.foodType != 1 && orderData.sortNum}}">
+      <text>取货码:</text>
+      <view style="font-size: 54rpx;color: #000;">{{orderData.sortNum}}</view>
+    </view>
+    <!--快递配送-->
+    <view class="order-delivery {{!fromTakeout && orderData ? 'main-color-bg':''}}" style="{{fromTakeout?app.globalData.customStyleBg:''}}">
+      <view class="order-number" style="background:transparent;font-size: 36rpx;background-size:cover;background-image: url('{{staticResPath}}/image/mobile/info-background.png');" wx:if="{{orderData != null}}">
+        <view class="number" style='white-space:nowrap;'>
+          <image style="width: 32rpx;height: 32rpx;vertical-align: text-top;margin-right: 8rpx;" src="{{staticResPath}}/image/mobile/{{statusIcon}}.png"></image>
+          <text id="status" class="state over" style="color:#fff">{{orderStatus}}</text>
+        </view>
+      </view>
+      <!--预下单--- 商品快递配送地址选择块-->
+      <view wx:if="{{fromToStore && goodsType != 1 && goodsType !== 5 && !isVirtualGoods}}">
+        <view class="coupon-item text-black other-item" bindtap='handleDineWayModalOpen' wx:if="{{!orderData}}">
+          <view class="commonInlineFlexAC" style="padding-left:45rpx;">
+            <image src="{{staticResPath}}/image/mobile/foodType.png" class="abLftIco"></image>
+            {{waySelect}}
+          </view>
+          <view class="fright" style='padding-right:5px;'>
+            <text wx:if="{{!selectedDineWay}}">请选择</text>
+            <text wx:else>{{selectedDineWay==1?"到店堂吃":"到店自取"}}</text>
+            <view class="trigger"></view>
+          </view>
+        </view>
+      </view>
+      <view class="address hide_address" style="{{fromTakeout || !orderData ? 'border-radius: 0 !important;':''}}" bindtap="onTapAddress" wx:elif="{{1 == ecWayType && !isVirtualGoods}}">
+        <block wx:if="{{addressInfo == null && !isVirtualGoods}}">
+          <view class="zan-icon zan-icon-location icon-ads" style="color: #333333"></view>
+          <view class="address-tip">请填写收货地址</view>
+          <view wx:if="!isVirtualGoods" style="background-image:url({{staticResPath}}/image/mobile/ca.png);" class="addr-ca"></view>
+        </block>
+        <block wx:else>
+          <view class="zan-icon zan-icon-location icon-ads" style="align-self:center;margin-right: 15rpx;color:#333333"></view>
+          <view class="address-message text-black">
+            <view style="font-size: 26rpx;">
+              <text class="over receiver-title" style="padding-right: 15rpx;">{{addressInfo.userName}}</text>
+              <text class="receiver-name over" id="receiver_name">{{addressInfo.tel}}</text>
+              <!--                            <text class="tel over" id="contact_tel">{{addressInfo.tel}}</text>-->
+            </view>
+            <view style="font-size: 22rpx;" class="address-text" bindtap='showToShopAddr' wx:if="{{!VirtualPage && !isVirtualGoods}}">
+              <!--                            <text class="address-title">{{addressTitle}}</text>-->
+              <text class="receiver-addr" id="receiver_addr">{{addressInfo.areaName+addressInfo.address}}</text>
+            </view>
+          </view>
+          <!-- <text class="checkToShopAddr" wx:if="{{orderData && 3== orderData.wayType}}">查看地址</text> -->
+        </block>
+        <image wx:if="{{orderData == null}}" src="http://static.resource.fenxiaov3.weijuju.com/image/mobile/umall/orderdetail/arrow-right.png" class="icon-arr" alt="详情图标"></image>
+        <view class="clear"></view>
+      </view>
+      <!--            <view style="background-image:url({{staticResPath}}/image/mobile/ca.png);height:8rpx;" class="addr-ca"-->
+      <!--                  wx:if="{{!fromToStore && !goodsVirtual}}"></view>-->
+      <view class="coupon-item text-black other-item" wx:if="{{!orderData && fromTakeout && !fromToStore}}">
+        <view style='display:block;font-size:24rpx;' wx:if="{{fromTakeout && distributionRangeChecked}}">
+          <view wx:if="{{distributionRangeCheck}}" class="zan-icon zan-icon-success icon-checkrange" style="color: #333333" style='margin:0 6rpx 0 10rpx;'></view>
+          <view wx:else class="zan-icon zan-icon-fail icon-checkrange" style='margin:0 6rpx 0 10rpx;color: #333333'></view>
+          商家配送范围为{{shoperInfo.distributionRange}}公里内：
+          <text wx:if="{{distributionRangeCheck}}" style='font-size:24rpx;color:rgb(9, 187, 7);' class="expTimeItemActive" bindtap='chooseLocation'>恭喜，您的收货地址在商家配送范围！</text>
+          <text wx:elif="{{chooseLocation && chooseLocation.address}}" style='font-size:24rpx;color:#ea9518;' class="expTimeItemActive" bindtap='chooseLocation'>很遗憾，您的收货地址不在商家配送范围！</text>
+          <text wx:else class="expTimeItemActive" style='font-size:24rpx;' bindtap='chooseLocation'>请点击查询收货地址是否在配送范围</text>
+        </view>
+      </view>
+      <!-- 送达时间 -->
+      <view class="coupon-item text-black other-item" bindtap='handleExpTimeModalOpen' wx:if="{{!orderData && fromTakeout}}">
+        <view style='display:inline-block;'>
+          <image src="{{staticResPath}}/image/mobile/takeout/time-icon.png" class="abLftIco" style="position:relative;vertical-align: text-top"></image>
+          送达时间：
+          <text class="expTimeItemActive">大约{{canSelectTimeTA[selectedExpTime].showTime}}送达</text>
+        </view>
+
+        <view class="fright" style='padding-right:5px;'>
+          <view class="trigger"></view>
+        </view>
+      </view>
+      <!-- 取餐时间 -->
+      <view class="coupon-item text-black other-item" wx:if="{{!orderData && 2 == selectedDineWay}}">
+        <view class="commonInlineFlexAC" style="padding-left:45rpx;">
+          <image src="{{staticResPath}}/image/mobile/et.png" class="abLftIco"></image>
+          自取时间
+        </view>
+        <view class="fright" style='padding-right:5px;display:flex;width:70%;'>
+          <picker style='margin-top:-2px;width:100%' mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+            <view style='text-align:right;margin-top:7rpx;'>{{time}}</view>
+          </picker>
+
+          <!-- <text class="">{{canSelectTimeTA[selectedExpTime].showTime}}</text> -->
+          <view class="trigger"></view>
+        </view>
+      </view>
+      <view class="coupon-item text-black other-item" bindtap='handleExpTimeModalOpen' wx:elif="{{orderData && 2 == orderType && orderData.bespeakTime && (3 == orderData.foodType || null == orderData.foodType)}}">
+        <view class="time_select" style='display:inline-block;'>
+          <image class="icon-time" alt="时间图标" src="{{staticResPath}}/image/mobile/takeout/time-icon.png"></image> 期望送达时间：
+          <text class=" ">{{orderData.bespeakTime}}</text>
+        </view>
+      </view>
+      <view class="way text-black hide_address" style="display:none;">配送方式：
+        <text class="text-gray" id="delivery_row">商家包邮</text>
+      </view>
+      <view class="microshop-box order-goods bottom-radius">
+        <view class="total-money text-black" wx:if="{{orderData && fromToStore}}">
+          <view class="money_item newTakeAwayItem">
+            <view class="fleft" style="font-size: 28rpx !important;">
+              <image src="{{staticResPath}}/image/mobile/takeout/take-type.png" class="abLftIco" style="width:37rpx;height: 37rpx;margin-left: -3rpx;position:relative;"></image>
+              {{waySelect}}
+            </view>
+            <view class="fright">
+              <text>{{orderData.foodType == 1?"到店堂吃":"到店自取"}}</text>
+            </view>
+          </view>
+          <view class="money_item newTakeAwayItem" wx:if="{{orderData.foodSiteName}}">
+            <view class="fleft" style="font-size: 28rpx !important;">就餐位置</view>
+            <view class="fright">
+              <text>{{orderData.foodSiteName}}</text>
+            </view>
+          </view>
+          <view class="money_item newTakeAwayItem">
+            <view class="fleft" style="font-size: 28rpx !important;">
+              <image src="{{staticResPath}}/image/mobile/takeout/time-icon.png" class="abLftIco" style="position:relative;"></image>
+              预计自取时间
+            </view>
+            <view class="fright">
+              <text>{{orderData.bespeakTime || orderData.waitTime + "分钟后"}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <block>
+        <view style="background: #fff;color: #333" class='orderInfoRef' wx:if="{{orderData && orderDeInf.length !=0 && orderDeInf[0].name}}">
+          <view style='display:flex;align-items:center;padding:0 20rpx;'>
+            <text class='zan-icon zan-icon-pending-evaluate' style='margin-left:10rpx;margin-right:10rpx;font-size:32rpx;color: #333333'></text>
+            <text>{{orderDeInf[0].name}}：</text>
+            <view class='orderInfoDet' wx:if="{{orderDeInf[0].image}}">
+              <image src='{{userImagePath + orderDeInf[0].image}}' class='communityPublish-item-add-image'></image>
+            </view>
+            <view wx:elif="{{orderDeInf[0].type=='select'}}">
+              <text decode="{{true}}" wx:key="index" wx:for="{{mTool.splitIndex(orderDeInf[0].value)}}" wx:for-item="subItem">{{orderDeInf[0].sels[subItem]}}&nbsp;&nbsp;</text>
+            </view>
+            <view class='orderInfoDet' wx:elif="{{orderDeInf[0].type=='radio'}}">
+              {{orderDeInf[0].sels[orderDeInf[0].value]}}
+            </view>
+            <view wx:else>{{orderDeInf[0].value}}</view>
+          </view>
+          <button class='orderInfoBut main-color' style="{{app.globalData.customStyleColor}}" bindtap='toOrderInfo' wx:if="{{orderDeInf.length >1}}">
+            查看更多
+          </button>
+        </view>
+      </block>
+    </view>
+
+    <!--商品送达信息列表列表-->
+    <view class="microshop-box order-goods" style="border-top: 0px;">
+      <view class="tip-carriage hide" id="tip_carriage">
+        <text class="icon-carriage"></text>
+        <text></text>
+      </view>
+      <view style="margin-top: 20rpx;">
+        <view class='takeFree' wx:if="{{!isVirtualGoods && (showGoodsCount && goodsType == 1 || showGoodsPrice && goodsType == 1)}}" style="margin-top: 0;border-bottom: 1rpx solid #eee">
+          <view class="cuxiao free commSpinVal">促销</view>
+          <text class='freeText' wx:if="{{showGoodsCount}}">购满\t{{goodsCounts}}\t件包邮\t</text>
+          <text wx:if="{{showGoodsCount && showGoodsPrice}}">或</text>
+          <text class='freeText' wx:if="{{showGoodsPrice}}">\t购满\t{{mTool.fToY(goodsPrices)>0?mTool.fToY(goodsPrices):0}}\t元包邮</text>
+        </view>
+        <view wx:if="{{showOverReduce && false == isIntegralGoods}}">
+          <view class='overReduce' style="margin-top: 0;border-bottom: 1rpx solid #eee">
+            <view class="cuxiao free commSpinVal">满减</view>
+            <view wx:if="{{overReduceType==1}}">
+              <text class='freeText'>购满\t{{overReduceRule[0].over}}\t件，减\t{{overReduceRule[0].reduce}}\t元</text>
+            </view>
+            <view wx:if="{{overReduceType==2}}">
+              <text class='freeText'>购满\t{{overReduceRule[0].over}}\t元，减\t{{overReduceRule[0].reduce}}\t元</text>
+            </view>
+            <image class='jianTou-right' src='{{staticResPath}}/image/mobile/trigger_right.png' bindtap='changeOverReduce'></image>
+          </view>
+          <view class="overReduceDetail {{showOverReduceDetail?'open_over':'close_over'}}">
+            <view wx:for="{{overReduceRule}}">
+              <view wx:if="{{overReduceType==1}}">
+                <text class='freeText'>购满\t{{item.over}}\t件，减\t{{item.reduce}}\t元</text>
+              </view>
+              <view wx:if="{{overReduceType==2}}">
+                <text class='freeText'>购满\t{{item.over}}\t元，减\t{{item.reduce}}\t元</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 首单立减 -->
+        <view wx:if="{{!orderData && firstOrderDiscount.isOpen == 'true' && firstOrderDiscount.sceneType[1].selected}}">
+
+          <view class='overReduce' style="margin-top: 0;border-bottom: 1rpx solid #eee">
+            <view class="cuxiao free commSpinVal">首单立减</view>
+            <view>
+              <text class='freeText'>首次下单用户立减{{firstOrderDiscount.reduceMoney}}元</text>
+              <text class='freeText' wx:if="{{firstOrderDiscount.isEnjoy == 'true'}}">（同时享受满减）</text>
+              <text class='freeText' wx:if="{{firstOrderDiscount.isEnjoy == 'false'}}">（不同时享受满减）</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="goods_list goods-list">
+        <!--选中的商品列表-->
+        <view class="list">
+          <view class="list-item" wx:for="{{goodsList}}" wx:for-item="goodsData" wx:key="goodsData.id" data-msgid="{{goodsData.id}}" style="background: #fff">
+            <view bindtap='toGoodsDetail' data-gid="{{goodsData.id}}">
+              <view wx:if="{{goodsData.selectedSku && goodsData.selectedSku.img}}">
+                <image class="icon-goods" src="{{mTool.specUrl(extConfig,userImagePath,goodsData.selectedSku.img)}}"></image>
+              </view>
+              <view wx:else>
+                <image class="icon-goods" src="{{mTool.specUrl(extConfig,userImagePath,goodsData.cover)}}"></image>
+              </view>
+            </view>
+            <view class="description">
+              <view>
+                <view class="text-black" style="color: #333333;">{{goodsData.name}}</view>
+              </view>
+
+              <view class="amount over" style="font-size: 24rpx;color:#999999;width: 100%;display: flex;justify-content: space-between;">
+                <view class="text-spec" wx:if="{{goodsData.selectedSku}}">
+                  ( {{goodsData.selectedSku.names}} )
+                </view>
+                <view class="text-spec" wx:elif="{{goodsData.spec && goodsData.spec.names}}">
+                  ( {{goodsData.spec.names}} )
+                </view>
+                <view style="width: 100%;text-align: right;font-size: 22rpx;">
+                  <text wx:if="{{false === isIntegralGoods}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goodsData.price)}}</text>
+                  <text wx:elif="{{true === isIntegralGoods}}">{{goodsData.price}} 积分</text>x
+                  <text style="padding-right: 5rpx;">{{goodsData.count}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 定金 -->
+        <view wx:if="{{orderData.orderType == 4 && orderData.extend && orderData.extend.preAmount}}" class="preOrder">
+          <span>阶段1：定金(已支付)</span>
+          <span>{{m1.getFixedMoney(orderData.extend.preAmount)}}</span>
+        </view>
+        <view wx:if="{{orderData.orderType == 4 && orderData.extend && orderData.extend.restAmount}}" class="preOrder">
+          <span>阶段2：尾款({{orderData.extend.validityStart}}开始支付)</span>
+          <span>{{m1.getFixedMoney(orderData.extend.restAmount)}}</span>
+        </view>
+      </view>
+      <!--共计栏-->
+      <!--padding-bottom:{{showApplyRefund ? '80rpx':0}} -->
+      <view class="goods-count-panel" style="position: relative;background: #fff">
+        <view wx:if="{{orderData.orderType != 4}}" class="total-count text-black">
+          <text>共<text class="text-red main-color" style="{{app.globalData.customStyleColor}}" id="total_count">{{goodsCount}}</text>件商品</text>
+          <view class="total fright">合计
+            <text class="text-red main-color" style="display: inline-block;{{app.globalData.customStyleColor}}"><text class="js-total-money" wx:if="{{false === isIntegralGoods }}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(totalPrice)}}</text>
+            <text class="js-total-money" wx:elif="{{true === isIntegralGoods }}">{{totalPrice}} 积分</text></text>
+          </view>
+        </view>
+        <!--申请退款-->
+        <!--<block wx:if="{{showApplyRefund}}">-->
+        <!--<button wx:if="{{m1.getFixedMoney(orderData.actualPrice+orderData.depositPrice) >0 && orderData.orderType != 4}}"-->
+        <!--class="btn-tuikuan main-color" style="{{app.globalData.customStyleColor}}"-->
+        <!--bindtap="onReturnOrder">申请退款-->
+        <!--</button>-->
+        <!--</block>-->
+      </view>
+      <view class="coupon-item-list" wx:if="{{ false === isIntegralGoods}}">
+        <view wx:if="{{1 == selectedDineWay && fromToStore}}">
+          <view class="coupon-item text-black other-item" style='border-bottom:solid 1px #eee !important;' wx:if="{{tableInfo || shoperInfo.tableNumEnable}}">
+            <view style='display:inline-block;'>
+              就餐位置
+            </view>
+            <view class="fright" style='padding-right:5px;'>
+              <text wx:if="{{tableInfo}}">{{tableInfo.name}}</text>
+              <input wx:if="{{shoperInfo.tableNumEnable && !tableInfo}}" style='width:160rpx' bindinput='bindChange' id='foodSiteName' type='text' placeholder='请输入桌号'></input>
+              <view wx:if="{{tableInfo}}" class="trigger"></view>
+            </view>
+          </view>
+        </view>
+        <!--会员卡选择块-->
+        <view class="coupon-item text-black " bindtap='handleCardModalOpen' wx:if="{{!orderData && accountPackagePrivilege.membercard}}">
+          <view style='display:inline-block;'>
+            会员卡
+            <view wx:if="{{!isVirtualGoods && prepareOrderVo.orderSign.isPinkage && !fromToStore}}" style='margin:-3px 0 0 0px' class="zan-label zan-label--primary zan-label--small zan-label--plain">包邮
+            </view>
+            <view wx:if="{{prepareOrderVo.orderSign.discountCount && prepareOrderVo.orderSign.discountScale}}" style='margin:-3px 0 0 5px' class="zan-label zan-label--primary zan-label--small zan-label--plain">
+              折扣{{m1.disDiv10(prepareOrderVo.orderSign.discountScale)}}折
+            </view>
+          </view>
+          <view class="fright" style='padding-right:5px;'>
+            <text wx:if="{{cardList.length == 0}}" class="main-color" style="{{app.globalData.customStyleColor}}">无可用会员卡</text>
+            <text wx:elif="{{!selectedCard}}">请选择会员卡</text>
+            <text wx:else>{{selectedCard.cname}}</text>
+            <view class="trigger"></view>
+          </view>
+        </view>
+        <!--满减块-->
+        <!-- <view class="coupon-item text-black " wx:if="{{preShowOverReduce}}">
+                  <view style='display:inline-block;'>
+                    满减
+                  </view>
+                  <view class="fright">
+                    <text>{{app.globalData.currencySymbol}}{{preOverReduceMoney}} 元</text>
+                  </view>
+                </view> -->
+        <!--优惠券-->
+        <view class="coupon-item text-black other-item" bindtap='handleCouponModalOpen' wx:if="{{!orderData && accountPackagePrivilege.coupon}}">
+          <view style='display:inline-block;'>
+            优惠券
+            <view wx:if="{{selectedCoupon && cardList.length > 0}}" style='margin:-3px 0 0 5px' class="zan-label zan-label--primary zan-label--small zan-label--plain">已选1张
+            </view>
+          </view>
+          <view class="fright" style='padding-right:5px;'>
+            <text wx:if="{{!selectedCoupon && couponList.length == 0}}">没有可用优惠</text>
+            <text wx:elif="{{!selectedCoupon}}">请选择优惠</text>
+            <text wx:else>-{{app.globalData.currencySymbol}}{{m1.getFixedMoney(prepareOrderVo.orderSign.ticketPrice)}}</text>
+            <view class="trigger"></view>
+          </view>
+        </view>
+        <!--礼品卡-->
+        <view class="coupon-item text-black " bindtap='handleGiftCardModalOpen' wx:if="{{!orderData && accountPackagePrivilege.giftcard && !app.globalData.shopuid && !app.globalData.fromuid}}">
+          <view style='display:inline-block;'>
+            礼品卡
+          </view>
+          <view class="fright" style='padding-right:5px;'>
+            <text wx:if="{{giftcardList.length == 0}}" class="main-color" style="{{app.globalData.customStyleColor}}">无可用礼品卡</text>
+            <text wx:elif="{{!selectedGiftCard}}">请选择礼品卡</text>
+            <text wx:else>{{selectedGiftCard.title}}</text>
+            <view class="trigger"></view>
+          </view>
+        </view>
+        <!--积分块-->
+        <view class="coupon-item text-black enablePointsItem" wx:if="{{!orderData && (prepareOrderVo && prepareOrderVo.orderSign.isIntegralDeduct) && accountPackagePrivilege.integral}}">
+          <view style='display:inline-block;'>
+            积分抵扣
+          </view>
+          <!-- {{prepareOrderVo && prepareOrderVo.orderSign.enableIntegral}}积分 -->
+          <view class="fright enablePoints" style='padding-right:5px;'>
+            <view class="enablePointsVal"></view>
+            <template is="zan-switch" data="{{app, disabled: enablePointsItemValue , checked:enablePointsChe , componentId: 'switch2' }}"></template>
+          </view>
+        </view>
+        <!--储值金-->
+        <view class="coupon-item text-black enableDepositItem" wx:if="{{!orderData && accountPackagePrivilege.deposit}}">
+          <view style='display:inline-block;'>
+            储值金
+          </view>
+          <view class="fright enableDeposit" style='padding-right:5px;'>
+            <view class="enableDepositVal">{{app.globalData.currencySymbol}}{{prepareOrderVo && m1.getFixedMoney(prepareOrderVo.orderSign.enableDepositItemValue)}}
+            </view>
+            <template is="zan-switch" data="{{app, disabled: enableDepositItemValue , checked : enableDepositChe, componentId: 'switch1' }}"></template>
+          </view>
+        </view>
+        <!--虚拟商品信息块-->
+        <view class="microshop-box remark-cont order-logistics" wx:if="{{goodsVirtual}}" style="padding:0">
+          <view class='title text-black identity' style="margin: 0 !important;" wx:if="{{goodsVirtual && goodsVirtual.tel}}">
+            <text class='requireStar'>*</text>
+            <text>手机号</text>
+            <input placeholder='请输入手机号' type="text" id="virtualTel" bindinput="getVirtualInfo"></input>
+          </view>
+          <view class='title text-black identity' style="margin: 0 !important;" wx:if="{{goodsVirtual && goodsVirtual.name}}">
+            <text class='requireStar'>*</text>
+            <text>姓名</text>
+            <input placeholder='请输入姓名' type="text" id="virtualName" bindinput="getVirtualInfo"></input>
+          </view>
+        </view>
+      </view>
+      <block wx:if="{{orderData == null}}">
+        <view wx:if="{{showRemarkInput || (enableExtraInfo&&extraItem) || switchTel}}" class="microshop-box remark-cont order-logistics">
+          <view id="sn_tel" wx:if="{{switchTel}}">
+            <view class="title text-black sn-icon">
+              <image src="http://static.resource.fenxiaov3.weijuju.com/image/mobile/umall/orderdetail/phone.png"></image>
+              手机号
+              <text>*</text>
+            </view>
+            <view class="sntel">
+              <input placeholder="请输入手机号" type="text" bindchange="bindChange" id="sntel" value='{{sntel}}' class="text-input"></input>
+            </view>
+          </view>
+          <block wx:for="{{extraItem}}" wx:key="idx" wx:for-index="idx" wx:if="{{enableExtraInfo && item.value}}">
+            <view class="{{item.type!='select'?'title text-black identity':'block-view text-black identity'}}">
+              <text class="requireStar" style="{{item.isRequire?'':'opacity:0;'}}">*</text>
+              <text>{{item.value}}</text>
+              <input placeholder='请输入信息' wx:if="{{item.type == 'txt'}}" bindinput='bindInputOrder' data-id="{{idx}}"></input>
+              <view wx:if="{{item.type=='radio'}}">
+                <picker class="huaer-field_picker" data-id="{{idx}}" range="{{item.sels}}" value="{{radioIdx}}" mode="selector" bindchange="bindInputOrder">
+                  <view class="picker">
+                    <text class="block-text" wx:if="{{item.sels[radioIdx[idx]]}}">{{item.sels[radioIdx[idx]]}}</text>
+                    <text class="block-text" wx:else style='color:#808080;height:24px;line-height:24px;'>请选择</text>
+                  </view>
+                </picker>
+              </view>
+              <view class="section_gap" wx:if="{{item.type=='select'}}">
+                <checkbox-group data-id="{{idx}}" wx:for="{{item.sels}}" wx:for-index="selIdx" bindchange="bindInputOrder" style='display:flex;justify-content:space-between;padding:10rpx 40rpx;border-bottom:1px solid #f5f5f5;'>
+                  <view style='line-height:25px; text-align:center;'>{{item}}</view>
+                  <checkbox value="{{selIdx}}" class="radio"></checkbox>
+                </checkbox-group>
+              </view>
+              <view class="communityPublish-item-add" bindtap='handleAddImage' wx:if="{{item.type == 'img' && !uploadImgList[idx]}}" data-id="{{idx}}"></view>
+              <image src='{{userImagePath + uploadImgList[idx]}}' wx:if="{{uploadImgList[idx] && item.type == 'img'}}" class='communityPublish-item-add-image' data-id="{{idx}}" bindtap='handAddImageMore'></image>
+            </view>
+          </block>
+          <view wx:if="{{showRemarkInput}}" class='title text-black identity' style="border-bottom: none !important;">
+            <text class='requireStar' style='opacity:0;'>*</text>
+            <text>给商家留言</text>
+            <input placeholder='请输入留言' bindchange="bindChange" type="text" id="remark" data-id="{{idx}}"></input>
+          </view>
+        </view>
+      </block>
+      <view class="total-money text-black" style="margin-bottom: 20rpx;" wx:if="{{ false === isIntegralGoods && orderData.orderType != 4 && (consumeGiftIntegral > 0 || goodsGiftIntegral>0 )}}">
+        <view class="money_item" wx:if="{{consumeGiftIntegral>0}}">
+          <view class="fleft" style="font-size: 26rpx;color: #999999">
+            支付送积分
+          </view>
+          <view class="text-red main-color fright" style="font-size: 26rpx;{{app.globalData.customStyleColor}}">
+            <text class="js-total-money total_price">{{consumeGiftIntegral}}<text style="color: #333333 !important;">积分</text></text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{goodsGiftIntegral>0}}">
+          <view class="fleft" style="font-size: 26rpx;color: #999999">
+            购买商品送积分
+          </view>
+          <view class="text-red main-color fright" style="{{app.globalData.customStyleColor}}">
+            <text class="js-total-money total_price">{{goodsGiftIntegral}}<text style="color: #333333 !important;">积分</text></text>
+          </view>
+        </view>
+      </view>
+      <view class="total-money text-black" wx:if="{{ false === isIntegralGoods}}">
+        <view class="money_item">
+          <view class="fleft">
+            商品金额
+          </view>
+          <view class="fright">
+            <text class="js-total-money total_price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(totalPrice)}}</text>
+          </view>
+        </view>
+        <view wx:if="{{orderData.orderType == 4 && orderData.extend && orderData.extend.restAmount}}" class="money_item">
+          <view class="fleft">
+            尾款
+          </view>
+          <view class="fright">
+            <text class="js-total-money total_price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.extend.restAmount)}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{!isVirtualGoods && !fromToStore}}">
+          <view class="fleft">
+            运费
+          </view>
+          <view class="text-black fright" id="delivery_text">
+            <text id="delivery_price" class="delivery_price">{{isCollect ? '运费到付':'('+ app.globalData.currencySymbol + m1.getFixedMoney(deliveryPrice)+')'}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{!isVirtualGoods && packingPrice}}">
+          <view class="fleft">
+            包装费
+          </view>
+          <view class="text-black fright" id="packing_text">
+            <text id="packing_price" class="packing_price">+ {{app.globalData.currencySymbol}}{{m1.getFixedMoney(packingPrice)}}</text>
+          </view>
+        </view>
+
+        <view class="money_item" wx:if="{{orderData && orderData.cardPrice}}">
+          <view class="fleft">
+            会员卡优惠
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.cardPrice)}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{orderData && orderData.ticketId}}">
+          <view class="fleft">
+            优惠券
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.ticketPrice)}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{orderData && orderData.giftCardDiscountMoney && !app.globalData.shopuid && !app.globalData.fromuid}}">
+          <view class="fleft">
+            礼品卡优惠
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.giftCardDiscountMoney)}}</text>
+          </view>
+        </view>
+
+
+        <view class="money_item" wx:if="{{orderData && orderData.integralPrice}}">
+          <view class="fleft">
+            {{orderData && orderData.useIntegral}}积分抵扣
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.integralPrice)}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{orderData && orderData.depositPrice}}">
+          <view class="fleft">
+            储值金
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.depositPrice)}}</text>
+          </view>
+        </view>
+
+        <view class="money_item" wx:if="{{!orderData && selectedCoupon}}">
+          <view class="fleft">
+            优惠券
+          </view>
+          <view class="fright">
+            <!-- <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(m1.getCouponDiscount(selectedCoupon,goodsList,orderData))}}</text> -->
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(prepareOrderVo.orderSign.ticketPrice)}}</text>
+          </view>
+        </view>
+        
+        <view class="money_item" wx:if="{{!orderData && prepareOrderVo.orderSign.discountCount}}">
+          <view class="fleft">
+            会员卡优惠
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(prepareOrderVo.orderSign.discountCount)}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{!orderData && enablePointsSW}}">
+          <view class="fleft">
+            {{enablePoints}}积分抵扣
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(pointsToMoney)}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{!orderData && preFirstOrderDiscount}}">
+          <view class="fleft">
+            首单立减
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{preFirstOrderMoney}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{!orderData && preShowOverReduce}}">
+          <view class="fleft">
+            满减
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{preOverReduceMoney}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{!orderData && selectedGiftCard && !app.globalData.shopuid && !app.globalData.fromuid}}">
+          <view class="fleft">
+            礼品卡优惠
+          </view>
+          <view class="fright">
+
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(prepareOrderVo.orderSign.giftCardDiscountMoney)}}</text>
+          </view>
+        </view>
+        <view class="money_item" wx:if="{{!orderData && enableDepositSW}}">
+          <view class="fleft">
+            储值金
+          </view>
+          <view class="fright">
+            <text class="coupon_price"> - {{app.globalData.currencySymbol}}{{m1.getFixedMoney(enableDeposit)}}</text>
+          </view>
+        </view>
+        <view class="count fright final-total" id="total_money" hidden="true">
+          <text class="money"> {{app.globalData.currencySymbol}}{{m1.getFixedMoney(calcFinPrice)}}</text>
+        </view>
+        <view class="clear"></view>
+        <!--支付信息-->
+        <view class='actualPayM' style="padding: 0;margin: 12rpx 0;" wx:if="{{orderData}}">
+          <text style="color: #333333;font-size: 26rpx;font-weight: bold;">实付款：</text>
+          <text class="money main-color" style="font-size: 26rpx;font-weight:bold;{{app.globalData.customStyleColor}}" wx:if="{{false === isIntegralGoods}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(orderData.actualPrice)}}</text>
+          <text class="money main-color" style="font-size: 26rpx;font-weight:bold;{{app.globalData.customStyleColor}}" wx:elif="{{true === isIntegralGoods}}">{{orderData.actualPrice}} 积分</text>
+        </view>
+      </view>
+    </view>
+    <!--订单信息-->
+    <view class="order-logistics" id="order_logistics" wx:if="{{orderData.orderType!=2 && orderData != null && orderData.status >= 3}}">
+      <view class="delivery-num text-black" id="delivery_num">
+        <view style="font-size: 26rpx;">快递单号：</view>
+        <block wx:if="{{orderData.deliveryCom == null}}">
+          <view style="font-size: 26rpx;" class="delivery over" id="delivery">无</view>
+        </block>
+        <block wx:else>
+          <view style="font-size: 26rpx;" class="delivery over actuallExpNum" id="delivery" style='width:auto;'>
+            <text style="color: #999999">{{orderData.deliveryCom}}</text> {{orderData.expressNum}}
+          </view>
+          <navigator class="checkExpress main-color" style="margin-right: 16rpx;float: right;border: none;text-decoration: underline" url="/pages/express/express?expressNum={{orderData.expressNum}}&oid={{orderId}}&wayType={{wayType}}" wx:if="{{openQueryExpress}}">查看物流信息
+          </navigator>
+        </block>
+      </view>
+      <view id="logistics_list"></view>
+      <view class="clear"></view>
+    </view>
+    <!--退款信息-->
+    <view class="order-logistics" wx:if="{{orderData != null && (orderData.status >= 6 || (orderData.refundReason != null && orderData.refundTime != null))}}">
+      <text style="padding-left:27rpx;margin-top:5px;display:block;color:#888;">退款信息：</text>
+      <view class='retFItem' wx:if="{{5 != orderType}}">
+        <text class='retLabel' style="">金额：</text>{{app.globalData.currencySymbol}}{{m1.getFixedMoney(refundMoney)}}（{{refundType}}）
+      </view>
+      <view class='retFItem' wx:elif="{{5 == orderType}}">
+        <text class='retLabel' style="">金额：</text>{{refundMoney}} 积分（{{refundType}}）
+      </view>
+      <view class='retFItem'>
+        <text class='retLabel' style="">退款商品：</text>{{refundType}}商品
+      </view>
+      <view class="retFItem text-black" style="margin-top:12rpx;">
+        <text class='retLabel' style="">退款原因：</text>
+        <text style="color:#000;">{{orderData.refundReason?orderData.refundReason:""}}</text>
+        <text style="float:right;color:#ccc;" wx:if="{{orderData.status == 6}}">卖家已同意</text>
+        <text style="float:right;color:#ccc;" wx:if="{{orderData.status < 6}}">卖家已拒绝</text>
+      </view>
+      <view class="clear"></view>
+    </view>
+
+    <!--订单信息-->
+    <view class="order-logistics order-extrainfo" wx:if="{{orderData != null}}">
+      <view class="delivery-num text-black">
+        <text>订单编号：</text>
+        <text class="delivery over">{{orderData.orderNum}}</text>
+      </view>
+      <view class="delivery-num text-black" wx:if="{{orderData.payType != null}}">
+        <text>支付方式：</text>
+        <text class="delivery over">{{mTool.getPayType(orderData.payType)}}</text>
+      </view>
+      <view class="delivery-num text-black" wx:if="{{orderData.transactionId != null}}">
+        <text>交易流水：</text>
+        <text class="delivery over">{{orderData.transactionId}}</text>
+      </view>
+      <view class="delivery-num text-black" wx:if="{{orderData.buyTime != null}}">
+        <text>下单时间：</text>
+        <text class="delivery over">{{orderData.buyTime}}</text>
+      </view>
+      <view class="delivery-num text-black" wx:if="{{orderData.payTime != null}}">
+        <text>付款时间：</text>
+        <text class="delivery over">{{orderData.payTime}}</text>
+      </view>
+      <view class="delivery-num text-black" wx:if="{{orderData.realDeliveryTime != null}}">
+        <text>发货时间：</text>
+        <text class="delivery over">{{orderData.realDeliveryTime}}</text>
+      </view>
+      <view class="clear"></view>
+    </view>
+    <!--自提信息-->
+    <view class="order-logistics order-qrcodeinfo" wx:if="{{orderData != null && (orderData.status == 2 || orderData == 3)}}">
+      <view class="text-black" bindtap='toggleQrcodeModal'>
+        <text class="zan-icon zan-icon-qr"></text> 到店或当面消费时，请向商家出示
+      </view>
+    </view>
+
+    <view id="footer_placeholder"></view>
+
+    <block wx:if="{{orderData == null}}">
+      <view wx:if="{{app.globalData.previewuid || app.globalData.tplid}}" class="order-btn">
+        <button class="zan-btn" disabled="true">预览模式中不能下单</button>
+      </view>
+      <form wx:else report-submit="true">
+        <view class="order-btn" id="order_btn">
+          <text class="bottomRealPay">实付款：<text style="font-weight: bold;{{app.globalData.customStyleColor}}" class="main-color" wx:if="{{false === isIntegralGoods}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(calcFinPrice)}}</text>
+          <text style="font-weight: bold;" class="main-color" wx:elif="{{true === isIntegralGoods}}">{{calcFinPrice}} 积分</text></text>
+          <button class="btn-menu order-btn-confirm {{btnLoading?'':'main-color-bg'}}" style="{{!btnLoading ? app.globalData.customStyleBg:''}}" id="btn_confirm" bindtap="onConfirmOrder" disabled="{{btnLoading}}">提交订单
+          </button>
+        </view>
+      </form>
+    </block>
+    <block wx:else>
+      <view class="order-btn" id="order_btn" wx:if="{{orderData.status < 4}}">
+        <block wx:if="{{showApplyRefund}}">
+          <button wx:if="{{m1.getFixedMoney(orderData.actualPrice+orderData.depositPrice) >0 && orderData.orderType != 4}}" class="btn-menu btn-show minor-color" bindtap="onReturnOrder">申请退款
+          </button>
+        </block>
+        <block wx:if="{{orderData.status == 2}}">
+          <button wx:if="{{orderData.orderType != 4}}" hidden='{{true}}' class="btn-menu btn-show minor-color" bindtap="onReturnOrder" id="btn_apply">申请退款</button>
+        </block>
+        <block wx:elif="{{orderData.status == 1}}">
+          <block wx:if="{{!orderData.extend.payStatus}}">
+            <button class="btn-menu btn-show minor-color" bindtap="onBtnCancel" id="btn_cancel">取消订单
+            </button>
+            <button class="btn-menu btn-show main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="onBtnPay" id="btn_pay">确认付款
+            </button>
+          </block>
+          <block wx:if="{{orderData.extend.payStatus}}">
+            <button wx:if="{{orderData.extend.payStatus == 2}}" class="btn-menu btn-show main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="onBtnPay" id="btn_pay">支付尾款
+            </button>
+            <button wx:if="{{orderData.extend.payStatus == 1}}" class="btn-menu btn-show" id="btn_cancel">
+              待支付尾款
+            </button>
+          </block>
+        </block>
+        <block wx:elif="{{orderData.status == 3}}">
+          <button class="btn-menu btn-show btn-one btnConfirmGet main-color-bg" bindtap="onFinishOrder" style="width: 35%;margin:0 0rpx;display:inline-block;{{app.globalData.customStyleBg}}" id="btn_confirm">确认收货
+          </button>
+          <button wx:if="{{orderData.orderType != 4}}" class="btn-menu btn-show minor-color" hidden='{{true}}' bindtap="onReturnOrder" id="btn_apply">申请退款</button>
+        </block>
+        <block wx:elif="{{orderData.status == 4}}">
+        </block>
+      </view>
+    </block>
+
+    <view class="modal-backdrop qrcode-backdrop" bindtap='toggleQrcodeModal' wx:if="{{showQrcodePopup}}">
+      <view class="qrcode-modal" catchtap='handleQrcodeModalTap'>
+        <image class="qr-img" src='{{userImagePath+appletScene.qrcodeUrl}}'></image>
+        <view class="number">{{orderData.orderNum}}</view>
+        <view class="tips">请向商家出示二维码</view>
+        <view>
+          <button bindtap="switchPasswordCheck" class="pwdCheckBtn">密码核销</button>
+        </view>
+      </view>
+    </view>
+    <template is="couponListTpl" data="{{app,showCouponList:showCouponList,couponList:couponList,selectedCoupon:selectedCoupon,selectedGiftCard:selectedGiftCard,preferenceCodeList:preferenceCodeList,staticResPath:staticResPath,userImagePath:userImagePath,scrollTop:scrollTop}}"></template>
+    <template is="giftcardListTpl" data="{{app,showGiftCardList:showGiftCardList,selectedCard:selectedCard,selectedCoupon:selectedCoupon,giftcardList:giftcardList,selectedGiftCard:selectedGiftCard,preferenceCodeList:preferenceCodeList,staticResPath:staticResPath,userImagePath:userImagePath,scrollTop:scrollTop}}"></template>
+    <template is="cardListTpl" data="{{app,showCardList:showCardList,cardList:cardList,selectedGiftCard:selectedGiftCard,selectedCard:selectedCard,staticResPath:staticResPath,userImagePath:userImagePath}}"></template>
+    <template is="dineWayTpl" data="{{app,waySelect:waySelect,showDineWayList:showDineWayList,shoperInfo:shoperInfo,selectedDineWay:selectedDineWay,staticResPath:staticResPath,userImagePath:userImagePath}}"></template>
+    <template is="expTimeListTpl" data="{{app,showExpTime:showExpTime,staticResPath:staticResPath,selectedExpTime:selectedExpTime,todayWeek:todayWeek,canSelectTimeTA:canSelectTimeTA,distributionMonty:distributionMonty,fromTakeout}}"></template>
+    <template is="passwordCheck" data="{{app,showPwdCheck,pcNameErr,pcPwdErr,verId:orderData.id}}"></template>
+  </view>
+  <include src="/pages/template/copyright.wxml" />
+  <include src="/pages/template/authModal.wxml" />
+</view>

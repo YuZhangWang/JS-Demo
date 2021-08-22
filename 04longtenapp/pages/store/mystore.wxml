@@ -1,0 +1,82 @@
+<!--pages/store/mystore.wxml-->
+<wxs module="m1">
+    var getTypeText = function(record) {
+    var type = record.depositItemType;
+    if(type == 0){
+    return "储值";
+    } else if(type == 1){
+    return "赠送";
+    } else if(type == 2){
+    return "消费";
+    } else if(type == 3){
+    return "退款";
+    } else if(type == 4){
+    return "管理员充值";
+    } else if(type == 5){
+    return "管理员扣除";
+    } else if(type == 6){
+    return "储值券储值";
+    } else if(type == 8){
+    return "分销提现";
+    }
+    }
+    var isAmountAdd = function(record) {
+    var type = record.depositItemType;
+    if(type == 0){
+    return true;
+    } else if(type == 1){
+    return true;
+    } else if(type == 2){
+    return false;
+    } else if(type == 3){
+    return true;
+    } else if(type == 4){
+    return true;
+    } else if(type == 5){
+    return false;
+    } else if(type == 6){
+    return true;
+    } else if(type == 8){
+    return true;
+    }
+    }
+    module.exports.getTypeText = getTypeText;
+    module.exports.isAmountAdd = isAmountAdd;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="tools"/>
+<import src="/youzan/dist/loadmore/index.wxml"/>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+    <scroll-view>
+        <view class="header_info main-color-bg" style="position: relative;{{app.globalData.customStyleBg}}">
+            <view class="content-panel">
+                <text class="title">当前储值金（元）</text>
+                <view class="money_info">
+                    <view class="balance main-color" style="{{app.globalData.customStyleColor}}">{{tools.fToY(memberInfo?memberInfo.totalDepositBalance:0)}}</view>
+                    <navigator url="/pages/store/store_charge" style="margin-top: -40px;">
+                        <view class="charge main-color" style="{{app.globalData.customStyleColor}}">立即充值</view>
+                    </navigator>
+                </view>
+            </view>
+        </view>
+        <view class="footer-panel">
+            <text>收支记录</text>
+            <view style="color:#999;" bindtap="openNotice">开启余额提醒</view>
+        </view>
+        <view class="record_cont">
+            <view class="record" wx:for="{{recordList}}" wx:for-item="record" wx:key="record.id">
+                <view class="name">
+                    <view style="font-size: 30rpx;color:#363A3D ">{{m1.getTypeText(record)}}</view>
+                    <view class="datetime" style="font-size: 24rpx;color: #878787">{{record.flowTime}}</view>
+                    <view style="font-size: 24rpx;color: #878787">{{m1.isAmountAdd(record) ? record.extend || '--':record.orderId || '--'}}</view>
+                </view>
+                <view class="info">
+                    <view class="amount" style="font-size: 36rpx;color: {{m1.isAmountAdd(record)?'#E15624':'#363A3D'}}">
+                        {{m1.isAmountAdd(record)?"+":""}}{{tools.fToY(record.depositAmount)}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <template is="zan-loadmore" data="{{app,nodata: nodata,nomore:nomore}}"/>
+    </scroll-view>
+    <!--<include src="/pages/template/authModal.wxml"/>-->
+</view>

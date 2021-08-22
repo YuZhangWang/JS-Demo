@@ -1,0 +1,6 @@
+<!--pages/userinfo/userinfo.wxml-->
+<view class="container">
+  <icon type="success" size="60"/>
+  <button open-type="getUserInfo" style='margin-top:100rpx;margin-bottom:30rpx;' type="primary" bindgetuserinfo="userInfoHandler">打开微信授权</button>
+  <view class="h2">拒绝授权将无法体验完整功能，建议打开授权</view>
+</view>

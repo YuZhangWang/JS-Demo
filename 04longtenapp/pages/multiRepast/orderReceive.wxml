@@ -1,0 +1,134 @@
+<!--pages/multiRepast//orderReceive.wxml-->
+<!-- 公共格式化工具模块 -->
+<wxs src="../../utils/comm.wxs" module="mTool"/>
+<wxs module="m1">
+    //金额格式化
+    var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+    return Number(money / 100).toFixed(2);
+    } else {
+    return 0;
+    }
+    }
+
+    var getStatus=function(status){
+    switch(status){
+       case 1:
+    return "待接单"
+       break;
+        case 2:
+    return "已接单"
+        break;
+        case 3:
+    return "已取消"
+        break;
+        case 4:
+    return "待付款"
+        break;
+        case 5:
+    return "交易完成"
+        break;
+        case 6:
+    return "后台取消"
+        break;
+    }
+    }
+
+    //模块导出
+    module.exports.getFixedMoney = getFixedMoney;
+    module.exports.getStatus = getStatus;
+</wxs>
+<!-- 订单列表块-->
+<view wx:if="{{receiveData.length==0}}" style="text-align: center;height: 60rpx;line-height: 60rpx;color: #cccccc;margin-top: 100rpx">
+    暂无进行中的订单
+</view>
+<view wx:else class="multi-order-panel app-theme-{{app.globalData.themeId}}">
+    <view class="order-status">
+        <text class="highlight-font">{{m1.getStatus(receiveData.subOrderList[0].orderStatus)}}</text>
+        <view wx:if="{{receiveData.subOrderList[0].orderStatus==1}}">等待后台接单请耐心等待</view>
+        <view wx:if="{{receiveData.subOrderList[0].orderStatus==2}}">商家已接单，请耐心等候</view>
+        <view wx:if="{{receiveData.subOrderList[0].orderStatus==3}}">可咨询服务员了解取消原因或重新下单</view>
+    </view>
+    <view class="order-extras-info">
+        <view class="order-info-panel padding-15">
+            <text>就餐位置</text>
+            <text class="select-count">{{receiveData.tableNo}}</text>
+        </view>
+        <view class="order-info-panel padding-15 border-top">
+            <text>就餐人数</text>
+            <text class="select-count">{{receiveData.personCount}}人</text>
+        </view>
+    </view>
+    <view class="multi-content">
+        <!-- 订单列表 -->
+        <view class="order-panel" wx:for="{{receiveData.subOrderList}}" wx:for-index="subIndex" wx:for-item="subItem">
+            <!-- 信息总括 -->
+            <view class="order-info-panel padding-30" style="margin-top: 10px;" bindtap="handleUpfold" data-id="{{subItem.id}}">
+                <view class="highlight-font">第{{receiveData.subOrderList.length-subIndex}}次下单（合计<text style="color:#FFA04C">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(subItem.orderAmountTotal)}}</text>元）
+                    <text class="{{currentList==subItem.id ? 'angle-up-icon':'angle-down-icon'}}"></text>
+                </view>
+                <text class="select-count">{{m1.getStatus(subItem.orderStatus)}}</text>
+            </view>
+            <view class="order-list" wx:if="{{currentList==subItem.id}}" wx:for="{{subItem.orderItemListGroupByOpenid}}" wx:for-item="classifyItem">
+                <!-- 微信信息 -->
+                <view class="wechat-info" wx:if="{{subItem.openid}}">
+                    <image src="{{classifyItem.headPic}}" class="wechat-header"></image>
+                    <text class="wechat-nick">{{classifyItem.nickName}}</text>
+                    <text class="select-count">已选{{classifyItem.cnt}}份菜品</text>
+                </view>
+                <view class="wechat-info" wx:else>
+                    <image src='{{staticResPath}}/image/mobile/takeout/waiter.png' class="wechat-header"></image>
+                    <text class="wechat-nick">服务员</text>
+                    <text class="select-count">已选{{classifyItem.cnt}}份菜品</text>
+                </view>
+                <view class="order-goods-item" wx:for="{{classifyItem.orderItems}}" wx:for-item="goodsItem">
+                    <view class="goods-left-info">
+                        <view class="goods-image">
+                            <image src="{{mTool.specUrl(extConfig,userImagePath,goodsItem.thumbnail,300)}}"></image>
+                        </view>
+                        <view class="goods-price">
+                            <view>{{goodsItem.title}}</view>
+                            <view wx:if="{{goodsItem.sku}}" style="font-size: 10px;color: #999;">（{{goodsItem.specName}}）</view>
+                            <view class="unit-price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goodsItem.price)}}</view>
+                        </view>
+                    </view>
+                    <view class="goods-right-info">
+                        <view style="color: red" wx:if="{{goodsItem.retNum}}">已退菜：x{{goodsItem.retNum}}</view>
+                        <view class="select-count">
+                            x{{goodsItem.buyNum}}
+                        </view>
+                    </view>
+                </view>
+                <!-- 订单备注 -->
+                <view class="order-info-panel border-top">
+                    <text>订单备注</text>
+                    <text class="select-count">{{subItem.remark || '--'}}</text>
+                </view>
+            </view>
+
+        </view>
+
+    </view>
+    <view class="order-extras-info">
+        <view class="order-info-panel padding-5" wx:for="{{additionInfo}}" wx:for-item="addItem">
+            <text>{{addItem.name}}</text>
+            <text class="select-count">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(addItem.feeType==0 ? addItem.fee:addItem.fee*receiveData.personCount)}}</text>
+        </view>
+        <view class="order-info-panel border-top padding-30">
+            <text class="select-count"></text>
+            <text class="select-count">总计：{{app.globalData.currencySymbol}}{{m1.getFixedMoney(receiveData.orderAmountTotal)}}</text>
+        </view>
+    </view>
+
+    <!-- 操作按钮( 加菜|下单|买单)-->
+    <view class="order-handle">
+        <!-- 加菜 -->
+        <button class="order-add sub-color-bg" bindtap="addCartData" style="{{app.globalData.customSubBg}}" type="primary">加菜</button>
+        <!-- 下单 -->
+        <button bindtap="{{!hasWaitOrder ? 'payBill':'handleDisabled'}}" class="order-confirm main-color-bg" style="position: relative;{{app.globalData.customSubBg}}" type="primary">
+            我要买单</button>
+        <!-- 买单 -->
+        <!--<view class="order-pay"></view>-->
+    </view>
+</view>
+

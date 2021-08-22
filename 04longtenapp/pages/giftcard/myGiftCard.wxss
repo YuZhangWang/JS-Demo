@@ -1,0 +1,231 @@
+/* pages/coupon/coupon.wxss */
+
+page {
+  background-color: #f5f7f7;
+}
+
+.no-data-show {
+  padding: 40rpx;
+  text-align: center;
+}
+
+.record_list {
+  box-sizing: border-box;
+}
+
+.coupon-state {
+  margin: 0 0 20rpx;
+  background: #fff;
+}
+
+.coupon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250rpx;
+}
+
+.coupon .main_info {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  flex: 0 0 400rpx;
+  padding: 30rpx;
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.coupon-description {
+  background: #fff;
+  box-shadow: 0px 3px 15px 0px rgba(206, 200, 225, 0.3);
+  padding: 15rpx;
+  font-size: 20rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: rgba(188, 187, 191, 1);
+  line-height: 44rpx;
+  text-shadow: 0px 3px 15px rgba(206, 200, 225, 0.3);
+}
+
+.coupon.state-2 .main_info {
+  background: #c2c2c2;
+}
+
+.coupon.state-3 .main_info {
+  background: #c2c2c2;
+}
+
+.zan-loadmore--nomore {
+  margin-top: 20px;
+}
+
+.zan-loadmore--nodata .zan-loadmore__tips {
+  background: transparent;
+}
+
+.zan-loadmore--nomore .zan-loadmore__tips {
+  background: transparent;
+}
+
+.main_info .rmb {
+  font-size: 30rpx;
+}
+
+.main_info .money {
+  line-height: 50rpx;
+  padding-top: 40rpx;
+}
+
+.main_info .money_number {
+  font-size: 80rpx;
+  font-weight: 500;
+}
+
+.main_info .subtext {
+  font-size: 24rpx;
+  line-height: 54rpx;
+  overflow: hidden;
+  max-width: 90%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.main_info image {
+  width: 100%;
+  height: 100%;
+  border-radius: 15rpx;
+}
+
+.gift-card-date {
+  padding: 0rpx 0rpx 15rpx 30rpx;
+  color: #999;
+  margin-top: -10rpx;
+  font-size: 26rpx;
+}
+  
+
+.gift-btn {
+  padding: 5rpx 10rpx;
+  border: 1rpx solid;
+  font-size: 26rpx;
+  border-radius: 25px;
+  width: 120rpx;
+  text-align: center;
+
+}
+
+.coupon .detail_info {
+  flex: 1 1 auto;
+  display: flex;
+  padding-right: 30rpx;
+  flex-direction: column;
+  background: white;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.award {
+  font-size: 28rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 500;
+  color: rgba(45, 45, 45, 1);
+  margin-top: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coupon .detail_info .title {
+  font-size: 32rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 500;
+  color: rgba(45, 45, 45, 1);
+  margin-top: 10rpx;
+  max-width: 240rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coupon .detail_info .date {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  height: 50rpx;
+  margin-top: 20rpx;
+  padding: 10rpx 0;
+}
+
+.coupon .detail_info .date text {
+  font-size: 20rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: rgba(188, 187, 191, 1);
+  line-height: 44px;
+  text-shadow: 0px 3px 15px rgba(206, 200, 225, 0.3);
+}
+
+.detail_info .date .use-btn {
+  width: 120rpx;
+  height: 40rpx;
+  border: 1rpx solid #eb1f5c;
+  border-radius: 19rpx;
+  font-size: 22rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: #eb1f5c;
+  text-align: center;
+  line-height: 40rpx;
+}
+
+.coupon-detail {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 45rpx;
+}
+
+.coupon-detail text {
+  font-size: 20rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: rgba(188, 187, 191, 1);
+  line-height: 44px;
+  text-shadow: 0px 3px 15px rgba(206, 200, 225, 0.3);
+}
+
+.zan-tab__title {
+  color: #333 !important;
+}
+
+.coupon-detail .toggle-btn {
+  width: 24rpx;
+  height: 24rpx;
+  background: rgba(188, 187, 191, 1);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20rpx;
+  text-align: center;
+  line-height: 24rpx;
+}
+
+.use-status image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-bottom: 30rpx;
+}
+
+.img-state {
+  width: 100rpx;
+  height: 92rpx;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+}

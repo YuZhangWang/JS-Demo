@@ -1,0 +1,29 @@
+/* pages/fenxiao/sharePoster.wxss */
+.sharePage{
+  text-align: center;
+  background: #F4F4F4;
+  height: 100%;
+}
+.posterImg{
+  width: 540.6rpx;
+  height: 880rpx;
+  border-radius: 5rpx;
+  margin: 50rpx 0;
+}
+.btn{
+  width: 550rpx;
+  margin-bottom: 20rpx;
+  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+  color: #fff;
+}
+.shareFriend{
+  background: #09B90C;
+}
+
+.savePhone{
+  background: #FF585B;
+  color: #fff;
+  height: 90rpx;
+  line-height: 90rpx;
+  border-radius: 50px;
+}

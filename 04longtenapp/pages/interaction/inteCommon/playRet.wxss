@@ -1,0 +1,81 @@
+/* pages/interaction/inteCommon/playRet.wxss */
+.playRetWrap{
+  position: fixed;
+  background-color: rgba(0,0,0,0.8);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  color: #fff;
+  z-index: 108;
+}
+/* .playRetWrap[hidden]{
+  display:none;
+
+} */
+.playRetContent{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-top: 40%;
+}
+.playRetIco{
+  width: 252rpx;
+  height: 231rpx;
+  position: absolute;
+  top: -170rpx;
+  left: 50%;
+  margin-left: -126rpx;
+}
+.playRetGiftIco{
+  width: 304rpx;
+  height: 382rpx;
+  top: -180rpx;
+  left: 50%;
+  margin-left: -126rpx;
+}
+.playRetDeatail{
+  display: inline-flex;
+  width: 453rpx;
+  height: 312rpx;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  color: #000;
+  flex-direction: column;
+  align-items: center;
+}
+.playRetDeatailGift{
+  width: 489rpx;
+  height: 363rpx;
+}
+.playMsg{
+  height: 80rpx;
+  line-height: 80rpx;
+  display: inline-flex;
+  margin-top: 60rpx;
+  border-bottom: 1px solid #bababa;
+}
+.playDesc{
+  color: #ef3b42;
+  font-size: 40rpx;
+  margin-top: 20rpx;
+}
+.playMsgGift{
+  margin-top: 200rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  border: none;
+}
+.playDescGift{
+  margin-top: 0rpx;
+  color: #000;
+  font-size: 32rpx;
+}
+
+.playAgain{
+  width: 334rpx;
+  height: 105rpx;
+  margin-top: 100rpx;
+}

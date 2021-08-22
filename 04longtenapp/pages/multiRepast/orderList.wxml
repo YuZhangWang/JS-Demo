@@ -1,0 +1,107 @@
+<!--pages/multiRepast//orderList.wxml-->
+
+<!-- 公共格式化工具模块 -->
+<wxs src="../../utils/comm.wxs" module="mTool"/>
+<wxs module="m1">
+    //金额格式化
+    var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+    return Number(money / 100).toFixed(2);
+    } else {
+    return 0;
+    }
+    }
+    //模块导出
+    module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<!-- 订单列表块-->
+<view class="multi-order-panel app-theme-{{app.globalData.themeId}}" wx:if="{{cartData && cartData.length>0}}">
+
+    <view class="multi-content">
+        <!-- 订单列表 -->
+        <view class="order-list" wx:for="{{cartData}}" wx:for-item="cartItem" wx:if="{{cartItem.goodsObj.length>0}}">
+            <!-- 微信信息 -->
+            <view class="wechat-info">
+                <image src="{{cartItem.headPic}}" class="wechat-header"></image>
+                <text class="wechat-nick">{{cartItem.nickName}}</text>
+                <text class="select-count">已选{{cartItem.totalCount}}份菜品</text>
+            </view>
+            <view class="order-goods-item" wx:for="{{cartItem.goodsObj}}" wx:for-item="goodsItem" wx:key="goodsItem.goodsId">
+                <view class="goods-left-info">
+                    <view class="goods-image" style="width: 112rpx;height: 112rpx;margin-right: 30rpx;">
+                        <image src="{{mTool.specUrl(extConfig,userImagePath,goodsItem.picture,300)}}"> style="width: 100%;height: 100%;border-radius: 12rpx"></image>
+                    </view>
+                    <view class="goods-price" style="display: flex;flex-direction: column;justify-content: space-between;">
+                        <view>{{goodsItem.goodsName}}</view>
+                        <view wx:if="{{goodsItem.sku}}" style="font-size: 10px;color: #999;">（{{goodsItem.specName}}）</view>
+                        <view class="unit-price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goodsItem.price)}}</view>
+                    </view>
+                </view>
+                <view class="goods-right-info" wx:if="{{goodsItem.count>0}}">
+                    <view class="cart-choose-num flex-center" wx:if="{{cartItem.openid == app.globalData.myOpenid}}">
+                        <image bindtap="selfAddGoods" data-type="remove" data-editData="{{goodsItem}}"
+                               src="{{staticResPath}}/image/mobile/takeout/food_del.png"
+                               class="food-remove2">
+                        </image>
+                        <text class="food-num">{{goodsItem.count}}</text>
+                        <view style="{{app.globalData.customStyleColor}}" bindtap="selfAddGoods" data-type="add" data-editData="{{goodsItem}}" class="cart-add-food zan-icon zan-icon-add main-color"></view>
+                    </view>
+                    <view wx:else>
+                        x{{goodsItem.count}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- 实时点餐气泡 -->
+    <view class="real-time" wx:if="{{addInfo}}">
+        <view class="order-animation {{addInfo ? 'animation-show':''}}">
+            <!--<image class="animation-image" src="../../images/qipao.png"></image>-->
+            <image class="user-headImg" src="{{addInfo.headPic}}"></image>
+            <view style="margin: 0 20rpx;color:#fff"><text class="user-nick">{{addInfo.nickName}}</text>选择了{{addInfo.goodsName}}</view>
+        </view>
+    </view>
+    <view class="order-extras-info">
+        <!-- 茶位费-->
+        <view class="order-info-panel">
+            <text>就餐人数</text>
+            <view class="cart-choose-num flex-center">
+                <image src="{{staticResPath}}/image/mobile/takeout/food_del.png" data-type="1" bindtap="handlePeople" class="food-remove2"></image>
+                <text class="food-num">{{dinerNum}}</text>
+                <view data-action="addFood" style="{{app.globalData.customStyleColor}}" bindtap="handlePeople" data-type="2" class="cart-add-food zan-icon zan-icon-add main-color"></view>
+            </view>
+        </view>
+        <!-- 订单备注 -->
+        <view class="order-info-panel border-top padding-15">
+            <text>订单备注</text>
+            <input placeholder-class="text-right" placeholder="请输入口味、偏好等要求" bindinput="handleRemark" style="width: 330rpx;height: 40rpx;text-align:right;padding: 2px 5px;"></input>
+        </view>
+    </view>
+    <view class="order-extras-info padding-15">
+        <!--<view class="order-info-panel padding-5">-->
+            <!--<text>茶位费</text>-->
+            <!--<text>{{app.globalData.currencySymbol}}20.20</text>-->
+        <!--</view>-->
+        <!--<view class="order-info-panel padding-5">-->
+            <!--<text>餐巾费</text>-->
+            <!--<text>{{app.globalData.currencySymbol}}10.20</text>-->
+        <!--</view>-->
+        <view class="order-info-panel">
+            <text></text>
+            <text>小计：{{app.globalData.currencySymbol}}{{m1.getFixedMoney(totalMoney)}}</text>
+        </view>
+    </view>
+
+    <!-- 操作按钮( 加菜|下单|买单)-->
+    <view class="order-handle">
+        <!-- 加菜 -->
+        <button class="order-add sub-color-bg" style="{{app.globalData.customSubBg}}" bindtap="addCartData" type="primary">加菜</button>
+        <!-- 下单 -->
+        <button class="order-confirm main-color-bg" bindtap="payCartData" style="{{app.globalData.customStyleBg}}"  type="primary">立即下单</button>
+        <!-- 买单 -->
+        <!--<view class="order-pay"></view>-->
+    </view>
+</view>
+<view wx:else bindtap="addCartData" style="text-align: center;height: 60rpx;line-height: 60rpx;color: #cccccc;margin-top: 100rpx">
+    暂未选择任何商品 <text style="color: red;text-decoration: underline">去选菜</text>
+</view>

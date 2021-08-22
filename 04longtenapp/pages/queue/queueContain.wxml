@@ -1,0 +1,36 @@
+<!--pages/queue/queueList.wxml-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}" style="background: #eff1ee">
+  <view class="queue-update-tip" style='margin-bottom: 15rpx;margin-left:15rpx;'>
+    下拉刷新页面，更新排队号单状态
+  </view>
+  <view wx:if="{{recordList.length>0}}" wx:for="{{recordList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="idx" data-id="{{itemName.id}}" bindtap="detail">
+    <view class="queue-contain-header">
+      <view class="queue-time" style="text-indent: 15px;">
+        {{itemName.fetchTime}}
+      </view>
+      <view class="queue-status">
+        {{itemName.state}}
+      </view>
+    </view>
+    <view class="queue-contain-body">
+      <view class="queue-wait">
+        <view class="wait-number">
+          还需等待 <text>{{itemName.waitCount}}桌</text>
+        </view>
+        <view class="wait-time">
+          预估等待 <text>{{itemName.waitTime}}</text>
+        </view>
+      </view>
+      <view class="queue-seat">
+        <view style="color:#cf4b48;font-size:24px;font-weight: bolder;white-space:nowrap">{{itemName.number}}</view>
+        <view style="color:#a09f9d;font-size:14px">{{itemName.name}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{recordList.length==0}}"  style="text-align: center;position: absolute;left:40%;top:40%;color: #a8a8a8;">
+      <text>暂无相关数据</text>
+  </view>
+
+  <include src="/pages/template/authModal.wxml"/>
+</view>

@@ -1,0 +1,151 @@
+page{background: #F5F7F6;}
+.myJifenData{
+     flex: none;
+	height: 225rpx;
+	background: #fff;
+	padding: 40rpx 30rpx;
+	box-sizing: border-box;
+	font-size: 28rpx;
+}
+.myJifenData .jifen_title{
+	/*color: #7d7d7d;*/
+	text-align: center;
+	font-size: 26rpx;
+	color: #fff;
+	margin-bottom: 15rpx
+}
+.myJifenData .jifen_value{
+	/*color: #d93925;*/
+	text-align: center;
+	font-weight: bold;
+	/*font-size: 60rpx;*/
+	line-height: 80rpx;
+	font-size: 72rpx;
+	color: #fff;
+
+}
+.container{
+	font-size: 28rpx;
+	flex: 1;
+	width: 100%;
+	/* height: 100%; */
+	box-sizing: border-box;
+	padding-top: 10rpx;
+}
+.jifen_list{
+	background: #fff;
+	margin: 0 20rpx;
+     border-radius: 20rpx;
+     border: 1rpx;
+     padding: 20rpx 40rpx;
+}
+.jifen_list .jifen_item{
+	border-top: 1rpx solid #F5F7F6;
+	height: 110rpx;
+
+}
+.jifen_list .jifen_item:first-child{
+	margin-top:none;
+     border-top: none;
+}
+.jifen_list .jifen_item .jifen_time_box{
+	float: left;
+}
+.jifen_list .jifen_item .jifen_time_box .jifen_time_title{
+	font-size: 30rpx;
+	padding-top: 20rpx;
+	line-height: 40rpx;
+     color: #363A3D;
+     margin-bottom: 10rpx;
+}
+.jifen_list .jifen_item .jifen_time_box .jifen_time_val{
+	font-size: 24rpx;
+	color: #999999;
+	line-height: 30rpx;
+}
+.jifen_list .jifen_item .jifen_val{
+	float: right;
+	line-height: 100rpx;
+     color: #363A3D;
+	font-size: 36rpx;
+}
+.textleft{text-align: left;}
+.textcenter{text-align: center;}
+.textright{text-align: right;}
+.sign{
+  	background: #fff;
+	margin: 0 20rpx;
+     border-radius: 20rpx;
+     border: 1rpx;
+     padding: 15rpx 0;
+     /* border-bottom: 10rpx solid #ededed; */
+}
+.signTitle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+.signText{
+  min-height: 80rpx;
+  color: #363A3D;
+  font-size: 32rpx;
+  line-height: 80rpx;
+  font-weight: bolder
+}
+.signHelp{
+  width: 45rpx;
+  height: 45rpx;
+  /* border: 1rpx solid #ededed; */
+  border-radius: 50%;
+
+
+}
+.signItem{
+  min-height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28rpx;
+  padding: 20rpx 30rpx;
+  /* border-top: 2rpx solid #ededed; */
+}
+.signScore{
+  width: 60%;
+  height: 60%;
+  margin: 20rpx auto;
+}
+.signImage{
+  display: flex;
+  align-items: center;
+}
+.signImage .sign-image {
+	background-size: 100% !important;
+	width: 100rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	margin-right: 30rpx;
+	text-align: center;
+}
+.content-tip .sign-integral{
+	font-size: 30rpx;
+	color: #363A3D
+}
+.content-tip .sign-tips{
+	font-size: 26rpx;
+	color: #999999
+}
+.signButton{
+  display: flex;
+  align-items: center;
+
+}
+.signButton button{
+  min-width: 123rpx;
+  height: 59rpx;
+  border: 1rpx solid;
+  background: #fff;
+  font-size: 26rpx;
+  line-height: 59rpx;
+  border-radius: 30rpx;
+
+}

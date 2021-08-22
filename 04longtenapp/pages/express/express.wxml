@@ -1,0 +1,85 @@
+<wxs module="m1">
+    var timeLine=function(date,type){
+    var time = getDate(value);
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date = time.getDate();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    var second = time.getSeconds();
+    month = month < 10 ? "0" + month : month;
+    date = date < 10 ? "0" + date : date;
+    hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+    if (type) {
+    return year + "-" + month + "-" + date;
+    } else {
+    return hour + ":" + minute + ":" + second;
+    }
+    }
+    module.exports.getDateTime = timeLine;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+    <scroll-view>
+        <view class="expressHeader">
+            <image class="goodsCover" src="{{userImagePath}}{{cover}}"></image>
+            <view class="expHRight">
+                <text>{{status == 4 ? "已签收":"派送中"}}</text>
+                <text>{{deliveryCom}}：{{expressNum}}</text>
+            </view>
+        </view>
+        <view class="expressBody">
+            <view class="emptyExpress" wx:if="{{emptyExpress}}">
+                <image class="emptyIco" src="{{staticResPath}}image/mobile/warn2.png"></image>
+                <view>未查询物流信息~</view>
+                <view> 建议登录快递官网查询物流追踪信息</view>
+            </view>
+            <view wx:if="{{noEmptyExpress}}">
+                <view class="expItem buyer">
+                    <view class="expPart1" style="width:93rpx"></view>
+                    <view class="expPart2">
+                        <image class="" style="width:40rpx;height:40rpx;"
+                               src="{{staticResPath}}/image/mobile/expaddr.png"></image>
+                    </view>
+                    <view class="expPart3">
+                        <view class="expPartDetail">[收货地址]{{address}}</view>
+                    </view>
+                </view>
+                <view class="expItem {{index == 0 ? 'active' : ''}}" wx:for="{{records}}">
+                    <view class="expPart1">
+                        <view class="expPartDate">{{item.date}}</view>
+                        <view class="expPartTime">{{item.time}}</view>
+                    </view>
+                    <view class="expPart2">
+                        <image class="expArrow"
+                               src="{{staticResPath}}image/mobile/{{index == 0 ? 'exparrowa' : 'exparrow'}}.png"></image>
+                        <view class="expLine {{index == 0 ? 'active' : ''}}"
+                              wx:if="{{records.length - 1 != index}}"></view>
+                    </view>
+                    <view class="expPart3">
+                        <view class="expPartDesc">{{item.desc}}</view>
+                        <view class="expPartDetail">{{item.detail}}</view>
+                    </view>
+                </view>
+                <view class="expItem {{index == 0 ? 'active' : ''}}" wx:for="{{pathArray}}">
+                    <view class="expPart1">
+                        <view class="expPartDate">{{m1.getDateTime(item.action_time,'date')}}</view>
+                        <view class="expPartTime">{{m1.getDateTime(item.action_time)}}</view>
+                    </view>
+                    <view class="expPart2">
+                        <image class="expArrow"
+                               src="{{staticResPath}}image/mobile/{{index == 0 ? 'exparrowa' : 'exparrow'}}.png"></image>
+                        <view class="expLine {{index == 0 ? 'active' : ''}}"
+                              wx:if="{{recordsArray.length - 1 != index}}"></view>
+                    </view>
+                    <view class="expPart3">
+                        <view class="expPartDesc">{{item.action_msg}}</view>
+                        <!--<view class="expPartDetail">{{item.detail}}</view>-->
+                    </view>
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+    <include src="/pages/template/authModal.wxml"/>
+</view>

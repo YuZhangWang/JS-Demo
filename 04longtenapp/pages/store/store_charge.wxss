@@ -1,0 +1,56 @@
+/* pages/store/store_charge.wxss */
+.wrapper{
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+.title{
+  font-size: 26rpx;
+  line-height: 50rpx;
+  color: #363A3D;
+  margin-bottom: 12rpx;
+}
+.item_list{
+  margin: 0;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding: 0 14rpx 20rpx;
+  border-bottom: 2rpx solid #F5F7F6; 
+  margin-bottom: 20rpx;
+  flex-wrap: wrap;
+}
+.empty_tips{
+  font-size: 32rpx;
+  line-height: 100rpx;
+  text-align: center;
+  width: 100%;
+  color: #999;
+}
+.item_list .item{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-size: 28rpx;
+  flex: 0 0 325rpx;
+  padding: 36rpx 0;
+  text-align: center;
+  line-height: 40rpx;
+  color: #777;
+  border: 1px solid #777;
+  border-radius: 10px;
+  flex-direction: column;
+  margin-bottom: 30rpx;
+  height: 110rpx;
+}
+.item_list .item.selected{
+  border-color: #ff6600;
+  color: #ff6600;
+}
+.desc{
+  font-size: 24rpx;
+  color: #878787;
+  line-height: 34rpx;
+  word-break: break-all;
+}

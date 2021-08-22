@@ -1,0 +1,58 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<block wx:if="{{showLoading}}">
+  <view class="container" style='display:none;'>
+  <view class="header" style='margin-top:30%;'>
+    <icon type="waiting" size="65" color="#04be02"/>
+    <view class="p_txt">加载中...</view>
+  </view>
+</view>
+</block>
+<block wx:else>
+<view class="container" wx:if="{{verifiedClerk && !showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">是否核销？</view>
+  </view>
+  <view class="center order-goods" style='margin-top:18px;'>
+    
+    <view class="clerk-detail">
+      <view class="field">
+        <view class="title">核销员</view>
+        <view class="name">{{verifiedClerk.name}}</view>
+      </view>
+      <view class="field">
+        <view class="title">操作时间</view>
+        <view class="name">{{nowTime}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel bottom">
+    <view class="zan-btns">
+      <button wx:if="{{record.state == 2}}" class="zan-btn">已核销</button>
+      <button wx:else bindtap='handleSubmit' class="zan-btn zan-btn--primary {{btnLoading?'zan-btn--loading':''}}">确定核销</button>
+    </view>
+  </view>
+</view>
+<view class="container" wx:elif="{{verifiedClerk && showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">核销成功！</view>
+  </view>
+
+  <view class="center" style='margin-top:20px;text-align:center;'>
+
+  </view>
+</view>
+<view class="container cont_error" wx:else>
+  <view class="header">
+    <icon type="clear" size="65" color="#f00"/>
+    <view class="p_txt">您没有核销权限！</view>
+  </view>
+  <view class="center">
+
+  </view>
+</view>
+</block>
+<include src="/pages/template/authModal.wxml"/>
+</view>

@@ -1,0 +1,40 @@
+<!--pages/liveplayer/liveplayer.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="liveplayer-container">
+  <view class="live-list live-list{{list_style}}">
+    <view class="live{{list_style}}" wx:for="{{list}}">
+      <navigator url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{item.roomId}}" class="live-container" style="background:url({{list_style == 1 ? item.coverImg : item.anchorImg}});background-size:cover">
+        <view class="status status-{{item.liveStatus}}">
+          <view class="small-circle"></view>
+          {{liveStatus[item.liveStatus]}}
+          <view wx:if="{{item.liveStatus == 102}}" class="liver-time">{{mTool.filterTime(item.startTime)}}</view>
+        </view>
+        <view class="live-anchor">
+          <!-- <image class="anchor-img" src="{{item.anchorImg}}"></image> -->
+          <text class="anchor-name">主播：{{item.anchorName}}</text>
+        </view>
+
+      </navigator>
+      <view class="live-title">
+        <view class="live-title-txt"><text class="txt{{list_style}}">{{item.name}}</text><subscribe wx:if="{{item.liveStatus == 102}}" room-id="{{item.roomId}}"></subscribe></view>
+        <view class="live-goods-info" wx:if="{{item.goodsList.length>0}}">
+          <view class="live-goods-img">
+            <image class="live-goods-img" src="{{item.goodsList[0].goodsImg}}"></image>
+          </view>
+
+          <view>
+            <view class="live-goods-title{{list_style}}">{{item.goodsList[0].goodsName}}</view>
+            <view class="live-goods-price">{{app.globalData.currencySymbol}}{{item.goodsList[0].goodsPrice/100}}</view>
+          </view>
+
+        </view>
+
+      </view>
+    </view>
+
+
+
+  </view>
+  <view wx:if="{{isBottom && !isLoading && list.length == 0}}" class="notdata">没有数据</view>
+
+</view>

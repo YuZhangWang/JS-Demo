@@ -1,0 +1,14 @@
+<!--pages/fenxiao/sharePoster.wxml-->
+<view class="sharePage">
+  <view>
+    <image src="{{posterUrl}}" class="posterImg" bindtap="showImgPre" bindload="loadDone"></image>
+  </view>
+
+  <view>
+
+  </view>
+   <view>
+    <button class="btn savePhone"  bindtap="saveImg">保存到手机</button>
+  </view>
+</view>
+<include src="/pages/template/authModal.wxml" />

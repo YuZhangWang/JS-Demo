@@ -1,0 +1,46 @@
+/* pages/queue/queueDetail.wxss */
+page{
+  background: #f8f8f8;
+}
+.queueDetailWrap{
+  margin-top: 150rpx;
+}
+
+
+.num{
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+}
+.name{
+  text-align: center;
+  margin-top: 0rpx;
+  margin-bottom: 60rpx;
+
+}
+.info{
+  background: #fff;
+  padding: 20rpx 25rpx;
+}
+.info .iItem{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.clearBtn{
+
+  padding: 0;margin: 0;background: transparent;border: none;line-height:unset;
+  display: inline-block;
+}
+.clearBtn::after {
+  border: 0;
+
+} 
+.opts{
+  text-align: center;
+  margin-top: 100rpx;
+}
+.toIndex{
+  color: #333333;
+  text-decoration:underline;
+}

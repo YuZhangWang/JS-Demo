@@ -1,0 +1,27 @@
+<!--pages/selfAddress/selfAddress.wxml-->
+<!--pages/myTrack/myTrack.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view>
+<view class='container'>
+  <view class='item' wx:for="{{list}}">
+    <view class='item-left' data-id="{{item.id}}" data-address="{{item.detailAddress}}({{item.mapAddress}})" bindtap='selectAdd'>
+      <view class='addressName'>
+        <text>{{item.detailAddress}}</text>
+        <text>{{item.time.startHour}}:{{item.time.startMin}}-{{item.time.endHour}}:{{item.time.endMin}}</text>
+      </view>
+      <view   class='address'><view catchtap='toMap' data-la="{{item.latitude}}" data-lo='{{item.longitude}}' class="dwNewIco zan-icon zan-icon-location main-color" style="{{app.globalData.customStyleColor}}"></view> {{item.mapAddress}}</view>
+    </view>
+    <view wx:if="{{item.distance}}" class="item-right" >
+       {{item.distance
+          < 1000 ? item.distance + "m" : mTool.mToKm(item.distance)+ "km"}}
+    </view>
+  </view>
+</view>
+
+
+</scroll-view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>
+

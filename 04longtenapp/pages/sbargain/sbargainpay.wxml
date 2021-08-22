@@ -1,0 +1,214 @@
+<!--pages/groupbuy/groupbuypay.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="payPage payDetail" id="payDetail" hidden="{{showPageArr[0]}}">
+  <view class="order_info_wrapper">
+    <view class="order_info_box">
+      <view  class='ecWayType' wx:if="{{deliveryTab}}">
+        <view class='ecWTItem {{1 == ecWayType ? "active" : ""}}' bindtap='changeEcWayType' data-wtype="1">
+          <text>物流配送</text>
+          <view class='ecWTActive main-color-bg' style="{{app.globalData.customStyleBg}}" ></view>
+        </view>
+        <view class='ecWTItem {{3 == ecWayType ? "active" : ""}}' bindtap='changeEcWayType' data-wtype="3">
+          <text>到店自提</text>
+          <view class='ecWTActive main-color-bg' style="{{app.globalData.customStyleBg}}" ></view>
+        </view>
+      </view>
+      <view class='getSelfBlock' wx:if="{{3 == ecWayType && getSelfTimeTxt}}">
+        <view class='getSelfTimeHeader'>自提时间</view>
+        <view><text>{{getSelfTimeTxt}}</text></view>
+      </view>
+      <view wx:if="{{3 == ecWayType}}" class='toShopAddr order-delivery'>
+        <!-- <view class="toShopBlock">
+          <view>商家地址</view>
+          <view class="toShopAddrDetail">{{getSelfAddr.mapAddress || getSelfAddr.genAddress}}</view>
+          <view><text class='checkShopMap' bindtap='openShopMap'>查看地图</text></view>
+        </view> -->
+        <view class="address hide_address" bindtap="onSelfAddress">
+
+          <view class="zan-icon zan-icon-location icon-ads" style="align-self:flex-start;"></view>
+          <view class="address-message text-black">
+              <view style='color:#000;text-align:left;margin-bottom:15rpx;'>{{address!='请选择自提点'?selfAddressName:address}}</view>
+              <view wx:if="{{address!='请选择自提点'}}" style='color:#959595;text-align:left;margin-right:20px;margin-top:-12rpx;' class="address-text">收货地址：{{address}}</view>
+          </view>
+        <image src="http://static.resource.fenxiaov3.weijuju.com/image/mobile/umall/orderdetail/arrow-right.png" class="icon-arr" alt="详情图标"></image>
+        <view class="clear"></view>
+    </view>
+        <view class='title text-black identity'>
+          <text>姓名</text>
+          <input placeholder='请填写取货人姓名' name="toShopName" value='{{userName}}' bindchange="changeToShopName"></input>
+        </view>
+        <view class='title text-black identity'>
+          <text> 手机</text>
+          <input placeholder='请填写取货人手机' name="toShopTel" value='{{userPhone}}' bindchange="changeToShopTel"></input>
+        </view>
+      </view>
+      <view class="addAddress editAddr addrAddBox" hidden="{{haveAddr}}" data-showindex="1" bindtap="topPageSwitch" style="">
+        <image src="{{staticResPathTuan}}add_icon.png"></image>
+        <span>添加收货信息</span>
+      </view>
+      <view class="address editAddr addrShowBox" wx:if="{{3 != ecWayType}}" hidden="{{!haveAddr}}" data-showindex="1" bindtap="topPageSwitch">
+        <view class="orderInfoWrap">
+          <view class="" style='color:#444;'>
+            <span class="receiveName">{{userName}}</span>
+            <span class="receiveTel">{{userPhone}}</span>
+          </view>
+          <view class="addInfo" style="margin-top:0.2rem;">
+            <span class="addressPCU" data-areaid="">{{areaInfo}}</span>
+            <span class="detailAddress">{{detailAddr}}</span>
+          </view>
+          <image class="tuan_shop_logo" style='width:40rpx;height:40rpx;position:absolute;right:30rpx;top:37%;' src="{{staticResPathBargain}}jiantou.png"></image>
+        </view>
+      </view>
+      <view style='background-size: 100% 100%;height:4px; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}shape.png);"'></view>
+      <view class="odGoodsInfo">
+        <view class="wrapShop" style="">
+          <image class="tuan_shop_logo" src="{{staticResPathBargain}}shops.png"></image>
+          <text class="shopName">{{activity.activityName}}</text>
+        </view>
+        <view class="odSummary">
+          <view class="goodsImg">
+            <image class="goodsImgVal" src="{{mTool.specUrl(extConfig,userImagePath,goodsDetailInfo.awardPic)}}"></image>
+            <!-- {{userImagePath+goodsDetailInfo.awardPic}} -->
+          </view>
+          <view class="odDesc">
+            <span class="goodsNameVal">{{goodsDetailInfo.awardName}}</span>
+            <view class="">
+              <span class="nowPrice">{{app.globalData.currencySymbol}}
+                 <span class="tuanPriceVal">{{mTool.fToY(goodsDetailInfo.originalPrice-goodsDetailInfo.barCount)}}</span>
+              </span>
+              <span class="oldPrice">{{app.globalData.currencySymbol}}
+                <span class="actPriceVal">{{mTool.fToY(goodsDetailInfo.originalPrice)}}</span>
+              </span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="otherThings">
+        <view class="otItem">
+          <span>订单状态：</span>
+          <span class="tuan_peisong_style">等待付款</span>
+        </view>
+        <view class="otItem">
+          <span>配送方式：</span>
+          <span  wx:if="{{3 == ecWayType}}" class="tuan_peisong_style">自提</span>
+         <span  wx:if="{{goodsDetailInfo.deliveryType == 1 && 1 == ecWayType}}" class="tuan_peisong_style">包邮</span>
+          <span  wx:if="{{goodsDetailInfo.deliveryType == 2 && 1 == ecWayType}}" class="tuan_peisong_style">运费{{mTool.fToY(goodsDetailInfo.deliveryPrice)}}元</span>
+        </view>
+        <view class="otItem" style="display: none;">
+          <span>兑奖须知：</span>
+          <span class="getPrize_mustKonw">退货请联系商家</span>
+        </view>
+        <view class="otItem">
+          <span>买家留言：</span>
+          <input type="text" bindinput="inputRemark" id="inputRemark" placeholder="选填：对本次交易的说明"></input>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="payPart {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}">
+    <view class="payInfo payBtn">
+      <span>实际付款</span>
+      <span class="payPrice">{{app.globalData.currencySymbol}}
+        <span class="payPriceVal" wx:if="{{buyType == 0 && 3 == ecWayType}}">{{mTool.fToY(goodsDetailInfo.originalPrice-goodsDetailInfo.barCount)}}</span>
+        <span class="payPriceVal" wx:elif="{{buyType == 1 && 3 == ecWayType}}">{{mTool.fToY(goodsDetailInfo.originalPrice-goodsDetailInfo.barCount)}}</span>
+        <span class="payPriceVal" wx:if="{{buyType == 0 && 1 == ecWayType}}">{{mTool.fToY(goodsDetailInfo.originalPrice+goodsDetailInfo.deliveryPrice-goodsDetailInfo.barCount)}}</span>
+        <span class="payPriceVal" wx:elif="{{buyType == 1 && 1 == ecWayType}}">{{mTool.fToY(goodsDetailInfo.originalPrice+goodsDetailInfo.deliveryPrice-goodsDetailInfo.barCount)}}</span>
+        <span wx:if="{{goodsDetailInfo.deliveryType == 1 && 1 == ecWayType}}">包邮</span></span>
+    </view>
+    <view class="submit_order_btn payBtn" hidden="{{isPay}}" bindtap="commitOrder">提交订单</view>
+    <view bindtap="payForOrder" hidden="{{!isPay}}" id="pay" class="pay payBtn">微信支付</view>
+  </view>
+
+  <!-- <view class="tuan_view_module tuan_orderDetail_view">
+    <view class="footer_btn_box">
+      <view class="footer_btn all_tuan_btn">
+        <image src="{{staticResPathTuan}}icon_tag.png"> 所有宝贝</image>
+      </view>
+      <view class="footer_btn my_tuan_btn">
+        <image src="{{staticResPathTuan}}icon_tuan.png"></image>我的拼团</view>
+      <view class="line"></view>
+    </view>
+  </view> -->
+</view>
+<view class="payPage editAddressPage" id="editAddressPage" hidden="{{showPageArr[1]}}">
+  <view class="nav">
+    <span class="top_title">请填写信息</span>
+  </view>
+  <view class="buyerInfo">
+    <view class="bInfoItem collectUserNameBox">
+      <span>收货人：</span>
+      <input type="text" name="" value="{{userName}}" placeholder="请填写收货人姓名" id="receiveName" bindinput="inputName"></input>
+    </view>
+    <view class="bInfoItem collectTelBox">
+      <span>联系电话：</span>
+      <input type="number" maxlength="11" name="" value="{{userPhone}}" placeholder="请填写联系电话" id="receiveTel" bindinput="inputPhone"></input>
+    </view>
+    <view class="bInfoItem addrBlock collectAddrBox" id="showCityPicker3" bindtap="selectDistrict">
+      <view>
+        <span>所在地区：</span>
+        <span id='cityResult3' class="ui-alert" style="width:auto;">{{areaInfo}}</span>
+      </view>
+
+      <view style="display:inline-block;float: right;">
+        <span style="color:#909090;">请选择></span>
+      </view>
+    </view>
+    <view class="bInfoItem addrBlock collectAddrBox" style="border:none;">
+      <textarea name="name" placeholder="请填写详细地址" id="detailAddr" bindinput="inputDetailAddr" value="{{detailAddr}}"></textarea>
+    </view>
+  </view>
+
+  <view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">
+    <view class="pickerOp" style="">
+      <text catchtap="cityCancel">取消</text>
+      <text style="" catchtap="citySure">确定</text>
+    </view>
+    <!--"可以显示默认的城市，使用后级联选择城市反应很慢就不使用了-->
+    <picker-view style="width: 100%; height: 380rpx;" bindchange="cityChange" value="{{value}}">
+      <picker-view-column>
+        <view wx:for="{{provinces}}" class="picker-item" wx:key="index">
+          {{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{citys}}" class="picker-item" wx:key="index">
+          {{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{areas}}" class="picker-item" wx:key="index">
+          {{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+
+  <view class="addrBtns display_flex">
+    <view class="addrBtn retBtn" id="backPayPage" data-showindex="0" bindtap="topPageSwitch">
+      返回
+    </view>
+    <view class="addrBtn saveBtn" id="saveAddress" data-showindex="0" bindtap="saveAddr">
+      保存
+    </view>
+  </view>
+</view>
+<!--   mask-->
+  <view class="mask friendHelpBaginMask" bindtap="maskHide" hidden="{{tipMask}}">
+        <view t_action="1" t_cid="5911" class="alert--container">
+      <view class="alert--body alert--body-first-bargin">
+        <view class="alert--content alert--f-first-bargin">
+          <view class="alert--text-light">{{tipMaskTxt}}</view>
+
+        </view>
+        <view t_action="1" t_cid="5913" class="alert--icon-close">
+          <image src="{{staticResPathBargain}}cancel.png" style='width:54rpx;height:54rpx;'>
+            <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url({{staticResPathBargain}}cancel.png);"></div>
+            <virtual></virtual>
+          </image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--   mask end-->
+<include src="/pages/template/copyright.wxml" />
+<include src="/pages/template/authModal.wxml"/>
+</view>
+

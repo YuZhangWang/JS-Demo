@@ -1,0 +1,135 @@
+<!--pages/giftcard//giftcardRecordDetail.wxml-->
+<!--pages/giftcard//giftcardDetail.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="view">
+    <view class="cardCntArea">
+      <view class="cardRegion" style="background-image: url({{config.coverShow}});background-size:100% 100%;height:300rpx">
+
+      </view>
+
+      <block>
+        <view class="gift-title">{{config.title}}</view>
+        <view class="gift-price-wrap">
+          <view class="gift-price">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.saleMoney)}}</view>
+          <view class="gift-count">库存：{{config.totalCount}}</view>
+
+        </view>
+        <view wx:if="{{config.type == 2}}" class="gift-card-item">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>面值</view>
+          <view class="item-content">总价值{{app.globalData.currencySymbol}}{{m1.getFixedMoney(config.money)}}元，{{config.getUseLimitTxt}}</view>
+
+        </view>
+        <view wx:if="{{config.type == 1}}" class="gift-card-item">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>可兑换商品</view>
+          <view class="giftcard-goods">
+            <image src="{{config.bizMsg}}" style="width:50px;height: 50px;margin-right: 10px;border-radius: 4px;"></image>
+            <view class="gift-card-goods">
+              <view>{{config.bizName || '商品名称'}}</view>
+              <span style="font-size: 12px" class="main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol || '￥'}}{{m1.getFixedMoney(goods.price)}}</span>
+
+            </view>
+          </view>
+
+        </view>
+        <view class="gift-card-item" style="margin-bottom: 10px">
+          <view class="item-title">
+            <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>使用期限</view>
+          <view class="item-content">{{config.getTimeLimitTxt}}</view>
+
+        </view>
+        <view style="height: 10px; width: 100%;background: #f5f6f7;"></view>
+        <block wx:if="{{!isShare}}">
+          <view wx:if="{{config.state == 1}}" class="gift-card-item" style="padding:30rpx 0;">
+            <view class="item-title">
+              <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>赠送祝福</view>
+            <textarea placeholder="请输入赠送祝福" maxlength="200" bindinput="bindBlessing" placeholder-style="color:#999" class="gift-card-blessing">
+            <text class="currentWordNumber">{{currentNoteLen|0}}/{{noteMaxLen}}个字</text>
+            </textarea>
+
+          </view>
+          <view wx:if="{{config.state == 3}}" class="gift-card-item" style="padding:30rpx 0;">
+            <view class="item-title">
+              <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>赠送记录</view>
+            <view class="given-title">暂时无人领取哦</view>
+            <view class="given-time">发起赠送时间：{{config.giftTime}}</view>
+
+          </view>
+          <view wx:if="{{config.state == 4}}" class="gift-card-item" style="padding:30rpx 0;">
+            <view class="item-title">
+              <text style="position: relative;{{app.globalData.customStyleBg}}" class="gift-card-tag main-color-bg"></text>赠送记录</view>
+            <view class="receiveUser">
+              <view class="userinfo">
+                 <image class="user-avtar" src="{{toGiftCardRecord.head}}"></image>
+                 <text>{{toGiftCardRecord.nickName}}</text>
+              </view>
+              <view class="receiveInfo">
+                 <view class="receiveInfo-state">已领取</view>
+                 <view class="receiveInfo-time">领取时间：{{toGiftCardRecord.createTime}}</view>
+              </view>
+
+            
+            </view>
+
+          </view>
+        </block>
+        <block wx:if="{{isShare}}">
+           <view class="gift-card-item">
+             <view class="gift-blessing-word">来自 <image style="margin: 0 10rpx;" class="user-avtar" src="{{config.head}}"></image>{{cofig.nickName}} 祝福：</view>
+             <view class="blessing-content">{{config.giftExtend || ''}}</view>  
+           </view>
+
+        </block>
+
+
+
+      </block>
+
+
+
+
+    </view>
+  </view>
+
+
+  <view class="receiveCard gift-btn" wx:if="{{!isShare && config.state != 4}}">
+    <block wx:if="{{config.state == 1}}">
+      <button bindtap="cancel" class="main-color toGet" style="{{app.globalData.customStyleColor}};border:1px solid;width:45%">取消</button>
+      <button open-type="share" class="main-color-bg toGet" style="{{app.globalData.customStyleBg}};width:45%">赠送好友</button>
+
+    </block>
+    <block wx:if="{{config.state == 3}}">
+      <button bindtap="cancelGiven" class="main-color toGet" style="{{app.globalData.customStyleColor}};border:1px solid;width:85%">撤销赠送</button>
+
+    </block>
+    <block wx:if="{{config.state == 4}}">
+      <button bindtap="cancelGiven" class="main-color toGet" style="background:#999;color:#fff;width:85%">已赠送</button>
+
+    </block>
+
+  </view>
+  <view class="receiveCard gift-btn" wx:if="{{isShare}}">
+    
+    <button wx:if="{{config.state != 4}}" bindtap="receiveGiftcard" class="main-color-bg toGet" style="{{app.globalData.customStyleBg}};width:85%">立即领取</button>
+<block wx:if="{{config.state == 4}}">
+      <button bindtap="cancelGiven" class="toGet" style="background:#999;color:#fff;width:85%">已赠送</button>
+
+    </block>
+
+  </view>
+
+
+</view>
+<include src="/pages/template/authModal.wxml" />
+<include src="/pages/template/copyright.wxml" />

@@ -1,0 +1,87 @@
+<!--pages/giftcard//myGiftCard.wxml-->
+<!--pages/coupon/coupon.wxml-->
+<import src="/youzan/dist/toast/index.wxml" />
+<import src="/youzan/dist/tab/index.wxml" />
+<import src="/youzan/dist/loadmore/index.wxml" />
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var	htmlEncode = function(e) {
+    var reg = getRegExp("\n","g");
+    return e.replace(reg, "<br />");
+	}
+  var getMoneyFontSize = function(money){
+    var len = ((money / 100).toFixed(2)).length;
+    if(len >= 9){
+      return "38rpx";
+    }
+    if(len >= 8){
+      return "42rpx";
+    }
+    if(len >= 7){
+      return "48rpx";
+    }
+    if(len >= 6){
+      return "58rpx";
+    }
+    if(len >= 5){
+      return "68rpx";
+    }
+
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.htmlEncode = htmlEncode;
+  module.exports.getMoneyFontSize = getMoneyFontSize;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view class="container">
+  <view>
+    <template is="zan-tab" data="{{app,tab: mainTab, componentId: 'mainTab'}}"></template>
+  </view>
+  <view class="record_list">
+      <view bindtap="goGiftCardDetail" data-recordid="{{record.id}}" data-state="{{mainTab.selectedId}}"  data-url="/pages/giftcard/giftcardRecordDetail?id={{record.id}}" class="coupon-state state-{{record.state}}" wx:for="{{recordList}}" wx:for-item="record" wx:key="record.id">
+        <view class="coupon">
+          <view class="main_info">
+             <image src="{{record.coverShow}}"></image>
+          </view>
+          <view class="detail_info">
+            <view class="title">{{record.title}}</view>
+            <view class="award" wx:if="{{record.type == 2}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(record.initMoney)}}<text wx:if="{{record.state == 2}}"  class="main-color" style="{{app.globalData.customStyleColor}}">（余额:{{app.globalData.currencySymbol}}{{m1.getFixedMoney(record.money)}}）</text></view>
+            <view class="award" wx:if="{{record.type == 1}}">可兑换{{record.bizName}}</view>
+            <view wx:if="{{record.state == 1}}" class="date">
+               <view data-recordid="{{record.id}}"  catchtap="selfUse" class="main-color gift-btn" style="{{app.globalData.customStyleColor}}">
+                  自己用
+               </view>
+               <view wx:if="{{record.canGiveFriend}}" data-recordid="{{record.id}}" catchtap="giveFriend" class="main-color-bg gift-btn" style="position: relative;margin-left:30rpx;{{app.globalData.customStyleBg}}">
+                  赠送好友
+               </view>
+              
+            </view>
+            <view wx:if="{{record.state == 2}}" class="date">
+               <view data-index="{{index}}" data-goodsid="{{record.goods.id}}" data-goodstype="{{record.goods.goodsType}}" data-type="{{record.type}}" catchtap="useGiftCard" class="main-color gift-btn" style="{{app.globalData.customStyleColor}}">
+                  立即使用
+               </view>
+            </view>
+            <view wx:if="{{record.state == 3}}" class="date">
+               <view catchtap="revokeGiftCard" class="main-color gift-btn" style="{{app.globalData.customStyleColor}}">
+                  撤销赠送
+               </view>
+            </view>
+            <image class="img-state" style="width:101rpx;height:92rpx;" src="{{staticResPath}}/image/mobile/state{{imgObj[record.state]}}.png"></image>
+            
+          </view>
+        </view>
+        <view class="gift-card-date">有效至：{{record.effectEndTime}}</view>
+      </view>
+  </view>
+  <view style="color:#999;font-size: 12px;text-align: center;padding: 30rpx;" wx:if="{{recordList.length == 0}}">暂无数据</view>
+</scroll-view>
+<template is="zan-toast" data="{{app, zanToast }}"></template>
+<include src="/pages/template/copyright.wxml"/>
+<!--<include src="/pages/template/authModal.wxml"/>-->
+</view>

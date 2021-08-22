@@ -1,0 +1,15 @@
+<template name="none-auth">
+        <!-- 无授权展示 -->
+        <view class="none-auth-panel" wx:if="{{noAuthInfo}}">
+            <view class="empty_text">
+                <text> 登录后才能{{handleType ? handleType:'查看'}}{{pageName}}哦</text>
+            </view>
+            <view class="none-auth-footer" style="margin: 40rpx auto;">
+                <view bindtap='checkUserInfo' style="{{app.globalData.customStyleBg}}"  class="auth-btn main-color-bg">立即登录</view>
+            </view>
+            <view class="none-auth-footer" style="margin: 0 auto;">
+                <view bindtap='backHome' class="auth-btn main-color-bg" style="{{app.globalData.customStyleBg}}" >随便逛逛</view>
+            </view>
+        </view>
+</template>
+

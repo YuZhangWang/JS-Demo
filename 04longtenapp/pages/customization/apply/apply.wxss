@@ -1,0 +1,65 @@
+/* pages/offline/pay.wxss */
+.zan-panel{
+  border: 0;
+}
+.zan-field--wrapped{
+  border:none;
+  border-bottom: 0.5px solid #e5e5e5;
+}
+.header{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 60rpx;
+}
+.header .logo_img{
+  width: 100px;
+  height: 100px;
+  display: blcok;
+  margin: 0 auto 10px;
+  border-radius: 100px;
+}
+.header .p_txt{
+  font-size: 24rpx;
+  line-height:80rpx;
+}
+.money-field .zan-field__title{
+  font-size: 20px;
+  min-width:24px;
+}
+.money-field .zan-field__input{
+  font-size: 16px;
+}
+.remark_cont .zan-field__input{
+  color: #999;
+  font-size: 32rpx;
+}
+.enableDepositItem, .enableItem{
+  display: flex;
+  justify-content: space-between;
+}
+.enableDeposit, .enableRow{
+  display:flex;
+  align-items:center;
+}
+.enableDepositVal, .enableVal{
+  margin-right:10rpx;
+}
+.zan-switch,.zan-switch__bg {
+  width:42px !important;
+  height:22px !important;
+}
+.zan-switch__circle {
+  width:20px !important;
+  height:20px !important;
+}
+
+.btn-getrandcode{
+position:absolute;
+right:30rpx;
+bottom:0rpx;
+height:80rpx;
+width:auto;
+z-index:11;
+line-height:80rpx;
+}
+

@@ -1,0 +1,202 @@
+/* pages/mycards/cardlist.wxss */
+.notCard{
+  text-align: center;
+  color: #333;
+  font-size: 30rpx;
+}
+.cardRegion {
+  background-color: transparent;
+  padding: 40rpx;
+  margin: 25rpx;
+  border-radius: 10px;
+  color: #fff;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+  position: relative;
+  height: 200rpx;
+  box-shadow:0px 5px 7px 0px rgba(0,0,0,0.16);
+}
+.cardRegion .qrCode {
+  width: 25px;
+  height: 25px;
+  margin-top: -15rpx;
+}
+.vipcard-logo{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: transparent;
+  border: 1rpx solid rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.cardRegion .cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardRegion .shopInfo {
+  display: flex;
+  align-items: center;
+}
+
+.cardRegion .shopName {
+  font-size: 26rpx;
+  color: #fff;
+}
+.cardRegion  .vipTypeName{
+  font-size: 38rpx;
+}
+.expireTime{
+  font-size: 24rpx;
+  bottom: 30rpx;
+  left: 20rpx;
+  padding: 0rpx 20rpx;
+  line-height: 35rpx;
+  position: absolute;
+}
+.card-status{
+  position: absolute;
+  bottom: 30rpx;
+  right: 40rpx;
+  border: 1px solid #fff;
+  padding: 0rpx 20rpx;
+  border-radius: 15px;
+  line-height: 35rpx;
+
+}
+.cardRegion .cardIntro{
+  margin-left: 16rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.cardRegion .vLogo {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+}
+.cardRegion .notUse{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0,0.6);
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mask{
+position: fixed;
+background: rgba(0,0,0,0.6);
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+display: flex;
+justify-content: center;
+}
+.collectionInfon{
+  margin-top: 40%;
+  background: #fff;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 60%; 
+  border-radius: 4px;
+  box-sizing:border-box;
+
+}
+.collectionInfonH430{
+  height: 460rpx; 
+}
+
+.collectionInfon .colleItem{
+  display: flex;
+  align-items: center;
+  font-size: 14px;margin-bottom: 20rpx;
+  justify-content: center;
+  width:100%;
+
+}
+
+.collectionInfon .colleItem input{
+  border: 1px #E4E4E4 solid;
+  border-radius: 4px;
+  margin-left: 20rpx;
+  padding-left: 10rpx;
+  width: 400rpx;
+}
+.collectionInfon .colleItem .commTxt{
+  /* width: 118rpx; */
+  text-align: right;
+}
+
+
+.cardform{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.getBtn{
+  margin: 0;
+}
+
+.titleRow{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cardArrow{
+  width: 10rpx;
+  height: 22rpx;
+}
+.collectionInfon .btnGet{
+  margin-bottom:0;
+}
+
+.toGet, .getBtn {
+    width: 90%;
+    max-width: 350px;
+    height: 82rpx;
+    line-height: 82rpx;
+    clear: both;
+    border: 1px solid #C43416;
+    border-radius: 5.4rpx;
+    -webkit-border-radius: 5.4rpx;
+    background-color: #E85436;
+    color: #fff;
+    font-size: 36rpx;
+    text-align: center;
+    margin-top: 10rpx;
+}
+.getBtn{
+  font-size:14px;
+  height: 75rpx;
+  line-height: 75rpx;
+  width: 80%;
+  margin-top: 20rpx
+}
+.oneline{
+  height: 1px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  border-bottom: 1px solid #E4E4E4;
+  bottom:140rpx;
+
+}

@@ -1,0 +1,43 @@
+<!--pages/formRecord/formRecordDetail.wxml-->
+<import src="../template/formdetail.wxml"/>
+<import src="../template/decoration.wxml"/>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<wxs module="m1">
+  var getImgList = function(pic) {
+    if(pic){
+      return pic.split(",");
+    } else {
+      return [];
+    }
+  }
+  module.exports.getImgList = getImgList;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<!--form.wxml-->
+<scroll-view class="container">
+<view style="background-color:#F9F9F9;text-align:left;margin-top:0px;margin-bottom:0px;border-style:none;border-width:0px;border-color:;box-shadow:none;;"
+		class="form_title_box">
+		<view class="form_title">用户信息</view>
+		<view wx:if="{{data.sub_title}}" class="form_sub_title">{{data.sub_title}}</view>
+	</view>
+	<view wx:for="{{collectInfo}}"  wx:if="{{item.val && item.title}}" class="huaer-cell huaer-field">
+    <view wx:if="{{item.val && item.title}}"  class="huaer-cell_hd huaer-field_title">{{item.title}}</view>
+    <view wx:if="{{item.val && item.type == 'image'}}">
+        <image style='width:80px;height:80px;' wx:for="{{item.val}}" wx:for-item="items" src='{{userImagePath+items}}'></image>
+    </view>
+    <input wx:if="{{item.val && item.title && item.type != 'image'}}" type="text" disabled='disabled' placeholder="{{item.val}}"
+      class="huaer-field_input huaer-cell_bd {{right?'huaer-field_input-right':''}}"
+      placeholder-class="huaer-field_placeholder" data-index="{{index}}" data-isReq="{{data.isReq}}" value="" bindinput="bindKeyInput" maxlength='40' data-place='{{data.tipsTxt}}'/>
+  </view>
+  <view>
+    <view class='huaer-field' wx:if="{{formData.createTime}}"><text>提交时间：</text>{{mTool.filterTimestamp(formData.createTime)}}</view>
+    <view class='huaer-field' wx:if="{{formData.payPrice}}"><text>支付金额：{{formData.payPrice/100}}元</text></view>
+    <view class='huaer-field' wx:if="{{formData.orderNum}}"><text>支付单号：{{formData.orderNum}}</text></view>
+  </view>
+  <include src="../template/footer.wxml"/>
+</scroll-view>
+<include src="/pages/template/copyright.wxml"/>
+
+<include src="/pages/template/authModal.wxml"/>
+</view>
+

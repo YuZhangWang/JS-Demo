@@ -1,0 +1,7 @@
+/* channel.wxss */
+@import "../detail/detail.wxss";
+@import "../template/forum/community.wxss";
+@import "../search/search.wxss";
+.fixedcontainer {
+  bottom: 130rpx;
+}

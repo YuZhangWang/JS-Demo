@@ -1,0 +1,600 @@
+/* pages/groupbuy/groupbuypay.wxss */
+.payPage {
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-color: #fafafa;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F1F1F1;
+    width: 100%;
+    height: 90rpx;
+    font-size: 35rpx;
+}
+
+.payDetail .order_info_box .header_detail .header_title_box> image{
+ width: 10rpx;
+ height: 10rpx;
+}
+
+.payDetail .order_info_box .header_detail .header_title_box {
+    
+    font-size: 38rpx;
+    font-weight: bold;
+    color: #fd6221;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payDetail .order_info_box  .header_title {
+    margin: 0 10rpx;
+}
+.payDetail .order_info_box .header_detail .header_tips {
+    
+    font-size: 24rpx;
+    color: #868686;
+    text-align: center;
+}
+
+.payDetail .order_info_box .tuan_countDown_box {
+    width: 100%;
+    height: 170rpx;
+    background-size: 100% 170rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box {
+    position: relative;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_box {
+    position: absolute;
+    box-sizing: border-box;
+    width: 64rpx;
+    height: 100%;
+    bottom: -6rpx;
+    letter-spacing: 25rpx;
+    font-size: 30rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_day {
+    left: 235rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_hour {
+    left: 355rpx;
+}
+.payDetail .tuan_countDown_box .countDown_time_box .timer_minute {
+    left: 485rpx;
+}
+
+.payDetail .tuan_countDown_box .countDown_time_box .timer_second {
+    left: 605rpx;
+}
+
+.address {
+    display: flex;
+    /* align-items: center;  */
+    background: #fff;
+    font-size: 0.7rem;
+    padding: 0.6rem 0.4rem;
+    color: #424242;
+    border-top: 1px solid #dddddd;
+}
+.addAddress {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 30rpx;
+    color: #595758;
+    border-top: 1px solid #dddddd;
+    padding: 40rpx 0;
+}
+.addAddress>image {
+    width: 50rpx;
+    height: 50rpx;
+    margin-right: 10rpx;
+}
+.addr_icon{
+  width: 28rpx;
+height: 34rpx;
+margin-right: -10rpx;
+margin-left: 10rpx;
+margin-top: 5rpx;
+}
+.orderInfoWrap{
+  margin-left: 20rpx;
+  color: #909090;
+  font-size:28rpx;
+  width: 85%;
+
+}
+.receiveTel{
+  margin-left: 50rpx;
+}
+
+
+.odGoodsInfo {
+    background: #fff;
+    font-size: 30rpx;
+    color: #3a3a3a;
+    
+}
+.wrapShop {
+    padding: 20rpx;
+    border-bottom: 1px solid #f6f2f3;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.wrapShop .tuan_shop_logo {
+   width: 47.6rpx;
+   height: 43.4rpx;
+}
+.wrapShop .shopName{
+  height: 47.6rpx;
+  line-height: 47.6rpx;
+  margin-left: 10rpx;
+  font-size:30rpx;
+width: 80%;
+display: inline-block;
+white-space: nowrap;
+overflow: hidden;
+text-overflow:ellipsis;
+}
+.goodsImg>image {
+    width: 110rpx;
+    height: 110rpx;
+}
+.odSummary {
+    display: flex;
+    padding: 26rpx;
+}
+.odDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 16rpx;
+}
+.nowPrice {
+    color: #9D2327;
+    font-size: 35rpx;
+    font-weight: bold;
+}
+.goodsNameVal{
+  color:#000;
+  font-weight:blod;
+
+}
+.oldPrice {
+    color: #696969;
+    font-size: 030rpx;
+    position: relative;
+    text-decoration: line-through;
+    margin-left: 20rpx;
+}
+.order_info_box{
+  max-width: 100%;
+}
+.payDetail .order_info_box>view {
+    background-color: #fff;
+    max-width: 100%;
+    position:relative;
+
+}
+
+.otherThings {
+    background: #fff;
+    margin-top: 0.4rem;
+    font-size: 30rpx;
+}
+.otherThings .otItem {
+    border-bottom: 1px solid #f6f2f3;
+    padding: 16rpx 25rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30rpx;
+}
+.otherThings .otItem input{
+    text-align: right;
+    width: 400rpx;
+}
+.payPart {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 222;
+    width: 100%;
+}
+.payPart .payBtn {
+     display: inline-flex; 
+    flex-direction: column;
+    text-align: center;
+    padding: 8rpx 0;
+    background: #9D2327;
+    align-items: center;
+    justify-content: center;
+}
+.payPart .payBtn[hidden]{
+  display:none;
+
+}
+.payPart .payInfo {
+    width: 55%;
+    background:white;
+    color: #9D2327;
+}
+.payPart .submit_order_btn, .payPart .pay{
+  width: 45%;
+  background: #9D2327;
+  color: #fff;
+}
+.tuan_sucTime_box {
+    padding: 0.2rem 0.4rem;
+    background: #fafafa;
+    font-size: 30rpx;
+    font-weight: bold;
+}
+
+.buyerInfo {
+    background: #fff;
+    padding-top: 2rem;
+}
+.bInfoItem {
+    border-bottom: 1px solid #f6f2f3;
+    padding: 16rpx;
+    display: flex;
+    align-items: center;
+}
+.bInfoItem >span {
+    display: inline-block;
+    width: 180rpx;
+}
+.addrBtns {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+}
+.addrBtns .addrBtn {
+    padding: 0.5rem 0;
+    text-align: center;
+    width: 50%;
+}
+.addrBtns .retBtn {
+    margin: 0;
+    background: #fff;
+}
+#saveAddress {
+    background: #42B035;
+    color: #fff;
+}
+#showCityPicker3{
+  justify-content: space-between;
+}
+textarea {
+
+padding:0;
+box-sizing:border-box;
+height: 100rpx;
+}
+
+
+
+
+
+
+
+
+.picker-view {
+  width: 100%;
+  display: flex;
+  z-index:12;
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  height: 40vh;
+}
+
+.picker-item {
+  line-height: 70rpx;
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+  text-align: center;
+}
+.order_info_wrapper{
+  width: 100%;
+  padding-bottom: 60px
+}
+
+.mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+   
+    color: white;
+    font-size: 0.8rem;
+    top: 0;
+    z-index: 106;
+}
+.friendHelpBaginMask[hidden] {
+  display:none;
+}
+.friendHelpBaginMask {
+color:#303030;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content: center;
+
+}
+
+.popBargainRet {
+background-size:600rpx 270rpx;
+width:600rpx;
+height:270rpx;
+display:flex;
+align-items:center;
+justify-content: center;
+font-size: 30rpx;
+background-repeat: no-repeat;
+box-sizing: border-box;
+padding: 0 25rpx;
+}
+.pickerOp{
+  height:20% ;width:95%;display:flex;justify-content: space-between;
+  align-items: center;
+}
+.pickerOp text{
+  padding:  0 20rpx;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  
+}
+.alert--container {
+    height: 100%;
+    width: 100%;
+    z-index: 25;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.alert--body-first-bargin {
+    position: relative;
+}
+.alert--body {
+    width: 330px;
+    border-radius: 4px;
+    background: #fff;
+    font-family: "PingFangSC-Light";
+    color: #333;
+    padding: 80rpx;
+    margin: 50rpx;
+}
+.alert--content {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.alert--f-first-bargin .alert--icon {
+    margin-top: 31px;
+    margin-bottom: 18px;
+}
+.alert--icon {
+    display: block;
+    width: 73px;
+    height: 73px;
+    margin-top: 56px;
+    margin-bottom: 13px;
+}
+.alert--text-noraml {
+    margin: 40px 0;
+    width: 267px;
+    font-size: 16px;
+    text-align: center;
+}
+.alert--f-first-bargin .alert--text-noraml {
+    font-family: "PingFangSC-Regular";
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+.alert--f-first-bargin .alert--red {
+    color: #b4282d;
+}
+.alert--f-first-bargin .alert--text-light, .alert--f-alert-novolume .alert--text-light {
+    font-family: "PingFangSC-Light";
+    color: #7F7F7F;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+}
+.alert--share-btn-wrapper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.alert--share-btn {
+    height: 49px;
+    width: 262px;
+    background: #B4282D;
+    border-radius: 2px;
+    font-family: 'PingFangSC-Light';
+    font-size: 14px;
+    line-height: 49px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 26px;
+    color: #fff;
+}
+.alert--button-share {
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.alert--button {
+    background: transparent;
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    display: block;
+    height:49px;
+    line-height:49px;
+
+}
+.alert--icon-close {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    bottom: -59px;
+}
+.alert--icon-close image {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.ecWayType{
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0,0,0,.2);
+  margin-bottom: 5px;
+  padding: 25rpx 0;
+}
+.ecWTItem{
+  width: 20%;
+  text-align: center;
+  color: #999;
+  
+}
+.ecWTItem .ecWTActive{
+  visibility: hidden;
+}
+.ecWTItem.active{
+  color: #333;
+}
+.ecWTItem.active .ecWTActive{
+  visibility: visible;
+}
+.ecWTActive{
+  height: 2px;
+}
+
+.getSelfBlock{
+  text-align: center;
+  background: #fff;
+}
+.getSelfTimeHeader{
+  color: #999;
+}
+.toShopAddr{
+  text-align: center;
+  color: #999;
+  background: #fff;
+}
+.toShopBlock{
+  /* padding:30rpx 25rpx; */
+  border-bottom: 5px #f8f8f8 solid;
+}
+.toShopAddrDetail{
+  color: #333;
+  font-size: 30rpx;
+}
+.checkShopMap{
+  color: #3ba8fd;
+  text-decoration:underline;
+}
+.toShopAddr .identity{
+  padding:15rpx 0;
+  margin: 0 25rpx;
+  text-align: left;
+  
+}
+.toShopAddr .identity input{
+  padding-left: 20rpx;
+  width: 85%;
+}
+.toShopAddr .identity:nth-child(2){
+  border-bottom:solid 1px #eee;
+
+}
+
+.checkToShopAddr{
+  color: #3ba8fd;
+  font-size: 24rpx;
+  margin-left: 20rpx;
+}
+.identity{
+  display: flex;
+  align-items: center;
+}
+.identity text{
+  font-size: 26rpx;
+  color: black;
+  white-space: nowrap;
+}
+.order-delivery .address {
+    padding: 6% 20rpx 2.5%;
+    vertical-align: middle;
+    display: flex;
+    font-size: 28rpx;
+    min-height: 80rpx;
+   
+}
+
+.order-delivery .address .icon-arr {
+  display:block;
+  width:26rpx;
+  height:26rpx;
+
+  margin-top:4px;
+  position:absolute;
+  right:25rpx;
+
+
+}
+
+.order-delivery .address .icon-ads {
+    display: inline-block;
+    width: 3.7%;
+    height: 42rpx;
+    margin:0rpx 10rpx 0;
+    vertical-align: top;
+    align-self:center;
+
+}

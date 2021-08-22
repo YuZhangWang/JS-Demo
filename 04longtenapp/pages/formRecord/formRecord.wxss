@@ -1,0 +1,38 @@
+/* pages/formRecord/formRecord.wxss */
+page{
+  background: #f8f8f8;
+
+}
+.formRecord{
+  
+  width: 100%;
+  margin-top: 10px;
+}
+.formlist{
+  background: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px 10px;
+  margin-bottom: 4px;
+  position: relative;
+  
+}
+.formitem{
+  width: 90%;
+}
+.formitem view:nth-child(1){
+  font-size: 36rpx;
+
+}.formitem view:nth-child(2){
+  font-size: 28rpx;
+  color: #999
+}
+
+
+.emptyForm{
+  font-size:26rpx;
+  color: #888;
+  text-align: center;
+  margin-top: 50rpx;
+}

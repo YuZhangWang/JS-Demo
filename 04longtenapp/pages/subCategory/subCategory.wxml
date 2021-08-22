@@ -1,0 +1,27 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+ <view class="category-tab-content category-tab-style-{{style==2?'left':'top'}}" wx:if="{{style==2 || style==3}}">
+    <scroll-view class="type-tab" scroll-y="{{style==2}}" scroll-x="{{style==3}}">
+      <view class="cat-box flex-center {{selectedCatId==cat.id?'active-type':''}}" wx:for="{{categoryList}}" data-id="{{cat.id}}" bindtap="handleCatTabTap" wx:for-item="cat" wx:key="cat.id">
+        <view class="cat-item-name">
+          <text class="cat-item-text">{{cat.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <scroll-view class="product-tab" scroll-y="true" lower-threshold="100" scroll-into-view="sub-cat-{{selectedCatId}}">
+      <view class="sub-cat-cont" wx:for="{{categoryList}}" wx:key="cat.id" wx:for-item="cat" id="sub-cat-{{cat.id}}" data-id="{{cat.id}}"  wx:if="{{cat.subList.length > 0}}">
+        <view class="cat-name">{{cat.name}}</view>
+        <view class="subcat-list">
+          <navigator class="subcat-item" url='/pages/subCategory/sCategoryList?clsid={{subCat.id}}' wx:for="{{cat.subList}}" wx:for-item="subCat" wx:key="subCat.id">
+            <image src="{{subCat.logo?(userImagePath+subCat.logo):(staticResPath+'image/mobile/subcat-default.png')}}"></image>
+            <view class="subcat-name">{{subCat.name}}</view>
+          </navigator>
+        </view>
+      </view>
+    </scroll-view>
+</view>
+<include src="../template/footer.wxml"/>
+<include src="../template/fixedmenu.wxml"/>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

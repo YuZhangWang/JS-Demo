@@ -1,0 +1,46 @@
+<!--pages/mult/multlist.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="multShopCont">
+  <view class="multAroundAddr main-color-bg" style="{{app.globalData.customStyleBg}}">
+    <view class="multAroundAddrWrap"  bindtap="getMultLocation">
+      <view class="leftBlock">
+        <image class="dwIco" src="{{staticResPath}}/youdian/image/mobile/locationIcon1.png"></image>
+        <text class="detailAddr">{{multInfoAddr}}</text>
+      </view>
+      <!-- <view class="arrow" style=" background-image:url({{staticResPath}}/youdian/image/mobile/arrow2.png);"></view> -->
+    </view>
+
+  </view>
+  <view class="multListHeader">
+    <text class="rowLine"></text>
+    <text class="multHeaderTitle">附近商家</text>
+    <text class="rowLine"></text>
+  </view>
+  <navigator open-type="navigate" url="/pages/index/index?fromuid={{item.uid}}&shopuid={{item.relationUid}}" class="list-item" wx:for-index="idx" wx:for="{{list}}">
+    <view class="img-cont">
+      <image src="{{userImagePath+item.image}}"></image>
+    </view>
+    <view class="info-cont">
+      <view class="title">{{item.name}}<span class="shop_closed" wx:if="{{!item.isOpen}}">未营业</span></view>
+      <view class="desc">
+        {{item.introduction}}
+      </view>
+      <view catchtap="openloaction" data-address="{{item.locaction}}" data-latitude="{{item.latitude }}" data-longitude="{{item.longitude }}" class="disKm">
+        <view class="addWrap">
+          <view class="dwNewIco zan-icon zan-icon-location main-color" style="{{app.globalData.customStyleColor}}"></view>
+          <text style="line-height:40rpx;height:40rpx;">{{item.localtion}}</text>
+        </view>
+        <view>
+          {{item.distance
+          < 1000 ? item.distance + "m" : mTool.mToKm(item.distance)+ "km"}}
+        </view>
+      </view>
+    </view>
+  </navigator>
+  <view style="height:105rpx;width:100%;"></view>
+  </view>
+
+  <include src="/pages/template/copyright.wxml" />
+  <include src="../template/footer.wxml" />
+  </view>

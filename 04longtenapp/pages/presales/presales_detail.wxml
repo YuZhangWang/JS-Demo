@@ -1,0 +1,155 @@
+<!--pages/presales/presales_detail.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/decoration.wxml" />
+<import src="../template/preGoodsModal.wxml" />
+<canvas style="width:1188rpx;height:1782rpx; position:absolute;top:-1300px;" canvas-id="canvasGB"></canvas>
+<view hidden="{{true}}">
+  <image src="{{shareQrCodeUrl}}"></image>
+</view>
+<view wx:if="{{isDone}}" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <scroll-view class="container {{contClass}}" style="padding-bottom:120rpx;background:#faf9f9;">
+    <!--商品轮播图-->
+    <view class="header-cont">
+      <swiper class="index-banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" style="height:{{mainBannerHeight||562}}rpx" duration="{{1000}}">
+        <block wx:for="{{goodsDetailInfo.goodsSlider}}" wx:key="index">
+
+          <swiper-item>
+            <image bindtap="viewImg" data-id="{{index}}" data-type="banner" src="{{mTool.specUrl(extConfig,userImagePath,item,1080)}}" bindload="onMainBannerImgLoad" class="slide-image" />
+          </swiper-item>
+
+        </block>
+      </swiper>
+
+      <!--商品基本信息-->
+      <view class="detail-pre">
+        <view class="detail-pre-price">
+          <text>定金:{{app.globalData.currencySymbol}}</text>
+          <text style="font-size:48rpx">{{m1.getFixedMoney(goodsDetailInfo.preAmount)}}</text>
+        </view>
+        <view class="detail-pre-time">
+
+          <view class="act_countDown_box">
+            <view style="font-size:24rpx" class="act_time_name">{{atyStatusTxt}}</view>
+            <view class="countDown_time">
+              <span class="timer_day timer_box">{{atyTimeShutDown.timerDay}}</span>
+              <span class="split">天</span>
+              <span class="timer_box timer_hour">{{atyTimeShutDown.timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{atyTimeShutDown.timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{atyTimeShutDown.timerSecond}}</span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="detail-cont">
+
+        <view class="name" style='width:100%; display: flex; align-items: center; justify-content: space-between;'>
+          <text style="max-width:560rpx;">{{goodsDetailInfo.awardName}}</text>
+        </view>
+        <view style='min-height:50rpx;color:#FC464A;position:relative;'>
+          <text class="item_price i_pri"><text>{{app.globalData.currencySymbol}}</text>
+          <text style='font-size:44rpx;'>{{m1.getFixedMoney(goodsDetailInfo.preAmount+goodsDetailInfo.restAmount)}}</text></text>
+          <text class="pre-text">预售价</text>
+
+          <block>
+            <text wx:if="{{goodsData.originalPrice !=0}}" style="display:block" class="express_money_show">尾款：{{m1.getFixedMoney(goodsDetailInfo.restAmount)}} ({{goodsDetailInfo.validityStart}}-{{goodsDetailInfo.validityStop}})</text>
+
+          </block>
+          <view class='commonGoddsPoster' bindtap='showShareMasks'>
+          <image src='{{staticResPath}}/image/mobile/shareIcon.png' class='commonPosterIco'></image>
+
+        </view>
+        </view>
+
+      </view>
+      <view class="payed_count">
+        <text class="inventory">剩余：{{goodsDetailInfo.sendNum}} {{unitName}}</text>
+        <text class="soldNum">销量：{{(goodsDetailInfo.awardRealNum-goodsDetailInfo.sendNum)+goodsDetailInfo.awardVirtualNum}} 笔</text>
+        <text class="delivery_txt">{{deliveryTxt}}</text>
+      </view>
+    </view>
+    <!-- 预售流程 -->
+    <view class="microshop-box">
+      <view class="goto_shop">
+        <text>预售流程</text>
+        <image bindtap="showMustKnowPage" style="width:30rpx;height:30rpx" src="{{staticResPathTuan}}tips.png"></image>
+      </view>
+    </view>
+    <view class="pre-process pre-process{{preOrder.status}}">
+      <view>支付定金
+        <span wx:if="{{preOrder.status != 1 && preOrder.status != 6}}" class="pre-process-time">{{activity.atyStartTimeM}}-{{activity.atyEndTimeM}}</span>
+      </view>
+      <view>支付尾款
+        <span wx:if="{{preOrder.status == 1}}" class="pre-process-time">{{goodsDetailInfo.validityStart}}-{{goodsDetailInfo.validityStop}}</span>
+      </view>
+      <view>发货</view>
+    </view>
+
+    <!--商品详情块-->
+    <view class="microshop-box">
+      <view class="goto_shop">
+        <text>商品详情</text>
+      </view>
+    </view>
+    <!--商品描述块-->
+    <view class="detail_decoration">
+      <rich-text nodes="{{goodsDetailInfo.description}}" type="text"></rich-text>
+    </view>
+  </scroll-view>
+  <!-- 活动规则 -->
+  <view id="mustKnowPage" hidden="{{mustKnowPage}}" class="sTuanPage mustKnowPage">
+    <view class="musk_know_box">
+      <view class="musk_know">
+        <view class="musk_know_box_title">预售规则</view>
+        <view class="musk_know_detail_box">
+          <view class="musk_know_detail">
+            <rich-text nodes="{{mTool.htmlEncode(activity.rule)}}" type="text"></rich-text>
+          </view>
+        </view>
+      </view>
+      <view class="close_btn" bindtap="hideMustKnowPage" style="background-image:url({{staticResPathTuan}}close.png)"></view>
+    </view>
+  </view>
+
+  <template is="categoryModalTpl" data="{{app,isService:decoration.header_data.service,userImagePath:userImagePath,staticResPath:staticResPath,goodsData:goodsDetailInfo,app:app,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isDetailPage:true,isCollected:isCollected,preOrder:preOrder,activity:activity}}"></template>
+
+</view>
+     <!-- 生成海报  -->
+  <view class="shareMask" hidden='{{showShareMask}}'>
+	<view class="shareMask-body">
+		<view class="shareMask-middle">
+			<view class="shareMask-icon" data-goodsid="{{goodsDetailInfo.id}}">
+				<button open-type="share" style="background:#fff">
+					<image class="shareMask-img" src="{{staticResPathBargain}}icon-wx.png">
+						<div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}icon-wx.png&quot;);"></div><span></span></image>
+				</button>
+				<view class="shareMask-txt">
+					<view>召唤伙伴一起拼</view>
+				</view>
+			</view>
+			<form class="shareMask-icon" wx:if="{{shareType == 0}}"  data-goodsid="{{goodsDetailInfo.id}}" bindtap="shareByQRCode" report-submit="" ><span><button class="button-reset" form-type="submit"><view class="shareFormFlex"><image class="shareMask-img" src="{{staticResPathBargain}}icon-ps.png"><div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}/icon-ps.png&quot;);"></div><span></span></image>
+				<view class="shareMask-txt">
+					<view>生成海报图</view>
+				</view>
+		</view>
+		</button>
+		</span>
+		</form>
+	</view>
+	<view class="shareMask-confirm" bindtap='hideShareMasks'>取消</view>
+</view>
+</view>
+<include src="../template/fixedmenu.wxml" />
+<include src="/pages/template/copyright.wxml" />
+<include src="/pages/template/authModal.wxml" />

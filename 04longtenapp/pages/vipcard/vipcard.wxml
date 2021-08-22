@@ -1,0 +1,223 @@
+<!--pages/vipcard/vipcard.wxml-->
+<view wx:if="{{isComplete}}" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="view">
+    <view class="cardCntArea">
+      <view class="cardRegion" style="background-image: url({{coverSet == 2 ? userImagePath+prefixImg : staticResPath+default_bg}});background-color:{{coverSet == 1 ? curCardColor : ''}};background-size:100% 100%;min-height:{{isCustom ? '320' : '200'}}rpx;">
+        <view class="cardHeader">
+          <view class="shopInfo">
+            <view class="vipcard-logo">
+              <image src="{{userImagePath+logo}}" class="vLogo" alt=""></image>
+            </view>
+            <view class="vipType">
+              <text style="color:{{nameColor}}" class="shopName">{{shopName}}</text>
+              <view  wx:if="{{!isCustom}}" class="vipTypeName">{{cardName}}</view>
+            </view>
+          </view>
+          <image wx:if="{{!isCustom && isReceived}}" bindtap='showQrcode' src="{{staticResPath+'/youdian/image/admin/xiaochengxu/vip/vipcard_qrcode.png'}}" class="qrCode" alt=""></image>
+        </view>
+
+        <view wx:if="{{!isCustom}}" class="vipCardContent">
+          <text class="expiryDateWrap">有效期：<text class="expiryDate">{{expireTime? expireTime:'无限期'}}</text></text>
+          <text wx:if="{{statu==1}}">{{cardState == 3 ? "不可用" : "使用中"}}</text>
+          <text wx:if="{{isReceived && statu==-1}}" data-activetype="{{payStatus =='1' || (payStatus =='0' && activeMoney<=0) ? true:''}}" class="{{payStatus =='1' || (payStatus =='0' && activeMoney<=0) ?'main-color':''}}" style="{{payStatus =='1' || (payStatus =='0' && activeMoney<=0) ? app.globalData.customStyleBg:''}}"
+            bindtap="{{payStatus =='1' ? 'getCard':(payStatus =='0' && activeMoney>0 ? ' ':'getCard')}}">待激活</text>
+
+        </view>
+      </view>
+      <!-- isReceived -->
+      <view class="userWrap" wx:if="{{isReceived}}">
+        <view class="userItem">
+          <text>积分</text>
+          <text class="myPoints val">{{curPoint}}</text>
+        </view>
+        <view wx:if="{{!isCustom}}" class="userItem" bindtap="queryCoupon">
+          <text>优惠券</text>
+          <text class="myCoupon val">查看</text>
+        </view>
+        <view class="userItem" style="border-right:none;">
+          <text>等级</text>
+          <text class="myLevel val">{{levelName}}</text>
+        </view>
+      </view>
+      <block wx:if="{{!isCustom}}">
+        <view class="membershipRegion" wx:if="{{rightCntArr.length != 0}}" style="">
+          <view class="membershipHeader">
+            <text style="margin-top:-20rpx;font-size:38rpx;font-weight:400;">会员权益</text>
+          </view>
+          <view class="membership">
+            <view class="membershipItem freeShipping" wx:if="{{isShowFree}}">
+              <image src="{{staticResPath+'/youdian/image/admin/xiaochengxu/vip/vipcard_by.png'}}" class="membershipItemIcon" alt=""></image>
+              <text class="membershipItemName vipFreeShipping">包邮</text>
+            </view>
+            <view class="membershipItem discount" wx:if="{{isShowDiscount}}">
+              <image src="{{staticResPath+'/youdian/image/admin/xiaochengxu/vip/vipcard_zk.png'}}" class="membershipItemIcon" alt=""></image>
+              <text class="membershipItemName vipDiscount" style="">{{discountTxt}}折</text>
+            </view>
+            <view class="membershipItem coupon" wx:if="{{isShowCoupon}}">
+              <image src="{{staticResPath+'/youdian/image/admin/xiaochengxu/vip/vipcard_yf.png'}}" class="membershipItemIcon" alt=""></image>
+              <text class="membershipItemName vipCoupon">优惠券</text>
+            </view>
+            <view class="membershipItem points" wx:if="{{isShowPoints}}">
+              <image src="{{staticResPath+'/youdian/image/admin/xiaochengxu/vip/vipcard_jf.png'}}" class="membershipItemIcon" alt=""></image>
+              <text class="membershipItemName vipScore">积分</text>
+            </view>
+          </view>
+          <view class="shipDetail">
+            <view class="membershipCnt" wx:for="{{rightCntArr}}">
+              <view style="display:flex;align-items:center" class="">
+                <text style="font-size:16px;font-weight:bold;padding-right:10rpx;">·</text>{{item}}</view>
+            </view>
+          </view>
+
+        </view>
+        <!-- <view class='memberDeposit cardCommRow'>
+          <view class="titleRow" bindtap="goToDeposit">
+            <text>会员储值</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view> -->
+
+        <view class="vipBlock cardCommRow">
+          <view class="vipBlockHeader" bindtap="tapKnow">
+            <view class="titleRow">
+              <text>使用需知</text>
+              <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+            </view>
+            <view class="needKnow" hidden="{{isShowKnow}}">{{needKnowTxt}}</view>
+          </view>
+
+          <!-- <view class="vipBlockHeader" style="border-bottom:none;">出示会员凭证</view> -->
+        </view>
+        <view class="vipBlock cardCommRow">
+          <view class="vipBlockHeader titleRow" bindtap="callService">
+            <text>客服电话</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+        <view class="vipBlock cardCommRow">
+          <view class="vipBlockHeader titleRow" bindtap="goToIndex">
+            <text>店铺主页</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+      </block>
+      <block wx:if="{{isCustom}}">
+        <view class='memberDeposit cardCommRow'>
+          <view class="titleRow" data-type='cardDetail' bindtap="goToLink">
+            <text>会员卡详情</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+        <view class='memberDeposit cardCommRow'>
+          <view class="titleRow" data-type="brandInfo" bindtap="goToLink">
+            <text>品牌信息</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+        <view class='memberDeposit cardCommRow'>
+          <view class="titleRow" bindtap="linkToMin">
+            <text>自助积分</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+        <navigator class='memberDeposit cardCommRow'>
+          <view class="titleRow" data-type="stopFee" bindtap="goToLink">
+            <text>停车缴费</text>
+            <image class="cardArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </navigator>
+
+      </block>
+
+
+      <view class="vipBlock cardCommRow" wx:if="{{isGet}}">
+        <view class="vipBlockHeader" style="border-bottom:none;margin:0;text-align:center;" bindtap="delVipCard">删除会员卡</view>
+      </view>
+    </view>
+  </view>
+
+  <view bindtap='showQrcode' class='qrCode-model' wx:if='{{showModel}}'>
+    <view class='qrCode-container'>
+      <view class='qrCode-content'>
+        <image src='{{imgurl+mcNumber}}'></image>
+
+      </view>
+    </view>
+  </view>
+  <view class="receiveCard">
+   <button wx:if="{{isReceived && statu==-1 && payStatus !='0'}}" class="zan-btn zan-btn--primary zan-btn--small toGet" data-activeMoney='{{activeMoney}}'  bindtap="getCard">去激活</button>
+    <button class="zan-btn zan-btn--primary zan-btn--small toGet" data-activeMoney='{{activeMoney}}' wx:if="{{!isReceived && activeMoney <= 0}}" bindtap="getCard">领取会员卡</button>
+    <button class="zan-btn zan-btn--primary zan-btn--small toGet" data-activeMoney='{{activeMoney}}' wx:if="{{!isReceived && activeMoney > 0}}" bindtap="getCard1">领取会员卡</button>
+    <button class="zan-btn zan-btn--primary zan-btn--small toGet" wx:if="{{isReceived && payStatus =='0' && activeMoney>0}}" bindtap="payCard">购买会员卡支付{{app.globalData.currencySymbol}}{{activeMoney/100}}</button>
+    <button class="zan-btn zan-btn--primary zan-btn--small toGet" wx:if="{{isReceived && payStatus =='1' && activeMoney>0 && statu == 2}}" bindtap="payCard">重新激活会员卡支付{{app.globalData.currencySymbol}}{{activeMoney/100}}</button>
+    <button class="zan-btn zan-btn--primary zan-btn--small isGet" wx:if="{{false}}">默认使用该卡</button>
+  </view>
+  <view class="mask" hidden="{{isShowMask}}" bindtap="hideMask">
+
+    <view class="collectionInfon {{isCollectDate ? 'collectionInfonH430': ''}}" catchtap="stopOverflow">
+      <view class="colleItem">
+        开通会员
+      </view>
+      <view class="colleItem">
+        <text class="commTxt splTxt"><text>姓</text>
+        <text style="color:#fff">隐</text>
+        <text style="color:#fff">隐</text>
+        <text>名</text></text>
+        <input placeholder="输入姓名" name="name" bindinput="inputName"></input>
+      </view>
+
+      <view class="colleItem">
+        <text class="commTxt">联系电话</text>
+        <input placeholder="输入联系电话" name="userPhone" bindinput="inputPhone" maxlength='11'></input>
+      </view>
+      <view wx:for="{{extendInfo}}" class="colleItem" wx:if="{{item.isChecked}}">
+        <block wx:if="{{item.name=='短信验证'}}">
+          <view class="colleItem">
+            <view class="commTxt">
+              <text style="color:#fff">隐</text>验证码</view>
+            <input type="text" placeholder="请输入验证码" style="width: 210rpx" placeholder-class="huaer-field_placeholder" value="" bindinput="bindCodeInput" />
+            <block wx:if="{{has_get_vcode != true}}">
+              <view bindtap="tapGetVcode" style="font-size: 26rpx;padding: 10rpx 26rpx;background: rgb(101, 196, 170)!important;color: #fff;border-radius: 10rpx;margin-left: 8rpx">获取验证码</view>
+            </block>
+            <block wx:if="{{has_get_vcode == true}}">
+              <view style="font-size: 22rpx;padding: 12rpx 20rpx;background: #ccc;color: #ffffff;border-radius: 10rpx;margin-left: 8rpx;">{{vcodeGetTime}}s后重新获取</view>
+            </block>
+          </view>
+        </block>
+        <block wx:else>
+          <block wx:if="{{item.type != 2}}">
+            <text class="commTxt">{{item.name}}</text>
+            <input placeholder="{{item.tips}}" data-name="{{item.name}}" data-idx="{{index}}" name="userPhone" bindinput="inputs"></input>
+          </block>
+          <block wx:esle>
+            <radio-group class="radio-group" bindchange="radioChange">
+                <radio class="radio" wx:for-items="{{item.options}}" wx:key="index" value="{{item.name}}" checked="{{item.checked}}">
+                  <text>{{item.name}}</text>
+                </radio>
+              </radio-group>
+          </block>
+
+        </block>
+
+      </view>
+      <view class="colleItem" wx:if="{{isCollectDate}}">
+        <text class="commTxt splTxt"><text>生</text>
+        <text style="color:#fff">隐</text>
+        <text style="color:#fff">隐</text>
+        <text>日</text></text>
+        <picker class="weui-btn" mode="date" value="{{date}}" start="1900-01-01" end="2100-01-01" bindchange="bindDateChange">
+          <input placeholder="输选择生日" disabled='true' value="{{date}}"></input>
+        </picker>
+
+      </view>
+
+      <view class="colleItem btnGet">
+        <button class="getBtn main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="infoSubmit">领取</button>
+      </view>
+    </view>
+
+  </view>
+
+</view>
+<include src="/pages/template/authModal.wxml" />
+<include src="/pages/template/copyright.wxml" />

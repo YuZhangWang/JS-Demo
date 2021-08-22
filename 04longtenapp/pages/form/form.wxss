@@ -1,0 +1,149 @@
+.container{padding-bottom: 70rpx;font-size: 28rpx;background: #fff;}
+page{
+  background: #f5f6f7;
+}
+.huaer-panel {background:#fff;border-top:solid 9.45rpx #eee;overflow:hidden;}
+.huaer-cell{position:relative;padding:12px 15px;display:flex;line-height:1.4;font-size:14px;flex-direction: column}
+.huaer-cell::after{position:absolute;left:15px;right:0;bottom:0;background:#e5e5e5;content:' '}
+.huaer-cell_icon{margin-right:5px}
+.huaer-cell_bd{flex:1}
+.huaer-cell_text{line-height:24px;font-size:14px}
+.huaer-cell_desc{line-height:1.2;font-size:12px;color:#666}
+.huaer-cell_ft{position:relative;text-align:right;color:#666}
+.huaer-cell_no-pading{padding:0}
+.huaer-cell_no-pading .huaer-cell_bd_padding{padding:12px 0 12px 15px}
+.huaer-cell_no-pading .huaer-cell_bd_padding .huaer-form_input{height:26px}
+.huaer-cell_no-pading .huaer-cell_ft_padding{padding:12px 15px 12px 0}
+ .huaer-cell-last-child::after,.huaer-cell:last-child::after{/*display:none*/} 
+.huaer-cell-switch{padding-top:6px;padding-bottom:6px}
+.huaer-field{padding:7px 15px;color:#333}
+.huaer-field-wrapped{margin:0 15px;border:1rpx solid #e5e5e5;border-radius:8rpx;background-color:#fff}
+.huaer-field-wrapped::after{border:0rpx}
+.huaer-field-wrapped+.huaer-field-wrapped{margin-top:10px}
+.huaer-field-error{border-color:#f40;color:#f40}
+.huaer-field_title{color:#333;font-size: 32rpx;padding: 15rpx 0;}
+.huaer-field_input{flex:1;line-height:1.6;padding:10rpx 20rpx;height:55rpx;font-size:14px;color: #333;border: 1px solid #e4e4e4;border-radius: 5px;}
+.huaer-field_picker{flex:1;padding:10px 4px;font-size:28rpx;border: 1px solid #e4e4e4;position: relative;border-radius: 5px;}
+.huaer-field_placeholder{font-size:28rpx;color: #999;}
+.huaer-field_input-right{text-align:right}
+.form_title_box{padding:8rpx 20rpx;margin-bottom: 20rpx;}
+.form_title_box .form_title{font-size: 38rpx;font-weight: bold;}
+.textleft{text-align: left;}
+.textcenter{text-align: center;}
+.textright{text-align: right;}
+.bottom-arrow{
+  position: absolute;
+right: 12px;
+top: 10px;
+transform: rotate(90deg);
+color: #ccc;
+
+}
+.form_btn_box{
+	position: fixed;
+	border-top: 1px solid #f9f9f9;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 140rpx;
+	background: #f5f6f7;
+	z-index: 10;
+}
+.picker text{
+  color: #333;
+  font-size: 28rpx;
+}
+.currentWordNumber{
+  font-size: 24rpx;
+  color: #999;
+  position: absolute;
+  right: 10rpx;
+  bottom: 10rpx;
+  
+}
+.vcode-container{
+  display: flex;
+  align-items: center;
+}
+.picker{
+  color: #333;
+  padding: 0 15rpx;
+}
+.form_btn_box .formBtn{
+	margin:20rpx 50rpx;
+	font-size: 32rpx;
+	border-radius: 45rpx;
+	height: 90rpx;
+	line-height: 90rpx;
+	text-align: center;
+}
+
+/* 单选按钮样式*/
+
+radio .wx-radio-input {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #EEEEEE;
+  border-radius: 100%;
+  background: none;
+}
+
+/*单选按钮选中后内部样式*/
+
+radio .wx-radio-input.wx-radio-input-checked {
+  border: 2rpx solid #0080ff!important;
+  background: white;
+}
+
+radio .wx-radio-input.wx-radio-input-checked::before {
+  width: 50%;
+  height: 50%;
+  background: #0080ff;
+  border-radius: 100%;
+  content: '';
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+radio-group radio{
+	position:relative !important;
+  left: 0 !important;
+  display: block;
+ 
+  
+
+}
+
+
+radio.disabled .wx-radio-input {
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #EEEEEE;
+  border-radius: 100%;
+  background: none;
+}
+/*  重写 checkbox 样式  */
+/* 未选中的 背景样式 */
+checkbox .wx-checkbox-input{
+   width: 40rpx; /* 背景的宽 */
+   height: 40rpx; /* 背景的高 */
+}
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+   border: none;
+   background: #0080ff;
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   width: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   line-height: 40rpx;
+   text-align: center;
+   font-size:30rpx; /* 对勾大小 30rpx */
+   color:#fff; /* 对勾颜色 白色 */
+   background: transparent;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}
+
+

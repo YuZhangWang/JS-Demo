@@ -1,0 +1,135 @@
+/* pages/fenxiao/myPerformance.wxss */
+page{
+  background-color:rgba(245, 245, 245, 1);
+  box-sizing: border-box;
+  font-family:Source Han Sans CN;
+  font-weight:400;
+}
+.nomore{ padding: 15px 0; text-align: center; font-size: 12px; color: #949494; }
+.wrap{
+  font-size: 26rpx;
+}
+.panel-headers .zan-icon-question{
+  font-size: 14px;
+  color: #949494;
+}
+.list-panel{
+  border-radius: 15px 0 0 15px;
+  margin-top: -30rpx;
+  position: relative;
+}
+.questionIco {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin-left: 10rpx;
+  line-height: 11px;
+  text-align: center;
+  font-size: 20rpx;
+
+}
+.wrapFreeze{
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  
+}
+
+.panel-headers {border-radius: 15px 15px 0 0; font-size: 13px; -webkit-flex: 0 0 auto; flex: 0 0 auto; height: 38px; line-height: 38px; background: #fff; display: -webkit-flex; display: flex; -webkit-justify-content: space-around; justify-content: space-around; position: relative; }
+.panel-header image{ width: 17px; height: 17px; display: inline-block; margin-left: 4px; margin-top: -1px; vertical-align:middle; }
+.panel-headers:after { content: ' '; bottom: 0; left: 0; width: 100%; position: absolute; }
+.panel-header { color: #737373; text-align: center; width: 250rpx; }
+.panel-header-active { color: #fb4e44; }
+.panel-header-active .panel-header-txt:after{
+   content: ' '; 
+   bottom: 1px; 
+   left: 50%;
+  width: 50%;
+  position: absolute;
+  border-bottom: 2px solid #fb4e44;
+  margin-left: -25%;
+ }
+.panel-header-txt{ display: inline-block; position: relative; width:100%;}
+
+.table{
+  background-color: #fff;
+}
+.table .thead{
+  background-color:#fff;
+}
+.table .tbody{
+  background-color: #fff;
+}
+.table .tbody-row{
+  border-bottom: 1px solid #F5F7F6;
+}
+.table .row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0;
+}
+.table .sub-text{
+  color: #c0c0c0;
+  font-size: 26rpx;
+}
+.table .time{
+  font-size: 20rpx;
+}
+.table .thead .row{
+  height: 30px;
+  line-height: 30px;
+  padding: 0;
+  font-size: 26rpx;
+  color: #333;
+
+}
+.table .td1{
+  flex: 1 auto;
+}
+.table .td2{
+  flex: 0 0 33.3%;
+  color: #000;
+}
+.table .td3{
+  flex: 0 0 33.3%;
+}
+.awardInfo{
+  display: flex;
+  padding: 70rpx 0rpx 100rpx 0;
+  background: #FF585B;
+  position: relative;
+}
+.awardInfo .awardItem{
+  flex-grow: 1;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+.awardNum{
+  color: #fff;
+  font-size: 30rpx;
+  line-height: 50rpx;
+}
+.awardItem text{
+  font-size: 24rpx;
+}
+.bg-left{
+  position:absolute;
+  left: 0;
+  width: 35px;
+  height: 60px;
+  top: 50%;
+  margin-top: -30px;
+}
+.bg-right{
+  position:absolute;
+  right: 0;
+  width: 30px;
+  height: 40px;
+  top: 50%;
+  margin-top: -20px;
+}

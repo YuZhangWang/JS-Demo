@@ -1,0 +1,96 @@
+/* pages/judge/judge.wxss */
+@import "../template/forum/publish.wxss";
+.wrapper{
+  box-sizing: border-box;
+  width: auto;
+  margin: 0 20rpx;
+}
+.goods-info{
+  display: flex;
+  margin-top: 20rpx;
+}
+.goods-info .goodsCover{
+  width: 150rpx;
+  height: 150rpx;
+  flex: 0 0 150rpx;
+}
+.goods-info .name{
+  flex: 1 1 auto;
+  padding-left: 10rpx;
+}
+textarea{
+  width: auto;
+  border: 1rpx solid #ccc;
+  height: 260rpx;
+  border-radius: 5rpx;
+  margin: 0rpx 10rpx;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+.textarea text{
+  margin-left: 10rpx;
+}
+.cameraJudge{
+  width: 200rpx;
+  height: 200rpx;
+  border: 1rpx dotted #ccc;
+
+  /* position: relative;
+  top: 20rpx;
+  left: 20rpx; */
+}
+.submit{
+  margin-top: 100rpx;
+}
+.perfect{
+  height: 40px;
+  line-height: 40px;
+  background-color: #f1f1f1;
+  display: flex;
+  margin-top:20rpx;
+  margin-bottom:20rpx;
+  width:100%;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  padding-left: 10rpx;
+}
+.perfect .p-text{
+  padding-left: 10rpx;
+  flex: 0 0 140rpx;
+}
+.perfect .score-icon{
+  flex: 0 0 280rpx;
+  align-self: flex-start;
+}
+.perfect .zan-icon{
+  width: 56rpx;
+  font-size: 14px; 
+}
+.perfect .score-text{
+  align-self:flex-end;
+  flex:0 0 250rpx;
+  text-align:right;
+  padding-right:10rpx;
+}
+.zan-toast{
+  position: fixed;
+  top: 13%;
+  left: 20%;
+}
+.score-icon .zan-icon-like{
+  font-size: 25rpx;
+}
+.integral{
+  width: 100%;
+  height: 100rpx;
+  /* background: #e4e4e4; */
+  text-align: center;
+  line-height: 100rpx;
+  margin-top: 10rpx;
+}
+.communityPublish-item-add .imgTips{
+  font-size: 24rpx;
+  line-height: 24rpx;
+  position: absolute;
+  bottom: 10rpx;
+}

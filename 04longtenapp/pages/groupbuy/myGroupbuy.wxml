@@ -1,0 +1,106 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/noneAuth.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <import src="/youzan/dist/toast/index.wxml" />
+  <view id="myTuanListPage" class="sTuanPage myTuanListPage">
+    <view class="top_header" style="background-image: url({{staticResPathTuan}}newbg.jpg);" style="display:none;">
+      <view class="nick_img" style="background-image: url({{staticResPathTuan}}nick_img_box.png);">
+        <image src="{{curUser.headimgurl}}"></image>
+      </view>
+      <view class="nick_name">{{curUser.nickName}}</view>
+
+    </view>
+    <view class="swiper-tab">
+      <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">全部</view>
+      <view class="swiper-tab-list {{currentTab==4 ? 'on' : ''}}" data-current="4" bindtap="swichNav">拼团中</view>
+      <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">成功</view>
+      <view wx:if="{{!(isNewGb || isStepGb)}}" class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">已支付</view>
+    </view>
+
+    <scroll-view wx:if="{{!noAuthInfo}}" class="my_tuan_list_box">
+      <view class="my_tuan_list">
+        <!-- 我的团item -->
+        <view class="my_tuan_item_box" wx:for="{{myTuanList}}" wx:key="index">
+          <view class="my_tuan_item status_{{item.relationshipDefine.statu}} {{item.isPayed||(isNewGb&&item.relationshipDefine.statu==2)?'ispayed':''}}">
+            <view class="order_header">
+              <view class="header_left" style="padding: 10rpx 0rpx;">
+                <view class="start_time" wx:if="{{item.relationshipDefine.sponsorOpenid == curUser.openId}}">发起时间:
+                  <span class="order_time">{{item.relationshipDefine.createTime}}</span>
+                </view>
+                <view class='start_time' wx:else>参与时间:
+                  <span class="order_time">{{item.relationshipDefine.createTime}}</span>
+                </view>
+
+              </view>
+
+            </view>
+            <view class="order_body">
+              <view class="goods_img">
+                <image src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}"></image>
+                <!-- {{ userImagePath + item.award.awardPic}} -->
+              </view>
+              <view class="goods_info_box">
+                <view class="goods_name">{{item.award.awardName}}</view>
+                <view wx:if="{{!isStepGb}}" class="goods_price_box">
+                  <span class="tuan_num_box" style="border:1px solid #F95506;">
+                    <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+                    <span class="tuanpeopleNum" style="color:#F95506">{{item.award.ecExtend.offeredLimitNum}}人拼</span>
+                  </span>
+                  <span class="goods_price">{{app.globalData.currencySymbol}}
+                    <span>{{mTool.fToY(item.award.ecExtend.activityPrice)}}</span>
+                  </span>
+                  <view class="order_statu tuan_ing" wx:if="{{0 == item.relationshipDefine.statu}}">还差
+                    <span style="color:#F44;">{{item.award.ecExtend.offeredLimitNum - item.relationshipDefine.joinNum}}人</span>成团</view>
+                </view>
+                <view wx:if="{{isStepGb}}" class="goods_price_box">
+                  <span class="tuan_num_box" style="border:1px solid #F95506;">
+                    <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+                    <span class="tuanpeopleNum" style="color:#F95506">阶梯团</span>
+                  </span>
+                  <span class="goods_price">{{app.globalData.currencySymbol}}
+                    <span>{{mTool.fToY(item.award.ecExtend.stepList[0].price)}}</span>
+                  </span>
+                </view>
+              </view>
+            </view>
+
+            <view class="order_footer">
+              <view class="order_btn_box">
+                <view class="btn_style_2 tuan_info_btn" data-awardId="{{item.relationshipDefine.awardId}}" data-statu="{{item.relationshipDefine.statu}}" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail">拼团详情</view>
+                <view class="btn_style_2 tuan_info_btn tuan_share_btn"  data-awardId="{{item.relationshipDefine.awardId}}" data-statu="{{item.relationshipDefine.statu}}" data-reid="{{item.relationshipDefine.relationId}}" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail" wx:if="{{0 == item.relationshipDefine.statu}}">召唤伙伴</view>
+                <view class="btn_style_1 tuan_pay_btn" data-goodsid="{{item.award.id}}" data-reid="{{item.relationId}}" data-atyid="{{item.relationshipDefine.activityId}}" wx:if="{{2 == item.relationshipDefine.statu}}" data-type="{{(false == item.isPayed && !(isNewGb || isStepGb))?'pay':'detail'}}"
+                  bindtap="goToPayOhterBtn">{{(false == item.isPayed && !(isNewGb || isStepGb))?"去支付":"订单详情"}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view style="text-align:center" wx:if="{{myTuanList.length == 0}}">暂无数据</view>
+        <!-- 我的团item end -->
+      </view>
+    </scroll-view>
+    <template is="none-auth" data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'阶梯拼团',handleType:'进行'}}"></template>
+
+    <!-- <view class="nodata"><image src="{{staticResPathTuan}}newbg.jpg"></image></view> -->
+    <view class="top_activityRulesBtn" style="display: none;"></view>
+    <a href="javascript:;" class="top_findShoperBtn" style="display:none;"></a>
+    <!-- <view class="top_myOrderBtn"></view> -->
+    <view class="footer_btn_box {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}">
+      <view class="footer_btn all_tuan_btn" bindtap="topPageSwitch" data-showindex="0">
+        <image src="{{staticResPathTuan}}new_ituan1.png"></image>
+        <view class="tuan_menu_txt">{{cusTxt.bottomLTxt}}</view>
+      </view>
+      <view class="footer_btn my_tuan_btn" bindtap="topPageSwitch" data-showindex="1">
+        <image src="{{staticResPathTuan}}new_ilist2.png"></image>
+        <view class="tuan_menu_txt" style='color:#e93b3d'>{{cusTxt.bottomRTxt}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{returnIndex}}" class="fixedhome sub-color" style="{{app.globalData.customSubColor}}" bindtap='backToHome'>
+    <view class="zan-icon zan-icon-home sub-color" style="{{app.globalData.customSubColor}}"></view>
+  </view>
+</view>
+<include src="/pages/template/authModal.wxml" />
+<!-- <view class="topbar_tuanActEnded">
+  活动已结束，当前仅供预览，将不能进行拼团活动
+</view> -->

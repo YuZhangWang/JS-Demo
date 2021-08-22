@@ -1,0 +1,145 @@
+<wxs module="formTool">
+  var getAreaValText = function(areaVal) {
+    var areaValText = "";
+    if (!areaVal || !areaVal[0]) {
+      return "请选择省-市-区"
+    } else {
+      areaValText = areaVal[0];
+      if(areaVal[1] && "全部" != areaVal[1]){
+        areaValText += (","+areaVal[1]);
+      }
+      if(areaVal[2] && "全部" != areaVal[2]){
+        areaValText += (","+areaVal[2]);
+      }
+    }
+    return areaValText;
+  }
+  module.exports.getAreaValText = getAreaValText;
+</wxs>
+<template name="huaerForm">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title">{{ data.labelTxt || "标题"}}</view>
+    <input type="text" placeholder="{{data.tipsTxt}}"
+      class="huaer-field_input huaer-cell_bd {{right?'huaer-field_input-right':''}}"
+      placeholder-class="huaer-field_placeholder" data-index="{{index}}" data-isReq="{{data.isReq}}" value="" bindinput="bindKeyInput"  data-minlimitnum ="{{data.minLimitNum}}" data-maxlimitnum ="{{data.maxLimitNum}}" data-place='{{data.tipsTxt}}'/>
+  </view>
+</template>
+<template name="huaerTell">
+    <view class="huaer-cell huaer-field">
+        <view class="huaer-cell_hd huaer-field_title">{{ data.labelTxt || "标题"}}</view>
+        <input type="number" placeholder="{{data.tipsTxt}}"
+               class="huaer-field_input huaer-cell_bd {{right?'huaer-field_input-right':''}}"
+               placeholder-class="huaer-field_placeholder" data-index="{{index}}" data-isReq="{{data.isReq}}" value="" bindinput="bindTellInput" data-place='{{data.tipsTxt}}'/>
+    </view>
+    <view class="huaer-cell huaer-field" wx:if="{{data.authCode==1}}">
+        <view class="huaer-cell_hd huaer-field_title">验证码</view>
+        <view class="vcode-container">
+        <input type="text" placeholder="请输入验证码"
+               class="huaer-field_input huaer-cell_bd {{right?'huaer-field_input-right':''}}"
+               placeholder-class="huaer-field_placeholder" data-index="{{index}}" value="" bindinput="bindCodelInput"/>
+        <block wx:if="{{has_get_vcode != true}}">
+            <view bindtap="tapGetVcode" data-index="{{index}}" style="padding: 15rpx 28rpx;background: {{data.bgColor}};color: {{data.fontColor}};border-radius: 10rpx;margin-left: 8rpx">获取验证码</view>
+        </block>
+        <block wx:if="{{has_get_vcode == true}}">
+            <view style="padding: 15rpx 28rpx;background: #ccc;color: #ffffff;border-radius: 10rpx;margin-left: 8rpx">{{vcodeGetTime}}s后重新获取</view>
+        </block>
+        </view>
+        
+    </view>
+</template>
+<template name="huaerMultiline">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title huaer-multiline_title">{{ data.labelTxt || "标题"}}</view>
+    <textarea placeholder="{{data.tipsTxt}}" class="huaer-multiline"
+      placeholder-class="huaer-field_placeholder" data-index="{{index}}" data-isReq="{{data.isReq}}" value="" maxlength="{{data.maxLimitNum}}"  data-minlimitnum ="{{data.minLimitNum}}" data-maxlimitnum ="{{data.maxLimitNum}}" bindinput="bindKeyInput" data-place='{{data.tipsTxt}}'> <text class="currentWordNumber">{{num || 0}} / {{data.maxLimitNum == -1 ? '无限制':data.maxLimitNum}}</text></textarea> 
+  </view>
+</template>
+<template name="huaerFormTitle">
+	<view wx:if="{{data.title}}" style="background:{{data.bg_color}};"
+		class="form_title_box {{(data.show_method==0)?'textleft':((data.show_method==1)?'textcenter':'textright')}}"
+		data-item="{{data}}"  data-index="{{index}}" bindtap="formTitleTap">
+		<view class="form_title">{{data.title}}</view>
+		<view wx:if="{{data.sub_title}}" class="form_sub_title">{{data.sub_title}}</view>
+	</view>
+</template>
+<template name="huaerDateField">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title">{{ data.labelTxt || "预约时间"}}</view>
+    <picker mode="multiSelector" value='{{dateValue}}' range='{{dateTime}}' range-key="name" bindchange="bindTimeChange" class="huaer-field_picker" data-fieldindex="{{index}}">
+      <view class="picker">
+        <text style="color:#333" wx:if="{{submitValue}}">{{submitValue}}</text>
+        <text wx:else style='color:#999'>请选择时间</text>
+      </view>
+    </picker>
+  </view>
+</template>
+<template name="huaerFileUpload">
+  <view class="huaer-fileupload-img-wrap huaer-cell">
+      <view class="huaer-fileupload-field">{{ data.labelTxt||"上传图片" }}</view>
+      <view class="huaer-fileupload-ul clearfix">
+        <view class="huaer-fileupload-item" wx:for="{{uploadImgList}}" wx:for-index="idx" wx:for-item="img">
+            <image mode="aspectFill" src="{{userImagePath+img}}"></image>
+            <view class="huaer-fileupload-item-delete" data-fieldindex="{{index}}" bindtap='handleDelImg' data-index="{{idx}}">×</view>
+        </view>
+        <view class="huaer-fileupload-item-add" wx:if="{{uploadImgList.length < 3}}" data-index="{{index}}" bindtap='handleAddImage'></view>
+      </view>
+  </view>
+</template>
+<template name="selectW">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title">{{ data.data.labelTxt || "标题"}}</view>
+    <picker class="huaer-field_picker" range="{{list}}" mode="selector" range-key="itemTxt" bindchange="bindSelectChange" data-idx="{{index}}">
+      <view class="picker">
+        <text style='color:#333' wx:if="{{selected}}">{{selected}}</text>
+        <text wx:else style='color:#999'>请选择</text>
+      </view>
+      <text class="zan-icon zan-icon-arrow bottom-arrow"></text>
+    </picker>
+  </view>
+</template>
+<template name="addressWidget">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title">{{ data.labelTxt1 || "选择地区"}}</view>
+    <picker class="huaer-field_picker"
+      mode="region"
+      data-idx="{{index}}"
+      custom-item="全部"
+      bindchange="bindRegionChange"
+      value="{{areaVal}}"
+    >
+      <view class="picker">
+        <text>{{formTool.getAreaValText(areaVal)}}</text>
+      </view>
+      <text class="zan-icon zan-icon-arrow bottom-arrow"></text>
+    </picker>
+  </view>
+  <view class="huaer-cell huaer-field" wx:if="{{data.addrType==3}}">
+      <view class="huaer-cell_hd huaer-field_title">{{ data.labelTxt2 || "详细地址"}}</view>
+      <input type="text" placeholder="{{data.placeholderTxt||'请输入详细地址'}}"
+        class="huaer-field_input huaer-cell_bd"
+        placeholder-class="huaer-field_placeholder" data-idx="{{index}}" data-isReq="{{data.isReq}}" value="{{addressVal}}" bindinput="bindRegionInput" maxlength='80'/>
+    </view>
+</template>
+<template name="radiotW">
+
+    <view class="section section_gap">
+    <view class="huaer-cell_hd huaer-field_title" style="padding-left:5px;background-color:{{data.data.bgColor?data.data.bgColor:'#fff'}};color:{{data.data.fontColor?data.data.fontColor:'#333'}};line-height:{{data.data.lineHeight>0?data.data.lineHeight:'30'}}px; font-size:32rpx;font-weight:{{data.data.font_bold ? 'bold':'none'}}; font-style:{{data.data.font_italic? 'italic':'normal'}};text-decoration:{{data.data.font_underline? 'underline':'none'}};margin: 5px 12px 0px 12px;">{{ data.data.labelTxt || "标题"}}</view>
+        <radio-group wx:if="{{data.data.selectType==1}}" data-idx="{{index}}"  class="radio-group" bindchange="radioChange">
+            <view wx:for="{{list}}" wx:key="name"  style='display:flex;justify-content:space-between;padding:10rpx 40rpx;position:relative;align-items:center;'>
+              
+              <radio value="{{item.itemTxt}}"  class="radio"></radio>
+              <view style='color:#333;width:100%;word-break: break-all;'>{{item.itemTxt}}</view>
+            </view>
+        </radio-group>
+        <checkbox-group wx:if="{{data.data.selectType==0}}" data-idx="{{index}}"  bindchange="checkboxChange">
+            <view  wx:for="{{list}}" wx:key="name"  style='display:flex;justify-content:space-between;align-items:center;padding:10rpx 40rpx;position:relative;align-items:center'>
+              
+              <checkbox value="{{item.itemTxt}}"   class="radio"></checkbox>
+              <view style='color:#333;width:100%;word-break: break-all;'>{{item.itemTxt}}</view>
+            </view>
+
+        </checkbox-group>
+    </view>
+
+
+</template>

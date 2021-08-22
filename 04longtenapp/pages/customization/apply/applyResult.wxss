@@ -1,0 +1,38 @@
+/* pages/offline/payresult.wxss */
+.header{
+  text-align: center;
+  margin-top: 20px;
+  line-height: 60px;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: cneter;
+  font-weight: 700;
+  flex-direction: column;
+}
+.header icon{
+  width: 180rpx;
+  height: 180rpx;
+  margin-bottom: 100rpx;
+}
+
+.detail-msg{
+  margin: 15px auto 0;
+  height: 200px;
+}
+.detail-msg .row{
+  height: 38px;
+  display: flex;
+  line-height: 38px;
+  font-size: 32rpx;
+  color: #000;
+}
+.detail-msg .row .label{
+  flex: 0 0 46%;
+  text-align: right;
+}
+.detail-msg .row .field{
+  flex: 1 1 auto;
+  text-align: left;
+}

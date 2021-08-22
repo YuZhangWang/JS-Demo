@@ -1,0 +1,99 @@
+<!--pages/myCollection/myCollection.wxml-->
+<import src="../template/goodsCategoryModal.wxml" />
+<import src="../template/noneAuth.wxml" />
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getType = function (type,num) {
+    if(type && type != null && type != ""){
+       if(type.indexOf('1') != -1 && num == 1){
+         return true;
+       }
+       if(type.indexOf('2') != -1 && num == 2){
+         return true;
+       }
+       if(type.indexOf('3') != -1 && num == 3){
+         return true;
+       }
+    } else {
+      return false;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getType = getType;
+</wxs>
+
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+    <scroll-view wx:if="{{!noAuthInfo}}" style='min-height:110%'>
+            <view class='search-wrapper'>
+                <picker class='selectStatus' bindchange="bindPickerChange" value="{{selectType}}" range="{{array}}">
+                    <view class='selectWrap'>
+                        <view class="weui-input" style='font-size:26rpx;'>{{array[selectType]}}</view>
+                        <view  class='trigger-rights'>
+                            <image src="http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/trigger_right.png"></image>
+                        </view>
+                    </view>
+                </picker>
+                <view class="search-input-cont">
+                    <view  class="search-btn">
+                        <image class="search_icon" src="{{staticResPath}}/image/mobile/search_icon.png"></image>
+                    </view>
+                    <input type="text" placeholder="请输入搜索内容" confirm-type="前往" bindinput="handleSearchInput"  bindconfirm="handleSearchIng" class="search-input" />
+                </view>
+                <view class='operation' bindtap='delTrack'>{{trackText}}</view>
+            </view>
+            <!-- 收藏商品列表 -->
+            <view class='track-list'>
+                <view wx:for="{{list}}" bindtap='toDetail' data-goodstype="{{item.goodsType}}" data-goodsid="{{item.goodsId}}"  class='track'>
+                    <view class='track-content'>
+                        <view wx:if="{{isTrack}}" class="goods-select track-select" data-itemid="{{item.id}}" data-index="{{index}}" catchtap="changeSelect">
+                            <view id="all_select" style="{{item.isSelected?app.globalData.customStyleColor:''}}" class="zan-icon {{item.isSelected?'zan-icon-checked selected main-color':'zan-icon-check'}} j-select-btn">
+                            </view>
+                        </view>
+                        <view class="track-goods-img">
+                            <image src="{{mTool.specUrl(extConfig,userImagePath,item.goodsCover,1080)}}"></image>
+                        </view>
+                        <view class='track-msg'>
+                            <view class="track-info">
+                                <view class="track-goods-title">{{item.goodsName}}</view>
+                                <view class='collect-number'>{{item.collectNum}}人收藏</view>
+                                <view wx:if="{{item.type && m1.getType(item.type,2) && item.changePrice}}" class='change-price'>比收藏时降价{{m1.getFixedMoney(item.changePrice)}}元</view>
+                                <view wx:if="{{item.type && m1.getType(item.type,3)}}" class='count-lack'>库存紧张</view>
+                                <view wx:if="{{item.type && m1.getType(item.type,1)}}" class='collect-number'>失效中</view>
+                            </view>
+                            <view class='track-right-bottom'>
+                                <view wx:if="{{item.changePrice}}" class='track-goods-price main-color' style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(item.price-item.changePrice)}}</view>
+                                <view wx:if="{{!item.changePrice}}" class='track-goods-price main-color' style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(item.price)}}</view>
+                                
+                                <image class="cart-icon" wx:if="{{item.goodsType != 3}}" data-goodsid="{{item.goodsId}}" catchtap='onAddCart' src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png"></image>
+                              
+                            </view>
+                        </view>
+                    </view>
+
+
+                </view>
+            </view>
+            <!-- 全选 一键删除 -->
+            <view wx:if="{{isTrack}}" class='track-footer'>
+                <view class="goods-select">
+                    <view id="all_select" bindtap="onAllSelect" style="{{allSelected?app.globalData.customStyleColor:''}}" class="zan-icon {{allSelected?'zan-icon-checked selected main-color':'zan-icon-check'}} j-select-btn"><text style='font-size:36rpx;margin-left:20rpx'>全选</text>
+                    </view>
+                </view>
+                <view class='del' bindtap='deleteTrack'>一键删除</view>
+            </view>
+
+        </scroll-view>
+    <template is="none-auth" data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'我的收藏'}}"></template>
+    <template is="categoryModalTpl" data="{{app,userImagePath:userImagePath,staticResPath:staticResPath,goodsData:goodsData,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isDetailPage:isDetailPage,isCollected:isCollected}}"></template>
+    <include src="../template/goodsCategoryModal.wxml" />
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>
+

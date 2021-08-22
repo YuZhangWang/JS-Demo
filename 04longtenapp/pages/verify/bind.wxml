@@ -1,0 +1,53 @@
+<!--pages/verify/bind.wxml-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="container" wx:if="{{!showResult}}">
+  <view class="header">
+    <image class="logo_img" src='{{staticResPath}}/image/mobile/hexiao/icon_safe.png'></image>
+    <view class="p_txt">授权绑定核销员</view>
+  </view>
+  <view class="center">
+    <view class="form_panel {{verifiedClerk?'form_disabled':''}}">
+      <view class="field">
+        <view class="icon">
+        <image class="icon-user" src='{{staticResPath}}/image/mobile/hexiao/icon_user.png?v=1'></image>
+        </view>
+        <input type="text"
+      placeholder="请输入姓名"
+      class="zan-field__input" value='{{verifiedClerk?verifiedClerk.name:""}}'
+      placeholder-class="zan-field__placeholder" disabled='{{verifiedClerk?true:false}}'
+      bindinput="_handleZanFieldChange"
+      data-component-id="username"/>
+      </view>
+      <view class="field" style='border:0;'>
+        <view class="icon">
+        <image class="icon-phone" src='{{staticResPath}}/image/mobile/hexiao/icon_phone.png?v=1'></image>
+        </view>
+        <input type="number"
+      placeholder="请输入电话号码" value='{{verifiedClerk?verifiedClerk.phone:""}}'
+      class="zan-field__input" disabled='{{verifiedClerk?true:false}}'
+      placeholder-class="zan-field__placeholder"
+      bindinput="_handleZanFieldChange"
+      data-component-id="phone"/>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel bottom">
+    <view class="zan-btns">
+      <button bindtap='handleSubmit' class="zan-btn zan-btn--primary {{btnLoading?'zan-btn--loading':''}}">确定</button>
+    </view>
+    <view class="tips">授权绑定成功后，你将拥有订单或优惠券扫描核销权限</view>
+  </view>
+</view>
+
+<view class="container" wx:else>
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">绑定核销员成功！</view>
+  </view>
+
+  <view class="center" style='margin-top:20px;text-align:center;'>
+
+  </view>
+</view>
+<include src="/pages/template/authModal.wxml"/>
+</view>

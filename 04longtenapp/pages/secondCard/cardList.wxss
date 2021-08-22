@@ -1,0 +1,431 @@
+/* pages/secondCard/cardList.wxss */
+page{
+   background: rgba(248,248,248,1);
+}
+.userInfo{
+  background: #fff;
+  display: flex;
+  padding: 30rpx 0;
+  padding-left: 50rpx;
+  border-radius: 10px;
+  align-items: center;
+}
+.rightInfo{
+  margin-left: 20rpx;
+}
+.avator{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: gray;
+}
+.nickName{
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.canBuyTimes{
+  color: #949494;
+  font-size: 18px;
+}
+.list{
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.listWrap{
+  background: #fff;
+  /* padding-top: 100rpx; */
+  position: relative;
+}
+.listType{
+  display: flex;
+  justify-content: space-around;
+  /* position: absolute; */
+  width: 100%;
+  /* top: -40rpx; */
+  left: 0;
+}
+.listBtn{
+  width: 150rpx;
+  color: rgba(65,65,78,1);
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #fff;
+}
+.listBtn.active{
+  border-bottom: 6rpx solid rgba(27,27,32,1);
+  color: rgba(27,27,32,1);
+  font-weight: 500;
+  font-size: 30rpx;
+}
+
+.cardItem{
+  width: 95%;
+
+  border-radius: 5px;
+  height: 250rpx;
+  margin-bottom: 50rpx;
+  display: flex;
+}
+.leftCard{
+  background: #177ff8;
+  color: #fff;
+  font-size: 18px;
+  width: 12%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.circleLoop{
+  position: absolute;
+  right: -10rpx;
+  top:8rpx;
+  height: 100%;
+  width: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+.cItem{
+  display: inline-block;
+  height: 20rpx;
+  width: 20rpx;
+  margin-bottom: 8rpx;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.rightCard{
+  position: relative;
+  height: 100%;
+  width: 88%;
+  border: 2px #e1e1e1 solid;
+  box-sizing: border-box;
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  /* overflow: hidden; */
+  /* border-right: none; */
+}
+.rightCard .circleLoop{
+  top: 10rpx;
+}
+.rightCard .cItem{
+ border: 2px solid #e1e1e1;
+ border-radius: 100rpx;
+ border-right: none;
+ border-top: none;
+ transform:rotate(45deg);
+ width: 15rpx;
+ height: 15rpx;
+}
+.cardLogoWrap{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100rpx;
+  height: 100rpx;
+  overflow: hidden;
+}
+.cardLogo{
+  position: absolute;
+  width: 100rpx;
+  height: 100rpx;
+  border: 2px #e1e1e1 solid;
+  color: #e1e1e1;
+  border-radius: 50%;
+  top: -30rpx;
+  right: -20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  box-sizing: border-box;
+  padding-bottom: 10rpx;
+  font-weight: 500;
+}
+.cardInfo{
+  width: 80%;
+  margin-left: 5%;
+}
+.cHeader{
+  font-size: 16px;
+  display: flex;
+  border-bottom: 1px dotted #e1e1e1;
+  padding: 20rpx 0;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.cardName{
+  max-width: 300rpx;
+  white-space: nowrap;
+  overflow:hidden;
+	text-overflow:ellipsis;
+}
+.cardTimeMoney{
+  color: red;
+  font-size: 14px;
+}
+.cardTimes{
+  color: #b6b6b6;
+  font-size: 14px;
+}
+.cBottom{
+  color: #b6b6b6;
+  font-size: 14px;
+}
+
+.cardUse{
+  font-size: 14px;
+}
+
+
+.cardValid{
+  width: 80%;
+  background: #fff;
+  display: inline-block;
+  margin-top: 50rpx;
+  padding: 20rpx;
+  max-height: 1000rpx;
+
+  overflow: scroll;
+  padding-bottom: 50rpx;
+}
+.secName{
+  margin-bottom: 15rpx;
+}
+.validQrCode{
+  width: 300rpx;
+  height: 300rpx;
+  /* background: gray; */
+}
+.cardEnableTimes{
+  color: #b6b6b6;
+}
+.useTips{
+  margin-top: 60rpx;
+}
+.useTitle{
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 5rpx;
+
+}
+.tips{
+  text-align: left;
+  padding: 15rpx;
+}
+.tItem::before{
+  color: #b6b6b6;
+  content: "● "
+}
+.closeIco{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50rpx;
+  height: 50rpx;
+  border: 2px #e0e0e0 solid;
+  color: #e0e0e0;
+  border-radius: 50%;
+  line-height: 50rpx;
+  margin-top: 20rpx;
+}
+
+
+.mMask{
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mModal{
+  background-color: #F9F7FA;
+
+  border-radius: 15rpx;
+  width: 80%;
+  display: inline-block;
+  /* height: 100px; */
+  position: relative;
+}
+.mModal .mHeader{
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #E3E2E4;
+  padding: 15rpx 20rpx;
+  align-items: center;
+  box-sizing: border-box;
+  height: 100rpx;
+}
+.mModal .mBody{
+  padding: 0 50rpx;
+  margin: 50rpx 0;
+  text-align: left;
+  overflow: auto
+}
+.mModal input{
+  border: 1px solid #E7E7E7;
+  border-radius: 10rpx;
+  /* width: 90%; */
+  flex: 1;
+  padding-left: 10rpx;
+  text-align: left;
+  box-sizing: border-box;
+}
+.mModal .mBottom{
+  display: flex;
+  border-top: 1px solid #E3E2E4;
+}
+.mModal .mBottom button{
+  width: 50%;
+  margin: 0;
+  padding: 10rpx 0;
+  border-radius: 0;
+}
+.mModal .mBottom .mConfirmBtn{
+  color: #38BB2D;
+  border-left: 1px solid#E3E2E4;
+  border-bottom-right-radius: 15rpx;
+}
+.mModal .mBottom .mCancelBtn{
+  border-bottom-left-radius: 15rpx;
+}
+.mModal .mClose{
+  display: inline-block;
+  padding: 0 20rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.mModal .textScroll{
+  max-height: 200rpx;
+  overflow-x: scroll;
+}
+
+.orangeCl{
+  color: #f38b32;
+}
+
+/* 新版此卡样式 */
+.cardItem{
+  display: block;
+  background: url("http://res.xcx.weijuju.com/image/mobile/timeCard.png") no-repeat center;
+  background-size: 100% 100%;
+  padding: 28rpx 0 36rpx 36rpx;
+  color: #fff;
+  box-sizing: border-box;
+}
+.cardItem1{
+  position: relative;
+  display: block;
+  background: url("http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/timeCard2.png") no-repeat center;
+  background-size: 100% 100%;
+  padding: 28rpx 0 36rpx 36rpx;
+  color: #fff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 95%;
+  height: 250rpx;
+  margin-bottom: 50rpx;
+
+}
+.timeCard-delete{
+  background: url("http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/timeCard_delete.png") no-repeat center;
+  background-size: 100% 100%;
+  height: 100rpx;
+  width: 100rpx;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.timeCard-state1{
+  background: url("http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/unenabled.png") no-repeat center;
+  background-size: 100% 100%;
+  height: 116rpx;
+  width: 167rpx;
+  position: absolute;
+  right: 30rpx;
+  bottom: 40rpx;
+}
+.timeCard-state2{
+  background: url("http://xcxtest.weijuju.com/res/yyxiaochengxu//image/mobile/expired.png") no-repeat center;
+  background-size: 100% 100%;
+  height: 116rpx;
+  width: 167rpx;
+  position: absolute;
+  right: 30rpx;
+  bottom: 40rpx;
+}
+.view-panel{
+  display: flex;
+}
+.view-panel .item-first{
+  flex: 1;
+}
+.view-panel .item-next{
+  width: 250rpx;
+  flex: none;
+  text-align:right;
+  margin-right:36rpx;
+}
+.view-panel .item-cardName, .detail-name-panel{
+  color: rgba(222,187,133,1);
+  font-size: 36rpx;
+  font-weight: 500;
+}
+.item-cardPrice{
+  color:rgba(212,212,212,1);
+  margin-top: -12rpx
+}
+.item-cardPrice .price-integer{
+  font-size: 54rpx;
+}
+.item-cardPrice .price-float{
+  font-size: 36rpx;
+}
+.item-cardTime{
+color:rgba(236,236,236,1);
+font-size: 22rpx
+}
+.item-next .item-cardButton{
+    width:150rpx;
+    height:60rpx;
+}
+.detail-count-panel{
+  color:rgba(212,212,212,1);
+  font-size: 24rpx;
+  font-weight:400;
+}
+.detail-enable-panel{
+  text-align: right;
+  color:rgba(212,212,212,1);
+  font-size: 28rpx;
+  margin-right: 37rpx;
+  margin-top: -20rpx;
+}
+.detail-count-panel{
+  margin-top: -30rpx;
+  letter-spacing: 2rpx;
+}
+
+/* 会员卡购买用户信息 */
+.user-info-panel view{
+  display: flex;
+  margin-bottom: 18rpx;
+}
+.user-info-panel text{
+   width: 120rpx;
+  flex: none;
+  text-align: right
+}

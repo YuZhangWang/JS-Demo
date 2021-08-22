@@ -1,0 +1,78 @@
+<!-- pages/sign/sign.wxml -->
+<import src="../template/noneAuth.wxml" />
+<wxs module="mw">
+    var selectDate = function(id){
+    if(id == 0){
+      return "第一天"
+    } else if(id == 1){
+      return "第二天"
+    } else if (id == 2) {
+      return "第三天"
+    } else if (id == 3) {
+      return "第四天"
+    } else if (id == 4) {
+      return "第五天"
+    } else if (id == 5) {
+      return "第六天"
+    } else if (id == 6) {
+      return "第七天"
+    }
+  }
+  module.exports.selectDate = selectDate;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class='signRecord' wx:if="{{loading && !noAuthInfo}}">
+    <view class='addsign'>
+      <view class='bindSign firstTapA' wx:if="{{!hasSign && fetchLoading}}">
+        <!-- <view class='centerText' mode="widthFix">
+      <text>签到\n领积分</text>
+    </view> -->
+        <image wx:if="{{custBgDistri}}" src='{{userImagePath}}{{custBgDistri}}' mode='widthFix' class='firstTap' bindtap='addSign'></image>
+        <image wx:else src='{{staticResPath}}/image/sign/addsign.png' mode='widthFix' class='firstTap' bindtap='addSign'></image>
+        <text class='tipText'>轻轻一点，积分到手</text>
+      </view>
+      <view class='bindSign congratua' wx:else>
+        <text class='congratuation'>恭喜今天签到获得</text>
+        <view class='congraScore'>
+          <text class='scoreNumber'>{{scoreRecords}}\t\t</text>
+          <text class='scoreText'>积分</text>
+        </view>
+      </view>
+      <view class='signCount signItemList'>
+        <view class='addS' wx:for="{{signList}}" wx:for-index="index">
+          <!-- <image  wx:if="{{NoSignimg && Signimg}}" src='{{userImagePath}}/{{(!item.isSign)?(NoSignimg):(Signimg)}}' class='signCountItem' mode='widthFix'></image>
+             <image  wx:else  src='{{staticResPath}}/{{(!item.isSign)?"image/sign/beforesign.png":"image/sign/alreadysign.png"}}' class='signCountItem' mode='widthFix'></image> -->
+          <image wx:if="{{NoSignimg && Signimg}}" src='{{(!item.isSign)?(NoSignimg):(Signimg)}}' class='signCountItem' mode='widthFix'></image>
+          <image wx:else src='{{staticResPath}}{{(!item.isSign)?"/image/sign/beforesign.png":"/image/sign/alreadysign.png"}}' class='signCountItem' mode='widthFix'></image>
+          <text>{{mw.selectDate(index)}}</text>
+        </view>
+      </view>
+      <view class='signBottom' wx:if="{{hasSign}}">
+        <image mode='widthFix' wx:if="{{SignBackImg}}" src='{{userImagePath}}{{SignBackImg}}' class='signBottomE'></image>
+        <image mode='widthFix' wx:else src='{{staticResPath}}//image/sign/signblank.png' class='signBottomE'></image>
+        <text class='totalScore'>累计积分\t\t{{totalJifen}}</text>
+      </view>
+    </view>
+    <view class='signRecordTitle'>
+      <text>签到记录</text>
+    </view>
+    <block wx:for="{{hasSignItem}}">
+      <view class='signRecordItem'>
+        <view class='recordLeft'>
+          <view>
+            <text>签到</text>
+          </view>
+          <view>
+            <text class='signTime'>{{item.createTime}}</text>
+          </view>
+        </view>
+        <view class='recordRight'>
+          <text>+{{item.integral?item.integral:"0"}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  <template is="none-auth" data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'签到',handleType:'进行'}}"></template>
+  <include src="/pages/template/authModal.wxml" />
+</view>

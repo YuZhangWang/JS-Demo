@@ -1,0 +1,218 @@
+@import "/youzan/dist/index.wxss";
+#addressMessage{
+	font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif;
+	font-size: 28rpx;
+	margin:0;
+	padding: 0;
+	flex:1;
+	display:flex;
+	flex-direction:column;
+	box-sizing:border-box;
+}
+.microshop-box {
+    margin: 18rpx;
+    border: 2rpx solid #e0e0e0;
+    padding: 0;
+    background-color: #fff;
+}
+.microshop-box>view{
+	font-size: 30rpx;
+	line-height: 86rpx;
+}
+.microshop-box .manager {
+    float: right;
+    border-left: 2rpx solid #dfdfdf;
+    padding-left: 10px;
+    color: #646464;
+    -webkit-tap-highlight-color: transparent;
+}
+.microshop-box .manager image{
+	width: 32rpx;
+	height: 32rpx;
+	vertical-align: text-top;
+	border: 0;
+}
+#addressEdit{
+	background: #fff;
+}
+#addressEdit .item-box{
+	 padding: 20rpx 40rpx; 
+	border-top: 2rpx solid #f2f2f2;
+	font-size: 28rpx;
+}
+#addressEdit .item-box .item-name{
+	width: 150rpx;
+	float: left;
+	text-align: left;
+	height:60rpx;
+	line-height:60rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+#addressEdit .item-box .item-option{
+	padding:0 30rpx;
+  height: 60rpx;
+}
+#addressEdit .item-box .item-option .item-show{
+	height: 60rpx;
+	line-height: 60rpx;
+  padding-left:15rpx;
+}
+#addressEdit .item-box .item-option picker{
+  padding:0 15px;
+  padding-left:122rpx;
+}
+#addressEdit .item-box .item-option picker .item-show{
+	color: #333;
+  font-size: 28rpx;
+}
+#addressEdit .button-box{
+	margin-top: 10rpx;
+	padding:30rpx;
+  background: #f5f6f7;
+}
+#addressEdit .button-box button{
+	margin-top: 30rpx;
+	line-height:90rpx;
+  background: #fff;
+  width: 90%;
+  font-size: 30rpx;
+}
+#addressList{
+	flex:1;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+#addressList{
+	 /* margin-left: 30rpx;  */
+   box-sizing: border-box;
+   padding: 30rpx 15rpx 0 15rpx;
+  width: 100%;
+  background: #fff;
+}
+#addressList .addr-name{
+	 /* padding-bottom: 10rpx;  */
+   margin-top: 20rpx;
+	border-bottom:2rpx solid #ddd;
+}
+#addressList .list-box:not(:last-child){
+	position: relative;
+  border-bottom: 20rpx solid #F5F6F7; 
+}
+
+#addressList .addr-list-item{
+  width: 100%;
+	padding: 10rpx 0;
+	position:relative;
+	display:-webkit-box;
+	display:-webkit-flex;
+	display:flex;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	align-items:center;
+}
+#addressList .addr-radio{
+	float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#addressList .addr-radio .zan-icon{
+  font-size: 20px;
+}
+#addressList .addr-radio .default{
+  margin-left: 6rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+
+#addressList .addr-info-name{
+  display: flex;
+  color: #333;
+}
+#addressList .addr-info{
+  width: 100%;
+}
+#addressList .addr-info .itemName{
+  font-size: 30rpx;
+  width: 125rpx;
+  word-break: break-all;
+
+}
+#addressList .addr-info .itemTel{
+  font-size: 30rpx;
+  margin-left: 50rpx;
+}
+.addr-info-addr .itemArea{
+  font-size:28rpx;
+  color:#999;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-height:35px;
+  width:670rpx;
+  overflow:hidden;
+  display:inline-block;
+  margin-top: 10rpx;
+}
+.addr-info{
+  padding:14rpx;
+  box-sizing: border-box;
+}
+#addressList .addr-footer{
+  border-top: 1px solid #f2f2f2;
+  padding: 10rpx 14rpx;
+  height: 34px;
+}
+#addressList .addr-opt{
+	float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+#addressList .addr-option-delete{
+  margin-left: 12rpx;
+}
+.addr-info-addr{
+  position: relative;
+}
+.addr-option{
+  position: absolute;
+  right: 0;
+  top:0;
+}
+.addr-option-delete .zan-icon,.addr-option .zan-icon{
+  width: 40rpx;
+  height: 40rpx;
+  color: #999;
+  font-size: 32rpx;
+}
+/*底部按钮*/
+.container-footer{
+  position: relative;
+	width: 100%;
+	display: flex;
+	height: 88rpx;
+	background: #F5F6F7;
+  border: 0;
+}
+.container-footer .add-btn{
+	display: block;
+	text-align: center;
+	height: 76rpx;
+	line-height: 76rpx;
+	font-size: 30rpx;
+  margin: 0 auto;
+  width: 350rpx;
+  border-radius: 100rpx;
+  background-color: #f44;
+  color: #fff;
+}
+button[type="primary"] {
+color:#FFFFFF;
+background-color:#f44;
+}
+.newFooter{
+  position: fixed;
+  bottom: 0;
+}

@@ -1,0 +1,8 @@
+/* pages/backuppage/backup2.wxss */
+
+
+mycheckbox{
+  display: inline-block;
+  width: 28rpx;
+  height: 28rpx;
+}

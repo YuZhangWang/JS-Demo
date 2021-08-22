@@ -1,0 +1,85 @@
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<block wx:if="{{currentPage == 'startGame'}}">
+  <view class="game_page">
+    <view id="page2" wx:if="{{!isHelpPage}}">
+      <!-- 标题 -->
+      <view class="p2Img1">
+        <view class="p2I1_1">集齐以下全部“字”即可领取豪礼</view>
+        <view class="p2I1_2">奖品：<text class="prize">{{orgAwardList[0].awardName}}</text></view>
+      </view>
+      <!-- 灯笼 -->
+      <view id="lanternBox">
+        <view class="lantern">
+          <view wx:for="{{collectWord}}" wx:for-index="idx" wx:if="{{idx<=3}}" wx:for-item="word" class="word {{word.isCollect?'wordAnimation':'denGray'}}">{{word.txt}}</view>
+        </view>
+        <view class="lantern" wx:if="{{collectWord.length > 4}}">
+          <view wx:for="{{collectWord}}" wx:for-index="idx" wx:if="{{idx>=4}}" wx:for-item="word" class="word {{word.isCollect?'wordAnimation':'denGray'}}">{{word.txt}}</view>
+        </view>
+      </view>
+
+      <view id="tip" wx:if="{{collectWordInitData.isWin == 'true'}}">奖品已领取，请在我的奖品中查看</view>	
+      <view id="tip" wx:else>奖品有限，先到先得</view>	
+      <!-- 按钮 -->
+      
+      <image id="shareBtn" bindtap='handleShareBtn' wx:if="{{activityRule.shareType == 0}}" src="{{youyuResPath}}/zqjizi/game/1_4.png" mode='widthFix'></image>
+      <button wx:else open-type='share' hover-class='none' style='margin:0;padding:0;border-radius:0;'>
+        <image id="shareBtn" src="{{youyuResPath}}/zqjizi/game/1_4.png" mode='widthFix'></image>
+      </button>
+      <view class="rule_myprize_link">
+      <image id="giftBtn" bindtap='showAward' wx:if="{{collectWordInitData.isWin == 'true'}}" src="{{youyuResPath}}/zqjizi/game/1_0.png" mode='widthFix'></image>
+      </view>
+      <!-- 献字榜 -->
+      <view class="friendList">
+        <view class="h3">好友献字榜</view>
+        <view class="tableview" wx:if="{{collectWordInitData.helpList.length>0}}">
+          <view class="table">
+            <view class="tr" wx:for="{{collectWordInitData.helpList}}" wx:for-item="helpData">
+              <view class="td headImg">
+                <image src='{{helpData.headImg}}' mode='widthFix'></image>
+              </view>
+              <view class="td userName">{{helpData.nickName}}</view>
+              <view class="td sn">送你</view>
+              <view class="td friendWorld">一个“{{helpData.helpResult}}”</view>
+            </view>
+          </view>
+        </view>
+        
+      </view>
+    </view>
+
+    <view id="page3" wx:if="{{isHelpPage}}">
+      <!-- 活动说明 -->
+      <image id="explainBtn" class="rule_tag rule_btn" src="{{youyuResPath}}/gamepage/collectionWords/1_2.png" mode='widthFix' bindtap="showRule"></image>
+      <view class="p3Img1">
+        <view>参与集字，即可领奖</view>
+        <view>奖品有限，先到先得，快来抢喔！</view>
+      </view>
+      <!-- 背景旋转图片 -->
+      <image class="rotateImg" mode='widthFix' src="{{youyuResPath}}/gamepage/collectionWords/2_2.png"></image>
+      <!-- 灯笼字 -->
+      <view class="p3Img2">
+        {{collectWordHelpData.theWord}}
+      </view>
+      <!-- 说明文字 -->
+      <view class="p3tip">
+        <view>成功向<image class="friendImg" src="{{collectWordHelpData.targetHeadPic}}"></image><text class="friendName">{{collectWordHelpData.targetNickName}}</text>贡献一字</view>
+        <view>好友离奖品<text class="prize">{{orgAwardList[0].awardName}}</text>又近了一步</view>
+        <view style="color: white;">参与活动，你也可以获得奖品哦~</view>
+      </view>
+
+      <image id="iwantBtn" bindtap='iWantPlay' mode='widthFix' src="{{youyuResPath}}/zqjizi/game/1_8.png"></image>
+
+      <view id="checkPrizeBtn" class="rule_myprize_link" bindtap='showAward'>查看奖品</view>
+    </view>
+  </view>
+</block>
+
+
+<block wx:else>
+<include src="../inteCommon/startPage.wxml"></include>
+</block>
+<include src="../inteCommon/commonPage.wxml"></include>
+  <viewlay-ret static-res-path="{{staticResPath}}" bind:playagain="playAgain" is-show="{{isShow}}" have-gift="{{haveGift}}" play-msg="{{playMsg}}" play-desc="{{playDesc}}"></viewlay-ret>
+  <rule-and-award static-res-path="{{staticResPath}}" activity="{{activity}}"  awardlist="{{orgAwardList}}" myawards="{{myAwards}}" show-status="{{showStatus}}" bind:showrule="showRule" bind:showaward="showAward" bind:showawarditem="showAwardItem">
+  </rule-and-award> 
+</view>

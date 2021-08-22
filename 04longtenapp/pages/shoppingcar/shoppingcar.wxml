@@ -1,0 +1,159 @@
+<!--shoppingcar.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool"/>
+<wxs module="m1">
+    var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+    return Number(money / 100).toFixed(2);
+    } else {
+    return 0;
+    }
+    }
+    module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+    <!-- 无授权展示 -->
+    <view style="display: block;text-align: center;padding-top: 40rpx;" wx:if="{{noAuthInfo}}">
+        <image class="cart_empty" src="{{staticResPath}}/image/mobile/shopcart/image_gouwuche.png"/>
+        <view class="empty_text">
+            <text> 登录后才能查看我的购物车哦</text>
+        </view>
+        <view class="go_main_btn" style="margin: 40rpx auto;">
+            <view bindtap='checkUserInfo' class="empty_go_main main-color-bg" style="{{app.globalData.customStyleBg}}" >立即登录</view>
+        </view>
+        <view class="go_main_btn" style="margin: 0 auto;">
+            <view bindtap='toIndex' class="empty_go_main main-color-bg" style="{{app.globalData.customStyleBg}}" >随便逛逛</view>
+        </view>
+    </view>
+    <block wx:else>
+        <scroll-view style="background-color:#f5f7f7" class="container" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle"
+                     lower-threshold="50" bindscrolltolower="scrollLoading">
+            <!-- <view class="header">
+                  <view class="header-left"><text class="left-icon icon"></text>购物车(<text class="J-total-number">{{cartSelectedCount}}</text>)</view>
+            </view> -->
+            <!--促销  -->
+            <view class='takeFree' wx:if="{{showGoodsCount || showGoodsPrice}}">
+                <view class="cuxiao free sub-color commSpinVal" style="{{app.globalData.customSubColor}}">促销</view>
+                <text class='freeText' wx:if="{{showGoodsCount}}">购满\t{{goodsCount}}\t件包邮\t</text>
+                <text wx:if="{{showGoodsCount && showGoodsPrice}}">或</text>
+                <text class='freeText' wx:if="{{showGoodsPrice}}">\t购满\t{{mTool.fToY(goodsPrices)>0?mTool.fToY(goodsPrices):0}}\t元包邮</text>
+            </view>
+            <view style="border-bottom:1px solid #f5f6f7" wx:if="{{showOverReduce}}">
+                <view class='overReduce'>
+                    <view class="cuxiao free sub-color commSpinVal" style="{{app.globalData.customSubColor}}">满减</view>
+                    <view wx:if="{{overReduceType==1}}">
+                        <text class='freeText'>购满\t{{overReduceRule[0].over}}\t件，减\t{{overReduceRule[0].reduce}}\t元</text>
+                    </view>
+                    <view wx:if="{{overReduceType==2}}">
+                        <text class='freeText'>购满\t{{overReduceRule[0].over}}\t元，减\t{{overReduceRule[0].reduce}}\t元</text>
+                    </view>
+                    <image class='jianTou-right' src='{{staticResPath}}/image/mobile/trigger_right.png'
+                           bindtap='changeOverReduce'></image>
+                </view>
+                <view class="overReduceDetail {{showOverReduceDetail?'open_over':'close_over'}}">
+                    <view wx:for="{{overReduceRule}}">
+                        <view wx:if="{{overReduceType==1}}">
+                            <text class='freeText'>购满\t{{item.over}}\t件，减\t{{item.reduce}}\t元</text>
+                        </view>
+                        <view wx:if="{{overReduceType==2}}">
+                            <text class='freeText'>购满\t{{item.over}}\t元，减\t{{item.reduce}}\t元</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <block wx:if="{{shoppingCarList.length == 0}}">
+                <view id="empty" style="display: block;">
+                    <image class="cart_empty" src="{{staticResPath}}/image/mobile/shopcart/image_gouwuche.png"/>
+                    <view class="empty_text">
+                        <text> 您的购物车空空如也\n</text>
+                        <text style='margin-top:15rpx;display:inline-block'>去挑几件中意的商品吧</text>
+                    </view>
+                    <view class="go_main_btn">
+                        <view bindtap='toIndex' class="empty_go_main main-color-bg" style="{{app.globalData.customStyleBg}}" >去逛一逛吧!</view>
+                    </view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="cart-goods-list" id="goods_list">
+                    <view wx:for="{{shoppingCarList}}" wx:key="item.id"
+                          class="goods-detail j-goods-detail {{item.status==0?'goods-deleted':''}}" id="{{item.id}}"
+                          msg_id="{{item.goodsId}}">
+                        <view class="goods-select" data-itemid="{{item.id}}" bindtap="changeSelect">
+                            <view style="{{cartSelectStatu[item.id]?app.globalData.customStyleColor:''}}" class="zan-icon {{cartSelectStatu[item.id]?'zan-icon-checked selected main-color':'zan-icon-check'}} j-select-btn"></view>
+                        </view>
+
+                        <navigator url="/pages/detail/detail?id={{item.goodsId}}" class="goods-pic j-goods-pic">
+                            <view class="deleted-tips" wx:if="{{item.status==0}}">已失效</view>
+
+                            <image wx:if="{{item.spec && item.spec.img}}"
+                                   src="{{mTool.specUrl(extConfig,userImagePath,item.spec.img,1080)}}"></image>
+                            <image wx:else src="{{mTool.specUrl(extConfig,userImagePath,item.cover,1080)}}"></image>
+
+                        </navigator>
+                        <view class="goods-info">
+                            <view class="goods-name">{{item.name}}</view>
+                            <block wx:if="{{item.spec}}">
+                                <view class="goods-spec">（{{item.spec.names}}）</view>
+                            </block>
+                            <block wx:else>
+                                <view class="goods-spec"></view>
+                            </block>
+                            <view class="goods-money">
+                                <text class="new-money main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}<text class="j-new-money">{{item.spec?m1.getFixedMoney(item.spec.price):m1.getFixedMoney(item.price)}}</text><text style="color: red;font-size:24rpx;font-weight:300" wx:if="{{item.startCount >0}}">（{{item.startCount}}{{item.unitName}}起购）</text></text>
+                            </view>
+                        </view>
+                        <view class="goods-number">
+                            <view class="minus j-minus" data-purchase="{{item.startCount}}" data-itemid="{{item.id}}" data-unit="{{item.unitName || '件'}}" bindtap="minusCount">-</view>
+                            <view class="count">
+                                <block wx:if="{{item.status==0}}">
+                                    <input type="number" disabled="disabled" class="j-count" data-limitations="{{item.limitations}}" data-purchase="{{item.startCount}}" data-unit="{{item.unitName}}" data-itemid="{{item.id}}"
+                                           bindchange="bindChange" maxlength="5"
+                                           value="{{goodsCountContent[item.id]}}"></input>
+                                </block>
+                                <block wx:else>
+                                    <input type="number" data-totalcount="{{item.totalCount}}" class="j-count" data-limitations="{{item.limitations}}" data-itemid="{{item.id}}" data-unit="{{item.unitName}}" bindchange="bindChange"
+                                           maxlength="5" value="{{goodsCountContent[item.id]}}"></input>
+                                </block>
+                            </view>
+                            <view class="plus j-plus" data-totalcount="{{item.totalCount}}" data-limitations="{{item.limitations}}" data-purchase="{{item.startCount}}" data-unit="{{item.unitName}}" data-itemid="{{item.id}}" bindtap="addCount">+</view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <include src="/pages/template/copyright.wxml"/>
+
+        </scroll-view>
+        <include src="/pages/template/recommendGoods.wxml"/>
+        <view class="placeholder" style="height:180rpx;background:#f5f7f7"></view>
+        <view class="footer hide" id="footer"
+              style="display: block;bottom:{{app.globalData.bottomMenus && app.globalData.bottomMenus.isShow?(app.globalData.isIPhoneX || app.globalData.isIPhone11?'78px':'48px'):'0px'}}">
+            <view class="floor-1">
+                <view class='floor-fst'>
+                    <view class="goods-select">
+                        <view id="all_select" bindtap="onAllSelect" style="{{allSelected?app.globalData.customStyleColor:''}}"
+                              class="zan-icon {{allSelected?'zan-icon-checked selected main-color':'zan-icon-check'}} j-select-btn">
+                        </view>
+                    </view>
+                    <image bindtap="onDelCart" id="del" src="{{staticResPath}}/image/mobile/shopcart/icon_lajitong.png"></image>
+                    <view class="total-money">合计:<text class="main-color" style="{{app.globalData.customStyleColor}}"> {{app.globalData.currencySymbol}}<text class="main-color J-total-money" style="{{app.globalData.customStyleColor}}">{{m1.getFixedMoney(totalPrice)}}</text></text>
+                    </view>
+
+                </view>
+                <view class='floor-sec'>
+
+                    <view class="pay-btn">
+                        <view id="btn_pay" class="main-color-bg" style="{{app.globalData.customStyleBg}}"  wx:if="{{cartSelectedCount>0}}" bindtap="onBtnPay">
+                            结算({{cartSelectedCount}})
+                        </view>
+                        <view id="btn_pay" class="disabled" wx:else>结算</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{sancodeShow}}"  class='scanCode main-color-bg' style="{{app.globalData.customStyleBg}}"  bindtap='scanTarCode'>扫码购</view>
+    </block>
+
+    <include src="../template/footer.wxml"/>
+    <include src="/pages/template/authModal.wxml"/>
+</view>
+

@@ -1,0 +1,74 @@
+<!--pages/offline/orderdetail.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}" style="background: #F5F7F6;padding: 40rpx">
+<scroll-view style="box-shadow: 0 0 20rpx #E5E7E6;background: #fff;border-radius: 25rpx;padding: 30rpx 0 0;overflow: hidden">
+  <view class="header">
+    <view class="title">实付金额</view>
+    <view class="money main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(order.amount)}}</view>
+  </view>
+  <view class="zan-panel" style="border-top: none">
+    <view class="zan-cell">
+      <view class="zan-cell__bd">订单号</view>
+      <view class="zan-cell__ft">{{order.orderNum}}</view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-cell__bd">付款时间</view>
+      <view class="zan-cell__ft">{{order.payTime?order.payTime:"-"}}</view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-cell__bd">支付方式</view>
+      <view class="zan-cell__ft">微信支付</view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-cell__bd">应付</view>
+      <view class="zan-cell__ft"><text>{{app.globalData.currencySymbol}}{{m1.getFixedMoney(order.amount+order.ticketPrice+order.depositPrice+order.integralPrice+order.mcPrice)}}</text></view>
+    </view>
+    <view class="zan-cell" wx:if="{{order.mcId}}">
+      <view class="zan-cell__bd">会员卡</view>
+      <view class="zan-cell__ft"><text class="text-red main-color" style="{{app.globalData.customStyleColor}}">-{{app.globalData.currencySymbol}}{{m1.getFixedMoney(order.mcPrice)}}</text></view>
+    </view>
+    <view class="zan-cell" wx:if="{{order.ticketId}}">
+      <view class="zan-cell__bd">优惠券</view>
+      <view class="zan-cell__ft"><text class="text-red main-color" style="{{app.globalData.customStyleColor}}">-{{app.globalData.currencySymbol}}{{m1.getFixedMoney(order.ticketPrice)}}</text></view>
+    </view>
+    <view class="zan-cell" wx:if="{{order.integralPrice}}">
+      <view class="zan-cell__bd">积分抵扣</view>
+      <view class="zan-cell__ft"><text class="text-red main-color" style="{{app.globalData.customStyleColor}}">-{{app.globalData.currencySymbol}}{{m1.getFixedMoney(order.integralPrice)}}</text></view>
+    </view>
+    <view class="zan-cell" wx:if="{{order.depositPrice}}">
+      <view class="zan-cell__bd">储值金</view>
+      <view class="zan-cell__ft"><text class="text-red main-color" style="{{app.globalData.customStyleColor}}">-{{app.globalData.currencySymbol}}{{m1.getFixedMoney(order.depositPrice)}}</text></view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-cell__bd">实付</view>
+      <view class="zan-cell__ft"><text>{{app.globalData.currencySymbol}}{{m1.getFixedMoney(order.amount)}}</text></view>
+    </view>
+    <view class="zan-cell">
+      <view class="zan-cell__bd">备注信息</view>
+      <view class="zan-cell__ft">{{order.remark?order.remark:""}}</view>
+    </view>
+<!--    <view class="zan-cell zan-cell-row" style="padding-bottom: 10px !important;" wx:if="{{order.payStatus==0}}">-->
+<!--&lt;!&ndash;      <view class="zan-cell__bd">选择支付方式</view>&ndash;&gt;-->
+<!--      <view class="zan-cell" style='width:100%;padding:6px 0;'>-->
+<!--        <view class="zan-cell__bd"><view class="zan-icon zan-icon-wechat"  style="font-size: 20px; color: #20BC6A;margin:0px 5px 0 0;position:relative;top:2px;"></view>微信支付</view>-->
+<!--        <view class="zan-cell__ft"><view class="zan-icon zan-icon-checked"  style="font-size: 24px; color: #ff4343;margin:0px 5px 0 0;"></view></view>-->
+<!--      </view>-->
+<!--    </view>-->
+  </view>
+</scroll-view>
+  <view class="btn-cont" style="margin-top: 30rpx" wx:if="{{order.payStatus == 0}}">
+    <navigator wx:if="{{false}}" open-type="redirect" class="zan-btn zan-btn--small" url="/pages/orderlist/orderlist?sitetype=offline">取消支付</navigator>
+    <button class="zan-btn zan-btn--small zan-btn--danger offline-pay main-color-bg" style="{{app.globalData.customStyleBg}}" bindtap="handlePay">支付</button>
+  </view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

@@ -1,0 +1,127 @@
+<!--pages/sbargain/seckillGoods.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/decoration.wxml" />
+<import src="../template/discountCategoryModal.wxml" />
+<canvas style="width:1188rpx;height:1782rpx; position:absolute;top:-1300px;" canvas-id="canvasGB"></canvas>
+<view hidden="{{true}}">
+  <image src="{{shareQrCodeUrl}}"></image>
+</view>
+<view wx:if="{{isDone}}" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <scroll-view class="container {{contClass}}" style="padding-bottom:120rpx;background:#f5f7f7;">
+    <!--商品轮播图-->
+    <view class="header-cont">
+      <swiper class="index-banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" style="height:{{mainBannerHeight||562}}rpx" duration="{{1000}}">
+        <block wx:for="{{goodsCover}}" wx:key="index">
+
+          <swiper-item>
+            <image bindtap="viewImg" data-id="{{index}}" data-type="banner" src="{{mTool.specUrl(extConfig,userImagePath,item,1080)}}" bindload="onMainBannerImgLoad" class="slide-image" />
+          </swiper-item>
+
+        </block>
+      </swiper>
+
+      <!--商品基本信息-->
+      <view class="detail-pre" style="background: url({{staticResPath}}/image/mobile/discount_tag.png);background-size: 100% 100%;">
+        <view class="detail-pre-price">
+          <image src='{{staticResPath}}/image/mobile/seckill_act.png' class='discount-txt'></image>
+          <view class="discount-price-wrap">
+            <view>{{app.globalData.currencySymbol}}
+              <text style="font-size:48rpx">{{m1.getFixedMoney(goodsData.ecExtendObj.activityPrice)}}</text>
+            </view>
+            <text style="text-decoration: line-through">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goodsData.ecExtendObj.originalPrice)}}</text>
+          </view>
+
+        </view>
+        <!-- 活动时间 -->
+        <view class="detail-pre-time">
+          <view  style="font-size:24rpx;color:#2d2d2d;" class="act_countDown_box">
+
+            <view wx:if="{{0 == secListStatus}}">距离活动开始</view>
+            <view wx:elif="{{1 == secListStatus}}">距离活动结束</view>
+            <view wx:else>活动已结束</view>
+            <view class="countDown_time">
+              <span class="timer_day timer_box">{{atyTimeShutDown.timerDay1}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_hour">{{atyTimeShutDown.timerHour1}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{atyTimeShutDown.timerMinute1}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{atyTimeShutDown.timerSecond1}}</span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 活动商品名称及分享 -->
+      <view class="detail-cont">
+        <view class="discount-goods-name">{{goodsData.awardName}}</view>
+        <button  open-type="share" class="discount-share"  bindtap='showShareMasks'>
+          <image src='{{staticResPath}}/image/mobile/discount_share_icon.png' class='commonPosterIco'></image>分享
+        </button>
+
+      </view>
+      <!-- 库存 销量 -->
+      <view class="payed_count">
+        <text class="inventory">库存：{{inventory}}{{goodsData.unit || "件"}}</text>
+          <text class="soldNum">销量：{{activityStatInfo ? activityStatInfo.awardSendNum + awardVirtualNum : 0}} 笔</text>
+          <text class="delivery_txt">{{goodsData.ecExtendObj.deliveryType == 1 ? "包邮":"运费"+m1.getFixedMoney(goodsData.ecExtendObj.deliveryPrice)}}</text>
+      </view>
+    </view>
+
+    <!--商品详情块-->
+    <view class="microshop-box">
+      <view class="goto_shop">
+        <text>商品详情</text>
+      </view>
+    </view>
+    <!--商品描述块-->
+    <view class="detail_decoration">
+      <block wx:for="{{decoration.items}}" wx:key="idx" wx:for-index="idx">
+        <template is="{{item.item_type}}" data="{{app,item:item,userImagePath:userImagePath,staticResPath:staticResPath,bannerHeight:bannerHeight,multInfoArr:multInfoArr,multInfo:multInfo,multInfoAddr:multInfoAddr,shopUid:app.globalData.shopuid,categoryList:categoryList,selectedCatData:selectedCatData,widgetIndex:idx,communityHandleData:communityHandleData,subClsList:subClsList,selectedSubData:selectedSubData,goodsOrderObj:goodsOrderObj,extConfig:extConfig,app:app,seckList,countDownList,playBgMusic,navTabPanelData,shoppingCartCount,microBottomMenu,locationInfo}}"
+        />
+      </block>
+    </view>
+    <!-- 底部菜单 -->
+    <view class="discount-bottom-tar">
+        <navigator url="/pages/index/index" class="tar-item">
+         <image src="{{staticResPath}}/image/mobile/discount_index_icon.png"></image>
+          <view class="tar-text">首页</view>
+        </navigator>
+       <button class="tar-item commonNavButton" wx:if="{{isService!='0'}}"  open-type="contact" form-type='submit' send-message-path='/pages/sbargain/seckillGoods?id={{goodsData.id}}' show-message-card="true">
+          <image src="{{staticResPath}}/image/mobile/discount_customer.png"></image>
+          <view class="tar-text">客服</view>
+        </button>
+        <navigator url="/pages/orderlist/orderlist" class="tar-item">
+         <image src="{{staticResPath}}/image/mobile/discount_order.png"></image>
+          <view class="tar-text">订单</view>
+        </navigator>
+        <!-- 按钮状态 -->
+        <button form-type='submit' wx:if='{{inventory ==0}}' class="commonNavButton tar-buy-btn tar-buy-btn1">
+          已售完
+          <view class="notInAty" hidden="{{1 == secListStatus && atyIsLive}}"></view>
+        </button>
+        <button form-type='submit' wx:if='{{inventory > 0}}' class="commonNavButton tar-buy-btn tar-buy-btn2 " bindtap="goToPay">
+          立刻购买
+          <view class="notInAty" hidden="{{1 == secListStatus && atyIsLive}}"></view>
+        </button>
+
+
+
+
+    </view>
+  </scroll-view>
+
+</view>
+
+<include src="../template/fixedmenu.wxml" />
+<include src="/pages/template/copyright.wxml" />
+<include src="/pages/template/authModal.wxml" />

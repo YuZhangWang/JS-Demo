@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "摇钱树",
+  "usingComponents": {
+    "play-ret": "../inteCommon/playRet",
+    "rule-and-award": "../inteCommon/ruleAndAward"
+  }
+}

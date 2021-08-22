@@ -1,0 +1,157 @@
+/* 咻一咻奖励  */
+@import "../inteCommon/common.wxss";
+.game_page{ 
+width: 100%;
+height: 100%;
+max-width: 800px;
+margin: 0px auto;
+position: relative;
+background-repeat: no-repeat; background-position: center 0; background-size: 100% auto; background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/gamepage/xiuyixiu/bg.jpg"); }
+.wrapper{ font-size: 30.47rpx; }
+.game-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.game-title>image {
+    position: absolute;
+    top: 112.49rpx;
+    left: 56.24rpx;
+    width: 636.26rpx;
+    height: 113.66rpx;
+}
+.game-subtitle {
+    padding-top: 248.41rpx;
+    width: 100%;
+    text-align: center;
+}
+.game-subtitle>view {
+    margin: 0 auto;
+    max-width: 85%;
+    color: #d8213f;
+    background: url("http://res.xcx.weijuju.com/image/mobile/aty/gamepage/xiuyixiu/subtitle_bg.png") no-repeat center 16.4rpx/100%;
+}
+.game-subtitle>view>text {
+    display: inline-block;
+    width: 62%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+}
+.game-info {
+    margin-top: 70.3rpx;
+    text-align: center;
+    color: #F8B643;
+}
+.game-info .info-award {
+    overflow: hidden;
+    margin-top: 14.06rpx;
+    height: 55.07rpx;
+    line-height: 55.07rpx;
+}
+.game-info .info-award>view {
+    display: inline-block;
+    vertical-align: top;
+}
+.game-info .info-award .number-wrapper .number {
+    display: inline-block;
+    margin: 0 5.8rpx;
+    vertical-align: top;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+.game-info .info-award .number-wrapper .number .i {
+    display: block;
+    height: 55.07rpx;
+    width: 42.18rpx;
+    color: #511d25;
+    background-color: #f8b643;
+    border-radius: 5.86rpx;
+    font-style: normal;
+}
+.game-start {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.game-start>image {
+    z-index: 3;
+    position: absolute;
+    top: 597.59rpx;
+    left: 255.44rpx;
+    height: 240.21rpx;
+    width: 240.21rpx;
+}
+.game-start .light-ring {
+    display: inline-block;
+    position: absolute;
+    top: 597.59rpx;
+    left: 255.44rpx;
+    height: 240.21rpx;
+    width: 240.21rpx;
+    box-sizing: border-box;
+    border: 1px solid #D7223E;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.game-start .light-ring-1 {
+    -webkit-animation: light-ring 1s ease-in-out 0s infinite;
+    animation: light-ring 1s ease-in-out 0s infinite;
+}
+.game-start .light-ring-2 {
+    -webkit-animation: light-ring 1s ease-out 0.3s infinite;
+    animation: light-ring 1s ease-out 0.3s infinite;
+}
+.game-start .light-ring-3 {
+    -webkit-animation: light-ring 1s ease-out 0.6s infinite;
+    animation: light-ring 1s ease-out 0.6s infinite;
+}
+.game-rule {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.game-rule>image {
+    position: absolute;
+    top: 966.69rpx;
+    left: 38.67rpx;
+    height: 113.66rpx;
+    width: 91.4rpx;
+}
+.my-prize {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.my-prize>image {
+    position: absolute;
+    top: 966.69rpx;
+    left: 599.94rpx;
+    height: 113.66rpx;
+    width: 91.4rpx;
+}
+/* animation start */
+ @keyframes light-ring {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+@-webkit-keyframes light-ring {
+    0% {
+        -webkit-transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(2);
+        opacity: 0;
+    }
+}
+/* animation end */

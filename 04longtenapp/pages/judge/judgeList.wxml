@@ -1,0 +1,9 @@
+<!--pages/judgeList/judgeList.wxml-->
+<import src="../template/judgeList.wxml"/>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view id="uwrapper">
+<!--评论列表内容  -->
+  <template is="judgeList" data="{{app,judgeList:judgeList,userImagePath:userImagePath}}"></template>
+</scroll-view>
+<include src="/pages/template/authModal.wxml"/>
+</view>

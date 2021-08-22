@@ -1,0 +1,178 @@
+/* pages/fenxiao/wdDetail.wxss */
+page{
+  background: #EFEFEF;
+}
+.moneyInfoWrap{
+  background: #fff;
+  padding:60rpx 40rpx;
+  border-radius: 10px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  top: 50rpx;
+
+}
+.money-container{
+  padding:0rpx 30rpx 0;
+  background: #FF585B;
+  box-shadow: 0 1px 12px #f5f6f7;
+}
+.record-title{
+  padding: 70rpx 40rpx 20rpx;
+  background: #f5f6f7;
+  color: #333;
+  font-size: 32rpx;
+
+}
+.moneyInfo{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.getMoney{
+  margin: 0;
+  padding: 0;
+  border: 1px solid #FF585B;
+  background: transparent;
+  color: #FF585B;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 28rpx;
+  width: 150rpx;
+  border-radius: 25px;
+}
+.moneyInfoWrap .descTxt{
+  color: #333;
+  font-size: 32rpx;
+
+}
+.moneyInfoWrap .money{
+  color: #FF585B;
+  font-size: 46rpx;
+}
+.wdRecord{
+  background: #fff;
+}
+.wdItem{
+  padding: 35rpx;
+  border-bottom: 1px solid #f2f2f2;
+}
+.wdItem .topBlock{
+  display: flex;
+  justify-content: space-between;
+}
+.topBlock text:first-child{
+  color: #333;
+  font-size: 32rpx;
+}
+.wdItem .bottomBlock{
+  display: flex;
+  justify-content: space-between;
+  color: #999;
+  font-size: 26rpx;
+}
+.noMore{
+  text-align: center;
+  padding: 40rpx 0;
+  color: #949494;
+}
+.mMask{
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%; 
+  text-align: center;
+  top: 0;
+  left: 0;
+}
+.mModal{
+  background-color: #fff;
+  margin-top: 60rpx;
+  border-radius: 15rpx;
+  width: 90%;
+  display: inline-block;
+  /* height: 100px; */
+  position: relative;
+}
+.mModal .mHeader{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f7f7f7;
+  padding: 15rpx 20rpx;
+  align-items: center;
+  box-sizing: border-box;
+  height: 100rpx;
+}
+.mModal input{
+  border: 1px solid #E7E7E7;
+  border-radius: 10rpx;
+  width: 90%;
+  padding-left: 10rpx;
+  text-align: left;
+}
+.mModal .mBottom{
+  min-height: 40rpx;
+}
+.mModal .mClose{
+  display: inline-block;
+  padding: 0 20rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.rowComm{
+  display: flex;
+  min-height: 100rpx;
+  margin: 0 30rpx ;
+  align-items: center;
+}
+.rowComm .rowCommTxt{
+  width: 230rpx;
+  display: flex;
+  align-items: center;
+}
+.rowComm .rowCommData{
+  display: flex;
+  align-items: center;
+}
+.avator{
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 15rpx;
+  border-radius: 50%;
+}
+.payIco{
+  width: 45rpx;
+  height: 45rpx;
+  margin-right: 15rpx;
+}
+.spcWrap input{
+ width: 400rpx;
+}
+
+.mBtn {
+    clear: both;
+    border: 1px solid #FF585B;
+    border-radius: 5.4rpx;
+    -webkit-border-radius: 5.4rpx;
+    background-color: #FF585B;
+    color: #fff;
+    font-size: 30rpx;
+    text-align: center;
+    height: 75rpx;
+    line-height: 75rpx;
+    margin: 20rpx;
+}
+.descWD{
+  color: #E85436;
+  font-size: 26rpx;
+  margin: 0 20rpx;
+  text-align: left;
+}
+.simpleName{
+	display:inline-block;
+	max-width:415rpx;
+	white-space:nowrap;
+	word-break:keep-all;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}

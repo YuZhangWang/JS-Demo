@@ -1,0 +1,6 @@
+<!--pages/customization/huandian//huandian.wxml-->
+<view class="content-panel">
+    <image class="content-banner" src="{{staticResPath}}/image/mobile/customization/banner.png"></image>
+    <image class="content-bottom" bindtap="skipApplet" src="{{staticResPath}}/image/mobile/customization/button.png"></image>
+    <include src="/pages/template/authModal.wxml"/>
+</view>

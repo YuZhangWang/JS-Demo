@@ -1,0 +1,34 @@
+<wxs module="m1">
+  var switchFoodType = function(shopInfo,type) {
+    if(shopInfo){
+      var foodType = shopInfo.foodType;
+      return (foodType & Math.pow(2, type)) != 0;
+    } else {
+      return false;
+    }
+  }
+  module.exports.switchFoodType = switchFoodType;
+</wxs>
+<template name="dineWayTpl">
+<view class="modal-backdrop announce-backdrop" bindtap='handleDineWayModalClose' wx:if="{{showDineWayList}}"></view>
+  <view class="coupon-info-modal" wx:if="{{showDineWayList}}" bindtap="handleDineWayModalTap">
+    <view class="title">{{waySelect}}</view>
+    <scroll-view class="coupon-list">
+      <view class="coupon" wx:if="{{m1.switchFoodType(shoperInfo,0)}}" data-id="1" bindtap='handleDineWaySelect'>
+        <text>到店堂吃</text>
+        <view class="fright">
+          <view wx:if="{{selectedDineWay==1}}" class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+          <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+        </view>
+      </view>
+      <view class="coupon" wx:if="{{m1.switchFoodType(shoperInfo,1)}}" data-id="2" bindtap='handleDineWaySelect'>
+        <text>到店自取</text>
+        <view class="fright">
+          <view wx:if="{{selectedDineWay==2}}" class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+          <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+        </view>
+      </view>
+    </scroll-view>
+    <button data-action="closeModal" class="main-color-bg zan-btn zan-btn--large zan-btn--danger" style="{{app.globalData.customStyleBg}}" >关闭</button>
+  </view>
+  </template>

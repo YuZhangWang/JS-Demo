@@ -1,0 +1,14 @@
+/* pages/customization/huandian//huandian.wxss */
+.content-panel {
+    width: 100%;
+}
+
+.content-banner {
+    width: 100%;
+    height: 926rpx
+}
+
+.content-bottom {
+    width: 100%;
+    height: 142rpx
+}

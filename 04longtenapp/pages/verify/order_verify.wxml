@@ -1,0 +1,86 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<block wx:if="{{showLoading}}">
+  <view class="container" style='display:none;'>
+  <view class="header" style='margin-top:30%;'>
+    <icon type="waiting" size="65" color="#04be02"/>
+    <view class="p_txt">加载中...</view>
+  </view>
+</view>
+</block>
+<block wx:else>
+<view class="container" wx:if="{{verifiedClerk && !showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">是否核销该订单？</view>
+  </view>
+  <view class="center order-goods" style='margin-top:18px;'>
+    <view style='line-height:70rpx;padding:0 10rpx;border-top:1px solid #f0f0f0;font-size:26rpx;'>订单号：{{orderData.orderNum}}</view>
+    <view class="goods_list goods-list">
+      <view class="list">
+        <view class="list-item" wx:for="{{goodsList}}" wx:for-item="goodsData" wx:key="goodsData.id" data-msgid="{{goodsData.id}}">
+        <navigator url="{{(fromToStore||fromTakeout)?'blank':'/pages/detail/detail?id='+goodsData.id}}" wx:if="{{4 != orderType}}">
+        <image class="icon-goods" src="{{userImagePath+goodsData.cover}}"></image>
+        </navigator>
+        <image class="icon-goods" src="{{userImagePath+goodsData.cover}}" wx:else></image>
+        <view class="description">
+          <view class="text-black over">{{goodsData.name}}</view>
+          <view class="text-spec over" wx:if="{{goodsData.selectedSku}}">( {{goodsData.selectedSku.names}} )</view>
+          <view class="text-spec over" wx:elif="{{goodsData.spec && goodsData.spec.names}}">( {{goodsData.spec.names}} )</view>
+        </view>
+        <view class="amount over">
+          <text wx:if="{{orderData.orderType != 5}}" class="text-red">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsData.price)}}</text>
+          <text wx:if="{{orderData.orderType == 5}}" class="text-red">{{goodsData.price}}积分</text>
+           x<text>{{goodsData.count}}</text>
+
+        </view>
+        </view>
+      </view>
+    </view>
+    <view class="total-count text-black">
+      <text>共<text class="text-red" id="total_count">{{goodsCount}}</text>件商品</text>
+      <text class="total fright">合计 <text class="text-red">
+        <text wx:if="{{orderData.orderType != 5}}" class="js-total-money"> {{app.globalData.currencySymbol}}{{mTool.fToY(totalPrice)}}</text>
+        <text wx:if="{{orderData.orderType == 5}}" class="js-total-money"> {{totalPrice}}积分</text>
+      </text>
+      </text>
+    </view>
+    <view class="clerk-detail">
+      <view class="field">
+        <view class="title">核销员</view>
+        <view class="name">{{verifiedClerk.name}}</view>
+      </view>
+      <view class="field">
+        <view class="title">操作时间</view>
+        <view class="name">{{nowTime}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel bottom">
+    <view class="zan-btns">
+      <button bindtap='handleSubmit' class="zan-btn zan-btn--primary {{btnLoading?'zan-btn--loading':''}}">确定核销</button>
+    </view>
+  </view>
+</view>
+<view class="container" wx:elif="{{verifiedClerk && showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">核销成功！</view>
+  </view>
+
+  <view class="center" style='margin-top:20px;text-align:center;'>
+      <view style='line-height:70rpx;padding:0 10rpx;font-size:26rpx;'>订单号：{{orderData.orderNum}}</view>
+  </view>
+</view>
+<view class="container cont_error" wx:else>
+  <view class="header">
+    <icon type="clear" size="65" color="#f00"/>
+    <view class="p_txt">您没有核销权限！</view>
+  </view>
+  <view class="center">
+
+  </view>
+</view>
+</block>
+<include src="/pages/template/authModal.wxml"/>
+</view>

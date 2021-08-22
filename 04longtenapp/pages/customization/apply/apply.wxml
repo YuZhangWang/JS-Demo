@@ -1,0 +1,36 @@
+<!--pages/offline/pay.wxml-->
+<import src="/youzan/dist/field/index.wxml" />
+<import src="/youzan/dist/toast/index.wxml" />
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="container">
+  <view class="header">
+    <image class="logo_img" src='{{app.globalData.userInfo.avatarUrl}}'></image>
+  </view>
+  <view class="zan-panel money-field">
+    <template is="zan-field" data="{{app, mode: 'wrapped', type: 'input', placeholder: '请输入手机号' ,componentId:'phone'}}"></template>
+  </view>
+  <view class="zan-panel money-field" style='position:relative;'>
+    <template is="zan-field" data="{{app, mode: 'wrapped', type: 'input', placeholder: '请输入验证码' ,componentId:'randCode'}}"></template>
+    <button catchtap='getRandcode' style='border:none;font-size:24rpx;' disabled="{{randBtnLoading}}" class="zan-btn btn-getrandcode zan-btn--primary {{randBtnLoading?'disabled':''}}">{{randBtnText}}</button>
+  </view>
+  <view class="zan-panel">
+    <view class="zan-btns">
+      <button bindtap='handleSubmit' style='border:none;' class="zan-btn zan-btn--primary {{btnLoading?'zan-btn--loading':''}}">进入小程序</button>
+    </view>
+  </view>
+</view>
+<view wx:if="{{uid==37774}}" style='color:#999;font-size:26rpx;padding:0 30rpx;'>请先验证店铺负责人手机，我们将在1-3个工作日内为您开通账户，如需立即审核请联系管理员：13380351806</view>
+<template is="zan-toast" data="{{app, zanToast }}"></template>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

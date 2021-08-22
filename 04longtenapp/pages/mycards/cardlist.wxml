@@ -1,0 +1,89 @@
+<!--pages/mycards/cardlist.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" xmlns:wx="http://java.sun.com/JSP/Page" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="cardList" wx:for="{{cardList}}">
+    <view class="cardRegion" style="background-image: url({{item.cardConfig.coverSet == 2 ? userImagePath+item.cardConfig.prefixImg : staticResPath+default_bg}});background-color:{{item.cardConfig.coverSet == 1 ? cardColor[item.cardConfig.coverColor] : ''}};min-height:200rpx"
+      data-id="{{item.cardConfig.id}}" bindtap="toVipDetail" data-pay='{{item.cardSended.value4}}' data-money='{{item.cardConfig.activeMoney}}' data-sta="{{item.cardSended.statu}}" data-extendInfo="{{item.cardConfig.extendInfo}}" data-idx="{{index}}" data-sendid="{{item.cardSended.id}}"
+      data-rights="{{item.cardConfig.rights}}" data-activeSet="{{item.cardConfig.activeSet}}" data-termSet='{{item.cardConfig.termSet}}'>
+      <view class="cardHeader">
+        <view class="shopInfo">
+          <view class="vipcard-logo">
+            <image src="{{userImagePath+item.cardConfig.logo}}" class="vLogo" alt=""></image>
+          </view>
+          <view class="cardIntro">
+            <text style="color:{{cardColor[item.cardConfig.nameColor]}}" class="vipTypeName">{{item.cardConfig.shopName}}</text>
+            <text  class="shopName">{{item.cardConfig.cname}}</text>
+          </view>
+        </view>
+        <image src="{{staticResPath+'/youdian/image/admin/xiaochengxu/vip/vipcard_qrcode.png'}}" class="qrCode" alt=""></image>
+      </view>
+      <view class="expireTime">有效期：{{ item.cardSended.expireTime?mTool.filterTimestamp(item.cardSended.expireTime) :'无限期'}}</view>
+      <view wx:if="{{item.cardSended.statu != 1}}" class="card-status" style="font-size:24rpx;">{{mTool.getCardStu(item.cardSended.statu)}}
+        <text wx:if='{{item.cardConfig.activeMoney !=0 && item.cardSended.value4 =="0"}}'>(需支付{{app.globalData.currencySymbol}}{{item.cardConfig.activeMoney/100}})</text>
+        <text wx:if='{{item.cardConfig.activeMoney !=0 && item.cardSended.value4 =="1" && item.cardSended.statu == 2 && item.cardConfig.activeSet == 2 && item.cardConfig.termSet == 1}}'>(需支付{{app.globalData.currencySymbol}}{{item.cardConfig.activeMoney/100}}重新激活)</text>
+      </view>
+      <view class="notUse" wx:if="{{2 == item.cardSended.statu && 2 != item.cardConfig.activeSet}}">不可用</view>
+      <view class="notUse" wx:elif="{{2 == item.cardSended.statu && 2 == item.cardConfig.activeSet  && 1 != item.cardConfig.termSet}}">
+        不可用
+      </view>
+    </view>
+  </view>
+  <view class="notCard" wx:if="{{isBottom}}">你还没有领到任何会员卡噢~</view>
+  <view class="mask" hidden="{{!isShowMask}}" bindtap="hideMask">
+    <view class="collectionInfon {{isCollectDate ? 'collectionInfonH430': ''}}" catchtap="stopOverflow">
+      <view class="colleItem" style="margin-top:20rpx;">
+        激活会员
+      </view>
+      <view class="colleItem">
+        <text class="commTxt splTxt">
+                    <text>姓</text>
+        <text style="color:#fff">隐</text>
+        <text style="color:#fff">隐</text>
+        <text>名</text>
+        </text>
+        <input placeholder="输入姓名" name="name" bindinput="inputName"></input>
+      </view>
+      <view class="colleItem">
+        <text class="commTxt">联系电话</text>
+        <input placeholder="输入联系电话" name="userPhone" bindinput="inputPhone"></input>
+      </view>
+      <view wx:for="{{collectionInfo}}" wx:if="{{item.isChecked}}" class="colleItem">
+        <block wx:if="{{item.name=='短信验证'}}">
+          <view class="colleItem">
+            <view class="commTxt">
+              <text style="color:#fff">隐</text>验证码</view>
+            <input type="text" placeholder="请输入验证码" style="width: 210rpx" placeholder-class="huaer-field_placeholder" value="" bindinput="bindCodeInput" />
+            <block wx:if="{{has_get_vcode != true}}">
+              <view bindtap="tapGetVcode" style="font-size: 26rpx;padding: 10rpx 26rpx;background: #E85436 !important;color: #fff;border-radius: 10rpx;margin-left: 8rpx">获取验证码</view>
+            </block>
+            <block wx:if="{{has_get_vcode == true}}">
+              <view style="font-size: 22rpx;padding: 12rpx 20rpx;background: #ccc;color: #ffffff;border-radius: 10rpx;margin-left: 8rpx;">{{vcodeGetTime}}s后重新获取</view>
+            </block>
+          </view>
+        </block>
+        <block wx:else>
+          <text class="commTxt">{{item.name}}</text>
+          <input placeholder="{{item.tips}}" data-name="{{item.name}}" data-idx="{{index}}" name="userPhone" bindinput="inputs"></input>
+        </block>
+
+      </view>
+      <view class="colleItem" wx:if="{{isCollectDate}}">
+        <text class="commTxt splTxt">
+                    <text>生</text>
+        <text style="color:#fff">隐</text>
+        <text style="color:#fff">隐</text>
+        <text>日</text>
+        </text>
+        <picker class="weui-btn" mode="date" value="{{date}}" start="1900-01-01" end="2100-01-01" bindchange="bindDateChange">
+          <input placeholder="输选择生日" disabled='true' value="{{date}}"></input>
+        </picker>
+      </view>
+      <view class="colleItem btnGet">
+        <button class="getBtn" bindtap="infoSubmit">领取</button>
+      </view>
+    </view>
+
+  </view>
+  <include src="/pages/template/copyright.wxml" />
+  <include src="/pages/template/authModal.wxml" />
+</view>

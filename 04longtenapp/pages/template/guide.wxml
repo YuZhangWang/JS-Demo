@@ -1,0 +1,11 @@
+<view class='guide' wx:if="{{app.globalData.showGuide}}">
+  <view class='text'>
+    点击“
+    <text class='small-point'></text>
+    <text class='big-point'></text>
+    <text class='small-point'></text>”添加到我的小程序
+  </view>
+  <view>微信首页下拉即可快速访问小程序</view>
+  <view bindtap='closeGuide' class='zan-icon zan-icon-close close'></view>
+  <view class='arrow'></view>
+</view>

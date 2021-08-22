@@ -1,0 +1,121 @@
+<import src="../template/form.wxml" xmlns:wx="http://java.sun.com/JSP/Page"/>
+<wxs src="../../utils/comm.wxs" module="mTool"/>
+<!--form.wxml-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}" style="display: flex;flex-direction: column;">
+    <!-- 头部可用积分块 -->
+    <view class="myJifenData main-color-bg" style="background:  url({{staticResPath}}/image/mobile/signIn/bottom-bg.png) no-repeat left bottom;background-size: 100%;{{app.globalData.customStyleBg}}">
+        <view class="jifen_title">可用积分</view>
+        <view class="jifen_value">{{totalJifen}}</view>
+    </view>
+
+    <!-- 积分规则块 -->
+    <scroll-view scroll-y class="container">
+        <!-- 规则模框 -->
+        <modal hidden="{{hiddenmodalput}}" title="积分规则" confirm-text="确定" bindcancel="cancel" bindconfirm="confirm"
+               no-cancel="true">
+            <text wx:if="{{isSignOk}}">每日签到可获得{{signGet}}积分\n</text>
+            <text wx:if="{{isConsumeOk}}">每消费{{consumePreval}}元送{{consumeGet}}积分\n</text>
+            <text wx:if="{{isCommentOk}}">每评论{{commentPreval}}个商品送{{commentGet}}积分\n</text>
+            <text wx:if="{{isRecommendOk}}">成功召唤{{recommendPreval}}个新用户，送{{recommendGet}}积分，如被邀者不是新用户，不能获得积分\n</text>
+            <text wx:if="{{deductionOne}}">使用积分：{{integralKey}}积分\t=\t{{mTool.fToY(integralVal)}}元</text>
+        </modal>
+        <!-- 任务中心 -->
+        <view class='signTitle' wx:if="{{isOpen}}" style="background: #F5F7F6;padding-left: 20rpx;">
+            <text class='signText'> 任务中心</text>
+            <view class='signHelp zan-icon zan-icon-question' bindtap='showDetailBox'></view>
+        </view>
+        <view class='sign' wx:if="{{isOpen}}">
+            <view class='signItem' wx:if="{{isSignOk}}">
+                <view class='signImage'>
+                    <view class="sign-image" style="background: url({{staticResPath}}/image/mobile/signIn/sign-bg.png) no-repeat center;">
+                        <image src="{{staticResPath}}/image/mobile/signIn/sign.png" class='signScore'></image>
+                    </view>
+                    <view class="content-tip">
+                        <view class="sign-integral">签到领积分</view>
+                        <text class="sign-tips">每日签到可领取积分</text>
+                    </view>
+                </view>
+                <view class='signButton' bindtap='toSign'>
+                    <button class="main-color" style="{{app.globalData.customStyleColor}}">去签到</button>
+                </view>
+            </view>
+            <view class='signItem' wx:if="{{isConsumeOk}}">
+                <view class='signImage'>
+                    <view class="sign-image" style="background: url({{staticResPath}}/image/mobile/signIn/shop-bg.png) no-repeat center;">
+                        <image src="{{staticResPath}}/image/mobile/signIn/shop.png" class='signScore'></image>
+                    </view>
+                    <view class="content-tip">
+                        <view class="sign-integral">消费领积分</view>
+                        <text class="sign-tips">交易完成可领取积分</text>
+                    </view>
+                </view>
+                <view class='signButton' bindtap='toShopping'>
+                    <button class="main-color" style="{{app.globalData.customStyleColor}}">去消费</button>
+                </view>
+            </view>
+            <view class='signItem' wx:if="{{isCommentOk}}">
+                <view class='signImage'>
+                    <view class="sign-image" style="background: url({{staticResPath}}/image/mobile/signIn/evaluate-bg.png) no-repeat center;">
+                        <image src="{{staticResPath}}/image/mobile/signIn/evaluate.png" class='signScore' style="width: 56%;height: 56%;"></image>
+                    </view>
+                    <view class="content-tip">
+                        <view class="sign-integral">评价领积分</view>
+                        <text class="sign-tips">评价商品可获取积分</text>
+                    </view>
+                </view>
+                <view class='signButton' bindtap='toJudge'>
+                    <button class="main-color" style="{{app.globalData.customStyleColor}}">去评价</button>
+                </view>
+            </view>
+            <view class='signItem' wx:if="{{isRecommendOk}}">
+                <view class='signImage'>
+                    <view class="sign-image" style="background: url({{staticResPath}}/image/mobile/signIn/summon-bg.png) no-repeat center;">
+                        <image src="{{staticResPath}}/image/mobile/signIn/summon.png" class='signScore'></image>
+                    </view>
+                    <view class="content-tip">
+                        <view class="sign-integral">召唤领积分</view>
+                        <text class="sign-tips">召唤好友可获取积分</text>
+                    </view>
+                </view>
+                <view class='signButton' bindtap='toCall'>
+                    <button class="main-color" open-type="share" style="{{app.globalData.customStyleColor}}">去召唤</button>
+                </view>
+            </view>
+
+            <!--<view class='signItem' wx:if="{{isRecommendOk}}">-->
+                <!--<view class='signImage '>-->
+                    <!--<image class='signScore zan-icon zan-icon-add'></image>-->
+                    <!--<text>召唤领积分</text>-->
+                <!--</view>-->
+                <!--<view class='signButton'>-->
+                    <!--<button open-type="share" class="main-color-bg" style="{{app.globalData.customStyleBg}}">去召唤-->
+                    <!--</button>-->
+                <!--</view>-->
+            <!--</view>-->
+        </view>
+        <!-- 积分记录 -->
+        <view class='signTitle' wx:if="{{isOpen}}" style="background: #F5F7F6;padding: 20rpx;padding-top: 10rpx;">
+            <text class='signText'> 积分记录</text>
+            <view style="color:#999;" bindtap="openNotice">开启余额提醒</view>
+        </view>
+        <view class="jifen_list">
+            <block wx:if="{{list.length>0}}">
+                <block wx:for="{{list}}" wx:key="id">
+                    <view class="jifen_item">
+                        <view class="jifen_time_box">
+                            <view class="jifen_time_title">{{mTool.integralSource(item.source)}}</view>
+                            <view class="jifen_time_val">{{item.createTime}}</view>
+                        </view>
+                        <view class="jifen_val">{{item.type == 1? "+" : "-" }}{{item.integral}}</view>
+                    </view>
+                </block>
+            </block>
+            <block wx:elif="{{getDataFlag}}">
+                <view style="height: 200rpx;text-align: center;line-height: 200rpx;">暂时没有积分记录</view>
+            </block>
+        </view>
+    </scroll-view>
+
+    <include src="/pages/template/copyright.wxml"/>
+    <include src="/pages/template/authModal.wxml"/>
+</view>

@@ -1,0 +1,75 @@
+<!--pages/myTrack/myTrack.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/noneAuth.wxml" />
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getGoodsLink = function(goods) {
+    if(goods && goods.goodsType == 1){
+      return '/pages/detail/detail?id='+goods.goodsId
+    }else if(goods && goods.goodsType == 3){
+      return '/pages/yuyue/yydetail?id='+goods.goodsId
+    }else{
+      return '/pages/takeout/indexDetail?id='+goods.goodsId
+    }
+
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.getGoodsLink = getGoodsLink;
+</wxs>
+
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<scroll-view wx:if="{{!noAuthInfo}}">
+  <view class='search-wrapper'>
+    <view class="search-input-cont">
+        <view  class="search-btn">
+          <image class="search_icon" src="{{staticResPath}}/image/mobile/search_icon.png"></image>
+        </view>
+        <input type="text" placeholder="请输入搜索的商品名称" confirm-type="前往" bindinput="handleSearchInput"  bindconfirm="handleSearchIng" class="search-input" />
+    </view>
+    <view class='operation' bindtap='delTrack'>{{trackText}}</view>
+  </view>
+  <!-- 足迹商品列表 -->
+  <view class='track-list' wx:if="{{list.length>0}}" >
+     <navigator wx:for="{{list}}" url="{{m1.getGoodsLink(item)}}" class='track'>
+        <view class="track-item">
+          <view wx:if="{{isTrack}}" class="goods-select track-select" data-itemid="{{item.id}}" data-index="{{index}}" catchtap="changeSelect">
+          <view id="all_select" style="{{item.isSelected?app.globalData.customStyleColor:''}}" class="zan-icon {{item.isSelected?'zan-icon-checked selected main-color':'zan-icon-check'}} j-select-btn">
+          </view>
+        </view>
+        <view class="track-goods-img">
+          <image src="{{mTool.specUrl(extConfig,userImagePath,item.goodsPic,1080)}}"></image>
+        </view>
+        <view class="track-info">
+          <view class="track-goods-title">{{item.goodsName}}</view>
+        </view>
+        <view class='track-goods-price main-color' style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(item.goodsPrice)}}</view>
+        <view class=''>
+          <view class="track-countNum" style="font-size:11px;color:#999">{{item.salesCount}}人付款</view>
+          <!-- <view class="track-goods-buy btn1 zan-icon zan-icon-shopping-cart main-color" data-goodsid="147"></view> -->
+        </view>
+        </view>
+
+    </navigator>
+    <view class="bottom-tips" wx:if="{{list.length == total}}">已经到底啦！</view>
+  </view>
+  <view class="bottom-tips" wx:if="{{list.length==0}}">暂无商品足迹</view>
+  <!-- 全选 一键删除 -->
+  <view wx:if="{{isTrack}}" class='track-footer'>
+     <view class="goods-select">
+        <view id="all_select" style="{{allSelected?app.globalData.customStyleColor:''}}"  bindtap="onAllSelect" class="zan-icon {{allSelected?'zan-icon-checked selected main-color':'zan-icon-check'}} j-select-btn"><text style='font-size:36rpx;margin-left:20rpx'>全选</text>
+        </view>
+      </view>
+     <view class='del' bindtap='deleteTrack'>一键删除</view>
+  </view>
+
+</scroll-view>
+<template is="none-auth" data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'我的足迹'}}"></template>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

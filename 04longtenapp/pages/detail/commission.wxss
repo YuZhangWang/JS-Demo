@@ -1,0 +1,75 @@
+.commissionBlock{
+  margin: .5em auto 0;
+  padding: 14rpx 0;
+  background: #fff;
+}
+.commission{
+  display: flex;
+  padding: 10rpx 44rpx;
+  font-size: 12px;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+}
+.commission .valueBlock{
+  display: inline-flex;
+  /* margin-left: 20%;  */
+  align-items: center;
+  color: #959595;
+}
+.commission .posterWrap{
+
+}
+.commission .commVal{
+  border-radius: 10rpx;
+  padding: 0 5rpx;
+  margin-right: 5rpx;
+
+}
+.commission .inderectValue{
+
+  /* margin-left: 10%; */
+
+}
+.commission .directValue{
+
+
+}
+.commission .commission_1{
+  display: inline-block;
+  width: 34rpx;
+  height: 34rpx;
+}
+.commission .commission_2{
+  display: inline-block;
+  width: 34rpx;
+  height: 34rpx;
+}
+.commission .posterIco{
+  width: 34rpx;
+  height: 34rpx;
+}
+.pointPercentage{
+  border: 1px solid #F19737;
+  color: #F19737;
+  border-radius: 6rpx;
+  font-size: 20rpx;
+  padding: 2rpx 4rpx;
+  margin-right: 20rpx;
+}
+.commonPosterIco{
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 15rpx;
+}
+.commonText{
+  font-size: 24rpx;
+  display: block;
+  color: #959595;
+  margin-top: -10rpx;
+}
+.commonGoddsPoster{
+  float: right;
+  margin-right: 12rpx;
+
+}

@@ -1,0 +1,84 @@
+<wxs module="m1">
+  var getScoreTxt = function(score) {
+    if (score == 1) {
+      return "不满意";
+    } else if (score == 2) {
+      return "不满意";
+    } else if (score == 3) {
+      return "一般";
+    } else if (score == 4) {
+      return "满意";
+    } else {
+      return "非常满意";
+    }
+  }
+  var getScoreArray = function(score) {
+    var array = [];
+    for (var i = 0; i < score; i++) {
+      array[i] = i;
+    }
+    return array;
+  }
+  var getImgList = function(pic) {
+    if (pic) {
+      return pic.split(",");
+    } else {
+      return [];
+    }
+  }
+  module.exports.getImgList = getImgList;
+  module.exports.getScoreTxt = getScoreTxt;
+  module.exports.getScoreArray = getScoreArray;
+</wxs>
+<import src="/youzan/dist/loadmore/index.wxml" />
+<template name="judgeList">
+  <block wx:if="{{judgeList&&judgeList.length}}">
+    <!--头像  -->
+
+    <view wx:for="{{judgeList}}" class="judgeCont" wx:for-index="oIdx" wx:for-item="judge" wx:key="judge.id">
+      <view class='image' style='background-image: url("{{judge.head}}");'>
+        <navigator open-type="{{pagesLen>=5?'redirect':'navigate'}}">
+          <!--用户头像  -->
+        </navigator>
+      </view>
+      <!--用户名  -->
+      <view class='name'>{{judge.nickName}}</view>
+      <!--满意度  -->
+      <view class='score'>评分：
+        <view wx:for="{{m1.getScoreArray(judge.score)}}" class="zan-icon zan-icon-like main-color" style="{{app.globalData.customStyleColor}}"></view>
+      </view>
+      <!--评论时间  -->
+      <view class='judgeTime'>{{judge.reviewTime}}</view>
+      <!--评论详情  -->
+      <view class='judgeList'>
+        <view class="jDCont">\t{{judge.content}}</view>
+        <!--用户上传的图片  -->
+        <view class='judgeImage'>
+          <!--图片  -->
+          <!-- <text>\t{{judge.pic}}</text> -->
+          <view class="communityDetail-img">
+            <block wx:if="{{m1.getImgList(judge.pic).length>0}}">
+              <block wx:if="{{m1.getImgList(judge.pic).length==1}}">
+                <view class="communityDetail-imgli-one">
+                  <image data-oidx="{{oIdx}}" src="{{userImagePath+m1.getImgList(judge.pic)[0]}}" bindtap='handleImgTap' mode="aspectFit" data-index="0"></image>
+                </view>
+              </block>
+              <block wx:else>
+                <view class="communityDetail-imgli" wx:for-index="idx" wx:for="{{m1.getImgList(judge.pic)}}" wx:for-item="img">
+                  <image data-oidx="{{oIdx}}" data-index="{{idx}}" src="{{userImagePath+img}}" bindtap='handleImgTap' mode="aspectFill"></image>
+                </view>
+              </block>
+            </block>
+          </view>
+        </view>
+      </view>
+      <view class="replyContent" wx:if="{{judge.replyContent}}">
+        <view class='replyContentHead'>商家回复：</view>
+        <text>{{judge.replyContent}}</text>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="no-goodsList-show" style='text-align:center;line-height:40px;'>亲，商品还没有评论!</view>
+  </block>
+</template>

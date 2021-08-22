@@ -1,0 +1,938 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/noneAuth.wxml" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<import src="/youzan/dist/toast/index.wxml" />
+<canvas style="width:1188rpx;height:1782rpx; position:absolute;top:-1300px;" canvas-id="canvasGB"></canvas>
+<view hidden="{{true}}">
+  <image src="{{shareQrCodeUrl}}"></image>
+</view>
+  <!--展示块1-->
+<view id="indexPage" hidden="{{showPageArr[0]}}" class="sTuanPage indexPage {{goodsList.length < 3 ? 'hei100' :''}} {{cusTxt.isCust ?'indexPageBG100':''}}">
+  <view class="top_header">
+  <view class="tipTopPeople" wx:if="{{isShowJoin}}">已经有{{activity.activityStatInfo.uv + activity.virtualParticipant}}人参加拼团</view>
+    <view class="wrapBanner">
+      <swiper class="swiper" indicator-dots="true" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}" id="indexSlide">
+        <block wx:for="{{imgUrls}}" wx:key="index">
+          <swiper-item>
+            <image mode="widthFix" src="{{mTool.specUrl(extConfig,userImagePath,item,1080)}}" class="slide-image" />
+            <!-- {{userImagePath+item}} -->
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <!-- <view class="countDown_time_box" style="">
+      <view class="timeWrap" style="background-image: url({{staticResPathTuan}}time_show_box2.png);">
+        <view class="timer_box timer_day">{{atyTimeShutDown.timerDay}}</view>
+        <view class="timer_box timer_hour">{{atyTimeShutDown.timerHour}}</view>
+        <view class="timer_box timer_minute">{{atyTimeShutDown.timerMinute}}</view>
+        <view class="timer_box timer_second">{{atyTimeShutDown.timerSecond}}</view>
+      </view>
+    </view> -->
+    <!-- <view class="countDown_tips_box">
+      <view class="line_style"></view>
+      <view class="countDown_tips">{{atyStatusTxt}}</view>
+      <view class="line_style"></view>
+    </view> -->
+  </view>
+  <view class="tuan_goods_list_box">
+    <view class="tuan_goods_list {{!cusTxt.isCust && goodsList.length > 3 ? 'tuan_goods_listBg' :''}}">
+      <view class="tuan_goods_item_box tuan_goods_item_box_" data-typeid="" wx:for="{{goodsList}}" wx:key="index">
+
+        <view class="tuan_goods_item" bindtap="goodsDetailPage" data-tuantype="0" data-goodsid="{{item.id}}"  data-showindex="2">
+          <image class="goods_img" src="{{mTool.specUrl(extConfig,userImagePath,item.awardPic)}}"></image>
+          <!-- {{userImagePath + item.awardPic}} -->
+          <view class="goods_info_box">
+            <view class="goods_title">
+              <span class="goods_name">{{item.awardName}}</span>
+            </view>
+            <view>
+               <span style="color:#f44;font-size:28rpx;margin-left:-12rpx;">【{{item.offeredLimitNum}}人拼】</span>
+            </view>
+            <!-- <view class="nick_img_box">
+              <view class="yituan_box">已拼{{item.awardRealNum-item.sendNum+item.awardVirtualNum}}件</view>
+              <view class="img_and_qibpao">
+                <view class="nick_img">
+                  <image class="cantuan_nick_img" src="{{avatorList['a'+item.id+'0'] || staticResPathTuan+'vira/sba'+mTool.randA()+'.jpg'}}"></image>
+                </view>
+                <view class="nick_img">
+                  <image class="cantuan_nick_img" src="{{avatorList['a'+item.id+'1'] || staticResPathTuan+'vira/sba'+mTool.randA()+'.jpg'}}"></image>
+                </view>
+                <view class="qipao_box" style="background-image:url({{staticResPathTuan}}qipao.png)">
+                  <text>一起拼团</text>
+                </view>
+              </view>
+            </view> -->
+            <view class="goods_price_box">
+              <view class='goods_price_boxWrap'>
+                <view class="goods_act_price">
+
+                {{app.globalData.currencySymbol}}
+                <span wx:if="{{!item.switchLeadPrice}}">{{mTool.fToY(item.activityPrice)}}</span>
+                <span wx:if="{{item.switchLeadPrice}}">{{mTool.fToY(item.leaderPrice)}}</span>
+
+                </view>
+                <view class="goods_price">
+                <span style="font-size:24rpx;">单买价 </span>
+                <span style="text-decoration:line-through;">
+                   {{app.globalData.currencySymbol}}
+                  <span>{{mTool.fToY(item.originalPrice)}}</span>
+                </span>
+
+                </view>
+              </view>
+
+              <view class="goods_btn goods_soldOut_btn" data-tuantype="0" data-goodsid="{{item.id}}" data-showindex="2" wx:if="{{0 == item.sendNum}}">已售完</view>
+              <view class="goods_btn goods_buy_btn" data-tuantype="0" data-goodsid="{{item.id}}"  data-showindex="2"  wx:else>去开团</view>
+            </view>
+          </view>
+        </view>
+
+
+      </view>
+    </view>
+  </view>
+  <!-- <view class="top_myOrderBtn" bindtap="showMyOrderPage" style="background-image:url({{staticResPathTuan}}top_order_btn.png)"></view> -->
+  <view class="footer_btn_box {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}">
+    <view class="footer_btn all_tuan_btn" bindtap="topPageSwitch" data-showindex="0">
+      <image src="{{staticResPathTuan}}new_ituan2.png"></image>
+      <view class="tuan_menu_txt" style='color:#e93b3d'>{{cusTxt.bottomLTxt}}</view>
+      </view>
+    <view class="footer_btn my_tuan_btn" bindtap="topPageSwitch" data-showindex="1">
+      <image src="{{staticResPathTuan}}new_ilist1.png"></image>
+      <view class="tuan_menu_txt">{{cusTxt.bottomRTxt}}</view>
+      </view>
+  </view>
+  <include src="/pages/template/copyright.wxml"/>
+  <view style="height:100rpx;"></view>
+</view>
+    <!--展示块2-->
+<view id="myTuanListPage" hidden="{{showPageArr[1]}}" class="sTuanPage myTuanListPage">
+  <view class="top_header" style="background-image: url({{staticResPathTuan}}newbg.jpg);" style="display:none;">
+    <view class="nick_img" style="background-image: url({{staticResPathTuan}}nick_img_box.png);">
+      <image src="{{curUser.headimgurl}}"></image>
+    </view>
+    <view class="nick_name">{{curUser.nickName}}</view>
+
+  </view>
+  <view class="swiper-tab">
+    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">全部</view>
+    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">拼团中</view>
+    <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">成功</view>
+    <view wx:if="{{!isNewGb}}" class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="swichNav">已支付</view>
+  </view>
+  <template is="none-auth" data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'拼团',handleType:'进行'}}"></template>
+<swiper wx:if="{{!noAuthInfo}}" current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{1.5*winHeight +71}}px;padding-bottom: 60px;" bindchange="bindChange">
+    <!-- 全部 -->
+    <swiper-item style="">
+      <view class="my_tuan_list_box">
+        <view class="my_tuan_list">
+          <!-- 我的团item -->
+
+          <view class="my_tuan_item_box" wx:for="{{myTuanList}}" wx:key="index">
+            <view class="my_tuan_item status_{{item.relationshipDefine.statu}} {{item.isPayed||(isNewGb&&item.relationshipDefine.statu==2)?'ispayed':''}}">
+              <view class="order_header">
+                <view class="header_left" style="padding: 10rpx 0rpx;">
+                  <view class="start_time" wx:if="{{item.relationshipDefine.sponsorOpenid == curUser.openId}}">发起时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+                  <view class='start_time' wx:else>参与时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+
+                </view>
+
+              </view>
+              <view class="order_body">
+                <view class="goods_img">
+                  <image src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}"></image>
+                  <!-- {{ userImagePath + item.award.awardPic}} -->
+                </view>
+                <view class="goods_info_box">
+                  <view class="goods_name">{{item.award.awardName}}</view>
+                  <view class="goods_price_box">
+                  <span class="tuan_num_box" style="border:1px solid #F95506;">
+                <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+                <span class="tuanpeopleNum" style="color:#F95506">{{item.award.ecExtend.offeredLimitNum}}人拼</span></span>
+                    <span class="goods_price">{{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(item.award.ecExtend.activityPrice)}}</span>
+                    </span>
+                  <view class="order_statu tuan_ing" wx:if="{{0 == item.relationshipDefine.statu}}">还差
+                    <span style="color:#F44;">{{item.award.ecExtend.offeredLimitNum - item.relationshipDefine.joinNum}}人</span>成团</view>
+                  </view>
+                </view>
+              </view>
+
+              <view class="order_footer">
+                <view class="order_btn_box">
+                  <view class="btn_style_2 tuan_info_btn" data-awardId="{{item.relationshipDefine.awardId}}" data-statu="{{item.relationshipDefine.statu}}" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail" >拼团详情</view>
+                  <view class="btn_style_2 tuan_info_btn tuan_share_btn" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail" wx:if="{{0 == item.relationshipDefine.statu}}">召唤伙伴</view>
+                  <view class="btn_style_1 tuan_pay_btn" data-orderno="item.orderNo" data-goodsid="{{item.relationshipDefine.awardId}}" data-reid="{{item.relationshipDefine.relationId}}" data-atyid="{{item.relationshipDefine.activityId}}"  wx:if="{{2 == item.relationshipDefine.statu}}" data-type="{{(false == item.isPayed && !isNewGb)?'pay':'detail'}}" bindtap="goToPayOhterBtn">{{(false == item.isPayed && !isNewGb)?"去支付":"订单详情"}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 我的团item end -->
+        </view>
+      </view>
+    </swiper-item>
+    <!-- 拼团中 -->
+
+    <swiper-item>
+         <view class="my_tuan_list_box">
+        <view class="my_tuan_list" >
+          <!-- 我的团item -->
+          <view class="my_tuan_item_box" wx:for="{{myTuanList}}" wx:key="index">
+              <block wx:if="{{item.relationshipDefine.statu===0}}">
+                  <view class="my_tuan_item status_{{item.relationshipDefine.statu}} {{item.isPayed?'ispayed':''}}" wx:if="{{(isNewGb?item.isPayed:!item.isPayed) && !item.isSaleOut&& item.isSponsor}}">
+                      <view class="order_header">
+                          <view class="header_left" style="padding: 10rpx 0rpx;">
+                              <view class="start_time" wx:if="{{item.relationshipDefine.sponsorOpenid == curUser.openId}}">发起时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+                              <view class='start_time' wx:else>参与时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+
+                          </view>
+
+                      </view>
+                      <view class="order_body">
+                          <view class="goods_img">
+                              <image src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}"></image>
+                              <!-- {{ userImagePath + item.award.awardPic}} -->
+
+                          </view>
+                          <view class="goods_info_box">
+                              <view class="goods_name">{{item.award.awardName}}</view>
+                              <view class="goods_price_box">
+                    <span class="tuan_num_box" style="border:1px solid #F95506;">
+                      <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+                      <span class="tuanpeopleNum" style="color:#F95506">{{item.award.ecExtend.offeredLimitNum}}人拼</span>
+                    </span>
+                                  <span class="goods_price">{{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(item.award.ecExtend.activityPrice)}}</span>
+                    </span>
+                                  <view class="order_statu tuan_ing" wx:if="{{0 == item.relationshipDefine.statu}}">还差
+                                      <span style="color:#F44;">{{item.award.ecExtend.offeredLimitNum - item.relationshipDefine.joinNum}}人</span>成团</view>
+                              </view>
+                          </view>
+                      </view>
+
+                      <view class="order_footer">
+                          <view class="order_btn_box">
+                              <view class="btn_style_2 tuan_info_btn" data-awardId="{{item.relationshipDefine.awardId}}" data-statu="{{item.relationshipDefine.statu}}" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail" >拼团详情</view>
+                              <view class="btn_style_2 tuan_info_btn tuan_share_btn" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail" wx:if="{{0 == item.relationshipDefine.statu}}">召唤伙伴</view>
+                          </view>
+                      </view>
+                  </view>
+              </block>
+          </view>
+          <!-- 我的团item end -->
+        </view>
+      </view>
+    </swiper-item>
+    <!-- 成功 -->
+    <swiper-item>
+        <view class="my_tuan_list_box">
+        <view class="my_tuan_list" >
+          <!-- 我的团item -->
+
+          <view class="my_tuan_item_box" wx:for="{{myTuanList}}" wx:key="index">
+              <block wx:if="{{item.relationshipDefine.statu===2}}">
+                  <view class="my_tuan_item status_{{item.relationshipDefine.statu}} {{(item.isPayed || isNewGb)?'ispayed':''}}" wx:if="{{isNewGb?item.relationshipDefine.statu==2:item.isPayed}}">
+                      <view class="order_header">
+                          <view class="header_left" style="padding: 10rpx 0rpx;">
+                              <view class="start_time" wx:if="{{item.relationshipDefine.sponsorOpenid == curUser.openId}}">发起时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+                              <view class='start_time' wx:else>参与时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+
+                          </view>
+
+                      </view>
+                      <view class="order_body">
+                          <view class="goods_img">
+                              <image src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}"></image>
+                              <!-- {{ userImagePath + item.award.awardPic}} -->
+
+                          </view>
+                          <view class="goods_info_box">
+                              <view class="goods_name">{{item.award.awardName}}</view>
+                              <view class="goods_price_box">
+                  <span class="tuan_num_box" style="border:1px solid #F95506;">
+                <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+                <span class="tuanpeopleNum" style="color:#F95506">{{item.award.ecExtend.offeredLimitNum}}人拼</span></span>
+                                  <span class="goods_price">{{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(item.award.ecExtend.activityPrice)}}</span>
+                    </span>
+
+                              </view>
+                          </view>
+                      </view>
+
+                      <view class="order_footer">
+                          <view class="order_btn_box">
+                              <view class="btn_style_2 tuan_info_btn" data-awardId="{{item.relationshipDefine.awardId}}" data-awardId="{{item.relationshipDefine.awardId}}" data-statu="{{item.relationshipDefine.statu}}" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail" >拼团详情</view>
+                              <view class="btn_style_1 tuan_pay_btn" data-orderno="item.orderNo" data-goodsid="{{item.award.id}}" data-reid="{{item.relationId}}" data-atyid="{{item.relationshipDefine.activityId}}"  wx:if="{{2 == item.relationshipDefine.statu}}" bindtap="goToPayOhterBtn">{{(false == item.isPayed && !isNewGb)?"去支付":"订单详情"}}</view>
+                          </view>
+                      </view>
+                  </view>
+              </block>
+          </view>
+          <!-- 我的团item end -->
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+       <view class="my_tuan_list_box">
+        <view class="my_tuan_list" >
+          <!-- 我的团item -->
+
+          <view class="my_tuan_item_box" wx:for="{{myTuanList}}" wx:key="index">
+            <view class="my_tuan_item status_{{item.relationshipDefine.statu}} {{item.isPayed?'ispayed':''}}" wx:if="{{item.isPayed && !item.isSaleOut}}">
+              <view class="order_header">
+                <view class="header_left" style="padding: 10rpx 0rpx;">
+                  <view class="start_time" wx:if="{{item.relationshipDefine.sponsorOpenid == curUser.openId}}">发起时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+                  <view class='start_time' wx:else>参与时间:<span class="order_time">{{item.relationshipDefine.createTime}}</span></view>
+
+                </view>
+
+              </view>
+              <view class="order_body">
+                <view class="goods_img">
+                  <image src="{{mTool.specUrl(extConfig,userImagePath,item.award.awardPic)}}"></image>
+                  <!-- {{ userImagePath + item.award.awardPic}} -->
+
+                </view>
+                <view class="goods_info_box">
+                  <view class="goods_name">{{item.award.awardName}}</view>
+                  <view class="goods_price_box">
+                  <span class="tuan_num_box" style="border:1px solid #F95506;">
+                <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+                <span class="tuanpeopleNum" style="color:#F95506">{{item.award.ecExtend.offeredLimitNum}}人拼</span></span>
+                    <span class="goods_price">{{app.globalData.currencySymbol}}
+                      <span>{{mTool.fToY(item.award.ecExtend.activityPrice)}}</span>
+                    </span>
+
+                  </view>
+                </view>
+              </view>
+
+              <view class="order_footer">
+                <view class="order_btn_box">
+                  <view class="btn_style_2 tuan_info_btn" data-statu="{{item.relationshipDefine.statu}}" data-reid="{{item.relationshipDefine.relationId}}" bindtap="queryTuanDetail" >拼团详情</view>
+                  <view class="btn_style_1 tuan_pay_btn" data-orderno="item.orderNo" data-goodsid="{{item.award.id}}" data-reid="{{item.relationId}}" data-atyid="{{item.relationshipDefine.activityId}}"  wx:if="{{2 == item.relationshipDefine.statu}}" bindtap="goToPayOhterBtn">{{false == item.isPayed?"去支付":"订单详情"}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 我的团item end -->
+        </view>
+      </view>
+
+    </swiper-item>
+</swiper>
+
+  <!-- <view class="nodata"><image src="{{staticResPathTuan}}newbg.jpg"></image></view> -->
+  <view class="top_activityRulesBtn" style="display: none;"></view>
+  <a href="javascript:;" class="top_findShoperBtn" style="display:none;"></a>
+  <!-- <view class="top_myOrderBtn"></view> -->
+  <view class="footer_btn_box {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}">
+    <view class="footer_btn all_tuan_btn" bindtap="topPageSwitch" data-showindex="0">
+      <image src="{{staticResPathTuan}}new_ituan1.png"></image>
+      <view class="tuan_menu_txt">{{cusTxt.bottomLTxt}}</view>
+      </view>
+    <view class="footer_btn my_tuan_btn" bindtap="topPageSwitch" data-showindex="1">
+      <image src="{{staticResPathTuan}}new_ilist2.png"></image>
+      <view class="tuan_menu_txt" style='color:#e93b3d'>{{cusTxt.bottomRTxt}}</view>
+      </view>
+  </view>
+</view>
+
+    <!-- 展示块3 -->
+<scroll-view id="goodsDetailPage"  hidden="{{showPageArr[2]}}" class="sTuanPage goodsDetailPage" scroll-y="{{true}}">
+  <view class="top_bgMusicBtn"></view>
+  <view class="tuan_detail_wrapper">
+    <!-- <view class="comeBack_btn" data-showindex="0" bindtap="topPageSwitch">
+      <image src="{{staticResPathTuan}}btn_return.png"></image>
+    </view> -->
+    <view class="tuan_wrapper">
+      <view class="wrapBanner">
+        <view class="tuan_soldout_mask">
+          <view></view>
+        </view>
+        <view class="tuan_goods_person">
+          <view class="tuan_person_list">
+            <!-- <view class="tuan_person_item">
+							<img src="{{staticResPathTuan}}ilist2.png">
+							<view class="tuan_person_text">兰陵君正在拼这个商品</view>
+						</view> -->
+          </view>
+        </view>
+        <swiper class="swiper" id="detailSlide" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{1000}}" id="indexSlide">
+          <block wx:for="{{goodsDetailInfo.goodsSlider }}" wx:key="index">
+            <swiper-item>
+              <image mode="widthFix" src="{{mTool.specUrl(extConfig,userImagePath,item,480)}}" class="slide-image" />
+              <!-- {{userImagePath + item}} -->
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+      <view class="price_info_box" style="background-image:-webkit-linear-gradient(left, #f94c00, #fcc04e 80%);background-image:linear-gradient(left, #f94c00, #fcc04e 80%)">
+        <view class="price_info">
+
+        <span class="tuan_num_box">
+            <image style='width:32rpx;height:32rpx;' src="{{staticResPath}}/image/user.png"></image>
+            <span class="tuanpeopleNum">{{goodsDetailInfo.offeredLimitNum}}人拼</span></span>
+
+          <view class="goods_price">
+            <span wx:if="{{!goodsDetailInfo.switchLeadPrice || 0 < goodsDetailInfo.membersNum}}" class="goodsPriceVal">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+            <span wx:if="{{goodsDetailInfo.switchLeadPrice && 0 == goodsDetailInfo.membersNum}}" class="goodsPriceVal">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.leaderPrice)}}</span>
+          </view>
+          <view class="actual_price_box">
+            <view class="actual_price">
+              <span class="actualPriceVal">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.originalPrice)}}</span>
+            </view>
+
+          </view>
+        </view>
+        <view class="act_countDown_box">
+          <view class="act_time_name">{{atyStatusTxt}}</view>
+          <view class="countDown_time">
+            <span class="timer_day timer_box">{{atyTimeShutDown.timerDay}}</span><span class="split">天</span>
+            <span class="timer_box timer_hour">{{atyTimeShutDown.timerHour}}</span><span class="split">:</span>
+            <span class="timer_box timer_minute">{{atyTimeShutDown.timerMinute}}</span><span class="split">:</span>
+            <span class="timer_box timer_second">{{atyTimeShutDown.timerSecond}}</span>
+          </view>
+        </view>
+      </view>
+      <view class="goods_name_box">
+        <view class="show_goods_name">
+           {{goodsDetailInfo.awardName}}
+        </view>
+        <view class="goods_limit_box">
+          <span wx:if="{{goodsDetailInfo.limitBuy != -1}}">#每人限购
+            <span class="goodsLimitNum">{{goodsDetailInfo.limitBuy}}</span>{{goodsDetailInfo.unit || "件"}}#</span>
+          <span wx:else>#每人不限购#</span>
+          <span class="left_repertory_box">库存仅剩：
+            <span class="left_repertory_num">{{goodsDetailInfo.sendNum}}</span> {{goodsDetailInfo.unit || "件"}}</span>
+        </view>
+
+      </view>
+
+      <view class="tuan_statu_box" id="tuan_statu_box" hidden="{{!tuanStatuHeader[0]}}">
+        <view class="tuan_statu_header statu_sTuan_will" hidden="{{tuanStatuHeader[0]}}">
+          <view class="title">暂未拼团</view>
+          <view class="context">点击“{{cusTxt.detailBottomRTxt}}”，即有机会享受拼团价优惠</view>
+        </view>
+        <view class="tuan_statu_header statu_sTuan_limitBuy" hidden="{{tuanStatuHeader[1]}}">
+          <view class="title">该商品已达到限购数量</view>
+          <view class="context">该商品限购
+            <span class="limitBuyVal">1</span>{{goodsDetailInfo.unit || "件"}}，请在“我的订单”中查看</view>
+        </view>
+        <view class="tuan_statu_header statu_sTuan_manyuan" hidden="{{tuanStatuHeader[2]}}">
+          <view class="title">该团已满员</view>
+          <view class="context">你可以发起拼团当团长哦~更多宝贝等你拼</view>
+        </view>
+        <view id="statu_sTuan_ing" class="tuan_statu_header statu_sTuan_ing" hidden="{{tuanStatuHeader[3]}}">
+          <view class="title">还差<span class="leftPeopleNum" style="color: #ed3254;">{{goodsDetailInfo.offeredLimitNum - goodsDetailInfo.membersNum}}</span>人拼团成功，快叫小伙伴参团吧
+            </view>
+          <view class="context" style="margin-top:0.2rem;">数量有限，先到先得。{{clock}}后结束</view>
+        </view>
+        <view class="tuan_statu_header statu_sTuan_finish" hidden="{{tuanStatuHeader[4]}}">
+          <view class="title">
+            <image src="{{staticResPathTuan}}yes_icon_green.png"></image>团长人气太高，已经拼团成功啦</view>
+          <view class="context">数量有限，先到先得。请立即购买</view>
+        </view>
+        <view class="tuan_statu_body" hidden="{{0 == goodsDetailInfo.membersNum}}">
+          <view class="nick_img_list">
+            <view class="nick_img_list_box" >
+              <view class="nick_img_item {{index == 0 ?'leader_img_item' : ''}}" wx:for="{{goodsDetailInfo.members}}" wx:key="index">
+                <view class="item_img">
+                  <image src="{{item.headPic}}" wx:if="{{item.headPic}}"></image>
+                  <image src="{{staticResPathTuan}}nick_img.png" wx:else></image>
+                </view>
+                <view class="leader_tips" wx:if="{{0 == index}}">团长</view>
+              </view>
+
+
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="tuan_title_v2">
+          <span>拼团玩法</span>
+          <view class='link' bindtap="showMustKnowPage">详细规则<text class="zan-icon zan-icon-arrow"></text></view>
+
+      </view>
+      <view class="tuan_rulev2">
+
+        <view class='tuan_rulev2_item'>
+          <span>①开团/参团</span>
+        </view>
+        <view class='tuan_rulev2_arrow'><text class="zan-icon zan-icon-arrow"></text></view>
+        <view class='tuan_rulev2_item'>
+          <span>②召唤伙伴</span>
+        </view>
+        <view class='tuan_rulev2_arrow'><text class="zan-icon zan-icon-arrow"></text></view>
+        <view class='tuan_rulev2_item'>
+          <span>③满员发货</span>
+        </view>
+
+      </view>
+      <view class="tuan_title_v2" style='margin-top:20rpx;'>
+          <span>商品详情</span>
+      </view>
+      <view class="goods_detail_box">
+        <view class="goods_detail_body commonBody">
+          <view class="goods_detail_wrapper">
+            <!-- <template is="wxParse" data="{{wxParseData:article.nodes}}"/> -->
+            <rich-text nodes="{{goodsDetailInfo.description}}" type="text"></rich-text>
+          </view>
+          <view class="goods_detail_footer">
+            <!-- <img class="official_qrcode" src=""> -->
+          </view>
+        </view>
+      </view>
+      <!-- <view class="company_detail_box">
+        <view class="company_detail_header">
+          <view class="left_line">
+            <image src="{{staticResPathTuan}}dot_left.png"></image>
+          </view>
+          <view class="center_title companyNameVal">深圳花儿绽放网络科技</view>
+          <view class="left_line right_line">
+            <image src="{{staticResPathTuan}}dot_left.png"></image>
+          </view>
+        </view>
+        <view class="company_detail_body commonBody">
+          <view class="company_jianjie_box">
+            <view class="companyJianjieVal">基于大数据的社会化营销解决方案，助你开启营销新时代。</view>
+          </view>
+          <view class="company_linkWay_box">
+            <view class="company_tel_box">联系方式：
+              <span class="companyTelVal">400-7888-925</span>
+            </view>
+            <view class="company_addr_box">地址：
+              <span class="companyAddrVal">广东省南山区高新园迈科龙10楼</span>
+            </view>
+          </view>
+        </view>
+      </view> -->
+    </view>
+  </view>
+
+  <!-- <view class="joinTuansucBox">
+		<view class="joinTuansuc startSucBox">
+			<p><image src="{{staticResPathTuan}}yes_icon_green.png"></image> 开团成功</p>
+			<p>赶快叫小伙伴参团吧</p>
+		</view>
+		<view class="joinTuansuc helpSucBox"><p><image src="{{staticResPathTuan}}yes_icon_green.png"></image>参团成功</p></view>
+	</view> -->
+
+  <view style="height:105rpx;"></view>
+</scroll-view>
+  <!-- 展示块3 -->
+<view class='goodsDetailPage' hidden="{{showPageArr[2]}}">
+     <view class="tuan_btn_box">
+
+    <view class="tuan_statu_btn_wrap" style="padding-bottom: {{app.globalData.isIPhoneX ? '40rpx':''}}" hidden="{{tuanStatuBtn[0]}}">
+      <!-- 没有拼团的时候 -->
+      <view class="tuan_statu_btn tuan_will_btn">
+      <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+           </view>
+          <view class="btn_bottom_text">拼团首页</view>
+        </view>
+        <button class='contact_btn' open-type='contact'>
+        <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+          </view>
+          <view class="btn_bottom_text">联系卖家</view>
+        </view>
+        </button>
+        <view class="left_btn buy_self_btn" style='background:#FF8C42;color:white;' bindtap="originPriceBuy">
+          <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+            <span class="act_price actPriceVal">{{mTool.fToY(goodsDetailInfo.originalPrice)}}</span>
+          </view>
+          <view class="btn_bottom_text2">单独购买</view>
+        </view>
+        <form class="right_btn buy_tuan_btn formSubStart" >
+          <button data-goodsid="{{goodsDetailInfo.id}}" class="subStart" bindtap="startTuan"  >
+              <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+                <span wx:if="{{!goodsDetailInfo.switchLeadPrice}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+                <span wx:if="{{goodsDetailInfo.switchLeadPrice}}" class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.leaderPrice)}}</span>
+              </view>
+              <view class="btn_bottom_text2">{{cusTxt.detailBottomRTxt}}</view>
+          </button>
+        </form>
+      </view>
+    </view>
+
+    <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[1]}}">
+      <!-- 自己拼团中的时候 -->
+      <view class="tuan_statu_btn tuan_self_btn">
+      <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+           </view>
+          <view class="btn_bottom_text">拼团首页</view>
+        </view>
+        <button class='contact_btn' open-type='contact'>
+        <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+          </view>
+          <view class="btn_bottom_text">联系卖家</view>
+        </view>
+        </button>
+        <view class="left_btn buy_self_btn" style='background:#FF8C42;color:white;' bindtap="originPriceBuy" wx:if="{{!isNewGb}}">
+          <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+            <span class="act_price actPriceVal">{{mTool.fToY(goodsDetailInfo.originalPrice)}}</span>
+          </view>
+          <view class="btn_bottom_text2">单独购买</view>
+        </view>
+        <view class="right_btn ">
+          <button bindtap='showShareMasks' class="subStart imgShare">
+            <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+              <span class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+            </view>
+            <view class="btn_bottom_text2">请伙伴参团</view>
+          </button>
+        </view>
+      </view>
+    </view>
+     <!-- 生成海报  -->
+  <view class="shareMask" hidden='{{showShareMask}}'>
+	<view class="shareMask-body">
+		<view class="shareMask-middle">
+			<view class="shareMask-icon" data-goodsid="{{goodsDetailInfo.id}}">
+				<button open-type="share" style="background:#fff">
+					<image class="shareMask-img" src="{{staticResPathBargain}}icon-wx.png">
+						<div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}icon-wx.png&quot;);"></div><span></span></image>
+				</button>
+				<view class="shareMask-txt">
+					<view>召唤伙伴一起拼</view>
+				</view>
+			</view>
+			<form class="shareMask-icon"  data-goodsid="{{goodsDetailInfo.id}}" bindtap="shareByQRCode" report-submit="" wx:if="{{0 == shareType}}"><span><button class="button-reset" form-type="submit"><view class="shareFormFlex"><image class="shareMask-img" src="{{staticResPathBargain}}icon-ps.png"><div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}/icon-ps.png&quot;);"></div><span></span></image>
+				<view class="shareMask-txt">
+					<view>生成海报图</view>
+				</view>
+		</view>
+		</button>
+		</span>
+		</form>
+	</view>
+	<view class="shareMask-confirm" bindtap='hideShareMasks'>取消</view>
+</view>
+</view>
+    <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[2]}}">
+      <!-- 朋友成功进团后看到的 -->
+      <view class="tuan_statu_btn tuan_friendSelf_btn">
+      <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+           </view>
+          <view class="btn_bottom_text">拼团首页</view>
+        </view>
+        <button class='contact_btn' open-type='contact'>
+          <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+          </view>
+            <view class="btn_bottom_text">联系卖家</view>
+          </view>
+        </button>
+        <view class="left_btn more_goods_btn" style="" bindtap="topPageSwitch" data-showindex="0">
+          <view>更多优惠</view>
+        </view>
+        <view class="right_btn ">
+          <button bindtap='showShareMasks' class="subStart imgShare">
+            <view class="tuan_price_box">{{app.globalData.currencySymbol}}
+              <span class="tuan_price tuanPriceVal">{{mTool.fToY(goodsDetailInfo.activityPrice)}}</span>
+            </view>
+            <view class="btn_bottom_text2">请伙伴参团</view>
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[3]}}">
+      <!-- 朋友可以进团看到的 -->
+      <view class="tuan_statu_btn tuan_canyu_btn">
+        <view class="right_btn  buy_canyu_btn" bindtap="helpTuan">
+          <view>马上参团</view>
+        </view>
+        <view class="left_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">
+          <view>更多优惠</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[4]}}">
+      <!-- 朋友进来人数已满 -->
+        <view class="tuan_statu_btn tuan_finish_btn">
+            <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+                <view class="act_price_box">
+                    <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+                </view>
+                <view class="btn_bottom_text">拼团首页</view>
+            </view>
+            <button class='contact_btn' open-type='contact'>
+                <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+                    <view class="act_price_box">
+                        <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+                    </view>
+                    <view class="btn_bottom_text">联系卖家</view>
+                </view>
+            </button>
+            <view class="right_btn center_btn buy_now_btn" style='width:64%' bindtap="topPageSwitch" data-showindex="0">
+                <view>更多优惠</view>
+            </view>
+            <!-- <view class="right_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">
+              <view>更多优惠</view>
+            </view> -->
+        </view>
+      <!--<view class="tuan_statu_btn tuan_manyuan_btn" bindtap="topPageSwitch" data-showindex="0">-->
+          <!--<view>更多优惠</view>-->
+        <!--&lt;!&ndash; <view class="right_btn more_goods_btn">-->
+          <!--<view>我要当团长</view>-->
+        <!--</view> &ndash;&gt;-->
+      <!--</view>-->
+    </view>
+
+    <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[5]}}">
+      <!-- 拼团成功 -->
+      <view class="tuan_statu_btn tuan_finish_btn">
+        <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+           </view>
+          <view class="btn_bottom_text">拼团首页</view>
+        </view>
+        <button class='contact_btn' open-type='contact'>
+        <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+          <view class="act_price_box">
+           <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+          </view>
+          <view class="btn_bottom_text">联系卖家</view>
+        </view>
+        </button>
+        <view class="right_btn center_btn buy_now_btn" style='width:64%' bindtap="goToPay">
+          <view>立即购买</view>
+        </view>
+        <!-- <view class="right_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">
+          <view>更多优惠</view>
+        </view> -->
+      </view>
+    </view>
+
+    <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[6]}}">
+      <!-- 拼团商品无库存 -->
+      <view class="tuan_statu_btn tuan_soldOut_btn">
+          <view class="tuan_statu_btn tuan_finish_btn">
+              <view class="left_btn buy_self_btn home_btn" style='width:240rpx;' bindtap="topPageSwitch" data-showindex="0">
+                  <view class="act_price_box">
+                      <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/home.png"></image>
+                  </view>
+                  <view class="btn_bottom_text">拼团首页</view>
+              </view>
+              <button class='contact_btn' open-type='contact'>
+                  <view class="left_btn buy_self_btn" style='width:130rpx;' bindtap="originPriceBuy">
+                      <view class="act_price_box">
+                          <image style='width:50rpx;height:50rpx;' src="{{staticResPath}}/image/mobile/message.png"></image>
+                      </view>
+                      <view class="btn_bottom_text">联系卖家</view>
+                  </view>
+              </button>
+              <view class="right_btn center_btn buy_now_btn" style='width:64%' bindtap="topPageSwitch" data-showindex="0">
+                  <view>更多优惠</view>
+              </view>
+              <!-- <view class="right_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">
+                <view>更多优惠</view>
+              </view> -->
+          </view>
+        <!--<view class="center_btn more_goods_btn" bindtap="topPageSwitch" data-showindex="0">-->
+          <!--<view>更多拼团优惠</view>-->
+        <!--</view>-->
+      </view>
+    </view>
+
+    <view class="tuan_statu_btn_wrap" hidden="{{tuanStatuBtn[7]}}">
+      <view class="tuan_statu_btn tuan_actEnded_btn">
+        <view class="center_btn act_ended_btn">
+          <view>活动已结束</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>
+
+    <!-- 展示块4-->
+<view class="payPage payDetail sTuanPage" id="payDetail" hidden="{{showPageArr[3]}}">
+  <view class="nav">
+    <span class="top_title">订单详情</span>
+  </view>
+  <view class="order_info_wrapper">
+    <view class="order_info_box">
+      <view class="line_block_style"></view>
+      <view class="tuan_view_module tuan_orderDetail_view">
+        <view class="order_finish_header" style="background-image: url({{staticResPathTuan}}order_bg1.png);">
+          <image src="{{staticResPathTuan}}yes_icon.png"></image>
+          <span class="orderFinishDesc">完成</span>
+          <view>请联系商家跟踪商品状态</view>
+        </view>
+      </view>
+      <view class="addAddress" style="">
+        <image src="{{staticResPathTuan}}addr_icon.png"></image>
+        <view class="orderInfoWrap">
+          <view>
+            <text>收货人：</text>
+            <text class="orderName">{{OdDetailPage.activityPayOrder.extend.name}}</text>
+            <text class="orderPhone">{{OdDetailPage.activityPayOrder.extend.tel}}</text>
+          </view>
+          <view class="orderAddrWrap">
+            <text>收货地址：</text>
+            <text class="orderAddr">{{OdDetailPage.activityPayOrder.extend.address}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="odGoodsInfo">
+        <view class="wrapShop" style="">
+          <image class="tuan_shop_logo" src="{{staticResPathTuan}}shop_icon.png"></image>
+          <text class="shopName">有娱旗舰店</text>
+        </view>
+        <view class="odSummary">
+          <view class="goodsImg">
+            <image class="goodsImgVal" src="{{staticResPathTuan}}note8_11.png"></image>
+          </view>
+          <view class="odDesc">
+            <span class="goodsNameVal">{{OdDetailPage.activityPayOrder.goodsName}}</span>
+            <view class="">
+              <span class="nowPrice">{{app.globalData.currencySymbol}}
+                <span class="tuanPriceVal">{{mTool.fToY(OdDetailPage.activityPayOrder.orderAmount)}}</span>
+              </span>
+              <span class="oldPrice">{{app.globalData.currencySymbol}}
+                <span class="actPriceVal">{{mTool.fToY(OdDetailPage.activityPayOrder.originalPrice)}}</span>
+              </span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="line_block_style"></view>
+      <view class="otherThings">
+        <view class="otItem">
+          <span>配送方式：</span>
+          <span class="tuan_peisong_style">包邮</span>
+        </view>
+        <view class="otItem" style="display: none;">
+          <span>兑奖须知：</span>
+          <span class="getPrize_mustKonw">退货请联系商家</span>
+        </view>
+        <view class="otItem">
+          <span>买家留言：</span>
+          <span class="buyerMsg">{{OdDetailPage.activityPayOrder.extend.msg}}</span>
+        </view>
+      </view>
+      <view class="tuan_view_module tuan_orderDetail_view tuanOrderInfoWrap">
+        <view class="order_num_box">订单编号：
+          <span class="order_num">{{OdDetailPage.activityPayOrder.orderNo}}</span>
+        </view>
+        <view class="order_time_box">下单时间：
+          <span class="order_time">{{OdDetailPage.activityPayOrder.orderTime}}</span>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tuan_view_module tuan_orderDetail_view orderDetailBtnWrap">
+    <view class="footer_btn_box {{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' }}">
+      <view class="footer_btn all_tuan_btn" bindtap="topPageSwitch" data-showindex="0">
+        <image src="{{staticResPathTuan}}icon_tag.png"></image>{{cusTxt.bottomLTxt}}
+      </view>
+      <view class="footer_btn my_tuan_btn" bindtap="topPageSwitch" data-showindex="1">
+        <image src="{{staticResPathTuan}}icon_tuan.png"></image>{{cusTxt.bottomRTxt}}</view>
+      <view class="line"></view>
+    </view>
+  </view>
+  <view style="height:105rpx;"></view>
+</view>
+
+<view id="mustKnowPage" hidden="{{mustKnowPage}}" class="sTuanPage mustKnowPage">
+  <view class="musk_know_box">
+    <view class="musk_know" style="background-image:url({{staticResPathTuan}}tuan_tips_box.png)">
+      <view class="musk_know_detail_box">
+        <view class="musk_know_detail">
+          <rich-text nodes="{{mTool.htmlEncode(activity.rule)}}" type="text"></rich-text>
+        </view>
+      </view>
+    </view>
+    <view class="close_btn" bindtap="hideMustKnowPage" style="background-image:url({{staticResPathTuan}}btn_close_icon.png)"></view>
+  </view>
+</view>
+<!-- <view id="showHelpPersonPage" hidden="{{showPageArr[3]}}" class="sTuanPage showHelpPersonPage">
+  <view class="help_person_box">
+    <view class="help_person_title">拼团提示</view>
+    <view class="help_person_list">
+      <view class="help_person_item">
+		<view class="help_person_img"><img src="{{staticResPathTuan}}note8_11.png"></view>
+		<view class="help_person_text"></view>
+	  </view>
+    </view>
+  </view>
+</view> -->
+<view id="shareActPage" hidden="{{!showSharePage}}" class="sTuanPage shareActPage" bindtap="hideShareActPage">
+  <view class="share_style_box share_style_link" hidden="{{!isTxtShare}}">
+    <view class="img_box">
+      <image src="{{staticResPathTuan}}share_icon.png"></image>
+    </view>
+    <view class="shareDesc">宝贝库存正在急剧减少</view>
+    <view class="shareDesc">还差
+      <span class="mustPeopleNum">4</span>人满员，</view>
+    <view class="shareDesc">赶紧叫小伙伴来参团吧~</view>
+  </view>
+  <view class="share_style_box share_style_picture" style="text-align: center;margin-top: 3rem;" hidden="{{isTxtShare}}">
+    <view style="color: #fff; font-size: 0.6rem; margin-bottom: 0.2rem;text-align:center;">长按保存图片，叫小伙伴参团</view>
+    <!-- TODO:画qrcode海报 -->
+    <view class="cvsParent">
+      <canvas id="shareCanvas" style="display:none;"></canvas>
+    </view>
+    <view id="shareview" style="display:none;">
+    </view>
+    <image id="shareImgBargain" src="" alt=""></image>
+  </view>
+</view>
+
+    <!-- 订单展示块 -->
+<view class="completeOD sTuanPage myOrderPage" id="myOrderPage" hidden="{{!showMyOrderPage}}">
+  <view class="wrapCompleteODBG">
+    <view class="completeODBG" style="background-image: url({{staticResPathTuan}}my_order_box.png);">
+      <view class="completeODList">
+        <view class="completeODitem" bindtap="queryOdDetail" data-orderno="{{item.orderNo}}" wx:for="{{myOrderListPayed}}" wx:key="index">
+          <view class="completeODitemTop">
+            <view class="completeODImg">
+              <image src="{{mTool.specUrl(extConfig,userImagePath,item.extend.awardPic)}}"></image>
+            </view>
+            <view class="completeODInfo">
+              <view class="completeODName">{{item.goodsName}}</view>
+              <view class="completeODNo">订单编号：{{item.orderNo}}</view>
+              <view class="completeODTime">{{item.orderTime}}</view>
+            </view>
+            <image class="completeODLogo" src="{{staticResPathTuan}}statu_finish.png"></image>
+          </view>
+          <view class="completeODitemBottom">
+            <span class="completeODPriceDesc">实付款：</span>
+            <span class="completeODPrice">{{app.globalData.currencySymbol}}{{mTool.fToY(item.orderAmount)}}</span>
+          </view>
+        </view>
+      </view>
+      <view class="completeODListEmpty" style="display:none;">您暂时没已完成订单哦~</view>
+    </view>
+  </view>
+  <view style="text-align:center;">
+    <image bindtap="hideMyOrderPage" class="completeODClose" src="{{staticResPathTuan}}/btn_close_icon.png"></image>
+  </view>
+</view>
+
+    <!-- 返回块 -->
+<view wx:if="{{returnIndex}}" class="fixedhome sub-color" style="{{app.globalData.customSubColor}}" bindtap='backToHome'><view class="zan-icon zan-icon-home sub-color"></view></view>
+</view>
+<!--<template is="zan-toast" data="{{app, zanToast }}"></template>-->
+<include src="/pages/template/authModal.wxml"/>
+<!-- <view class="topbar_tuanActEnded">
+  活动已结束，当前仅供预览，将不能进行拼团活动
+</view> -->

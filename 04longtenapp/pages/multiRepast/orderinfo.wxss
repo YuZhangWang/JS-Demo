@@ -1,0 +1,172 @@
+/* orderinfo.wxss */
+@import "orderReceive.wxss";
+@charset "UTF-8";
+
+page {
+    font-size: 28rpx;
+    background-color: #f8f8f8;
+}
+
+.microshop-box{
+    margin-top: 10px;
+}
+
+.order-goods {
+    border-top: solid 1.6rpx #e0e1e3;
+}
+.detail-status{
+    border-bottom: 0.5px solid rgba(204, 204, 204, 0.33);
+    padding: 30rpx;
+    background: #fff;
+    margin-top: 10rpx;
+
+}
+.coupon-item-list{
+    background-color: #fff;
+    margin-bottom: 20rpx;
+}
+
+.coupon-item {
+    padding: 22rpx 48rpx 22rpx 0rpx;
+    position: relative;
+    background-color: #fff;
+    border-bottom:solid 1px #eee;
+    margin-left: 27rpx;
+}
+.coupon-item-list .coupon-item:last-child{
+    border-bottom: 0!important;
+}
+
+.coupon-item .trigger{
+    content:"\020";
+    display:block;
+    width:18px;
+    height:18px;
+    background-image:url("http://res.xcx.weijuju.com/image/mobile/trigger_right.png");
+    background-size:100%;
+    position:absolute;
+    right:10px;
+    top:50%;
+    margin-top:-9px;
+}
+
+.text-black {
+    color: #333;
+    font-size: 28rpx;
+}
+
+.fright {
+     max-width: 60%;
+     float: right;
+ }
+
+.text-black {
+    color: #333;
+    font-size: 28rpx;
+}
+
+.order-goods .enableDepositItem, .order-goods .enablePointsItem{
+    padding-right: 22rpx;
+}
+.order-goods .enableDepositVal, .order-goods .enablePointsVal{
+    margin-right: 10rpx;
+}
+.order-goods .enableDeposit, .order-goods .enablePoints{
+    display: flex;
+    align-items: center;
+    margin-top: -8rpx;
+}
+
+.order-goods .total-money .money_item {
+    height: 50rpx;
+    /* border-bottom: 1rpx solid #E3E3E3; */
+}
+
+.order-goods .total-money .fright {
+    max-width: 60%;
+    float: right;
+}
+
+.order-goods .total-money .count {
+    width:100%;
+    max-width:100%;
+    margin-top:8rpx;
+    text-align:right;
+    font-size:35rpx;
+    line-height:50rpx;
+    border-top:solid 2.16rpx #eee;
+    padding-top:8rpx;
+}
+
+.text-red {
+    color: #f02712;
+    font-size: 28rpx;
+}
+
+.fleft{
+    display: inline-flex;
+    align-items: center;
+
+}
+.fleft .abLftIco{
+    margin-right: 5rpx;
+}
+
+.order-goods .total-money {
+    padding: 15rpx 25rpx 15rpx 27rpx;
+    background-color: #fff;
+}
+
+.order-goods .total-money .fright {
+    max-width: 60%;
+    float: right;
+}
+
+.order-goods .total-money .count {
+    width:100%;
+    max-width:100%;
+    margin-top:8rpx;
+    text-align:right;
+    font-size:35rpx;
+    line-height:50rpx;
+    border-top:solid 2.16rpx #eee;
+    padding-top:8rpx;
+}
+
+.order-btn {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: flex-end;
+    height: 100rpx;
+    background-color: #fff !important;
+    align-items: center;
+}
+
+.bottomRealPay{
+    line-height: 102rpx;
+    margin-right: 10rpx;
+    font-size: 30rpx;
+    /* margin-left: 30rpx; */
+
+}
+
+.order-btn .btn-menu {
+    width: 32%;
+    max-width: 350px;
+    height: 100%;
+    line-height: 100rpx;
+    clear: both;
+    background-color: #EA232E;
+    color: #fff;
+    font-size: 30rpx;
+    text-align: center;
+    /* margin-top: 10rpx; */
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0rpx;
+    border-radius: 0;
+
+}

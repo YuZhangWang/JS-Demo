@@ -1,0 +1,175 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.10.4",
+	"appid": "wx76bce97e0c5ae485",
+	"projectname": "applet-cusmall-wxpage-v12.6c",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "全民拼团",
+					"pathName": "pages/groupbuy/groupbuy",
+					"query": "activityId=B87008AFCE7A4F9889B5B5DB2649F72A",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "新版拼团",
+					"pathName": "pages/groupbuy/groupbuy",
+					"query": "activityId=903B3F99315B44C1ADFE3A2F54A0EF2D",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "阶梯拼团",
+					"pathName": "pages/groupbuy/groupbuyDetail",
+					"query": "activityId=D8E2757DDBE14BDC8FF8ED5D62415069&goodsid=1854",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "预售",
+					"pathName": "pages/presales/presales_detail",
+					"query": "activityId=D1C62C61C02E4B12B3F4423D6853D4BF&goodsid=1868",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "秒杀",
+					"pathName": "pages/sbargain/seckillGoods",
+					"query": "id=9ED0073BB7EA4CA0A376DF720F75C549",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "限时折扣",
+					"pathName": "pages/time_discount/time_discount_goodsdetail",
+					"query": "activityId=FCCCB06836794BD78EB1F62A5419B630&goodsid=1865",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "砍价",
+					"pathName": "pages/sbargain/sbargain",
+					"query": "activityId=BE8792F9A5794D0B94A043BCC2A93489",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "分销产品",
+					"pathName": "pages/commissionGoods/commissionGoods",
+					"query": "keyword=&aId=&aInfo=",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "虚拟商品提交",
+					"pathName": "pages/orderinfo/orderinfo",
+					"query": "id=408358&goodsCount=1",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "pages/giftcard/myGiftCard",
+					"pathName": "pages/giftcard/myGiftCard",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "myGiftCard",
+					"pathName": "pages/giftcard/myGiftCard",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "pages/giftcard/giftcardShare",
+					"pathName": "pages/giftcard/giftcardShare",
+					"query": "id=42&source=share",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/chargeRecord/chargeRecord",
+					"pathName": "pages/chargeRecord/chargeRecord",
+					"query": "id=117",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "giftcard_verify",
+					"pathName": "pages/verify/giftcard_verify",
+					"query": "scene=a904d83d9070f6184aa0a2e4e58677c6",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "myinfo",
+					"pathName": "pages/fenxiao/myInfo",
+					"query": "id=42&source=share",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "myPerformance",
+					"pathName": "pages/fenxiao/myPerformance",
+					"query": "id=42&source=share",
+					"scene": null
+				}
+			]
+		}
+	}
+}

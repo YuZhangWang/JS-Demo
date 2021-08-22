@@ -1,0 +1,172 @@
+<!-- pages/offline/pay.wxml -->
+<import src="/youzan/dist/field/index.wxml"/>
+<import src="/youzan/dist/toast/index.wxml"/>
+<import src="../template/couponlist.wxml"/>
+<import src="../template/cardlist.wxml"/>
+<import src="../template/giftcardlist.wxml"/>
+<import src="../template/noneAuth.wxml"/>
+<import src="../../youzan/dist/switch/index.wxml"/>
+<wxs module="m1">
+    var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+    return Number(money / 100).toFixed(2);
+    } else {
+    return 0;
+    }
+    }
+    var disDiv10 = function(dis) {
+    return parseFloat(dis / 10).toFixed(1);
+    }
+
+    var getCouponPrice = function(coupon, payMoney) {
+    if (2 == coupon.type) {
+    return Number(payMoney - coupon.discount / 100 * payMoney).toFixed(2);
+    } else {
+    return getFixedMoney(coupon.money);
+    }
+    }
+
+    var getPreference=function(coupon,payMoney){
+    if(1==coupon.type){
+    if((coupon.money/100)>=payMoney){
+    return payMoney
+    }else{
+    return coupon.money/100;
+    }
+    }else if(2==coupon.type){
+    return Number(payMoney - coupon.discount / 100 * payMoney);
+    }else if(3==coupon.type){
+    if(((coupon.leastCount/100)>payMoney) || (payMoney=="")){
+    return 0
+    }else{
+    return coupon.money/100
+    }
+    }
+
+    }
+    module.exports.getFixedMoney = getFixedMoney;
+    module.exports.getPreference = getPreference;
+    module.exports.getCouponPrice = getCouponPrice;
+    module.exports.disDiv10 = disDiv10;
+</wxs>
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}" style="background: #f5f7f6;">
+    <view class="container" wx:if="{{payInfo && !noAuthInfo}}" style="display: flex;flex-direction: column;">
+        <!-- 头部块 -->
+        <view style="background: #f5f7f6;">
+            <view class="header">
+                <image class="logo_img" src='{{userImagePath+payInfo.logo}}'></image>
+                <view class="p_txt">{{payInfo.name}}正向您收款</view>
+            </view>
+            <view class="zan-panel money-field" style="margin-left: 40rpx;margin-right: 40rpx;padding: 30rpx 40rpx;border-radius: 20rpx;">
+                <!-- 表单 -->
+                <template class="moneyInput" is="zan-field"
+                          data="{{ mode: 'wrapped', title: app.globalData.currencySymbol, type: 'input', inputType: 'digit', placeholder: '请输入金额' ,componentId:'payMoney'}}"></template>
+                <!-- 优惠券 -->
+                <view class="zan-panel itemBorderBot" wx:if="{{payInfo.coupon}}" style='' bindtap='handleCouponModalOpen'>
+                    <view class="zan-cell zan-cell--access">
+                        <view class="zan-cell__bd">
+                            <text class="cell-text">优惠券</text>
+                            <view wx:if="{{selectedCoupon}}" style='margin:-3px 0 0 5px;font-size: 20rpx;height: 20px;line-height: 20px'
+                                  class="zan-label zan-label--primary zan-label--small zan-label--plain">
+                                已选1张
+                            </view>
+                        </view>
+                        <view class="zan-cell__ft switch-text">
+                            <text wx:if="{{couponList.length == 0 && preferenceCodeList.length==0}}" style="{{app.globalData.customStyleColor}}" class="main-color">无可用优惠券</text>
+                            <text wx:elif="{{!selectedCoupon &&!selectedPreference}}">请选择优惠</text>
+                            <text wx:elif="{{selectedPreference}}">-{{app.globalData.currencySymbol}}{{m1.getPreference(selectedPreference, inputContent.payMoney || 0)}}</text>
+                            <text wx:else>-{{app.globalData.currencySymbol}}{{m1.getCouponPrice(selectedCoupon, inputContent.payMoney || 0)}}</text>
+                        </view>
+                    </view>
+                </view>
+                <!-- 会员卡 -->
+                <view class="zan-panel itemBorderBot" wx:if="{{payInfo.memberCard}}" bindtap='handleCardModalOpen'>
+                    <view class='zan-cell enableItem zan-cell--access'>
+                        <view style='display:inline-block;'>
+                            会员卡
+                            <view wx:if="{{selDiscount}}" style='margin:-3px 0 0 5px;font-size: 20rpx;height: 20px;line-height: 20px'
+                                  class="zan-label zan-label--primary zan-label--small zan-label--plain">
+                                折扣{{m1.disDiv10(selDiscount)}}折
+                            </view>
+                        </view>
+                        <view class="zan-cell__ft switch-text" style='padding-right:13px;'>
+                            <text wx:if="{{cardList.length == 0}}" class="main-color" style="{{app.globalData.customStyleColor}}">无可用会员卡</text>
+                            <text wx:elif="{{selectedCard}}">{{selectedCard.cname}}</text>
+                            <text wx:elif="{{!selectedCard}}">请选择会员卡</text>
+                        </view>
+                    </view>
+                </view>
+                <!-- 礼品卡 -->
+                <view class="zan-panel itemBorderBot" wx:if="{{payInfo.giftCard}}" bindtap='handleGiftCardModalOpen'>
+                    <view class='zan-cell enableItem zan-cell--access'>
+                        <view style='display:inline-block;'>
+                            礼品卡
+                            
+                        </view>
+                        <view class="zan-cell__ft switch-text" style='padding-right:13px;'>
+                            <text wx:if="{{giftcardList.length == 0}}" class="main-color" style="{{app.globalData.customStyleColor}}">无可用礼品卡</text>
+                            <text wx:elif="{{selectedGiftCard}}">{{selectedGiftCard.title}}</text>
+                            <text wx:elif="{{!selectedGiftCard}}">请选择礼品卡</text>
+                        </view>
+                    </view>
+                </view>
+                
+                <view class="zan-panel itemBorderBot" wx:if="{{isIntegralDeduct}}">
+                    <view class="zan-cell zan-cell--access enableItem">
+                        <view style='display:inline-block;'>积分抵扣</view>
+                        <view class="fright enableRow">
+                            <view class="enableVal switch-text">
+                                <text wx:if="{{0 < showPointsPrice}}">{{showPoints}}积分抵{{m1.getFixedMoney(showPointsPrice)}}元</text>
+                            </view>
+                            <template is="zan-switch"
+                                      data="{{app, disabled: enablePointsItemValue , checked : enablePointsChe, componentId: 'switch2',switchType:'switchType'}}"></template>
+                        </view>
+                    </view>
+                </view>
+                <view class="zan-panel itemBorderBot" wx:if="{{isOpenDeposit}}">
+                    <view class="zan-cell zan-cell--access enableDepositItem">
+                        <view style='display:inline-block;'>储值金</view>
+                        <view class="fright enableDeposit">
+                            <view class="enableDepositVal switch-text">
+                                {{app.globalData.currencySymbol}}{{m1.getFixedMoney(enableDeposit)}}
+                            </view>
+                            <template is="zan-switch"
+                                      data="{{app, disabled: enableDepositItemValue , checked : enableDepositChe, componentId: 'switch1',switchType:'switchType' }}"></template>
+                        </view>
+                    </view>
+                </view>
+                <view class="remark_cont itemBorderBot" style="height: 109rpx;">
+                    <view class="zan-cell zan-cell--access" style="padding: 0 !important;">
+                        <view style='display:inline-block;'>备 注</view>
+                        <!-- <input class='remarkInput' placeholder='给对方留言'></input> -->
+                        <template is="zan-field"
+                                  data="{{app, type: 'input',componentId:'remark', placeholder: '给对方留言' }}"></template>
+                    </view>
+                </view>
+
+                <view class="zan-panel botPay">
+                    <view class="zan-btns">
+                        <button bindtap='handlePay' style="height: 95rpx;line-height: 95rpx;border-radius:80rpx;border:none;{{!btnLoading ? app.globalData.customStyleBg:''}}"
+                                class="zan-btn zan-btn--primary {{btnLoading?'zan-btn--loading':'main-color-bg'}}">
+                            确认付款
+                        </button>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <official-account style="flex: none;position: fixed;left: 0;right: 0;bottom: 0;z-index: 8000" wx:if="{{focusOfficial}}"></official-account>
+
+    </view>
+
+    <template is="none-auth"
+              data="{{app,noAuthInfo:noAuthInfo,staticResPath:staticResPath,pageName:'当面付',handleType:'进行'}}"></template>
+    <template is="couponListTpl"
+              data="{{app,scrollTop:scrollTop,showCouponList:showCouponList,couponList:couponList,selectedCoupon:selectedCoupon,staticResPath:staticResPath,preferenceCodeList:preferenceCodeList,userImagePath:userImagePath}}"></template>
+              <template is="giftcardListTpl"
+                  data="{{app,showGiftCardList:showGiftCardList,giftcardList:giftcardList,selectedGiftCard:selectedGiftCard,staticResPath:staticResPath,userImagePath:userImagePath,scrollTop:scrollTop}}"></template>
+    <template is="cardListTpl"
+              data="{{app,showCardList:showCardList,cardList:cardList,selectedCard:selectedCard,staticResPath:staticResPath,userImagePath:userImagePath}}"></template>
+    <template is="zan-toast" data="{{app, zanToast }}"></template>
+    <include src="/pages/template/copyright.wxml"/>
+    <include src="/pages/template/authModal.wxml"/>
+</view>

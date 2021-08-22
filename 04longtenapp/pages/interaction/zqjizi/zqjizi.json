@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "集字抢豪礼",
+  "usingComponents": {
+    "play-ret": "../inteCommon/playRet",
+    "rule-and-award": "../inteCommon/ruleAndAward"
+  }
+}

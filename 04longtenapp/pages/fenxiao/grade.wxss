@@ -1,0 +1,235 @@
+/* pages/fenxiao//grade.wxss */
+
+.page-panel {
+  height: 100%;
+  overflow: auto;
+  background: #f5f5f5;
+  margin: 0;
+}
+
+.page-panel .page-header {
+  height: 234rpx;
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 48rpx 24rpx;
+  box-sizing: border-box;
+  background: #1f1f1f;
+  background-repeat: no-repeat;
+  background-position: 68%;
+  background-size: contain;
+}
+
+.page-header .user-headImg {
+  width: 102rpx;
+  height: 104rpx;
+  border-radius: 100%;
+}
+
+.header-left {
+  display: flex;
+}
+.header-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12rpx;
+  padding: 5rpx;
+  border-radius: 100%;
+  background: #fff;
+
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header .user-nick {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+}
+
+.page-header .user-grade {
+  width: auto;
+  height: 40rpx;
+  border: 1rpx solid rgba(255, 201, 80, 1);
+  background: linear-gradient(103deg, rgba(255, 230, 156, 1) 0%, rgba(255, 203, 89, 1) 73%);
+  border-radius: 20px;
+  /* box-shadow: 0 1rpx 0 0 rgba(255, 235, 156, 1); */
+  padding: 2rpx;
+  /* box-sizing: border-box; *//* border-radius: 18rpx; *//* background: rgba(255, 209, 106, 1); */
+}
+
+.page-header .user-grade view {
+  width: auto;
+  padding: 0 10rpx;
+  height: 36rpx;
+  border: 1px solid rgba(255, 201, 80, 1);
+  box-shadow: 0px 1px 0px 0px rgba(255, 235, 156, 1);
+  border-radius: 18px;
+  font-family: Source Han Sans CN;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: rgba(116, 59, 0, 1);
+  text-shadow: 0 1rpx 0 rgba(252, 236, 174, 1);
+  text-align: center;
+  margin: 0 auto;
+}
+
+.page-panel .header-right {
+  width: 162rpx;
+  height: 43rpx;
+  border: 2rpx solid rgba(254, 229, 199, 1);
+  border-radius: 22rpx;
+  font-size: 22rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: rgba(254, 229, 199, 1);
+  line-height: 43rpx;
+  text-align: center;
+}
+
+.page-body {
+  height: auto;
+  border-radius: 40rpx 40rpx 0 0;
+  margin-top: -40rpx;
+  background: #f5f5f5;
+  padding: 0 27rpx;
+  flex: 1;
+  padding-bottom: 40rpx;
+}
+
+.grade-panel .grade-title, .upgrade-panel .upgrade-title {
+  font-size: 28rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  padding: 31rpx 0 35rpx;
+  line-height: 1;
+}
+
+.grade-title .quiz-icon, .upgrade-title .quiz-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 8rpx;
+  vertical-align: sub;
+}
+
+.grade-panel .grade-body, .upgrade-panel .upgrade-body {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2rpx 22rpx 0 rgba(123, 123, 123, 0.11);
+  border-radius: 40rpx;
+}
+
+.grade-panel .grade-item, .upgrade-panel .upgrade-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(245, 247, 246, 1);
+  padding: 34rpx;
+  overflow: hidden;
+}
+
+.grade-panel .grade-item:last-child, .upgrade-panel .upgrade-item:last-child {
+  border: none;
+}
+
+.grade-panel .grade-item .direct-icon {
+  flex: none;
+  width: 58rpx;
+  height: 54rpx;
+  margin-right: 24rpx;
+}
+
+.grade-panel .grade-item .indirect-icon {
+  flex: none;
+  width: 68rpx;
+  height: 58rpx;
+  margin-right: 24rpx;
+}
+
+.grade-panel .grade-item .grade-text {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Source Han Sans CN;
+}
+
+.grade-text .main-text {
+  font-size: 28rpx;
+  font-family: Source Han Sans CN;
+  color: rgba(51, 51, 51, 1);
+}
+
+.grade-text .sub-text {
+  font-size: 26rpx;
+  color: rgba(56, 56, 56, 1);
+}
+
+.value-text {
+  color: #e9b53d;
+}
+
+.next-value-text {
+  color: #cd8530;
+}
+
+.upgrade-panel .upgrade-image1 {
+  width: 78rpx;
+  height: 88rpx;
+  flex: none;
+}
+
+.upgrade-panel .upgrade-image2 {
+  width: 79rpx;
+  height: 75rpx;
+  flex: none;
+}
+
+.upgrade-panel .upgrade-image3 {
+  width: 78rpx;
+  height: 78rpx;
+  flex: none;
+}
+
+.upgrade-panel .upgrade-image4 {
+  width: 76rpx;
+  height: 78rpx;
+  flex: none;
+}
+
+.upgrade-panel .upgrade-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;
+  font-family: Source Han Sans CN;
+}
+
+.upgrade-text .text-main {
+  font-size: 28rpx;
+  color: rgba(51, 51, 51, 1);
+}
+
+.upgrade-text .text-sub {
+  font-size: 24rpx;
+  color: rgba(184, 184, 184, 1);
+}
+
+.upgrade-panel .upgrade-btn {
+  width: 121rpx;
+  height: 45rpx;
+  border: 2rpx solid #efab53;
+  font-size: 26rpx;
+  font-family: Source Han Sans CN;
+  color: #efab53;
+  border-radius: 23rpx;
+  line-height: 45rpx;
+  text-align: center;
+  white-space: nowrap;
+  padding: 0;
+  flex: none;
+}

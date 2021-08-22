@@ -1,0 +1,60 @@
+<!-- 特权 -->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="page-panel">
+    <view class="page-header" style="background-image: url('{{staticResPath}}/grade-header.png')">
+        <text class="image-title">升级条件</text>
+    </view>
+    <view class="page-body">
+        <view class="privilege-item">
+            <view class="column-head">等级</view>
+            <view class="column-head" wx:if="{{conditionComm}}">
+                <text>累计</text>
+                <text>推广佣金</text>
+            </view>
+            <view class="column-head" wx:if="{{conditionFans}}">
+                <text>累计直</text>
+                <text>接推广粉丝</text>
+            </view>
+            <view class="column-head" wx:if="{{conditionGoods}}">
+                <text>购买</text>
+                <text>指定商品</text>
+            </view>
+            <view class="column-head" wx:if="{{conditionMonetary}}">
+                <text>累计</text>
+                <text>消费金额</text>
+            </view>
+        </view>
+        <view class="privilege-item" wx:for="{{gradeList}}">
+            <view class="column-body">
+                <text class="level-value">V{{item.levelNum}}</text>
+                <text class="level-name">{{item.levelName}}</text>
+            </view>
+            <view class="column-body direct-th" wx:if="{{conditionComm}}">
+                {{app.globalData.currencySymbol}}{{mTool.fToY(item.commissionThreshold || 0)}}
+            </view>
+            <view class="column-head direct-th" wx:if="{{conditionFans || 0}}">
+                {{item.downNodeNumThreshold || 0}}
+            </view>
+            <view class="column-head direct-th" wx:if="{{conditionGoods}}">
+                {{item.goodsName || '--'}}
+            </view>
+            <view class="column-head direct-th" wx:if="{{conditionMonetary}}">
+                {{app.globalData.currencySymbol}}{{mTool.fToY(item.consumeMoneyThreshold || 0)}}
+            </view>
+        </view>
+    </view>
+    <view class="page-footer">
+        <view>
+            <text>·累计推广佣金：</text>即推广员当前累计的推广佣金；
+        </view>
+        <view>
+            <text>·累计直接推广粉丝：</text>即推广员的直接下级；
+        </view>
+        <view>
+            <text>·购买指定商品：</text>即推广员完成指定商品下单；
+        </view>
+        <view>
+            <text>·累计消费金额：</text>即推广员当前累计在该店铺的消费金额。
+        </view>
+    </view>
+</view>

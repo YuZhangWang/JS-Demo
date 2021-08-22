@@ -1,0 +1,85 @@
+@import "./giftcardDetail.wxss";
+.currentWordNumber{
+  font-size: 28rpx;
+  color: #999;
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+
+}
+.gift-card-blessing{
+  position: relative;
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  color: #666;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+  height: 300rpx;
+  width: 100%;
+}
+.user-avtar{
+  width:100rpx;
+  height:100rpx;
+  border-radius:50%;
+}
+
+.gift-blessing-word{
+   display: flex;
+   display: -webkit-flex;
+   align-items: center;
+   padding: 20rpx 0;
+   font-size: 32rpx;
+   color: #333
+
+}
+
+.blessing-content{
+  margin-bottom: 20rpx;
+  min-height: 200rpx;
+  font-size: 28rpx;
+  color: #999;
+  line-height: 50rpx;
+
+}
+.gift-btn{
+  display:flex;
+  display: -webkit-flex;
+  align-items: center;
+}
+.given-title{
+  text-align: center;
+  font-size: 30rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+.given-time{
+  text-align: center;
+  font-size: 28rpx;
+  color: #999;
+}
+.receiveUser{
+  display:flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100rpx;
+}
+.receiveUser .userinfo{
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+}
+.userinfo text{
+  padding-left: 15rpx;
+}
+.receiveInfo-time{
+   font-size: 28rpx;
+   color: #999;
+}
+.receiveInfo-state{
+   font-size: 32rpx;
+   color: #999;
+   text-align: right;
+   margin-bottom: 10rpx;
+
+}

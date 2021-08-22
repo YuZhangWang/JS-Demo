@@ -1,0 +1,11 @@
+page {
+  background-color: rgba(245, 245, 245, 1);
+  box-sizing: border-box;
+  padding: 20rpx;
+}
+
+.main {
+  background-color: #fff;
+  padding: 50rpx;
+  font-size: 30rpx;
+}

@@ -1,0 +1,67 @@
+<!--pages/interaction/inteCommon/ruleAndAward.wxml-->
+<wxs module="m1">
+  var getShowStatus = function(status,index) {
+     status = status.split(",");
+     console.log(status[index] == 1)
+     switch (index) {
+        case index:
+          return status[index] == 1;
+        default:
+          return false;
+      }
+  }
+
+  module.exports.getShowStatus = getShowStatus;
+</wxs>
+<view class="rAAWrap" hidden="{{!m1.getShowStatus(showStatus,0)}}">
+  <view class="rAA" >
+    <view class="rAACnt" style="background-image:url({{staticResPath + commonImgUrl}}raabg.png);">
+      <view class="rAAHead">
+        <image src="{{staticResPath + commonImgUrl}}btn-shm.png" class="atyTopBtn atyRule {{m1.getShowStatus(showStatus,1) ? 'active':''}}" bindtap="onTapShowRule"></image>
+        <image src="{{staticResPath + commonImgUrl}}btn-jp.png" class="atyTopBtn atyAward  {{!m1.getShowStatus(showStatus,1) ? 'active':''}}" bindtap="onTapShowAward" data-mark="hasCache"></image>
+        <image src="{{staticResPath + commonImgUrl}}btn-close.png" class="arrClose" bindtap="onTapClose"></image>
+      </view>
+      <view class="rAABody {{m1.getShowStatus(showStatus,1) ? 'showARB':'showAMAB'}}">
+        <view class="atyRuleBlock">
+          <view class="ruleItem">
+            <view>
+              <view class="ruleItemTitle">活动奖品</view>
+            </view>
+            <view class="arrAwardList">
+              <view class="arrAwardItem" wx:for="{{awardlist}}">
+              {{item.trophyName}}：{{item.awardName}}
+              </view>
+            </view>
+            <view>
+              <view class="ruleItemTitle">活动时间</view>
+            </view>
+            <view class="atyTime">
+              {{activity.atyStartTime}}  ~ {{activity.atyEndTime}}
+            </view>
+            <view>
+              <view class="ruleItemTitle">活动规则</view>
+            </view>
+            <view class="atyRuleList">
+
+              <rich-text nodes="{{activity.rule}}"></rich-text>
+            </view>
+          </view>
+        </view>
+
+
+        <view class="atyMyAwardBlock">
+          <scroll-view  class="awardRecords" scroll-y="true">
+            <view class="awardRecordItem" wx:for="{{myawards}}" data-awardtype="{{item.awardType}}" wx:if="{{0 < myawards.length}}" bindtap="showAwardItem">
+              <view class="trophyName">{{item.trophyName}}</view>
+              <view class="awardName">{{item.awardName}}</view>
+            </view>
+            <view wx:if="{{myawards && 0 == myawards.length}}" style='text-align:center;font-size:35rpx;'> 您暂时没有奖品哦~ </view>
+          </scroll-view>
+          <navigator url="/pages/coupon/mycoupon" class="awardTips">
+           请前往个人中心—优惠券中查看已获得的优惠券
+          </navigator>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

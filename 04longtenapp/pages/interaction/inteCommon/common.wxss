@@ -1,0 +1,484 @@
+.game_page {
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    margin: 0px auto;
+    position: relative;
+}
+.mask_page{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 105;
+  background-size: 100% 100%;
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+  top: 0;
+  left: 0;
+}
+.act_end_page{
+  background-size: 100% auto;
+  background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/isOver.png?v=5");
+  background-repeat: no-repeat;
+  background-color: #38547e;
+}
+.act_end_page .view_act_rule{
+  position: fixed;
+  bottom: 70rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300rpx;
+  height: 92rpx;
+}
+.act_end_page .view_act_rule image{
+  display: block;
+  width: 100%;
+}
+.act_unstart_page{
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-color: #38547e;
+  text-align: center;
+}
+.act_unstart_page .title{
+  margin-top: 25%;
+  font-size: 50rpx;
+  line-height: 120rpx;
+  margin-bottom: 20rpx;
+}
+.act_unstart_page .sub_title{
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  line-height: 40rpx;
+}
+.act_unstart_page .view_act_rule{
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300rpx;
+  height: 92rpx;
+}
+.act_unstart_page .view_act_rule image{
+  display: block;
+  width: 100%;
+}
+.start_page{
+	width: 100%;
+	height: 100%;
+	max-width: 800px;
+	margin: 0px auto;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-color: #FFF;
+	background-position: center top;
+	position: relative;
+}
+.container {
+    width: 100%;
+    min-height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center top;
+    position: relative;
+}
+.start_page .rule_tag {
+  position: absolute;
+}
+.start_page .start_btn{
+	position: absolute;
+	left: 0;
+	right: auto;
+	margin: 0;
+	top: 0;
+	overflow: visible;
+	z-index: 101;
+}
+.start_page .title_img{
+	position: absolute;
+	left: 0;
+	right:0;
+	margin: auto;
+	top: 0;
+}
+.start_page .bg{
+	display: block;
+	width: 100%;
+}
+.block_img {
+    display: block;
+    width: 100%;
+}
+#homeBgBox {
+    width: 100%;
+    overflow: hidden;
+}
+#homeBg{width: 100%;}
+
+.start_page .title_img {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    margin: auto;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+.start_page .start_btn {
+    position: absolute;
+    left: 50%;
+    right: auto;
+    margin: 0;
+    top: 0;
+    overflow: visible;
+    z-index: 101;
+    transform: translateX(-50%);
+}
+
+
+.game_page {
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    margin: 0px auto;
+    position: relative;
+}
+
+
+.tada {
+	-moz-animation: tada .6s ease 0s infinite forwards;
+	-o-animation: tada .6s ease 0s infinite forwards;
+	-webkit-animation: tada .6s ease 0s infinite forwards;
+	animation: tada .6s ease 0s infinite forwards
+}
+.startTada {
+    animation: tada .6s ease 1s 1 forwards;
+    -webkit-animation: tada .6s ease 1s 1 forwards;
+    -moz-animation: tada .6s ease 1s 1 forwards;
+    -o-animation: tada .6s ease 1s 1 forwards;
+}
+
+.titleDown {
+    animation: bounceInDown 1s ease 1;
+    -webkit-animation: bounceInDown 1s ease 1;
+    -moz-animation: bounceInDown 1s ease 1;
+    -o-animation: bounceInDown 1s ease 1;
+}
+@-webkit-keyframes tada{0%{-webkit-transform:scale3d(1,1,1)}
+10%,20%{-webkit-transform:scale3d(.9,.9,.9) rotate3d(0,0,1,-3deg)}
+30%,50%,70%,90%{-webkit-transform:scale3d(1.1,1.1,1.1) rotate3d(0,0,1,3deg)}
+40%,60%,80%{-webkit-transform:scale3d(1.1,1.1,1.1) rotate3d(0,0,1,-3deg)}
+100%{-webkit-transform:scale3d(1,1,1)}
+}
+@keyframes tada{0%{transform:scale3d(1,1,1)}
+10%,20%{transform:scale3d(.9,.9,.9) rotate3d(0,0,1,-3deg)}
+30%,50%,70%,90%{transform:scale3d(1.1,1.1,1.1) rotate3d(0,0,1,3deg)}
+40%,60%,80%{transform:scale3d(1.1,1.1,1.1) rotate3d(0,0,1,-3deg)}
+100%{transform:scale3d(1,1,1)}
+}
+@-webkit-keyframes bounceInDown{0%{opacity:0;-webkit-transform:translateX(-50%) translateY(-2000px)}
+60%{opacity:1;-webkit-transform:translateX(-50%) translateY(30px)}
+80%{-webkit-transform:translateX(-50%) translateY(-10px)}
+100%{-webkit-transform:translateX(-50%) translateY(0)}
+}
+@keyframes bounceInDown{0%{opacity:0;-webkit-transform:translateX(-50%) translateY(-2000px)}
+60%{opacity:1;-webkit-transform:translateX(-50%) translateY(30px)}
+80%{-webkit-transform:translateX(-50%) translateY(-10px)}
+100%{-webkit-transform:translateX(-50%) translateY(0)}
+}
+
+.fire_res view, .fire_res button {
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    transform: translateX(-50%);
+}
+.fire_res .fire_btn_cont .fire_btn {
+    position: static;
+    left: auto;
+    top: auto;
+    margin-top: 18.7rpx;
+    width: 352rpx;
+    height: 117rpx;
+    transform: translateX(0)
+}
+.fire_btn_cont{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* 挑战成功弹出框 */
+.fire_success .fire_res_light{
+	width: 515.57rpx;
+	height: 515.57rpx;
+	margin-top: -61.2%;
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/fire_res_light.png?v=5");
+	display: none;
+}
+.fire_success .fire_res_success{
+    width: 703.05rpx;
+    height: 515.57rpx;
+	top: 5em;
+}
+.fire_success .fire_res_title{
+	top: 271.85rpx;
+}
+.fire_success .fire_res_title>view:first-child{
+	display: inline-block;
+	width: 367.93rpx;
+	height: 98.43rpx;
+}
+.fire_success .fire_res_star3{
+	top: 120rpx;
+	margin-left: -158.98rpx;
+}
+.fire_success .fire_res_star3>view:first-child{
+	display: inline-block;
+	width: 147.64rpx;
+	height: 152.33rpx;
+}
+.fire_success .fire_res_star2{
+	top: 85rpx;
+	margin-left: -38rpx;
+}
+.fire_success .fire_res_star2>view:first-child{
+	display: inline-block;
+	width: 167.56rpx;
+	height: 176.7rpx;
+}
+.fire_success .fire_res_star1{
+	top: 51.56rpx;
+  margin-left:110rpx
+}
+.fire_success .fire_res_star1>view:first-child{
+	display: inline-block;
+	width: 239.04rpx;
+	height: 246.07rpx;
+}
+.fire_success .fire_res_guang{
+	top: 60.93rpx;
+  margin-left:96rpx;
+}
+.fire_success .fire_res_guang>view:first-child{
+	display: inline-block;
+	width: 203.88rpx;
+	height: 203.88rpx;
+}
+.fire_success .fire_btn_cont{
+	top: 693.68rpx;
+}
+.fire_success .fire_btn_cont.nolottery{
+	top: 749.92rpx;
+}
+.fire_success .p_text_1{
+	top: 431.2rpx;
+	font-size: 42.18rpx;
+	color: #000;
+}
+.fire_success .score {
+	color: #f64f33;
+}
+.fire_success .p_text_2{
+	top: 501.51rpx;
+	color: #000;
+	font-size: 32.81rpx;
+}
+.fire_success .p_text_2 .p_text{
+	display: inline-block;
+    width: 421.83rpx;
+}
+.fire_success .p_text_3{
+	top: 562.44rpx;
+	color: #000;
+	font-size: 28.12rpx;
+}
+.fire_success .p_text_3 .p_text{
+	display: inline-block;
+    width: 515.57rpx;
+}
+.fire_success .p_text_4 {
+    top: 590.56rpx;
+    color: #000;
+    font-size: 30rpx;
+}
+.fire_success .p_text_5 {
+    top: 628.06rpx;
+    color: #000;
+    font-size: 30rpx;
+}
+.fire_success .p_btn{
+	margin-top: 28%;
+}
+
+/* 挑战失败弹出框 */
+.fire_fail .fire_res_fail{
+	width: 703.05rpx;
+	height: 453.47rpx;
+	top: 234.35rpx;
+}
+.fire_fail .fire_res_title{
+	top: 309.34rpx;
+}
+.fire_fail .fire_res_title>view:first-child{
+	display: inline-block;
+	width: 369.1rpx;
+	height: 168.26rpx;
+}
+.fire_fail .fire_res_star3{
+	top: 154.67rpx;
+	margin-left: -169rpx;
+}
+.fire_fail .fire_res_star3>view:first-child{
+	display: inline-block;
+	width: 149.98rpx;
+	height: 161.7rpx;
+}
+.fire_fail .fire_res_star2{
+	top: 117.17rpx;
+}
+.fire_fail .fire_res_star2>view:first-child{
+	display: inline-block;
+	width: 180.45rpx;
+	height: 187.48rpx;
+}
+.fire_fail .fire_res_star1{
+	top: 154.67rpx;
+	margin-left: 165rpx;
+}
+.fire_fail .fire_res_star1>view:first-child{
+	display: inline-block;
+	width: 149.98rpx;
+	height: 159.36rpx;
+}
+.fire_fail .fire_btn_cont{
+    top: 740.55rpx;
+}
+.fire_fail .fire_ress_fail_playagain{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/playagain_btn.png?v=5");
+}
+.fire_fail .fire_ress_fail_share{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/share_btn.png?v=5");
+}
+.fire_fail .fire_ress_fail_subscribe{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/subscribe_btn.png?v=5");
+}
+.fire_fail .score {
+    color: #ffcc17;
+}
+.fire_fail .p_text_1{
+	top: 421.83rpx;
+	font-size: 46.87rpx;
+}
+.fire_fail .p_text_2{
+	top: 506.2rpx;
+}
+.fire_fail .p_text_3{
+	top: 506.2rpx;
+	display: none;
+}
+.fire_fail .p_text_2 .p_text{
+	display: inline-block;
+    width: 412.46rpx;
+}
+.fire_fail .p_text_3 .p_text{
+	display: inline-block;
+    width: 412.46rpx;
+}
+.fire_fail .p_btn_replay{
+	margin-top: 3%;
+}
+.fire_fail .p_btn_share{
+	margin-top: 19%;
+}
+.fire_fail .share_text{
+	margin-top: 35%;
+	font-size: 37.5rpx;
+}
+
+
+/* 挑战成功弹出框 */
+.fire_success .fire_res_light{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/fire_res_light.png?v=5");
+}
+.fire_success .fire_res_success{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/dikuang2.png?v=7");
+}
+.fire_success .fire_ress_success_award{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-choujiang.png?v=5");
+}
+.fire_success .fire_ress_success_share{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-share.png?v=5");
+}
+.fire_success .fire_ress_success_subscribe{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-guanzhu.png?v=5");
+}
+.fire_success .fire_ress_success_rank{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-rank.png?v=7");
+}
+.fire_success .fire_res_title>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/win.png?v=6");
+}
+.fire_success .fire_res_star3>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/xingxing3.png?v=5");
+}
+.fire_success .fire_res_star2>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/xingxing2.png?v=5");
+}
+.fire_success .fire_res_star1>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/xingxing1.png?v=5");
+}
+.fire_success .fire_res_guang>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/guang1.png?v=5");
+}
+.fire_success .score {
+	color: #f64f33;
+}
+
+/* 挑战失败弹出框 */
+.fire_fail .fire_res_fail{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/dikuang3.png?v=5");
+}
+.fire_fail .fire_ress_fail_playagain{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-again.png?v=5");
+}
+.fire_fail .fire_ress_fail_share{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-share.png?v=5");
+}
+.fire_fail .fire_ress_fail_subscribe{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-guanzhu.png?v=5");
+}
+.fire_fail .fire_ress_fail_rank{
+    background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/btn-rank.png?v=7");
+}
+.fire_fail .fire_res_title>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/lose.png?v=6");
+}
+.fire_fail .fire_res_star3>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/xingxing7.png?v=5");
+}
+.fire_fail .fire_res_star2>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/xingxing5.png?v=5");
+}
+.fire_fail .fire_res_star1>view:first-child{
+	background-image: url("http://res.xcx.weijuju.com/image/mobile/aty/common/style_4/xingxing6.png?v=5");
+}
+.fire_fail .score {
+    color: #ffcc17;
+    width:auto;
+    position:static;
+    padding: 0 5rpx;
+}
+.fire_fail .prize_score {
+    width:auto;
+    position:static;
+    padding: 0 5rpx;
+}

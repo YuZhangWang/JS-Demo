@@ -1,0 +1,16 @@
+/* pages/takeout//qualificationFiles.wxss */
+page{
+  background: #f5f6f7;
+
+}
+.qualification-container{
+  padding: 30rpx;
+  margin: 20rpx 0;
+  background: #fff;
+}
+.img-item{
+  width: 33%;
+  height: 80px;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}

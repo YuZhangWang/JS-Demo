@@ -1,0 +1,49 @@
+/* pages/subCategory/sCategoryList.wxss */
+.pageItem{
+  display: flex;
+  flex-direction: column;
+  margin: 0rpx 30rpx;
+  border-bottom: 1px solid #f5f7f7;
+  padding: 30rpx 0;
+  position: relative;
+}
+.pageItem text:nth-child(1){
+  font-size: 32rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: rgba(54,58,61,1);
+  margin-left: 10px;
+
+
+}
+.pageItem .cTime{
+  
+  margin-top: 5rpx;
+  margin-left: 10px;
+  font-size: 24rpx;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: rgba(171,174,179,1);
+
+}
+.noMore{
+  text-align: center;
+  padding: 40rpx 0;
+  color: #949494;
+}
+.pageList{
+  margin-bottom:100rpx;
+}
+.trigger{
+  content:"\020";
+  display:block;
+  width:18px;
+  height:18px;
+  background-image:url("http://res.xcx.weijuju.com/image/mobile/trigger_right.png");
+  background-size:100%;
+  position:absolute;
+  right:10px;
+  top: 50%;
+  margin-top: -9px;
+
+}

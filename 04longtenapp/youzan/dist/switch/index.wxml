@@ -1,0 +1,16 @@
+<template name="zan-switch">
+  <view
+    class="{{ switchType && checked ? 'main-color-bg':''}} zan-switch zan-switch--{{ checked ? 'on' : 'off' }} {{ disabled ? 'zan-swtich--disabled' : '' }}"
+    style="{{switchType && checked ? app.globalData.customStyleColor:''}};"
+    data-checked="{{ checked }}"
+    data-loading="{{ loading }}"
+    data-disabled="{{ disabled }}"
+    data-component-id="{{ componentId }}"
+    bindtap="_handleZanSwitchChange"
+  >
+    <view class="zan-switch__circle">
+      <view hidden="{{ !loading }}" class="zan-switch__loading"></view>
+    </view>
+    <view class="zan-switch__bg" style="{{switchType ? 'transition: none':''}}"></view>
+  </view>
+</template>

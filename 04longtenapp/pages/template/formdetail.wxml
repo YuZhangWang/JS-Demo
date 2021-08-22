@@ -1,0 +1,78 @@
+<template name="huaerForm">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title">{{ data.labelTxt || "标题"}}</view>
+    <input type="text" disabled='disabled' placeholder="{{data.tipsTxt}}"
+      class="huaer-field_input huaer-cell_bd {{right?'huaer-field_input-right':''}}"
+      placeholder-class="huaer-field_placeholder" data-index="{{index}}" data-isReq="{{data.isReq}}" value="" bindinput="bindKeyInput" maxlength='40' data-place='{{data.tipsTxt}}'/>
+  </view>
+</template>
+<template name="huaerMultiline">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title huaer-multiline_title">{{ data.labelTxt || "标题"}}</view>
+    <textarea  placeholder="{{data.tipsTxt}}" class="huaer-multiline"
+      placeholder-class="huaer-field_placeholder" data-index="{{index}}" data-isReq="{{data.isReq}}" value="" maxlength="1000" bindinput="bindKeyInput" data-place='{{data.tipsTxt}}'></textarea>
+  </view>
+</template>
+<template name="huaerFormTitle">
+	<view wx:if="{{data.title}}" style="background:{{data.bg_color}};"
+		class="form_title_box {{(data.show_method==0)?'textleft':((data.show_method==1)?'textcenter':'textright')}}"
+		data-item="{{data}}" data-index="{{index}}" bindtap="formTitleTap">
+		<view class="form_title">{{data.title}}</view>
+		<view wx:if="{{data.sub_title}}" class="form_sub_title">{{data.sub_title}}</view>
+	</view>
+</template>
+<template name="huaerDateField">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title">{{ data.labelTxt || "预约时间"}}</view>
+    <picker mode="multiSelector" value='{{dateValue}}' range='{{dateTime}}' range-key="name" bindchange="bindTimeChange" class="huaer-field_picker" data-fieldindex="{{index}}">
+      <view class="picker">
+        <text wx:if="{{submitValue}}">{{submitValue}}</text>
+        <text wx:else style='color:#808080'>请选择时间</text>
+      </view>
+    </picker>
+  </view>
+</template>
+<template name="huaerFileUpload">
+  <view class="huaer-fileupload-img-wrap huaer-cell">
+      <view class="huaer-fileupload-field">{{ data.labelTxt||"上传图片" }}</view>
+      <view class="huaer-fileupload-ul clearfix">
+        <view class="huaer-fileupload-item" wx:for="{{uploadImgList}}" wx:for-index="idx" wx:for-item="img">
+            <image mode="aspectFill" src="{{userImagePath+img}}"></image>
+            <view class="huaer-fileupload-item-delete" data-fieldindex="{{index}}" bindtap='handleDelImg' data-index="{{idx}}">×</view>
+        </view>
+        <view class="huaer-fileupload-item-add" wx:if="{{uploadImgList.length < 3}}" data-index="{{index}}" bindtap='handleAddImage'></view>
+      </view>
+  </view>
+</template>
+<template name="selectW">
+  <view class="huaer-cell huaer-field">
+    <view class="huaer-cell_hd huaer-field_title">{{ data.data.labelTxt || "标题"}}</view>
+    <picker class="huaer-field_picker" range="{{list}}" mode="selector" range-key="itemTxt" bindchange="bindSelectChange" data-idx="{{index}}">
+      <view class="picker">
+        <text wx:if="{{selected}}">{{selected}}</text>
+        <text wx:else style='color:#808080'>请选择</text>
+      </view>
+    </picker>
+  </view>
+</template>
+<template name="radiotW">
+    
+    <view class="section section_gap" style='padding-top:10px;'>
+    <view class="huaer-cell_hd huaer-field_title" style="padding-left:30rpx;background-color:{{data.data.bgColor?data.data.bgColor:'#fff'}};color:{{data.data.fontColor?data.data.fontColor:'#444'}};line-height:{{data.data.lineHeight>0?data.data.lineHeight:'30'}}px; font-size:{{data.data.font_size?data.data.font_size:'12'}}px;font-weight:{{data.data.font_bold ? 'bold':'none'}}; font-style:{{data.data.font_italic? 'italic':'normal'}};text-decoration:{{data.data.font_underline? 'underline':'none'}}">{{ data.data.labelTxt || "标题"}}</view>
+        <radio-group wx:if="{{data.data.selectType==1}}" data-idx="{{index}}"  class="radio-group" bindchange="radioChange">
+            <view wx:for="{{list}}" wx:key="name"  style='display:flex;justify-content:space-between;padding:10rpx 40rpx;border-bottom:1px solid #f5f5f5;'>
+              <view style='line-height:25px; text-align:center;'>{{item.itemTxt}}</view>
+              <radio value="{{item.itemTxt}}" class="radio"></radio>
+            </view>
+        </radio-group>
+        <checkbox-group wx:if="{{data.data.selectType==0}}" data-idx="{{index}}"  bindchange="checkboxChange">
+            <view  wx:for="{{list}}" wx:key="name"  style='display:flex;justify-content:space-between;padding:10rpx 40rpx;border-bottom:1px solid #f5f5f5;'>
+              <view style='line-height:25px; text-align:center;'>{{item.itemTxt}}</view>
+              <checkbox value="{{item.itemTxt}}"  class="radio"></checkbox>
+            </view>
+          
+        </checkbox-group>
+    </view>
+    
+  
+</template>

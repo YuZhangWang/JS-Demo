@@ -1,0 +1,89 @@
+.expressHeader{
+  display: flex;
+  padding: 20rpx;
+  border-bottom: 4px solid #F6F6F6;
+}
+.expressHeader .goodsCover{
+  width: 150rpx;
+  height: 150rpx;
+}
+.expressHeader .expHRight{
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;
+  justify-content: space-around;
+}
+.expressBody{
+  margin-bottom: 50rpx;
+}
+.expressBody .expItem{
+  display: flex;
+  color: #CCCCCC;
+}
+.expressBody .buyer .expPart3{
+  /* font-size: 30rpx;
+  line-height: 32 */
+}
+.expressBody .expItem.active{
+  color: #F8881B;
+}
+.expressBody .expItem .expPart1{
+  width: 100rpx;
+  text-align: right;
+}
+.expressBody .expItem .expPart1 .expPartDate{
+  font-size: 30rpx;
+  line-height: 30rpx;
+}
+.expressBody .expItem .expPart1 .expPartTime{
+  font-size: 24rpx;
+  line-height: 24rpx;
+  margin-top: 10rpx;
+}
+.expressBody .expItem .expPart2{
+  margin: 0 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.expressBody .expItem .expArrow{
+ width: 25rpx;
+ height: 25rpx;
+}
+.expressBody .expItem .expLine{
+  display: inline-block;
+  height: 120rpx;
+  width: 1px;
+  background: #ccc;
+}
+.expressBody .expItem .expLine.active{
+  height: 150rpx;
+}
+.expressBody .expItem .expPart3{
+  max-width: 500rpx;
+}
+.expressBody .expItem .expPartDesc{
+  font-size: 30rpx;
+  line-height: 30rpx;
+}
+.expressBody .expItem .expPartDetail{
+  font-size: 26rpx;
+  line-height: 30rpx;
+  margin-top: 0rpx;
+}
+
+.expressBody .emptyExpress{
+  margin-top: 200rpx;
+  text-align: center;
+  color: #ccc;
+}
+.expressBody .emptyIco{
+  width: 80rpx;
+  height: 80rpx;
+
+}
+.buyer{
+  margin:50rpx 0;
+  align-items:center;color:#9a9a9a;
+}

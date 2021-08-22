@@ -1,0 +1,41 @@
+<!--pages/interaction/newshakeredpack/newshakeredpack.wxml-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="game_page">
+  <view class="game-rule" id="game_rule" bindtap="showRule">
+    <image src="{{youyuResPath}}/gamepage/newshakeredpack/btn_tag.png" mode='widthFix' class="block_img"></image>
+  </view>
+  <view class="game-title" id="game_title">
+    <image src="{{youyuResPath}}/gamepage/newshakeredpack/title.png" class="block_img" mode='widthFix'></image>
+  </view>
+  <view class="tree">
+    <view class="money-wrapper">
+      <view class="money money-1 j-money">
+        <view>我的奖励</view>
+      </view>
+      <view class="money money-2 j-money">
+        <view>我的奖励</view>
+      </view>
+      <view class="money money-3 j-money">
+        <view>我的奖励</view>
+      </view>
+      <view class="money money-4 j-money">
+        <view>我的奖励</view>
+      </view>
+    </view>
+    <view class="shake" bindtap='handleShake'>
+      <view class="shake-phone"></view>
+    </view>
+    <view class="my-prize" id="my_prize" bindtap='showAward'>
+      <image src="{{youyuResPath}}/gamepage/newshakeredpack/btn_award.png" mode='widthFix' class="block_img"></image>
+    </view>
+  </view>
+  <view class="coins-wrapper" id="coins_wrapper" style='width:100%;height:{{coinsWrapHeight}}px;display:{{showDrapCoins?"block":"none"}}'>
+    <canvas canvas-id="coins_canvas" id="coins_canvas"></canvas>
+  </view>
+</view>
+<include src="../inteCommon/commonPage.wxml"></include>
+  <audio src="{{youyuResPath}}/gamepage/newshakeredpack/coin.mp3" id="coinAudio" loop="{{false}}"></audio>
+  <play-ret static-res-path="{{staticResPath}}" bind:playagain="playAgain" is-show="{{isShow}}" have-gift="{{haveGift}}" play-msg="{{playMsg}}" play-desc="{{playDesc}}"></play-ret>
+  <rule-and-award static-res-path="{{staticResPath}}" activity="{{activity}}"  awardlist="{{orgAwardList}}" myawards="{{myAwards}}" show-status="{{showStatus}}" bind:showrule="showRule" bind:showaward="showAward" bind:showawarditem="showAwardItem">
+  </rule-and-award> 
+</view>

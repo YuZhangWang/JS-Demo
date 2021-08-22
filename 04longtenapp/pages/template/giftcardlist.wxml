@@ -1,0 +1,47 @@
+
+<!-- 金额格式化 -->
+<wxs module="m1">
+    var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+    return Number(money / 100).toFixed(2);
+    } else {
+    return 0;
+    }
+    }
+    module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<template name="giftcardListTpl">
+    <view class="modal-backdrop announce-backdrop" bindtap='handleGiftCardModalClose' wx:if="{{showGiftCardList}}"></view>
+    <view class="coupon-info-modal" wx:if="{{showGiftCardList}}" bindtap="handleGiftCardModalTap">
+        <view class="title">礼品卡</view>
+        <scroll-view class="coupon-list" scroll-y="true">
+            <view class="{{ selectedCard || selectedCoupon ? 'disabledSelect' : ''}} coupon" data-id="{{card.id}}" wx:for="{{giftcardList}}" wx:for-item="card" wx:key="card.id"
+                  wx:if="{{2 == card.state}}">
+                <!-- wx:if="{{1 == card.state}}" -->
+                <view  bindtap= "{{selectedCard || selectedCoupon ? '' : 'handleGiftCardSelect'}}" data-id="{{card.id}}">
+                    <text>{{card.title}}<text class="main-color" style="{{app.globalData.customStyleColor}}" wx:if="{{card.type == 2}}">({{app.globalData.currencySymbol}}{{m1.getFixedMoney(card.money)}})</text></text>
+                    <view class="fright">
+                        <view wx:if="{{card.id == selectedGiftCard.id}}"
+                              class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+                        <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+                    </view>
+                </view>
+                <!-- <view wx:if="{{2 == card.state}}">
+                  <text>{{card.cname}} <text style="color:#949494;">（不可用）</text></text>
+                  <view class="fright">
+                    <view wx:if="{{card.id == selectedCard.id}}" class="zan-icon zan-icon-checked" style="color:#f44;"></view>
+                    <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+                  </view>
+                </view>  -->
+            </view>
+            <view class="coupon" data-id="-1" bindtap='handleGiftCardSelect'>
+                <text>不使用优惠</text>
+                <view class="fright">
+                    <view wx:if="{{!selectedGiftCard}}" class="zan-icon zan-icon-checked main-color" style="{{app.globalData.customStyleColor}}"></view>
+                    <view wx:else class="zan-icon zan-icon-check" style="color:#ccc;"></view>
+                </view>
+            </view>
+        </scroll-view>
+        <button style="{{app.globalData.customStyleBg}}" data-action="closeModal" class="main-color-bg zan-btn zan-btn--large zan-btn--danger">关闭</button>
+    </view>
+</template>

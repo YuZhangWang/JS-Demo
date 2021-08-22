@@ -1,0 +1,14 @@
+<wxs module="m1">
+    var	htmlEncode = function(e) {
+      var reg = getRegExp("\n","g");
+      return e.replace(reg, "<br />");
+	}
+</wxs>
+<view class="copyright-container" wx:if="{{app && app.globalData.isoem && app.globalData.oemconfig}}">
+  <navigator wx:if="{{app.globalData.copyrightFormConfig && app.globalData.copyrightFormConfig.isOn}}" url="/pages/copyrightForm/copyrightForm" class="copyright-text">
+    <rich-text nodes="{{app.globalData.oemconfig.extend.mobileCopyright}}" type="text"></rich-text> 
+  </navigator>
+  <view wx:else class="copyright-text">
+    <rich-text nodes="{{app.globalData.oemconfig.extend.mobileCopyright}}" type="text"></rich-text> 
+  </view>
+</view>

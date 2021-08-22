@@ -1,0 +1,240 @@
+<!--category.wxml-->
+<wxs module="m1">
+  var showShoppingCart = function(app,goods){
+    if(goods.goods_type == 3){
+      return false;
+    }
+    if(goods.goods_type == 1){
+      return true;
+    }
+    if(app && app.globalData.mallSite && app.globalData.mallSite.tplType==4){
+      return false;
+    }
+    return true;
+  }
+  module.exports.showShoppingCart = showShoppingCart;
+</wxs>
+<import src="../template/goodsCategoryModal.wxml" />
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view class="search-cont" style='padding:0 30rpx;margin:12rpx 0;'>
+  <view class="search-input-cont">
+    <view bindtap="handleSearchTap" class="search-btn">
+      <image class="search_icon" src="{{staticResPath}}/image/mobile/search_icon.png"></image>
+    </view>
+    <input type="text" cursor="-1" placeholder="请输入商品关键字" confirm-type="前往" bindinput="handleSearchInput" bindconfirm="handleSearchIng" class="search-input" />
+
+  </view>
+  <view class="search-btn-main" bindtap="handleSearchIng">搜索</view>
+</view>
+<scroll-view class="container" style="height:100%;padding-bottom:100px" wx:if="{{style==1}}">
+  <view class="list_cont">
+    <view class="category_item {{item.showSubList?'show_sublist':''}}" wx:for="{{categoryList}}" wx:key="item.id">
+      <view class="nav" data-id="{{item.id}}" data-ismain="true" bindtap='handleCatNavTap'>
+        <text class="t1">{{item.name}}</text>
+        <text class="t2">{{item.summary||"空"}}</text>
+        <view class="trigger"></view>
+      </view>
+      <view class="sublist_cont" wx:if="{{item.subSiteBar.length>0 && item.showSubList}}" wx:for="{{item.subSiteBar}}" wx:for-item="subCat" wx:key="subCat.id">
+        <navigator class="nav" data-id="{{subCat.id}}" url='/pages/channel/channel?id={{subCat.id}}'>
+          <text class="t1 main-color" style="{{app.globalData.customStyleColor}}">{{subCat.name}}</text>
+          <view class="trigger"></view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <include src="../template/footer.wxml"/>
+</scroll-view>
+<!--  -->
+<block wx:if="{{style==2 || style==3}}">
+ <view class="category-tab-content category-tab-style-{{style==2?'left':'top'}}">
+    <scroll-view class="type-tab" style="padding-bottom:{{app.globalData.bottomMenus.isShow && style == 2 ? '70px' : ''}}" scroll-y="{{style==2}}" scroll-x="{{style==3}}">
+      <view style="{{selectedCat.id==cat.id ? app.globalData.customStyleColor:''}}" class="cat-box flex-center {{selectedCat.id==cat.id?'main-color active-type':''}}" wx:for="{{categoryList}}" data-id="{{cat.id}}" bindtap="handleCatTabTap" wx:for-item="cat" wx:key="index">
+        <view class="cat-item-name">
+          <text style="{{selectedCat.id==cat.id ? app.globalData.customStyleColor:''}}" class="cat-item-text {{selectedCat.id==cat.id?'main-color':''}}">{{cat.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <scroll-view class="product-tab" style="padding-bottom:{{app.globalData.bottomMenus.isShow && style ==2  ? '70px' : ''}}" scroll-y="true" lower-threshold="100" scroll-into-view="sub-cat-{{selectedCat.id}}" bindscrolltolower="handleProductScrollToLower">
+      <block wx:if="{{selectedCat.subSiteBar.length > 0}}">
+      <view class="sub-cat-cont" wx:for="{{categoryList}}" wx:key="cat.id" wx:for-item="cat" id="sub-cat-{{cat.id}}" data-id="{{cat.id}}"  wx:if="{{cat.subSiteBar.length > 0 && selectedCat.id == cat.id}}">
+        <view wx:if="{{style==2}}" class="cat-name">
+            <view class="left-line"></view>
+            <view class="cat-name-txt">{{cat.name}}</view>
+            <view class="right-line"></view>
+
+        </view>
+        <view class="subcat-list" style="padding-bottom:{{app.globalData.bottomMenus.isShow && style==3 ? '130px' : ''}}">
+          <navigator class="subcat-item" url='/pages/channel/channel?id={{subCat.id}}' wx:for="{{cat.subSiteBar}}" wx:for-item="subCat" wx:key="subCat.id">
+            <image src="{{subCat.logo?(userImagePath+subCat.logo):(staticResPath+'image/mobile/subcat-default-icon.png')}}"></image>
+            <view class="subcat-name"> {{subCat.name}} </view>
+          </navigator>
+        </view>
+      </view>
+      </block>
+
+      <block wx:else>
+      <view class="tab-item" style="padding-bottom:{{app.globalData.bottomMenus.isShow && style==3 ? '130px' : ''}}">
+        <view class="food-item" wx:for="{{goodsListData}}" wx:for-item="goods" wx:for-index="goodsIndex" wx:key="index">
+          <button form-type='submit' bindtap='onNavTab' data-isbtn="true" class='commonNavButton' data-url='{{mTool.getGoodsLink(goods)}}?id={{goods.id}}'>
+          <view class="food-item-inner">
+            <view class="food-item-image" style="position: relative">
+              <!-- 商品角标 -->
+              <text wx:if="{{goods.cornerMarker.isSwitch}}" class="goods-corner-mark mark-position{{goods.cornerMarker.position}}" style="background: {{goods.cornerMarker.color}};">{{goods.cornerMarker.content}}</text>
+              <image class="food-item-img" mode='aspectFill' src="{{mTool.specUrl(extConfig,userImagePath,goods.goodsCover)}}"></image>
+            </view>
+            <view class="food-info-wrap">
+              <view class="food-info">
+                <view class="food-item-header">
+                  <view class="food-item-name">{{goods.name}}</view>
+                  <view class="food-item-price-info">
+                    <view class="food-item-price main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{mTool.fToY(goods.price)}}</view>
+                  </view>
+                </view>
+                <image src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png" class="goods-buy btn1" data-goodsid="{{goods.id}}" catchtap='onAddCart' wx:if="{{m1.showShoppingCart(app,goods)}}"></image>
+              </view>
+            </view>
+          </view>
+          </button>
+        </view>
+        <block wx:if="{{isComplete}}">
+          <view wx:if="{{goodsListData.length==0}}" class="empty-text">暂无商品</view>
+
+          <view wx:elif="{{nomoreGoods}}" class="empty-text" style='font-size: 12px; color: #949494;margin-top:0px;'>没有更多了</view>
+          <view wx:if="{{!nomoreGoods}}" class="loadmore" bindtap="handleProductScrollToLower">加载更多</view>
+        </block>
+
+      </view>
+      </block>
+    </scroll-view>
+</view>
+<include src="../template/footer.wxml"/>
+</block>
+<!-- 子分组显示商品列表 -->
+<block wx:if="{{style==4 || style==5}}">
+ <view class="category-tab-content category-tab-style-{{style==4?'left':'top'}}">
+    <scroll-view class="type-tab" style="padding-bottom:{{app.globalData.bottomMenus.isShow && style == 4 ? '70px' : ''}}" scroll-y="{{style==4}}" scroll-x="{{style==5}}">
+      <view style="{{selectedCat.id==cat.id ? app.globalData.customStyleColor:''}}" class="cat-box flex-center {{selectedCat.id==cat.id?'main-color active-type':''}}" wx:for="{{categoryList}}" data-id="{{cat.id}}" bindtap="handleCatTabTap" wx:for-item="cat" wx:key="cat.id">
+        <view class="cat-item-name">
+          <text style="{{selectedCat.id==cat.id ? app.globalData.customStyleColor:''}}" class="cat-item-text {{selectedCat.id==cat.id?'main-color':''}}">{{cat.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <!-- style == 4 -->
+    <block wx:if="{{style == 4}}">
+    <scroll-view style="padding-bottom:{{app.globalData.bottomMenus.isShow ? '70px' : ''}}" class="product-tab product-tab-{{style}}" scroll-y="{{style==4}}"  lower-threshold="100" scroll-into-view="sub-cat-{{selectedCat.id}}" bindscrolltolower="handleProductScrollToLower">
+      <block wx:if="{{selectedCat.subSiteBar.length > 0}}">
+      <view class="sub-cat-cont" wx:for="{{categoryList}}" wx:key="cat.id" wx:for-item="cat" id="sub-cat-{{cat.id}}" data-id="{{cat.id}}"  wx:if="{{cat.subSiteBar.length > 0 && selectedCat.id == cat.id}}">
+        <view class="subcat-list-{{style}}">
+        <view bindtap="handleSubCatTabTap" style="{{selectedSubCatId==selectedCat.id ? app.globalData.customStyleColor:''}}" class="subcat-item {{selectedSubCatId==selectedCat.id?'main-color':''}}" data-id="{{selectedCat.id}}" >
+            全部
+          </view>
+          <view style="{{selectedSubCatId==subCat.id ? app.globalData.customStyleColor:''}}"  bindtap="handleSubCatTabTap" class="subcat-item {{selectedSubCatId==subCat.id?'main-color':''}}" data-id="{{subCat.id}}" wx:for="{{cat.subSiteBar}}" wx:for-item="subCat" wx:key="subCat.id">
+            {{subCat.name}}
+          </view>
+        </view>
+      </view>
+      </block>
+
+
+      <view class="tab-item">
+        <view class="food-item" wx:for="{{goodsListData}}" wx:for-item="goods" wx:for-index="goodsIndex" wx:key="goods.id">
+          <button form-type='submit' bindtap='onNavTab' data-isbtn="true" class='commonNavButton' data-url='{{mTool.getGoodsLink(goods)}}?id={{goods.id}}'>
+          <view class="food-item-inner">
+            <view class="food-item-image" style="position: relative">
+              <!-- 商品角标 -->
+              <text wx:if="{{goods.cornerMarker.isSwitch}}" class="goods-corner-mark mark-position{{goods.cornerMarker.position}}" style="background: {{goods.cornerMarker.color}};">{{goods.cornerMarker.content}}</text>
+              <image class="food-item-img" mode='aspectFill' src="{{mTool.specUrl(extConfig,userImagePath,goods.goodsCover)}}"></image>
+            </view>
+            <view class="food-info-wrap">
+              <view class="food-info">
+                <view class="food-item-header">
+                  <view class="food-item-name">{{goods.name}}</view>
+                  <view class="food-item-price-info">
+                    <view class="food-item-price main-color" style="{{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{mTool.fToY(goods.price)}}</view>
+                  </view>
+                </view>
+                <image src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png" class="goods-buy btn1" data-goodsid="{{goods.id}}" catchtap='onAddCart' wx:if="{{m1.showShoppingCart(app,goods)}}"></image>
+              </view>
+            </view>
+          </view>
+          </button>
+        </view>
+
+        <block>
+          <view wx:if="{{goodsListData.length==0}}" class="empty-text">暂无商品</view>
+          <view wx:elif="{{nomoreGoods}}" class="empty-text" style='font-size: 12px; color: #949494;margin-top:0px;'>没有更多了</view>
+          <view wx:if="{{!nomoreGoods}}" class="loadmore" bindtap="handleProductScrollToLower">加载更多</view>
+        </block>
+
+      </view>
+
+    </scroll-view>
+    </block>
+    <!-- style === 5 -->
+    <block wx:if="{{style == 5}}">
+    <scroll-view class="product-tab product-tab-{{style}}" wx:if="{{selectedCat.subSiteBar.length > 0}}" scroll-x="{{true}}" lower-threshold="100" scroll-into-view="sub-cat-{{selectedCat.id}}">
+      <view class="sub-cat-cont" wx:for="{{categoryList}}" wx:key="cat.id" wx:for-item="cat" id="sub-cat-{{cat.id}}" data-id="{{cat.id}}"  wx:if="{{cat.subSiteBar.length > 0 && selectedCat.id == cat.id}}">
+        <view class="subcat-list-{{style}}">
+        <view bindtap="handleSubCatTabTap" style="{{selectedSubCatId==selectedCat.id ? app.globalData.customStyleColor:''}}"  class="subcat-item {{selectedSubCatId==selectedCat.id?'main-color':''}}" data-id="{{selectedCat.id}}" >
+            全部
+          </view>
+          <view bindtap="handleSubCatTabTap" style="{{selectedSubCatId==subCat.id ? app.globalData.customStyleColor:''}}"  class="subcat-item {{selectedSubCatId==subCat.id?'main-color':''}}" data-id="{{subCat.id}}" wx:for="{{cat.subSiteBar}}" wx:for-item="subCat" wx:key="subCat.id">
+            {{subCat.name}}
+          </view>
+        </view>
+      </view>
+
+    </scroll-view>
+    <scroll-view class="product-tab"  scroll-y="true"  lower-threshold="100" scroll-into-view="sub-cat-{{selectedCat.id}}" bindscrolltolower="handleProductScrollToLower">
+      <view class="tab-item" style="margin-bottom:{{app.globalData.bottomMenus.isShow ? '180px' : ''}}">
+        <view class="food-item" wx:for="{{goodsListData}}" wx:for-item="goods" wx:key="goods.id">
+          <button form-type='submit' bindtap='onNavTab' data-isbtn="true" class='commonNavButton'
+                  data-url='{{mTool.getGoodsLink(goods)}}?id={{goods.id}}'>
+            <view class="food-item-inner">
+              <view class="food-item-image" style="position:relative;">
+                <!-- 商品角标 -->
+                <text wx:if="{{goods.cornerMarker.isSwitch}}"
+                      class="goods-corner-mark mark-position{{goods.cornerMarker.position}}"
+                      style="background: {{goods.cornerMarker.color}};">{{goods.cornerMarker.content}}
+                </text>
+                <image class="food-item-img" mode='aspectFill'
+                       src="{{mTool.specUrl(extConfig,userImagePath,goods.goodsCover)}}"></image>
+              </view>
+              <view class="food-info-wrap">
+                <view class="food-info">
+                  <view class="food-item-header">
+                    <view class="food-item-name">{{goods.name}}</view>
+                    <view class="food-item-price-info">
+                      <view class="food-item-price main-color" style="{{app.globalData.customStyleColor}}">
+                        {{app.globalData.currencySymbol}}{{mTool.fToY(goods.price)}}
+                      </view>
+                    </view>
+                  </view>
+                  <image src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png" class="goods-buy btn1"
+                         data-goodsid="{{goods.id}}" catchtap='onAddCart'
+                         wx:if="{{m1.showShoppingCart(app,goods)}}"></image>
+                </view>
+              </view>
+            </view>
+          </button>
+        </view>
+        <block wx:if="{{!isLoading}}">
+          <view wx:if="{{goodsListData.length==0}}" class="empty-text">暂无商品</view>
+
+          <view wx:elif="{{nomoreGoods}}" class="empty-text" style='font-size: 12px; color: #949494;margin-top:0px;'>
+            没有更多了
+          </view>
+          <view wx:if="{{!nomoreGoods}}" class="loadmore" bindtap="handleProductScrollToLower">加载更多</view>
+        </block>
+      </view>
+    </scroll-view>
+    </block>
+</view>
+<include src="../template/footer.wxml"/>
+</block>
+<template is="categoryModalTpl" data="{{app,userImagePath:userImagePath,staticResPath:staticResPath,goodsData:goodsData,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isIntegralGoods}}"></template>
+<include src="../template/fixedmenu.wxml"/>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

@@ -1,0 +1,157 @@
+/* pages/sign/sign.wxss */
+.signRecordTitle{
+  padding: 10rpx;
+  min-height: 110rpx;
+  border-bottom:20rpx solid #ededed; 
+  display: flex;
+  align-items: center;
+}
+.signRecordTitle text{
+  margin-left: 10rpx;
+}
+.signRecordItem{
+  min-height: 100rpx;
+  border: 2rpx solid #ededed; 
+  display: flex;
+  justify-content: space-between;
+  padding: 5rpx;
+  
+}
+.firstTapA{
+  width: 100%;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.firstTap{
+  width: 100%;
+  background-size: cover;
+  /* position: relative; */
+}
+.centerText{
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  background: white;
+  z-index: 10000px;
+   position: absolute;
+  left: 50%-150rpx; 
+  bottom: 45%;
+  text-align: center;
+  /* line-height: 150rpx; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.centerText text{
+  font-size: 36rpx;
+}
+.tipText{
+  width: 300rpx;
+  height: 60rpx;
+  /* background: white; */
+  border-radius: 5rpx;
+  z-index: 10000px;
+   position: absolute;
+  bottom: 18%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.totalScore{
+  width: 300rpx;
+  height: 60rpx;
+  /* background: white; */
+  border-radius: 5rpx;
+  z-index: 10000px;
+    position: absolute; 
+    left: 28%;
+  bottom: 25%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.recordLeft{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 20rpx;
+}
+.recordRight{
+  display: flex;
+  align-items: center;
+  margin-right: 20rpx;
+}
+.signCount{
+   padding: 20rpx 20rpx 0rpx 20rpx; 
+   /* width: 320rpx; */
+  background-image: url("http://xcxtest.weijuju.com/res/yyxiaochengxu/image/sign/signblankbg.png");
+  background-size: cover;
+  height: 200rpx;
+}
+.signCountItem{
+  width: 100%;
+  height: 100rpx !important;
+  margin-right: 20rpx;
+
+}
+.signBottom{
+   position: relative;
+}
+.signBottomE{
+   height: 100px;
+   width: 100%; 
+   display: flex;
+   justify-content: center;
+  
+}
+.signItemList{
+   display: flex; 
+   justify-content: space-around;
+   align-items: center;
+}
+ .addS{
+  display: flex;
+  flex-direction: column;
+  /* width: 10%; */
+  font-size: 24rpx;
+  color: #ccc;
+} 
+.congratua{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150rpx;
+  flex-direction: column;
+}
+.congratuation{
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.congraScore{
+  font-weight: bold;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: baseline;
+}
+.signTime{
+  color: #ccc;
+}
+.scoreNumber{
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-right: 10rpx;
+  display: flex;
+  /* line-height: 54rpx; */
+}
+.scoreText{
+  font-size: 24rpx;
+}
+
+

@@ -1,0 +1,10 @@
+<!--pages/takeout//qualificationFiles.wxml-->
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="qualification-container">
+     <view>商家资质档案</view>
+     <view>
+       <image class="img-item" bindtap="viewImg" data-id="{{index}}" src="{{userImagePath+item}}" wx:for="{{shoperInfo.certificateUrl}}"></image>
+     </view>
+  </view>
+  <include src="/pages/template/authModal.wxml" />
+</view>

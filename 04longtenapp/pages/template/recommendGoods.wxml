@@ -1,0 +1,32 @@
+<block wx:if="{{isOpenGoodsRecommend && !isGoodsInteral}}">
+  <view class="recommend-title-container">
+    <view class="left-line"></view>
+    <view class="recommend-title">为您推荐</view>
+    <view class="right-line"></view>
+  </view>
+  <scroll-view scroll-y="true" lower-threshold="50" bindscrolltolower="recommendGoodsScrollToLower" style="background:#f5f7f7;height:100%;">
+    <view class="goods-list">
+      <view class="goods-item goods-item-1" wx:for="{{recommendGoodsList}}" wx:for-item="item" wx:key="item.goods.id">
+        <navigator class="commonNavigator" bindtap="onNavTab" url="/pages/detail/detail?id={{item.goods.id}}" data-url="/pages/detail/detal?id={{item.goods.id}}">
+          <button form-type='submit' data-isbtn="true" class='commonNavButton goods-link'>
+            <view class="photo-block" style="position: relative">
+              <!-- 商品角标 -->
+              <text wx:if="{{item.goods.isCornerMarker}}" class="goods-corner-mark mark-position{{item.goods.position || 0}}" style="background: {{item.goods.color}};">{{item.goods.content}}</text>
+              <image style="border-radius: 0" src="{{mTool.specUrl(extConfig,userImagePath,item.goods.goodsCover,800)}}"></image>
+            </view>
+            <view class="info">
+              <text class="goods-title">{{item.goods.name}}</text>
+              <view class="countNum" style='font-size:22rpx;'>销量：{{item.goods.payedCount+item.goods.virtualPayedCount}}</view>
+
+            </view>
+            <view class="goods-price-wrap">
+              <text class="goods-price main-color" style="font-size: {{m1.getFixedMoney(item.goods.price) >= 9999 ? '24rpx !important;':''}} {{app.globalData.customStyleColor}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(item.goods.price)}}<text style="color:#aeaeae;text-decoration:line-through;margin-left:15rpx;font-size:{{m1.getFixedMoney(item.goods.originalPrice)>=9999 ? '22rpx !important;':'24rpx;'}}" >{{app.globalData.currencySymbol}}{{m1.getFixedMoney(item.goods.originalPrice)}}</text></text>
+            </view>
+
+            <image src="{{staticResPath}}/image/mobile/shopcart/icon_cart.png" class="goods-buy btn1" data-goodsid="{{item.goods.id}}" catchtap='onAddCart' wx:if="{{m1.showShoppingCart(app,item.goods)}}"></image>
+          </button>
+        </navigator>
+      </view>
+    </view>
+  </scroll-view>
+</block>

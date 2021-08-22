@@ -1,0 +1,107 @@
+<wxs module = "m1">
+</wxs>
+<view style="background:#F5F6F7" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<view id="addressMessage">
+	<!-- <view class="microshop-box" style="padding: 0 10px;">
+		<view style="font-size: 15px;">
+			<text>我的地址</text>
+			<view class="manager">管理 <image src="http://127.0.0.1:9068/image/mobile/settings.png"></image></view>
+		</view>
+	</view> -->
+	<block  wx:if="{{isAddrEditShow}}">
+		<view id="addressEdit">
+			<view class="item-box">
+				<view class="item-name">取货人</view>
+				<view class="item-option">
+					<input class="item-show" data-type="name" value="{{inputInfo.name}}" bindinput="bindKeyInput" placeholder-style="font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif;font-size:28rpx;color:#999" placeholder="请填写取货人姓名" />
+				</view>
+			</view>
+			<view class="item-box">
+				<view class="item-name">手机号码</view>
+				<view class="item-option">
+					<input class="item-show" data-type="tel" value="{{inputInfo.tel}}" type="number" maxlength="11" bindinput="bindKeyInput" placeholder-style="font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif;font-size:28rpx;color:#999" placeholder="请填写手机号码" />
+				</view>
+			</view>
+			<view class="item-box">
+				<view class="item-name">省份</view>
+				<view class="item-option">
+					<picker bindchange="bindProChange" range-key="name" value="{{pro_idx}}" range="{{proData}}">
+						<view class="item-show">{{proData[pro_idx].name}}</view>
+					</picker>
+				</view>
+			</view>
+			<view class="item-box">
+				<view class="item-name">市</view>
+				<view class="item-option">
+					<block wx:if="{{curCityData.length>0}}">
+						<picker bindchange="bindCityChange" range-key="name" value="{{city_idx}}" range="{{curCityData}}">
+							<view class="item-show">{{curCityData[city_idx].name}}</view>
+						</picker>
+					</block>
+				</view>
+			</view>
+			<view class="item-box">
+				<view class="item-name">区/县</view>
+				<view class="item-option">
+					<block wx:if="{{curUrbanData.length>0}}">
+						<picker bindchange="bindUrbanChange" range-key="name" value="{{urban_idx}}" range="{{curUrbanData}}">
+							<view class="item-show">{{curUrbanData[urban_idx].name}}</view>
+						</picker>
+					</block>
+				</view>
+			</view>
+			<view class="item-box last">
+				<view class="item-name">详细地址</view>
+				<view class="item-option">
+					<input class="item-show"  value="{{inputInfo.area}}" data-type="area" bindinput="bindKeyInput" placeholder-style="font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif;font-size:28rpx;color:#999" placeholder="请填写详细地址" />
+				</view>
+			</view>
+			<view class="button-box">
+				<button type="primary" class="main-color-bg" bindtap="saveAddress" style="{{app.globalData.customStyleBg}}">保存</button>
+				<button bindtap="cancleSaveAddress">取消</button>
+			</view>
+		</view>
+	</block>
+	<block  wx:if="{{!isAddrEditShow}}">
+		<view id="addressList">
+			<view class="addr-list-box">
+        <block wx:for="{{listModule.addrList}}" wx:key="item.id">
+          <view class="list-box">
+          <!--radio按钮  -->
+            <view class="addr-info">
+              <view class="addr-info-name">
+                <text class='itemName'>{{item.userName}}</text>
+                <text class='itemTel'>{{item.tel}}</text>
+              </view>
+              <view class="addr-info-addr">
+                <text class='itemArea'>{{item.areaName}}{{item.address}}</text>
+                <view class="addr-option" catchtap="editAddrBtn" data-id="{{item.id}}">
+                  <view class='zan-icon zan-icon-records'></view>
+                </view>
+              </view>
+            </view>
+            <view class="addr-footer clearfix">
+              <view data-value="{{item.id}}" bindtap="radioChange" class="addr-radio">
+                <view class="zan-icon zan-icon-{{item.orderChecked?'checked main-color':'check'}}" style="color:{{item.orderChecked?'#f44':'#ccc'}};{{item.orderChecked?app.globalData.customStyleColor:''}}"></view>
+                <label for="{{item.createTime}}"><text class='default'>{{item.orderChecked?'默认地址':'设为默认地址'}}</text></label>
+              </view>
+              <view class="addr-opt">
+
+                <view class="addr-option-delete" catchtap="deleteAddress" data-id="{{item.id}}">
+                  <view class='zan-icon zan-icon-delete'></view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+			</view>
+		</view>
+
+	</block>
+  <view class="container-footer newFooter">
+			<view class="add-btn main-color-bg" wx:if="{{!isAddrEditShow}}" bindtap="newAddAddress" style="{{app.globalData.customStyleBg}}">新增收货地址</view>
+		</view>
+</view>
+<include src="/pages/template/copyright.wxml"/>
+<include src="/pages/template/authModal.wxml"/>
+</view>

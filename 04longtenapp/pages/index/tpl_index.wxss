@@ -1,0 +1,4 @@
+/* pages/index/tpl_index.wxss */
+@import "../template/forum/community.wxss";
+@import "../detail/detail.wxss";
+@import "../search/search.wxss";

@@ -1,0 +1,20 @@
+<template name="wheel" >
+  <view class="wheelWp display_flex justify-content_flex-center align-items_center">
+      <view class="wheel_wp display_flex" style="background-image:url({{wheelStaticRes+wheelBGsuffix}});background-size:100%;-webkit-transform:rotate({{deg}}deg) translateZ(0);transform:rotate({{ deg}}deg) translateZ(0)">
+          <!-- <image src = "{{wheelStaticRes}}6_03.png" style="-webkit-transform:rotate({{deg}}deg) translateZ(0);transform:rotate({{ deg}}deg) translateZ(0)"/> -->
+        <view class="awardList aListLen{{awardList.length}}">
+          <view class="awardItem" wx:for="{{awardList}}" style="transform:rotate(-{{index*360/awardList.length + 360/awardList.length/2}}deg) translateZ(0);">
+            <text class="wheelAwardName subClass">{{item.awardName}}</text>
+            <image src="{{wheelStaticRes}}p8.png" class="emptyIco subClass" wx:if="{{item.isEmpty}}"></image>
+            <image src="{{wheelStaticRes}}p2.png" class="giftIco subClass" wx:else></image>
+          </view>
+        </view>
+      </view>
+      
+       <image src="{{wheelStaticRes}}den1.png" class="flashDot" hidden="{{flashDotHid[0]}}"></image> 
+       <image src="{{wheelStaticRes}}den2.png" class="flashDot" hidden="{{flashDotHid[1]}}"></image> 
+       <image src="{{wheelStaticRes}}den3.png" class="flashDot" hidden="{{flashDotHid[2]}}"></image> 
+       <view class="wheel_pointer" bindtap="start"><image src = "{{wheelStaticRes}}btn1.png" /></view>
+  </view>
+  
+</template> 

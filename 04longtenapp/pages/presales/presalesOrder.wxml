@@ -1,0 +1,213 @@
+<!--pages/presales/presalesOrder.wxml-->
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <view class="payPage payDetail" id="payDetail" hidden="{{showPageArr[0]}}">
+    <view class="order_info_wrapper">
+      <view class="order_info_box">
+        <!-- <view class="tuan_view_module tuan_orderDetail_view">
+        <view class="order_finish_header">
+          <image src="{{staticResPathTuan}}yes_icon.png"></image>
+          <span>完成</span>
+          <view>请联系商家跟踪商品状态</view>
+        </view>
+      </view> -->
+        <view class='ecWayType' wx:if="{{deliveryTab}}">
+          <view class='ecWTItem {{1 == ecWayType ? "active" : ""}}' bindtap='changeEcWayType' data-wtype="1">
+            <text>物流配送</text>
+            <view class='ecWTActive'></view>
+          </view>
+          <view class='ecWTItem {{3 == ecWayType ? "active" : ""}}' bindtap='changeEcWayType' data-wtype="3">
+            <text>到店自提</text>
+            <view class='ecWTActive'></view>
+          </view>
+        </view>
+        <view class='getSelfBlock' wx:if="{{3 == ecWayType && getSelfTimeTxt}}">
+          <view class='getSelfTimeHeader'>自提时间</view>
+          <view>
+            <text>{{getSelfTimeTxt}}</text>
+          </view>
+        </view>
+        <view wx:if="{{3 == ecWayType}}" class='toShopAddr order-delivery'>
+          <!-- <view class="toShopBlock">
+          <view>商家地址</view>
+          <view class="toShopAddrDetail">{{getSelfAddr.mapAddress || getSelfAddr.genAddress}}</view>
+          <view><text class='checkShopMap' bindtap='openShopMap'>查看地图</text></view>
+        </view> -->
+          <view class="address hide_address" bindtap="onSelfAddress">
+
+            <view class="zan-icon zan-icon-location icon-ads" style="align-self:flex-start;"></view>
+            <view class="address-message text-black">
+              <view style='color:#000;text-align:left;margin-bottom:15rpx;'>{{address!='请选择自提点'?selfAddressName:address}}</view>
+              <view wx:if="{{address!='请选择自提点'}}" style='color:#959595;text-align:left;margin-right:20px;margin-top:-12rpx;' class="address-text">收货地址：{{address}}</view>
+            </view>
+            <image src="http://static.resource.fenxiaov3.weijuju.com/image/mobile/umall/orderdetail/arrow-right.png" class="icon-arr" alt="详情图标"></image>
+            <view class="clear"></view>
+          </view>
+          <view class='title text-black identity'>
+            <text>姓名</text>
+            <input placeholder='请填写取货人姓名' name="toShopName" value='{{userName}}' bindchange="changeToShopName"></input>
+          </view>
+          <view class='title text-black identity'>
+            <text> 手机</text>
+            <input placeholder='请填写取货人手机' name="toShopTel" value='{{userPhone}}' bindchange="changeToShopTel"></input>
+          </view>
+        </view>
+        <view wx:if="{{3 != ecWayType}}" class="addAddress editAddr addrAddBox" hidden="{{haveAddr}}" data-showindex="1" bindtap="topPageSwitch" style="">
+          <image src="{{staticResPathTuan}}add_icon.png"></image>
+          <span>添加收货信息</span>
+        </view>
+        <view wx:if="{{3 != ecWayType}}" class="address editAddr addrShowBox" hidden="{{!haveAddr}}" data-showindex="1" bindtap="topPageSwitch">
+          <image  class="addr_icon" src="{{staticResPathTuan}}addr_icon.png"></image>
+          <view class="orderInfoWrap">
+            <view class="">
+              <span>收货人：</span>
+              <span class="receiveName">{{userName}}</span>
+              <span class="receiveTel">{{userPhone}}</span>
+            </view>
+            <view class="addInfo" style="margin-top:0.2rem;">
+              <span>收货地址：</span>
+              <span class="addressPCU" data-areaid="">{{areaInfo}}</span>
+              <span class="detailAddress">{{detailAddr}}</span>
+            </view>
+
+          </view>
+
+        </view>
+        <view wx:if="{{3 != ecWayType}}" style="background-image:url({{staticResPath}}/image/mobile/ca.png);height:8rpx;" class="addr-ca" ></view>
+        <view class="odGoodsInfo">
+          <view class="odSummary">
+            <view class="goodsImg">
+              <image class="goodsImgVal" src="{{mTool.specUrl(extConfig,userImagePath,goodsDetailInfo.awardPic)}}"></image>
+              <!-- {{userImagePath+goodsDetailInfo.awardPic}} -->
+            </view>
+            <view class="odDesc">
+              <span class="goodsNameVal">{{goodsDetailInfo.awardName}}</span>
+              <view class="">
+
+                <span  class="nowPrice">{{app.globalData.currencySymbol}}
+                  <span class="tuanPriceVal">{{mTool.fToY(goodsDetailInfo.preAmount+goodsDetailInfo.restAmount)}}</span>
+                </span>
+                <span>x{{totalBuyCount}}</span>
+
+              </view>
+
+            </view>
+          </view>
+          <view class="colum-other"><span>阶段一：定金</span><span>{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.preAmount*totalBuyCount)}}</span></view>
+          <view class="colum-other"><span>阶段二：尾款</span><span>{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.restAmount*totalBuyCount)}}</span></view>
+        </view>
+        <view class="otherThings">
+
+          <view class="otItem">
+            <span>订单状态</span>
+            <span class="tuan_peisong_style">等待提交</span>
+          </view>
+          <view class="otItem">
+            <span>配送方式</span>
+            <span wx:if="{{3 == ecWayType}}" class="tuan_peisong_style">自提</span>
+            <span wx:if="{{goodsDetailInfo.deliveryType == 1 && 1 == ecWayType}}" class="tuan_peisong_style">包邮</span>
+            <span wx:if="{{goodsDetailInfo.deliveryType == 2 && 1 == ecWayType}}" class="tuan_peisong_style">运费{{mTool.fToY(goodsDetailInfo.deliveryPrice)}}元(随尾款支付)</span>
+          </view>
+
+          <view class="otItem">
+            <span>买家留言</span>
+            <input class="" type="text" bindinput="inputRemark" placeholder="选填：对本次交易的说明"></input>
+          </view>
+        </view>
+        <view class="otherThings">
+        <view class="otItem">
+            <span>定金</span>
+            <span class="nowPrice">{{app.globalData.currencySymbol}}{{mTool.fToY(goodsDetailInfo.preAmount*totalBuyCount)}}</span>
+          </view>
+        </view>
+
+        <!-- <view class="tuan_view_module tuan_orderDetail_view">
+        <view class="line_block_style"></view>
+        <view class="order_num_box">订单编号：
+          <span class="order_num">254712589541</span>
+        </view>
+        <view class="order_time_box">下单时间：
+          <span class="order_time">2017-09-21 11:25:57</span>
+        </view>
+      </view> -->
+      </view>
+    </view>
+    <form  style='width:45%;'>
+      <view class="payPart">
+        <view class="payInfo payBtn" style='flex:1 auto;'>
+          <span>实际付款</span>
+
+           <span  class="payPrice">{{app.globalData.currencySymbol}}
+            <span class="nowPrice" wx:if="{{3 == ecWayType}}">{{mTool.fToY(goodsDetailInfo.preAmount*totalBuyCount)}}</span>
+            <span class="nowPrice" wx:if="{{1 == ecWayType}}">{{mTool.fToY(goodsDetailInfo.preAmount*totalBuyCount)}}</span>
+
+          </span>
+        </view>
+        <button class="submit_order_btn payBtn commonNavButton" hidden="{{isPay}}" bindtap="commitOrder">提交订单</button>
+        <view bindtap="payForOrder" hidden="{{!isPay}}" id="pay" class="pay payBtn">微信支付</view>
+      </view>
+    </form>
+
+  </view>
+  <view class="payPage editAddressPage" id="editAddressPage" hidden="{{showPageArr[1]}}">
+    <view class="nav">
+      <span class="top_title">请填写信息</span>
+    </view>
+    <view class="buyerInfo">
+      <view class="bInfoItem collectUserNameBox">
+        <span>收货人：</span>
+        <input type="text" name="" value="{{userName}}" placeholder="请填写收货人姓名" id="receiveName" bindinput="inputName"></input>
+      </view>
+      <view class="bInfoItem collectTelBox">
+        <span>联系电话：</span>
+        <input type="number" maxlength="11" name="" value="{{userPhone}}" placeholder="请填写联系电话" id="receiveTel" bindinput="inputPhone"></input>
+      </view>
+      <view class="bInfoItem addrBlock collectAddrBox" id="showCityPicker3" bindtap="selectDistrict">
+        <view>
+          <span>所在地区：</span>
+          <span id='cityResult3' class="ui-alert" style="width:auto;">{{areaInfo}}</span>
+        </view>
+
+        <view style="display:inline-block;float: right;">
+          <span style="color:#909090;">请选择></span>
+        </view>
+      </view>
+      <view class="bInfoItem addrBlock collectAddrBox" style="border:none;">
+        <textarea name="name" placeholder="请填写详细地址" id="detailAddr" bindinput="inputDetailAddr" value="{{detailAddr}}"></textarea>
+      </view>
+    </view>
+
+    <view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">
+      <view class="pickerOp" style="">
+        <text catchtap="cityCancel">取消</text>
+        <text style="" catchtap="citySure">确定</text>
+      </view>
+      <!--"可以显示默认的城市，使用后级联选择城市反应很慢就不使用了-->
+      <picker-view style="width: 100%; height: 380rpx" bindchange="cityChange" value="{{value}}">
+        <picker-view-column>
+          <view wx:for="{{provinces}}" class="picker-item" wx:key="index">
+            {{item.name}}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{citys}}" class="picker-item" wx:key="index">
+            {{item.name}}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{areas}}" class="picker-item" wx:key="index">
+            {{item.name}}</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+    <include src="/pages/template/copyright.wxml" />
+
+    <view class="addrBtns display_flex">
+      <view class="addrBtn retBtn" id="backPayPage" data-showindex="0" bindtap="topPageSwitch">
+        返回
+      </view>
+      <view class="addrBtn saveBtn" id="saveAddress" data-showindex="0" bindtap="saveAddr">
+        保存
+      </view>
+    </view>
+  </view>
+  <include src="/pages/template/authModal.wxml" />
+</view>

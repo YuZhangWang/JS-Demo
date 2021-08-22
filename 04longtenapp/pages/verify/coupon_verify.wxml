@@ -1,0 +1,91 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<block wx:if="{{showLoading}}">
+  <view class="container" style='display:none;'>
+  <view class="header" style='margin-top:30%;'>
+    <icon type="waiting" size="65" color="#04be02"/>
+    <view class="p_txt">加载中...</view>
+  </view>
+</view>
+</block>
+<block wx:else>
+<view class="container" wx:if="{{verifiedClerk && !showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">是否核销该优惠券？</view>
+  </view>
+  <view class="center order-goods" style='margin-top:18px;'>
+    <view class="record_list">
+      <view class="coupon state-{{record.state}}">
+        <view class="main_info">
+          <block wx:if="{{record.type == 2}}">
+            <view class="money" style='padding-top:20rpx'>
+              <text class="money_number" style="font-size:88rpx;margin-right:8rpx;">{{record.discount/10}}</text>
+              <text class="rmb">折</text>
+            </view>
+          </block>
+          <block wx:elif="{{record.type == 4}}">
+              <text class="money_number" style="font-size:58rpx">兑换券</text>
+          </block>
+          <block wx:elif="{{record.type == 6}}">
+              <text class="money_number" style="font-size:58rpx">通用券</text>
+          </block>
+          <block wx:else>
+            <view class="money">
+              <text class="rmb">{{app.globalData.currencySymbol}}</text>
+              <text class="money_number" style="font-size:{{m1.getMoneyFontSize(record.money)}}">{{mTool.fToY(record.money)}}</text>
+            </view>
+          </block>
+          <view class="subtext" wx:if="{{record.type==3}}">满{{mTool.fToY(record.leastCost)}}元用</view>
+          <view class="subtext" wx:elif="{{record.type==1}}">任意金额可用</view>
+          <view class="subtext" wx:elif="{{record.type==4}}">{{record.busiName}}</view>
+          <view class="subtext" wx:elif="{{record.type==5}}">储值券</view>
+        </view>
+        <view class="detail_info">
+          <view class="title">{{record.title}}</view>
+          <view class="date">{{record.effectStartTime || "-"}} 到 {{record.effectEndTime || "-"}}</view>
+        </view>
+      </view>
+    </view>
+
+   
+    <view class="clerk-detail">
+      <view class="field">
+        <view class="title">核销员</view>
+        <view class="name">{{verifiedClerk.name}}</view>
+      </view>
+      <view class="field">
+        <view class="title">操作时间</view>
+        <view class="name">{{nowTime}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="zan-panel bottom">
+    <view class="zan-btns">
+      <button wx:if="{{record.state == 2}}" class="zan-btn">优惠券已核销</button>
+      <button wx:else bindtap='handleSubmit' class="zan-btn zan-btn--primary {{btnLoading?'zan-btn--loading':''}}">确定核销</button>
+    </view>
+  </view>
+</view>
+<view class="container" wx:elif="{{verifiedClerk && showResult}}">
+  <view class="header">
+    <icon type="success" size="65" color="#04be02"/>
+    <view class="p_txt">核销成功！</view>
+  </view>
+
+  <view class="center" style='margin-top:20px;text-align:center;'>
+
+  </view>
+</view>
+<view class="container cont_error" wx:else>
+  <view class="header">
+    <icon type="clear" size="65" color="#f00"/>
+    <view class="p_txt">您没有核销权限！</view>
+  </view>
+  <view class="center">
+
+  </view>
+</view>
+</block>
+<include src="/pages/template/authModal.wxml"/>
+</view>

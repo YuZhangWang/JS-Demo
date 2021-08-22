@@ -1,0 +1,3 @@
+<view class="cusCheck" bindtap="toggleCheckbox">
+  <view class='cusChecked' hidden="{{!checked}}"></view>
+</view>

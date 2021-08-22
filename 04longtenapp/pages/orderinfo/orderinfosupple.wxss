@@ -1,0 +1,32 @@
+/* pages/orderinfo/orderinfosupple.wxss */
+.orderItem{
+  /* width: 100%; */
+  height: 110rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  color: #999999;
+   /* border-bottom: 1rpx solid #dedede; */
+}
+.header{
+  width: 100%;
+  margin-top: 20rpx;
+  /* border-top: 10rpx solid #dedede; */
+}
+.orderRele{
+  color: #333;
+  font-size: 28rpx;
+  /* margin-left: 50rpx; */
+  /* font-weight: bold; */
+}
+.orderContent{
+  display: flex;
+  color: #999999
+}
+.orderContent image{
+  width: 70rpx;
+  height: 70rpx;
+}

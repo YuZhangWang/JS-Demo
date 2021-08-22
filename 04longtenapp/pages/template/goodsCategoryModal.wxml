@@ -1,0 +1,121 @@
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  var getSpecData = function(specData, ids){
+     for( var i = 1; i < specData.length; i++){
+         if(specData[i].ids == ids){
+           return specData[i].inventory
+         }
+     }
+  }
+  var isSpecSelected = function(specGroup,spec,idx){
+    if(specGroup.selectedId){
+      return specGroup.selectedId == spec.id;
+    } else if(idx==0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var goodsLeftCount = function(goodsData){
+    if(!goodsData)return 0;
+    return goodsData.selectedSku?goodsData.selectedSku.inventory:goodsData.totalCount;
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+  module.exports.isSpecSelected = isSpecSelected;
+  module.exports.goodsLeftCount = goodsLeftCount;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<template name="categoryModalTpl">
+<view class="{{categoryContClass}} {{isDetailPage?'detailPage':''}}" style='z-index:99999;position:fixed;'>
+  <view class="mod_pop_mask" bindtap="onCloseBuy"></view>
+  <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+  <view class="buy_bar {{app.globalData.isIPhoneX ? 'iPhoneXFooter':''}}" wx:if="{{isDetailPage}}"><!--因为bug编号7042这个是加{{app.globalData.isIPhoneX ? 'iPhoneXFooter':'' 但是加了会导致bug编号8267  -->
+    <button wx:if="{{isService!='0'}}" class="backtohome" open-type="contact" form-type='submit' send-message-path='/pages/detail/detail?id={{goodsData.id}}' show-message-card="true">
+      <view class="zan-icon zan-icon-chat main-color" style="{{app.globalData.customStyleColor}}"></view>
+      <view class="home_text">客服</view>
+    </button>
+    <navigator class="backtocart" url='/pages/shoppingcar/shoppingcar' open-type='redirect' wx:if="{{false == isIntegralGoods || undefined == isIntegralGoods}}">
+      <view class="zan-icon zan-icon-shopping-cart"></view>
+      <view class="shoppingcart_text">购物车</view>
+    </navigator>
+    <navigator class="backtocart" url='/pages/index/index' open-type='redirect'>
+      <view class="zan-icon zan-icon-home"></view>
+      <view class="shoppingcart_text">首页</view>
+    </navigator>
+    <button form-type='submit' wx:if="{{goodsData.formIdEnable}}" style="{{app.globalData.customStyleBg}}"  class="main-color-bg commonNavButton custom_buy_now"  data-goodsid="{{goodsData.id}}" bindtap="gotoForm">{{goodsData.customButtonText ? goodsData.customButtonText : "提交信息"}}</button>
+    <button form-type='submit' wx:if="{{goodsData&&!goodsData.formIdEnable && (false == isIntegralGoods  || undefined == isIntegralGoods)}}" style="{{app.globalData.customSubBg}}" class="sub-color-bg commonNavButton custom_add_cart" bindtap="onAddCart">加入购物车</button>
+    <!-- 商城商品库存不足 按钮已售完 -->
+     <button form-type='submit' wx:if="{{nostock}}" class=" commonNavButton custom_buy_now" bindtap="checkMorePro" disabled='{{true}}' style='background:#dfdfdf;'>已售罄</button>
+    <button form-type='submit' wx:if="{{goodsData&&!goodsData.formIdEnable && (false == isIntegralGoods  || undefined == isIntegralGoods)}}" class="main-color-bg commonNavButton custom_buy_now" bindtap="onBuyNow" style="{{app.globalData.customStyleBg}}" >{{goodsData.customButtonEnable ? goodsData.customButtonText : "立刻购买"}}</button>
+    <button form-type='submit' wx:elif="{{ true == isIntegralGoods}}" class="main-color-bg commonNavButton custom_buy_now" bindtap="onBuyNow" style="{{app.globalData.customStyleBg}}" >立刻兑换</button>
+    <button form-type='submit' wx:if="{{!goodsData.formIdEnable && m1.goodsLeftCount(goodsData)!=0}}" style="{{app.globalData.customSubBg}}" class="sub-color-bg commonNavButton custom_add_cart_next" bindtap="onAddCartNext">下一步</button>
+    <button form-type='submit' wx:if="{{!goodsData.formIdEnable && m1.goodsLeftCount(goodsData)==0 }}" class="commonNavButton custom_add_cart_next" disabled='{{true}}' style='background:#dfdfdf;'>已售罄</button>
+    <button form-type='submit' wx:if="{{m1.goodsLeftCount(goodsData)==0 }}" class="commonNavButton custom_buy_now_next" disabled='{{true}}' style='background:#dfdfdf;'>已售罄</button>
+    <button form-type='submit' class="main-color-bg commonNavButton custom_buy_now_next buy-iPhoneX" style="{{app.globalData.customStyleBg}}"  bindtap="onBuyNowNext" wx:if="{{(false == isIntegralGoods || undefined == isIntegralGoods) && m1.goodsLeftCount(goodsData)!=0}}">{{goodsData.customButtonEnable ? goodsData.customButtonText : "立刻购买"}}</button>
+    <button form-type='submit' class="main-color-bg commonNavButton custom_buy_now_next" style="{{app.globalData.customStyleBg}}"  bindtap="onBuyNowNext" wx:elif="{{m1.goodsLeftCount(goodsData)!=0 && true == isIntegralGoods}}">确定兑换</button>
+  </view>
+  </form>
+  <view class="category_main {{app.globalData.isIPhoneX ? 'iPhoneXView':''}}">
+      <!-- 选择规格和数量 -->
+      <view id="control_wrap">
+        <view id="control_info">
+          <view class="category_goods">
+            <view wx:if="{{goodsData.selectedSku && goodsData.selectedSku.img}}" class="left_img">
+             <image src="{{mTool.specUrl(extConfig,userImagePath,goodsData.selectedSku.img,1080)}}" width="60" height="60"></image>
+            </view>
+             <view wx:else class="left_img">
+             <image src="{{mTool.specUrl(extConfig,userImagePath,goodsData.goodsCover,1080)}}" width="60" height="60"></image>
+            </view>
+            <view class="right_goods">
+              <view class="goods-name"><text style="display: inline-block;max-width: 300rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;vertical-align: text-top;">{{goodsData.name}}</text><text wx:if="{{purchaseCon}}" style="font-size: 26rpx;color:red;padding-left: 15rpx">（{{startCount}}{{goodsData.unitName || '件'}}起购）</text></view>
+              <view class="price main-color" style="{{app.globalData.customStyleColor}}" wx:if="{{false == isIntegralGoods  || undefined == isIntegralGoods}}">
+                <text style="font-weight: bold;margin-right: 25px;white-space: nowrap;{{app.globalData.customStyleColor}}" class="item_price i_pri main-color" wx:if="{{showCardPrice}}"><text style="font-size:2.2vh;display: inline-block">会员价：{{app.globalData.currencySymbol}}</text><text style='font-size: 2.5vh;'>{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.memberPrice:memberCardPrice)}}</text></text>
+                <text wx:if="{{showCardPrice}}"  style="color:#959595;font-size:12px;white-space: nowrap"><text>非会员：{{app.globalData.currencySymbol}}</text>{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.price:goodsData.price)}}</text>
+                <text wx:if="{{!showCardPrice}}">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goodsData.selectedSku?goodsData.selectedSku.price:goodsData.price)}}</text>
+              </view>
+              <view class="price main-color" wx:elif="{{true == isIntegralGoods}}" style="{{app.globalData.customStyleColor}}">
+               {{goodsData.selectedSku?goodsData.selectedSku.price:goodsData.price}} 积分</view>
+            </view>
+            <view class="close_btn" bindtap="onCloseBuy">
+              <view class="zan-icon zan-icon-close"></view>
+            </view>
+          </view>
+          <view id="control_sku" wx:if="{{goodsData.usenewspec}}">
+            <scroll-view id="sku_view" scroll-y="true" style="max-height:60vh;">
+              <view class="sku_ul" wx:for="{{specList}}" wx:for-item="specGroup" wx:key="specGroup.id">
+                <view class="sku_ul_title">{{specGroup.name}}</view>
+                <view class='sku_li' wx:for="{{specGroup.specValue}}" wx:for-index="specIndex" wx:for-item="spec" wx:key="spec.id">
+                  <view  bindtap='handleSkuTap' class="option  sku_a {{m1.isSpecSelected(specGroup,spec,specIndex)?'current_sku main-color-bg':''}}" style="{{m1.isSpecSelected(specGroup,spec,specIndex)?app.globalData.customStyleBg:''}}"  data-groupid="{{specGroup.id}}" data-id='{{spec.id}}'>{{spec.name}}</view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+          <view id="control_count">
+            <text class="left control_tle">购买数量：</text>
+            <view class="good_count_box">
+              <view id="good_sub" class="minus" style="background: {{(purchaseCon && totalBuyCount==startCount) ? '#e7e7e7':'#fff'}};" bindtap="minusCount">-</view>
+              <view class="good_num">
+                <input id="total_count" bindinput="handleBuyGoodsCountChange" type="tel" value="{{totalBuyCount}}"></input>
+              </view>
+              <view id="good_add" bindtap="addCount" style="background: {{(limitEnable && totalBuyCount>=limitCount) ? '#e7e7e7':'#fff'}};" class="plus">+</view>
+            </view>
+            <view class="control_inventory main-color" style="{{app.globalData.customStyleColor}}">剩余：{{m1.goodsLeftCount(goodsData)}}{{goodsData.unitName || '件'}}</view>
+          </view>
+        </view>
+        <form bindsubmit='handleCommonFormSubmit' report-submit='true'>
+        <view class="control_btn" wx:if="{{!isDetailPage}}">
+          <button form-type='submit' wx:if="{{m1.goodsLeftCount(goodsData)==0 }}" class="commonNavButton custom_buy_now_next" disabled='{{true}}' style='background:#dfdfdf;height: 45px;line-height: 45px;width: 100%;text-align: center;'>已售罄</button>
+          <button form-type='submit' class="sub-color-bg commonNavButton btn-addcart" style="{{app.globalData.customSubBg}}" catchtap='onAddCartNext'  wx:if="{{(false == isIntegralGoods  || undefined == isIntegralGoods) && m1.goodsLeftCount(goodsData)!=0 }}">加入购物车</button>
+          <button wx:if="{{(false == isIntegralGoods  || undefined == isIntegralGoods) && m1.goodsLeftCount(goodsData)!=0 }}" form-type='submit' style="{{app.globalData.customStyleBg}}" style="{{app.globalData.customStyleBg}}"  class="main-color-bg commonNavButton btn-buynow" catchtap='onBuyNowNext'>{{goodsData.customButtonEnable ? goodsData.customButtonText : "立刻购买"}}</button>
+        </view>
+        </form>
+      </view>
+    </view>
+  </view>
+</template>

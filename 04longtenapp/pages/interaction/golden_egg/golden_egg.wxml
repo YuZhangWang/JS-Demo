@@ -1,0 +1,91 @@
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<block wx:if="{{currentPage == 'startGame'}}">
+<view class="game_page">
+  <image bindtap="showRule" data-name="btn_2" class="rule_tag rule_btn" src="{{youyuResPath}}/gamepage/golden_eggs/btn_2.png" mode="widthFix"></image>
+  <image data-name="image_7" class="den den1" src="{{youyuResPath}}/gamepage/golden_eggs/image_7.png" mode="widthFix"></image>
+  <image data-name="image_8" class="den den2" src="{{youyuResPath}}/gamepage/golden_eggs/image_8.png" mode="widthFix"></image>
+
+
+
+  <view class="game_div pages" data-name="bg2">
+
+    <view class="gd_1">
+      砸到TA，最高可以获得<text class="maxPrize">{{orgAwardList[0].awardName}}</text>
+    </view>
+
+    <view wx:if="{{animationEnded}}" class="say_box">
+      <view>看好哦！</view><view>砸中即可获奖</view>
+    </view>
+    <view wx:elif="{{!liRun}}" class="say_box say_box_{{randomFace+1}}">
+      <view>来呀，</view><view>砸我呀！</view>
+    </view>
+
+    <image class="{{eggClick?'hammer_run':''}}" id="hammer" src="{{youyuResPath}}/gamepage/golden_eggs/image_5.png" animation="{{hammerAnimationData}}" mode="widthFix"></image>
+
+    <view class="gd_tip">
+      今日有<text class="game_time">{{actuallyTime}}</text>次砸蛋机会哦，总砸蛋机会剩余<text class="game_time">{{allLimitTime}}</text>次
+    </view>
+
+    <!-- 舞台 -->
+    <view id="stage" class="stage">
+      <view class="container">
+        <view wx:for-index="idx" style='{{(idx==randomFace && !hideFace)?("animation:swing_"+(idx+1)+" 2s 0s infinite ease both"):""}}' bindtap='handleEggTab' class="li {{liRun?'liRun':''}}" wx:for="{{[1,2,3,4,5]}}">
+          <image data-id="{{idx}}" class="egg" data-name="egg" src="{{youyuResPath}}/gamepage/golden_eggs/{{(showEggResult&&idx==selectedEggIndex)?'egg2.png':'egg.png'}}" mode="widthFix"></image>
+          <block wx:if="{{idx==randomFace && !hideFace}}">
+            <image class="egg_face" src="{{youyuResPath}}/gamepage/golden_eggs/image_1.png" mode="widthFix"></image>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+</block>
+
+<block wx:elif="{{currentPage == 'failDiv'}}">
+  <view data-name="bg4" class="fail_div pages">
+    <image bindtap="showRule" data-name="btn_2" class="rule_tag rule_btn" src="{{youyuResPath}}/gamepage/golden_eggs/btn_2.png" mode="widthFix"></image>
+    <view class="wd_1">
+      <view class="wd1_1">没中奖</view>
+      <view>sorry，不在那颗蛋蛋中哦！</view>
+    </view>
+    <view class="wd_2">
+      <view>看歪了！</view>
+       <view>没中奖！</view>
+    </view>
+
+  </view>
+
+  <image data-name="icon_3" bindtap='playAgain' wx:if="{{actuallyTime>0}}" class="again_btn btns playagain_link" src="{{youyuResPath}}/gamepage/golden_eggs/icon_3.png" mode="widthFix"></image>
+</block>
+<block wx:elif="{{currentPage == 'winDiv'}}">
+  <view class="win_div pages">
+    <image bindtap="showRule" data-name="btn_2" class="rule_tag rule_btn" src="{{youyuResPath}}/gamepage/golden_eggs/btn_2.png" mode="widthFix"></image>
+    <view class="wd_1">
+      <text class="wd1_1">中奖啦</text>
+      <view>恭喜你获得<text class="maxPrize">{{prizeAward.awardName}}</text></view>
+    </view>
+    <view class="wd_2">
+      <view>眼力很好嘛！</view>
+      <view>居然砸中了！</view>
+    </view>
+    <view class="gd_tip">人品爆发，快去领取奖品吧！</view>
+  </view>
+  <image data-name="icon_2" bindtap='gotoMyPrize' class="lqjp_btn btns" src="{{youyuResPath}}/gamepage/golden_eggs/icon_2.png" mode="widthFix"></image>
+</block>
+
+<block wx:else>
+<include src="../inteCommon/startPage.wxml"></include>
+</block>
+
+     <rule-and-award static-res-path="{{staticResPath}}" activity="{{activity}}"  awardlist="{{orgAwardList}}" myawards="{{myAwards}}" show-status="{{showStatus}}" bind:showrule="showRule" bind:showaward="showAward" bind:showawarditem="showAwardItem">
+     </rule-and-award>
+<include src="../inteCommon/commonPage.wxml"></include>
+</view>
+<audio src="{{youyuResPath}}/gamepage/golden_eggs/za.mp3" id="zaAudio" loop="{{false}}"></audio>
+
+<audio src="{{youyuResPath}}/gamepage/golden_eggs/win.mp3" id="winAudio" loop="{{false}}"></audio>
+
+<audio src="{{youyuResPath}}/gamepage/golden_eggs/fail.mp3" id="failAudio" loop="{{false}}"></audio>
+
+<audio src="{{youyuResPath}}/gamepage/golden_eggs/rotate.mp3" id="rotateAudio" loop="{{true}}"></audio>
+

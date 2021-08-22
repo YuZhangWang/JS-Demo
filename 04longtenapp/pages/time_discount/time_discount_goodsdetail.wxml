@@ -1,0 +1,160 @@
+<!--pages/time_discount/time_discount_goodsdetail.wxml-->
+<wxs module="m1">
+  var getFixedMoney = function(money) {
+    if (typeof(money) !== "undefined") {
+      return Number(money / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  }
+  module.exports.getFixedMoney = getFixedMoney;
+</wxs>
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<import src="../template/decoration.wxml" />
+<import src="../template/discountCategoryModal.wxml" />
+<canvas style="width:1188rpx;height:1782rpx; position:absolute;top:-1300px;" canvas-id="canvasGB"></canvas>
+<view hidden="{{true}}">
+  <image src="{{shareQrCodeUrl}}"></image>
+</view>
+<view wx:if="{{isDone}}" class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <scroll-view class="container {{contClass}}" style="padding-bottom:120rpx;background:#f5f7f7;">
+    <!--商品轮播图-->
+    <view class="header-cont">
+      <swiper class="index-banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" style="height:{{mainBannerHeight||562}}rpx" duration="{{1000}}">
+        <block wx:for="{{goodsDetailInfo.goodsSlider}}" wx:key="index">
+
+          <swiper-item>
+            <image bindtap="viewImg" data-id="{{index}}" data-type="banner" src="{{mTool.specUrl(extConfig,userImagePath,item,1080)}}" bindload="onMainBannerImgLoad" class="slide-image" />
+          </swiper-item>
+
+        </block>
+      </swiper>
+
+      <!--商品基本信息-->
+      <view class="detail-pre" style="background: url({{staticResPath}}/image/mobile/discount_tag.png);background-size: 100% 100%;">
+        <view class="detail-pre-price">
+          <image src='{{staticResPath}}/image/mobile/discount_txt.png' class='discount-txt'></image>
+          <view class="discount-price-wrap">
+            <view>{{app.globalData.currencySymbol}}
+              <text style="font-size:48rpx">{{m1.getFixedMoney(goodsDetailInfo.timeDiscountGoodsAward.discountPrice)}}</text>
+            </view>
+            <text style="text-decoration: line-through">{{app.globalData.currencySymbol}}{{m1.getFixedMoney(goodsDetailInfo.timeDiscountGoodsAward.salePrice)}}</text>
+          </view>
+
+        </view>
+        <!-- 活动时间 -->
+        <view class="detail-pre-time">
+          <view class="act_countDown_box">
+            <view style="font-size:24rpx;color:#2d2d2d;" class="act_time_name">{{atyStatusTxt}}</view>
+            <view class="countDown_time">
+              <span class="timer_day timer_box">{{atyTimeShutDown.timerDay}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_hour">{{atyTimeShutDown.timerHour}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_minute">{{atyTimeShutDown.timerMinute}}</span>
+              <span class="split">:</span>
+              <span class="timer_box timer_second">{{atyTimeShutDown.timerSecond}}</span>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 活动商品名称及分享 -->
+      <view class="detail-cont">
+        <view class="discount-goods-name">{{goodsDetailInfo.timeDiscountGoodsAward.goods.name}}</view>
+        <view class="discount-share"  bindtap='showShareMasks'>
+          <image src='{{staticResPath}}/image/mobile/discount_share_icon.png' class='commonPosterIco'></image>分享
+        </view>
+
+      </view>
+      <!-- 库存 销量 -->
+      <view class="payed_count">
+        <text class="inventory">剩余：{{goodsDetailInfo.timeDiscountGoodsAward.totalCount}}</text>
+        <text class="soldNum">销量：{{goodsDetailInfo.timeDiscountGoodsAward.goods.payedCount+goodsDetailInfo.timeDiscountGoodsAward.goods.virtualPayedCount}} 笔</text>
+        <text class="delivery_txt">{{goodsDetailInfo.deliveryType == 1 ? "包邮":"运费"+m1.getFixedMoney(goodsDetailInfo.deliveryPrice)}}</text>
+      </view>
+    </view>
+
+    <!-- 商品评价 -->
+    <view class="microshop-box">
+      <view class="goto_shop" bindtap="toJudgeListAty">
+      <text>商品评价(\t{{judgeCount}}\t)</text>
+      <image class='jianTou-right' wx:if="{{judgeCount>0}}" src='{{staticResPath}}/image/mobile/trigger_right.png'></image>
+    </view>
+    </view>
+   
+    <!--商品详情块-->
+    <view class="microshop-box">
+      <view class="goto_shop">
+        <text>商品详情</text>
+      </view>
+    </view>
+    <!--商品描述块-->
+    <view class="detail_decoration">
+      <block wx:for="{{decoration.items}}" wx:key="item.item_type" wx:for-index="idx">
+        <template is="{{item.item_type}}" data="{{app,item:item,userImagePath:userImagePath,staticResPath:staticResPath,bannerHeight:bannerHeight,multInfoArr:multInfoArr,multInfo:multInfo,multInfoAddr:multInfoAddr,shopUid:app.globalData.shopuid,categoryList:categoryList,selectedCatData:selectedCatData,widgetIndex:idx,communityHandleData:communityHandleData,subClsList:subClsList,selectedSubData:selectedSubData,goodsOrderObj:goodsOrderObj,extConfig:extConfig,app:app,seckList,countDownList,playBgMusic,navTabPanelData,shoppingCartCount,microBottomMenu,locationInfo}}"
+        />
+      </block>
+    </view>
+    <!-- 底部菜单 -->
+    <view class="discount-bottom-tar">
+        <navigator url="/pages/index/index" class="tar-item">
+         <image src="{{staticResPath}}/image/mobile/discount_index_icon.png"></image>
+          <view class="tar-text">首页</view>
+        </navigator>
+       <button class="tar-item commonNavButton" wx:if="{{isService!='0'}}"  open-type="contact" form-type='submit' send-message-path='/pages/detail/detail?id={{goodsData.id}}' show-message-card="true">
+          <image src="{{staticResPath}}/image/mobile/discount_customer.png"></image>
+          <view class="tar-text">客服</view>
+        </button>
+        <navigator url="/pages/orderlist/orderlist" class="tar-item">
+         <image src="{{staticResPath}}/image/mobile/discount_order.png"></image>
+          <view class="tar-text">订单</view>
+        </navigator>
+        <!-- 按钮状态 -->
+        <view bindtap="{{activity.activityStatus == 2 && goodsDetailInfo.timeDiscountGoodsAward.totalCount != 0 ? 'onBuyDiscount':''}}"  class="tar-buy-btn tar-buy-btn{{activity.activityStatus == 2 && goodsDetailInfo.timeDiscountGoodsAward.totalCount == 0 ? '4':activity.activityStatus}}">
+           {{activity.activityStatus == 2 && goodsDetailInfo.timeDiscountGoodsAward.totalCount == 0 ? '已抢完':activity.activityStatusTxt}}
+        </view>
+
+
+
+    </view>
+  </scroll-view>
+  <!-- 商品规格 -->
+  <template is="categoryModalTpl" data="{{app,isService:decoration.header_data.service,userImagePath:userImagePath,staticResPath:staticResPath,goodsData:goodsData,goodsDetailInfo:goodsDetailInfo,app:app,categoryContClass:categoryContClass,specData:specData,specList:specList,totalBuyCount:totalBuyCount,isDetailPage:false,isCollected:isCollected,preOrder:preOrder,activity:activity}}"></template>
+</view>
+<!-- 生成海报  -->
+<view class="shareMask" hidden='{{showShareMask}}'>
+  <view class="shareMask-body">
+    <view class="shareMask-middle">
+      <view class="shareMask-icon" data-goodsid="{{goodsDetailInfo.id}}">
+        <button open-type="share" style="background:#fff">
+          <image class="shareMask-img" src="{{staticResPathBargain}}icon-wx.png">
+            <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}icon-wx.png&quot;);"></div>
+            <span></span>
+          </image>
+        </button>
+        <view class="shareMask-txt">
+          <view>召唤伙伴一起拼</view>
+        </view>
+      </view>
+      <form class="shareMask-icon" wx:if="{{shareType == 0}}" data-goodsid="{{goodsDetailInfo.id}}" bindtap="shareByQRCode" report-submit="">
+        <span>
+          <button class="button-reset" form-type="submit">
+            <view class="shareFormFlex">
+              <image class="shareMask-img" src="{{staticResPathBargain}}icon-ps.png">
+                <div style="background-size: 100% 100%; background-repeat: no-repeat; background-image: url(&quot;{{staticResPathBargain}}/icon-ps.png&quot;);"></div>
+                <span></span>
+              </image>
+              <view class="shareMask-txt">
+                <view>生成海报图</view>
+              </view>
+            </view>
+          </button>
+        </span>
+      </form>
+    </view>
+    <view class="shareMask-confirm" bindtap='hideShareMasks'>取消</view>
+  </view>
+</view>
+<include src="../template/fixedmenu.wxml" />
+<include src="/pages/template/copyright.wxml" />
+<include src="/pages/template/authModal.wxml" />

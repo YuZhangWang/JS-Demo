@@ -1,0 +1,766 @@
+/* pages/subCategory/subpage.wxss */
+@import "../template/forum/community.wxss";
+@import "../detail/detail.wxss";
+@import "../search/search.wxss";
+.page{
+  background: #f5f7f7;
+}
+.zanBlock{
+  position: fixed;
+  bottom: 5rpx;
+  display: flex;
+  margin-left: 10rpx;
+}
+  .zanIco{
+    width: 50rpx;
+    height: 50rpx;
+  }
+  .sbargainList{
+  background:white;
+  padding-top:10rpx;
+
+}
+.sbargainList .infoItem {
+margin:26px 15px 0;
+border-bottom:1px solid #EBEBEB;
+display:-webkit-flex;
+display:flex;
+position:relative;
+
+}
+.container{
+  /* padding-bottom: 70px !important; */
+}
+.infoItem .goodsImg-container{
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 272rpx;
+    margin-bottom: 40rpx;
+}
+.infoItem .goodsImg-container .goodsImg-wrapper{
+    background: #f4f4f4;
+    height: 272rpx;
+    border-radius: 4rpx;
+    overflow: hidden;
+
+}
+.goodsImg-wrapper img{
+    height: 272rpx;
+    width: 272rpx;
+    border-radius: 4rpx;
+    box-shadow: 0 2rpx 2rpx rgba(0, 0, 0, 0.06);
+}
+
+.list--buttons {
+    margin-left: 30rpx;
+    max-width: 428rpx;
+}
+.list--ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.list--title {
+    display: block;
+    font-family: "PingFangSC-Regular";
+    font-size: 32rpx;
+    color: #333;
+    line-height: 32rpx;
+}
+.list--status {
+    margin-top: 18rpx;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 40rpx;
+}
+.list--desc {
+    display: block;
+    font-family: "PingFangSC-Light";
+    color: #666;
+    font-size: 28rpx;
+    line-height: 32rpx;
+    margin-top: 18rpx;
+}
+.list--avatar {
+    display: block;
+    height: 38rpx;
+    width: 38rpx;
+    border-radius: 18rpx;
+    margin-right: 10rpx;
+}
+.list--color999 {
+    color: #999;
+}
+.list--attends {
+    margin-left: 4rpx;
+    font-size: 24rpx;
+    line-height: 32rpx;
+    font-family: "PingFangSC-Light";
+    color: #c0c0c0;
+}
+.list--prices {
+    margin-top: 18rpx;
+    display: -webkit-flex;
+    display: flex;
+}
+.list--price {
+    display: block;
+    height: 32rpx;
+    line-height: 32rpx;
+    font-size: 28rpx;
+    font-family: "PingFangSC-Light";
+}
+.list--red {
+    color: #b4282d;
+    font-family: "PingFangSC-Semibold";
+    font-size: 36rpx;
+}
+.list--origin-price {
+    margin-left: 16rpx;
+    text-decoration: line-through;
+    font-size: 24rpx;
+}
+.list--bargin {
+    margin-top: 28rpx;
+    width: 200rpx;
+    height: 53rpx;
+    background: #b4282d;
+    border-radius: 64rpx;
+    font-size: 28rpx;
+    line-height: 52rpx;
+    font-family: "PingFangSC-Light";
+    color: #fff;
+    text-align: center;
+    margin-left: 0px;
+}
+/* 拼团 */
+.tuan_goods_list{
+
+  overflow: hidden;
+  background:#f8f7f7;
+
+}
+.tuan_goods_listBg{
+  background: #F7F7F7;
+}
+
+#indexPage .countDown_time_box .timeWrap{
+	display: inline-flex;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300rpx 100rpx;
+  height: 100rpx;
+  justify-content: center;
+  align-items: cente;
+  width: 300rpx;
+  position: relative;
+}
+.goods_name{
+  color: #333;
+  font-size: 28rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 35rpx;
+  overflow: hidden;
+
+}
+#indexPage .countDown_time_box .timer_box{
+  position: absolute;
+	color: #fff;
+	font-size: 45rpx;
+	text-align: right;
+  padding-top: 28rpx;
+}
+#indexPage .countDown_time_box .timer_day{
+  left: 18rpx;
+}
+#indexPage .countDown_time_box .timer_hour{
+  left: 94rpx;
+}
+#indexPage .countDown_time_box .timer_minute{
+  left: 165rpx;
+}
+#indexPage .countDown_time_box .timer_second{
+  left: 240rpx;
+}
+#indexPage .countDown_tips_box{
+	display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+}
+#indexPage .countDown_tips_box .line_style{
+	width: 180rpx;
+	height: 1px;
+	border-bottom: 1px solid #e7103b;
+}
+#indexPage .footer_btn_box, #myTuanListPage .footer_btn_box {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100rpx;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 -1px 2px #eee;
+
+}
+#indexPage .footer_btn_box .footer_btn, #myTuanListPage .footer_btn_box .footer_btn {
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 16rpx 0 0;
+    text-align: center;
+    color: #100F0F;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#indexPage .footer_btn_box .footer_btn>image, #myTuanListPage .footer_btn_box .footer_btn>image {
+    height: 40rpx;
+    width: 40rpx;
+    display: block;
+    margin: 0 auto 4rpx;
+}
+#indexPage .footer_btn_box .footer_btn .tuan_menu_txt, #myTuanListPage .footer_btn_box .footer_btn .tuan_menu_txt {
+    font-size: 26rpx;
+    color: #999;
+}
+
+
+.topbar_tuanActEnded {
+    height: 20rpx;
+    background-color: #ef4b41;
+    color: #FFF;
+    font-size: 16px;
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 222;
+    width: 100%;
+     display: none;
+}
+/* 拼团 */
+#indexPage{
+  background: #f5f7f7;
+  padding:20rpx;
+}
+.tuan_goods_list{
+  background: #fff;
+  padding: 15rpx;
+  border-radius: 15rpx;
+}
+#indexPage .act_countDown_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10rpx;
+
+}
+ #indexPage .act_countDown_box_wrap {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+
+}
+#indexPage .act_countDown_box .box-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-right: 25rpx;
+
+}
+#indexPage .countDown_time {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #999;
+
+}
+#indexPage .countDown_time .time_txt {
+  color: #2d2d2d;
+  font-size: 26rpx;
+
+}
+#indexPage .countDown_time .timer_box {
+  background: #FE4543;
+  color: white;
+  display: inline-block;
+  font-size: 22rpx;
+  padding: 0 6rpx;
+  border-radius: 8rpx;
+  margin: 5rpx;
+
+}
+
+
+
+
+
+.tuan_goods_listBg{
+  background: #F7F7F7;
+}
+
+#indexPage .countDown_time_box .timeWrap{
+	display: inline-flex;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300rpx 100rpx;
+  height: 100rpx;
+  justify-content: center;
+  align-items: cente;
+  width: 300rpx;
+  position: relative;
+}
+#indexPage .countDown_time_box .timer_box{
+  position: absolute;
+	color: #fff;
+	font-size: 45rpx;
+	text-align: right;
+  padding-top: 28rpx;
+}
+#indexPage .countDown_time_box .timer_day{
+  left: 18rpx;
+}
+#indexPage .countDown_time_box .timer_hour{
+  left: 94rpx;
+}
+#indexPage .countDown_time_box .timer_minute{
+  left: 165rpx;
+}
+#indexPage .countDown_time_box .timer_second{
+  left: 240rpx;
+}
+#indexPage .countDown_tips_box{
+	display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+}
+#indexPage .countDown_tips_box .line_style{
+	width: 180rpx;
+	height: 1px;
+	border-bottom: 1px solid #e7103b;
+}
+#indexPage .footer_btn_box, #myTuanListPage .footer_btn_box {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100rpx;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 -1px 2px #eee;
+
+}
+#indexPage .footer_btn_box .footer_btn, #myTuanListPage .footer_btn_box .footer_btn {
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 16rpx 0 0;
+    text-align: center;
+    color: #100F0F;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#indexPage .footer_btn_box .footer_btn>image, #myTuanListPage .footer_btn_box .footer_btn>image {
+    height: 40rpx;
+    width: 40rpx;
+    display: block;
+    margin: 0 auto 4rpx;
+}
+#indexPage .footer_btn_box .footer_btn .tuan_menu_txt, #myTuanListPage .footer_btn_box .footer_btn .tuan_menu_txt {
+    font-size: 26rpx;
+    color: #999;
+}
+
+
+.topbar_tuanActEnded {
+    height: 20rpx;
+    background-color: #ef4b41;
+    color: #FFF;
+    font-size: 16px;
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 222;
+    width: 100%;
+     display: none;
+}
+#indexPage .tuan_goods_list .tuan_goods_item {
+  background:#fff;
+  display:flex;
+  padding:15rpx;
+  box-sizing:border-box;
+}
+#indexPage .tuan_goods_item .goods_img {
+  display: inline-block;
+  width: 200rpx;
+  height: 200rpx;
+  flex: 0 0 200rpx;
+  border-radius: 15rpx;
+  margin-right: 30rpx;
+
+}
+#indexPage .tuan_goods_item .goods_info_box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 428rpx;
+
+}
+#indexPage .tuan_goods_item .goods_title {
+  height: 70rpx;
+
+}
+#indexPage .tuan_goods_item .nick_img_box{
+  display: flex;
+  justify-content: space-between;
+  color: #8c8c8c;
+  font-size: 36rpx;
+}
+#indexPage .tuan_goods_item .img_and_qibpao{
+  display: inline-flex;
+}
+#indexPage .goods_info_box .nick_img_box .nick_img>image {
+    display: block;
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    margin-left: 10rpx;
+}
+#indexPage .goods_info_box .goods_price_box{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+#indexPage .goods_info_box .goods_act_price{
+  color: #f44;
+  font-weight: bold;
+  font-size: 36rpx;
+  margin-left: -5rpx;
+
+}
+#indexPage .acty-name{
+  font-size: 24rpx;
+  color: #f44;
+  font-weight: bold;
+  position: relative;
+  bottom: -15rpx;
+
+}
+#indexPage .goods_info_box .goods_price{
+  font-size:24rpx;
+  color: #8c8c8c;
+
+}
+
+#indexPage .goods_info_box .nick_img_box .qipao_box {
+    width: 128rpx;
+    height: 54rpx;
+    background-color: white;
+    background-size: 128rpx 54rpx;
+    font-size: 25rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#indexPage .goods_info_box .nick_img_box .qipao_box text{
+  margin-left: 10rpx
+}
+#indexPage .goods_info_box  .goods_btn{
+  width:150rpx;
+  height:60rpx;
+  color:white;
+  background:#EC4644;
+  border-radius:40rpx;
+  line-height:60rpx;
+  text-align:center;
+  font-size:28rpx;
+  background: #f85032; /* Old browsers */
+  background: linear-gradient(to right, #e73f40 0%,#ec8d6d 100%);
+}
+
+
+
+
+#goodsDetailPage .tuan_detail_wrapper {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    background:#f8f7f7;
+
+}
+#goodsDetailPage .comeBack_btn {
+    position: absolute;
+    z-index: 200;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+}
+#goodsDetailPage .comeBack_btn>image {
+    width: 75rpx;
+    height: 75rpx;
+}
+#goodsDetailPage .swiper {
+  height: 705rpx;
+}
+#goodsDetailPage .wrapBanner image{
+  height: 705rpx;
+}
+#goodsDetailPage .price_info_box{
+  background-size: 100% 100rpx;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  padding: 16rpx 10rpx;
+}
+#goodsDetailPage .price_info_box .price_info{
+  display: inline-flex;
+  align-items: center;
+
+}
+#goodsDetailPage .price_info_box .actual_price_box{
+margin-left: 5rpx;
+}
+#goodsDetailPage .price_info_box .act_countDown_box{
+  color: #ed295d;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+#goodsDetailPage .price_info_box .act_countDown_box .act_time_name{
+  font-size: 26rpx;
+  line-height: 34rpx;
+}
+
+
+
+.tuan_num_box{
+  display: flex;
+  text-align: center;
+  border: 1px solid white;
+  height:32rpx;
+  border-radius:6rpx;
+  margin-right: 16rpx;
+  align-items: center;
+  margin-left:12rpx;
+}
+.actual_price .actualPriceVal{
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    position: relative;
+    text-decoration: line-through;
+    margin-left: 10px;
+}
+.goods_price_box{
+  display: flex;
+  align-items: center;
+  width:100%;
+}
+.tuanpeopleNum{
+  position:relative;
+  padding:0px 2px;
+  font-size:26rpx;
+}
+.tuan_num_box img{
+  vertical-align: middle;
+}
+.infoItem .goods-img{
+    height: 200rpx;
+    width: 200rpx;
+    border-radius: 15rpx;
+    margin-right: 30rpx;
+}
+
+
+
+
+/* 拼团 */
+
+.sbargainList .infoItem {
+  margin: 0;
+  background: #fff;
+  display: flex;
+  padding: 15rpx;
+  box-sizing: border-box;
+
+
+}
+
+.infoItem .goods-img{
+    height: 200rpx;
+    width: 200rpx;
+    border-radius: 15rpx;
+    margin-right: 30rpx;
+}
+
+.list--buttons {
+    max-width: 428rpx;
+    width: 100%;
+}
+.list--ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.list--title {
+    display: block;
+    font-family: "PingFangSC-Regular";
+    font-size: 30rpx;
+    color: #333;
+    line-height: 32rpx;
+}
+.list--status {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 40rpx;
+}
+.list--desc {
+    display: block;
+    font-family: "PingFangSC-Light";
+    color: #999;
+    font-size: 24rpx;
+    line-height: 32rpx;
+    margin-top: 10rpx;
+}
+.list--avatar {
+    display: block;
+    height: 38rpx;
+    width: 38rpx;
+    border-radius: 18rpx;
+    margin-right: 10rpx;
+}
+.list--color999 {
+    color: #999;
+}
+.list--attends {
+    font-size: 24rpx;
+    line-height: 32rpx;
+    font-family: "PingFangSC-Light";
+    color: #ccc;
+}
+.list--prices {
+    flex-direction: column;
+    display: -webkit-flex;
+    display: flex;
+}
+.list--price {
+    display: block;
+    height: 32rpx;
+    line-height: 32rpx;
+    font-size: 28rpx;
+    font-family: "PingFangSC-Light";
+}
+.list--price-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10rpx;
+
+
+}
+.list--red {
+    color: #b4282d;
+    font-family: "PingFangSC-Semibold";
+    font-size: 36rpx;
+}
+.list--origin-price {
+    margin-left: 6rpx;
+    text-decoration: line-through;
+    font-size: 24rpx;
+    margin-top: 8rpx;
+}
+.list--bargin {
+    width: 150rpx;
+    height: 60rpx;
+    background: #b4282d;
+    border-radius: 40rpx;
+    font-size: 28rpx;
+    line-height: 60rpx;
+    font-family: "PingFangSC-Light";
+    color: #fff;
+    text-align: center;
+    margin-left: 0px;
+}
+#indexPage{
+  background: #f5f7f7;
+  padding:20rpx;
+}
+.tuan_goods_list{
+  background: #fff;
+  padding: 15rpx;
+  border-radius: 15rpx;
+}
+#indexPage .act_countDown_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10rpx;
+
+}
+ #indexPage .act_countDown_box_wrap {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+
+}
+#indexPage .act_countDown_box .box-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-right: 25rpx;
+
+}
+#indexPage .countDown_time {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #999;
+
+}
+#indexPage .countDown_time .time_txt {
+  color: #2d2d2d;
+  font-size: 26rpx;
+
+}
+#indexPage .countDown_time .timer_box {
+  background: #FE4543;
+  color: white;
+  display: inline-block;
+  font-size: 22rpx;
+  padding: 0 6rpx;
+  border-radius: 8rpx;
+  margin: 5rpx;
+
+}
+
+.sbargain-list-wrap{
+  background: #fff;
+  padding: 15rpx;
+  border-radius: 15rpx;
+}

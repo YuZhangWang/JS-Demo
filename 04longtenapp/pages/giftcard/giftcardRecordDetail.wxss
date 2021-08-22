@@ -1,0 +1,7 @@
+/* pages/giftcard//giftcardRecordDetail.wxss */
+@import "./giftcardDetail.wxss";
+.gift-btn{
+  display:flex;
+  display: -webkit-flex;
+  align-items: center;
+}

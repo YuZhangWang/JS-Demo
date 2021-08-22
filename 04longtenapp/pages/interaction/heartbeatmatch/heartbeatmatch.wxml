@@ -1,0 +1,58 @@
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+<block wx:if="{{currentPage == 'startGame'}}">
+  <view id="hdffl_panel" class="hd-bg" data-replace-img="bg">
+    <view class="top-time">
+      <view  class="top-time-item1"><text class="clock"></text><text class="left-time">{{heartData.leftTime}}s</text></view>
+      <view  class="top-time-item2"><text class="left-life"></text><text class="total-score">{{heartData.score}}</text></view>
+    </view>
+    <view id="gameContent">
+      <view id="cards_box" class="rotateIn1">
+        <view class="card" data-type="{{card.type}}" wx:for="{{realImgArr}}" wx:for-item="card" wx:for-index="idx" data-idx="{{idx}}" wx:key="card.id" bindtap='handleCardTap'>
+          <view class="img-wrap {{card.animClass}}">
+            <image src="{{youyuResPath}}/gamepage/{{templateName}}/back.png"></image>
+          </view>
+          <view class="img-wrap {{card.animClass}}">
+            <image src="{{card.url}}"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 加分效果 -->
+  <view id="add_score" class="add-score" style='display:{{showAddScore?"block":"none"}}'>
+    <view class="ball-heart">
+      <view class="ball-score zoomUp"></view>
+    </view>
+    <view class="circle circle1 zoomBig1"></view>
+    <view class="circle circle2 zoomBig1"></view>
+    <view class="circle circle3 zoomBig1"></view>
+    <view class="circle circle4 zoomBig1"></view>
+    <view class="circle circle5 zoomBig1"></view>
+    <view class="circle circle6 zoomBig1"></view>
+  </view>
+  <!-- 减分效果 -->
+  <view id="minus_score" class="minus-score" style='display:{{showMinusScore?"block":"none"}}'>
+    <view class="ball-heart-left heartLeft"></view>
+    <view class="ball-heart-right heartRight"></view>
+    <view class="ball-score zoomUp"></view>
+    <view class="other zoomUp"></view>
+  </view>
+
+  <!-- 倒计时提示 -->
+  <view class="countDown" wx:if="{{heartData.readyCountdown>0}}"><view  class="count-msg">{{heartData.readyCountdown}}</view></view>
+  <view class="score-add" style="display:none;">+10</view>
+</block>
+
+
+<block wx:else>
+<include src="../inteCommon/startPage.wxml"></include>
+</block>
+<include src="../inteCommon/commonPage.wxml"></include>
+  <play-ret static-res-path="{{staticResPath}}" bind:playagain="playAgain" is-show="{{isShow}}" have-gift="{{haveGift}}" play-msg="{{playMsg}}" play-desc="{{playDesc}}"></play-ret>
+  <rule-and-award static-res-path="{{staticResPath}}" activity="{{activity}}"  awardlist="{{orgAwardList}}" myawards="{{myAwards}}" show-status="{{showStatus}}" bind:showrule="showRule" bind:showaward="showAward" bind:showawarditem="showAwardItem">
+  </rule-and-award>
+</view>
+<audio src="{{youyuResPath}}/gamepage/{{templateName}}/bg.mp3" id="bgAudio" loop="{{true}}"></audio>
+<audio src="{{youyuResPath}}/gamepage/{{templateName}}/fp.mp3" id="fpAudio" loop="{{false}}"></audio>
+<audio src="{{youyuResPath}}/gamepage/{{templateName}}/add.mp3" id="addAudio" loop="{{false}}"></audio>
+<audio src="{{youyuResPath}}/gamepage/{{templateName}}/minus.mp3" id="minusAudio" loop="{{false}}"></audio>

@@ -1,0 +1,638 @@
+@import "../inteCommon/common.wxss";
+.start_page .rule_tag {
+    width: 140rpx;
+    right: 26rpx;
+    top: 0rpx;
+}
+
+.start_page .title_img{
+  width: 607rpx;
+  top: 56rpx;
+  left: 45%;
+}
+
+.start_page .start_btn{
+  width: 320rpx;
+  top: 942rpx;
+}
+.maxPrize{
+  font-weight: 700;
+}
+
+.start_page {
+	background-color: #5338AC;
+}
+.countDown {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,0.5);
+	z-index: 150;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.countDown view.count-msg {
+  color:#fff;
+  font-size:93.74rpx;
+  text-align:center;
+}
+.game_page {
+	background-color: #DFA9FB;
+}
+html {
+	background-color: #DFA9FB;
+}
+.placeholder {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+.switch-music{
+	position: absolute;
+	top: 46.87rpx;
+	right: 18.75rpx;
+	display: inline-block;
+	width: 58.59rpx;
+	height: 58.59rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/music.png);
+	background-size: 100% 100%;
+	z-index: 103;
+}
+.switch-music.off{
+	display: inline-block;
+	width: 58.59rpx;
+	height: 58.59rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/music_off.png);
+	background-size: 100% 100%;
+}
+.hd-bg {
+	width: 100%;
+	height: 100%;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/bg2.png);
+	background-size: 100% 100%;
+}
+.top-time {
+	width: 567.13rpx;
+	height: 148.81rpx;
+	text-align: center;
+	font-size: 46.87rpx;
+	margin: 0 auto;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/top.png);
+	background-size: 100% 100%;
+}
+.top-time .top-time-item1 {
+	float: left;
+	margin: 48rpx 0 0 94rpx;
+}
+.top-time .top-time-item1 .clock {
+	display: inline-block;
+	width: 55.07rpx;
+	height: 63.27rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/time.png);
+	background-size: 100% 100%;
+	vertical-align: middle;
+}
+.top-time .top-time-item1 .left-time {
+	display: inline-block;
+	font-size: 42.18rpx;
+	vertical-align: middle;
+	margin-left: 23.43rpx;
+}
+.top-time .top-time-item2 {
+	float: right;
+	margin: 48rpx 94rpx 0 0;
+}
+.top-time .top-time-item2 .left-life {
+	display: inline-block;
+	width: 58.59rpx;
+	height: 53.9rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/add_score.png);
+	background-size: 100% 100%;
+	vertical-align: middle;
+	margin-right: 23.43rpx; 
+}
+.top-time .top-time-item2 .total-score {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 42.18rpx;
+}
+#cards_box{
+	overflow: hidden;
+	width: 100%;
+	padding: 0.5% 0 0 0.5%;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.card{
+	position: relative;
+	float: left;
+	/*width: 25%;
+	margin: 4%;
+ 	padding-bottom: 24.5%; */
+ 	width: 216.6rpx;
+ 	height: 216.6rpx;
+ 	margin: 13.12rpx;
+	text-align: center;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.card view{
+	-webkit-transform: rotateY(0deg);
+	transform: rotateY(0deg);
+	position: absolute;
+	top: 0.0rpx;
+	left: 0.0rpx;
+	width: 100%;
+	height: 100%;	
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+} 
+.card view:nth-child(1){
+	z-index: 1;
+	-webkit-backface-visibility:hidden;	/* Chrome 和 Safari */
+	-moz-backface-visibility:hidden; 	/* Firefox */
+	-ms-backface-visibility:hidden; 	/* Internet Explorer */
+	backface-visibility: hidden; /* 背面不可见 */
+}
+.card view image{
+	width: 100%;
+	height: 100%;
+	/*object-fit: cover;*/ /*对替换元素而言 对img本身无用*/
+}
+.card view:nth-child(2) image{
+	-webkit-transform: rotateY(180deg);
+	transform: rotateY(180deg); /*将背面元素转到背面正向Z轴负向*/
+}
+.img-wrap {
+	width: 80%;
+	height: 80%;
+	/*margin: 10% auto;*/
+	margin: 0 auto;
+}
+#gameMenu{
+	color: white;
+	font-size: 32.81rpx;
+	text-align: center;
+	padding: 23.43rpx;
+	background-color: #3A96FF;
+}
+#gameContent{
+	padding: 9.37rpx;
+}
+#cards_box,.card {
+	-webkit-transform-style: preserve-3d;
+	-webkit-transform: perspective( 1000px );
+	transform-style: preserve-3d;
+	transform: perspective( 1000px );
+}
+.score-top {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 50px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	background-color: rgba(0,0,0,.4);
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+	color: #fff;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	z-index: 100;
+}
+.to-top {
+	-webkit-animation:toTop 1s 0s ease both;
+	animation:toTop 1s 0s ease both;
+}
+/*加分*/
+.add-score {
+	position: absolute;
+	top: 562.44rpx;
+	left: 281.22rpx;
+	width: 175.76rpx;
+	height: 175.76rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/wrap.png);
+	background-size: 100% 100%;
+}
+.add-score .ball-heart {
+	position: relative;
+	width: 85.54rpx;
+	height: 78.51rpx;
+	margin: 70.3rpx auto;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/heart.png);
+	background-size: 100% 100%;
+}
+.add-score .ball-heart .ball-score {
+	position: absolute;
+	top: -4.69rpx;
+	width: 133.58rpx;
+	height: 59.76rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/ten.png);
+	background-size: 100% 100%;
+}
+.add-score .circle {
+	position: absolute;
+}
+.add-score .circle1 {
+	top: 0.0rpx;
+	left: 164.04rpx;
+	width: 23.43rpx;
+	height: 23.43rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/circle1.png);
+	background-size: 100% 100%;
+}
+.add-score .circle2 {
+	top: 93.74rpx;
+	left: 187.48rpx;
+	width: 41.01rpx;
+	height: 41.01rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/circle2.png);
+	background-size: 100% 100%;
+}
+.add-score .circle3 {
+	top: 164.04rpx;
+	left: -23.43rpx;
+	width: 41.01rpx;
+	height: 41.01rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/circle3.png);
+	background-size: 100% 100%;
+}
+.add-score .circle4 {
+	top: -28.12rpx;
+	left: -56.24rpx;
+	width: 60.93rpx;
+	height: 60.93rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/circle4.png);
+	background-size: 100% 100%;
+}
+.add-score .circle5 {
+	top: 93.74rpx;
+	left: -56.24rpx;
+	width: 46.87rpx;
+	height: 38.67rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/circle5.png);
+	background-size: 100% 100%;
+}
+.add-score .circle6 {
+	top: 46.87rpx;
+	left: 178.11rpx;
+	width: 57.42rpx;
+	height: 28.12rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/circle6.png);
+	background-size: 100% 100%;
+}
+/*减分*/
+.minus-score {
+	position: absolute;
+	top: 562.44rpx;
+	left: 281.22rpx;
+	width: 175.76rpx;
+	height: 175.76rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/wrap.png);
+	background-size: 100% 100%;
+}
+.minus-score .ball-heart-left {
+	position: absolute;
+	top: 46.87rpx;
+	left: 42.18rpx;
+	width: 46.87rpx;
+	height: 93.74rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/heart_left.png);
+	background-size: 100% 100%;
+	-webkit-transform-origin: right bottom;
+	transform-origin: right bottom;
+	transform: rotateZ(10deg);
+}
+.minus-score .ball-heart-right {
+	position: absolute;
+	top: 46.87rpx;
+	left: 84.37rpx;
+	width: 46.87rpx;
+	height: 93.74rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/heart_right.png);
+	background-size: 100% 100%;
+	-webkit-transform-origin: left bottom;
+	transform-origin: left bottom;
+	transform: rotateZ(-10deg);
+}
+.minus-score .ball-score {
+	position: absolute;
+	top: 0.0rpx;
+	left: 46.87rpx;
+	width: 89.05rpx;
+	height: 58.59rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/three.png);
+	background-size: 100% 100%;
+}
+.minus-score .other {
+	position: absolute;
+	top: 0.0rpx;
+	left: -70.3rpx;
+	width: 89.05rpx;
+	height: 58.59rpx;
+	background: url(http://res.xcx.weijuju.com/image/mobile/aty/gamepage/heartbeatmatch/other.png);
+	background-size: 100% 100%;	
+}
+@-webkit-keyframes toTop{
+	0% {
+		-webkit-transform:translateY(0%);
+		transform:translateY(0%);
+		opacity: 1;
+	}
+	100% {
+		-webkit-transform:translateY(-100%);
+		transform:translateY(-100%);
+		opacity: 0;
+	}
+}
+/* 隐藏元素 */
+.fadeOut{
+	-webkit-animation:fadeOut 0.5s 0s ease both;
+	animation:fadeOut 0.5s 0s ease both;
+}
+@-webkit-keyframes fadeOut{
+	0%{
+		-webkit-transform: rotateZ(0deg) rotateY(0deg);
+		transform: rotateZ(0deg) rotateY(0deg);
+		opacity: 1;
+	}
+	100%{
+		-webkit-transform: rotateZ(360deg) rotateY(0deg);
+		transform: rotateZ(360deg) rotateY(0deg);
+		opacity: 0;
+	}
+}
+@keyframes fadeOut{
+	0%{
+		-webkit-transform: rotateZ(0deg) rotateY(0deg);
+		transform: rotateZ(0deg) rotateY(0deg);
+		opacity: 1;
+	}
+	100%{
+		-webkit-transform: rotateZ(360deg) rotateY(0deg);
+		transform: rotateZ(360deg) rotateY(0deg);
+		opacity: 0;
+	}
+}
+/* 翻转动画 */
+.flip{
+	-webkit-animation: flip 0.35s 0s ease both;
+	animation: flip 0.35s 0s ease both;
+}
+.flip2{
+	-webkit-animation: flip2 0.35s 0s ease both;
+	animation: flip2 0.35s 0s ease both;
+}
+@-webkit-keyframes flip{ /*转到背面*/
+	0%{
+		-webkit-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+	100%{
+		-webkit-transform: rotateY(180deg);
+		transform: rotateY(180deg);
+	}
+}
+@keyframes flip{ /*转到背面*/
+	0%{
+		-webkit-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+	100%{
+		-webkit-transform: rotateY(180deg);
+		transform: rotateY(180deg);
+	}
+}
+@-webkit-keyframes flip2{/*从背面转回来*/
+	0%{
+		-webkit-transform: rotateY(180deg);
+		transform: rotateY(180deg);
+	}
+	100%{
+		-webkit-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+}
+@keyframes flip2{/*从背面转回来*/
+	0%{
+		-webkit-transform: rotateY(180deg);
+		transform: rotateY(180deg);
+	}
+	100%{
+		-webkit-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+}
+/* 晃动 */
+.swing{
+	-webkit-animation:swing 0.5s 0s ease both;
+	animation:swing 0.5s 0s ease both;
+}
+/*晃动----没用到*/
+@-webkit-keyframes swing{
+	0%{-webkit-transform:translateX(0%);transform:translateX(0%); }
+	15%{-webkit-transform:translateX(-25%) rotateZ(-5deg);transform:translateX(-25%) rotateZ(-5deg); }
+	30%{-webkit-transform:translateX(20%) rotateZ(3deg);transform:translateX(20%) rotateZ(3deg); }
+	45%{-webkit-transform:translateX(-15%) rotateZ(-3deg);transform:translateX(-15%) rotateZ(-3deg); }
+	60%{-webkit-transform:translateX(10%) rotateZ(2deg);transform:translateX(10%) rotateZ(2deg); }
+	75%{-webkit-transform:translateX(-5%) rotateZ(-1deg);transform:translateX(-5%) rotateZ(-1deg); }
+	100%{-webkit-transform:translateX(0%);transform:translateX(0%); }
+}
+@keyframes swing{
+	0%{-webkit-transform:translateX(0%);transform:translateX(0%); }
+	15%{-webkit-transform:translateX(-25%) rotateZ(-5deg);transform:translateX(-25%) rotateZ(-5deg); }
+	30%{-webkit-transform:translateX(20%) rotateZ(3deg);transform:translateX(20%) rotateZ(3deg); }
+	45%{-webkit-transform:translateX(-15%) rotateZ(-3deg);transform:translateX(-15%) rotateZ(-3deg); }
+	60%{-webkit-transform:translateX(10%) rotateZ(2deg);transform:translateX(10%) rotateZ(2deg); }
+	75%{-webkit-transform:translateX(-5%) rotateZ(-1deg);transform:translateX(-5%) rotateZ(-1deg); }
+	100%{-webkit-transform:translateX(0%);transform:translateX(0%); }
+}
+/* 旋转淡入 */
+.rotateIn{
+	-webkit-animation:rotateIn 1s 0s ease both;
+	animation:rotateIn 1s 0s ease both;
+}
+@-webkit-keyframes rotateIn{
+	0%{
+		-webkit-transform-origin:center center;
+		transform-origin:center center;
+		-webkit-transform:rotate(-200deg);
+		transform:rotate(-200deg);
+		opacity:0;
+	}
+	100%{
+		-webkit-transform-origin:center center;
+		transform-origin:center center;
+		-webkit-transform:rotate(0);
+		transform:rotate(0);
+		opacity:1;
+	}
+}
+@keyframes rotateIn{
+	0%{
+		-webkit-transform-origin:center center;
+		transform-origin:center center;
+		-webkit-transform:rotate(-200deg);
+		transform:rotate(-200deg);
+		opacity:0;
+	}
+	100%{
+		-webkit-transform-origin:center center;
+		transform-origin:center center;
+		-webkit-transform:rotate(0);
+		transform:rotate(0);
+		opacity:1;
+	}
+}
+.zoomBig {
+	-webkit-animation: zoomBig 1s 0s ease both;
+	animation: zoomBig 1s 0s ease both;
+}
+.zoomBig1 {
+	-webkit-animation: zoomBig 1s .2s ease both;
+	animation: zoomBig 1s .2s ease both;
+}
+.zoomBig2 {
+	-webkit-animation: zoomBig 1s .4s ease both;
+	animation: zoomBig 1s .4s ease both;
+}
+.zoomBig3 {
+	-webkit-animation: zoomBig 1s .6s ease both;
+	animation: zoomBig 1s .6s ease both;
+}
+/*气泡放大*/
+@-webkit-keyframes zoomBig{
+	0% {
+		-webkit-transform: scale(0.1);
+		transform: scale(0.1);
+		opacity: 1;
+	}
+	/*50%{
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: .8;
+	}*/
+	100%{
+		-webkit-transform: scale(1.8) translateY(-10px);
+		transform: scale(1.8) translateY(-10px);
+		opacity: 0;
+	}
+}
+@keyframes zoomBig{
+	0% {
+		-webkit-transform: scale(0.1);
+		transform: scale(0.1);
+		opacity: 1;
+	}
+	/*50%{
+		-webkit-transform: scale(1);
+		transform: scale(1);
+		opacity: .8;
+	}*/
+	100%{
+		-webkit-transform: scale(1.8) translateY(-10px);
+		transform: scale(1.8) translateY(-10px);
+		opacity: 0;
+	}
+}
+.zoomUp {
+	-webkit-animation: zoomUp 1s 0s ease both;
+	animation: zoomUp 1s 0s ease both;
+}
+/*分数*/
+@-webkit-keyframes zoomUp{
+	0% {
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+		opacity: 1;
+	}
+	100%{
+		-webkit-transform: scale(1) translateY(-20px);
+		transform: scale(1) translateY(-20px);
+		opacity: 0;
+	}
+}
+@keyframes zoomUp{
+	0% {
+		-webkit-transform: scale(0.5);
+		transform: scale(0.5);
+		opacity: 1;
+	}
+	100%{
+		-webkit-transform: scale(1) translateY(-20px);
+		transform: scale(1) translateY(-20px);
+		opacity: 0;
+	}
+}
+/*心碎裂*/
+.heartLeft {
+	-webkit-animation: heartLeft 0.6s 0s ease both;
+	animation: heartLeft 0.6s 0s ease both;
+}
+.heartRight {
+	-webkit-animation: heartRight 1s 0s ease both;
+	animation: heartRight 1s 0s ease both;
+}
+@-webkit-keyframes heartLeft{
+	0% {
+		-webkit-transform-origin: right bottom;
+		transform-origin: right bottom;
+		-webkit-transform:rotate(10deg);
+		transform:rotate(10deg);
+	}
+	100%{
+		-webkit-transform-origin: right bottom;
+		transform-origin: right bottom;
+		-webkit-transform:rotate(-11deg);
+		transform:rotate(-11deg);
+	}
+}
+@keyframes heartLeft{
+	0% {
+		-webkit-transform-origin: right bottom;
+		transform-origin: right bottom;
+		-webkit-transform:rotate(10deg);
+		transform:rotate(10deg);
+	}
+	100%{
+		-webkit-transform-origin: right bottom;
+		transform-origin: right bottom;
+		-webkit-transform:rotate(-11deg);
+		transform:rotate(-11deg);
+	}
+}
+@-webkit-keyframes heartRight{
+	0% {
+		-webkit-transform-origin: left bottom;
+		transform-origin: left bottom;
+		-webkit-transform:rotate(-10deg);
+		transform:rotate(-10deg);
+	}
+	100%{
+		-webkit-transform-origin: left bottom;
+		transform-origin: left bottom;
+		-webkit-transform:rotate(10deg);
+		transform:rotate(10deg);
+	}
+}
+@keyframes heartRight{
+	0% {
+		-webkit-transform-origin: left bottom;
+		transform-origin: left bottom;
+		-webkit-transform:rotate(-10deg);
+		transform:rotate(-10deg);
+	}
+	100%{
+		-webkit-transform-origin: left bottom;
+		transform-origin: left bottom;
+		-webkit-transform:rotate(10deg);
+		transform:rotate(10deg);
+	}
+}

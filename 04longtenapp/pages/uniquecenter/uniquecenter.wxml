@@ -1,0 +1,231 @@
+<wxs src="../../utils/comm.wxs" module="mTool" />
+<view class="theme-wrapper app-theme-{{app.globalData.themeId}}">
+  <scroll-view style="background: #F5F7F7;">
+    <view class="p_container">
+      <!--个人中心头像背景设置-->
+      <view wx:if="{{!bgSet.radioBgset || bgSet.radioBgset==2}}" class="head-background" style="background-image:url({{bgSet.img ? (userImagePath + bgSet.img):staticResPath+'/image/admin/userCentre/iphone-background.png'}})"></view>
+      <view wx:else class="head-background" style='background-color:{{bgSet.bgColor}}'></view>
+      <!--个人的储值和积分-->
+      <view class="head-panel">
+        <view class="user-info user_top">
+          <view bindtap="{{userInfo ? '':'tinyWxHeadImg'}}">
+            <image background-size="cover" class="userinfo-avatar" style="vertical-align: middle;margin-right: 20rpx;" wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}"></image>
+            <image background-size="cover" class="userinfo-avatar" style="vertical-align: middle;margin-right: 20rpx;" wx:else src="{{staticResPath}}/image/admin/userCentre/userHeadImg.png"></image>
+            <text class="userinfo-nickname" style='display: inline-block;color:{{bgSet.color ? bgSet.color : ""}}'>{{userInfo.nickName || '点击登录账户'}}</text>
+          </view>
+          <view wx:if="{{userInfo}}" style="margin-top: 16rpx;display: flex;align-items: center;">
+            <text style="font-size: 26rpx;color: #666">更新信息</text>
+            <image style="width: 32rpx;height: 32rpx;margin-left: 10rpx;" bindtap="updateUserInfo" src="{{staticResPath}}/image/mobile/uniquecenter/update_icon.png"></image>
+
+          </view>
+        </view>
+        <view class="pointsItem" wx:if="{{userCentre.chuzhi || userCentre.score || userCentre.coupon}}">
+          <navigator class="item" url='/pages/store/mystore' wx:if="{{userCentre.chuzhi}}">
+            <text class="item-value">{{memberInfo?mTool.fToY(memberInfo.totalDepositBalance):'--'}}</text>
+            <text class="item-name">{{menusList['chuzhi'] && menusList['chuzhi'].newName || "储值金"}}</text>
+          </navigator>
+          <navigator class="item" url='/pages/uniquecenter/integratelist' wx:if="{{userCentre.score}}">
+            <text class="item-value">{{memberInfo?memberInfo.integral:'--'}}</text>
+            <text class="item-name">{{menusList['score'] && menusList['score'].newName || "积分"}}</text>
+          </navigator>
+          <navigator class="item" url='/pages/coupon/mycoupon' wx:if="{{userCentre.coupon}}">
+            <text class="item-value">{{couponCount||'--'}}</text>
+            <text class="item-name">{{menusList['coupon'] && menusList['coupon'].newName || "优惠券"}}</text>
+          </navigator>
+        </view>
+      </view>
+
+      <!--个人的订单-->
+      <view class="myorder" wx:if="{{userCentre.dingdan}}">
+        <navigator class="listli" url="/pages/orderlist/orderlist?status=" style="color:{{menusList['dingdan'] && menusList['dingdan'].defColor}}">
+          <!--<image src="{{userImagePath + menusList['dingdan'].cusIco}}"-->
+          <!--wx:if="{{menusList['dingdan'] && menusList['dingdan'].cusIco}}"></image>-->
+          <!--<image src="{{staticResPath}}/image/mobile/uniquecenter/order.png" wx:else></image>-->
+          {{menusList['dingdan'] && menusList['dingdan'].newName || "订单"}}
+          <span>
+            <image src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </span>
+        </navigator>
+        <view class="cont">
+          <navigator class="navigator" url="/pages/orderlist/orderlist?status=1">
+            <image src="{{staticResPath}}/image/admin/userCentre/fukuan.png">
+            </image>
+            <text>待付款</text>
+            <view class="unread" wx:if="{{orderCount.payingCount > 0}}">
+              {{orderCount.payingCount>99?"...":orderCount.payingCount}}
+            </view>
+          </navigator>
+          <navigator class="navigator" url="/pages/orderlist/orderlist?status=2">
+            <image src="{{staticResPath}}/image/admin/userCentre/fahuo.png">
+            </image>
+            <text>待发货</text>
+            <view class="unread" wx:if="{{orderCount.payedCount > 0}}">
+              {{orderCount.payedCount>99?"...":orderCount.payedCount}}
+            </view>
+          </navigator>
+          <navigator class="navigator" url="/pages/orderlist/orderlist?status=3">
+            <image src="{{staticResPath}}/image/admin/userCentre/shouhuo.png">
+            </image>
+            <text>待收货</text>
+            <view class="unread" wx:if="{{orderCount.shippedCount > 0}}">
+              {{orderCount.shippedCount>99?"...":orderCount.shippedCount}}
+            </view>
+          </navigator>
+          <navigator class="navigator" url="/pages/orderlist/orderlist?status=7,8,9">
+            <image src="{{staticResPath}}/image/admin/userCentre/shouhou.png">
+            </image>
+            <text>售后</text>
+          </navigator>
+        </view>
+      </view>
+      <!--个人财富值-->
+      <view class="manage_cont" wx:if="{{showFX && !isSubShop}}">
+        <view class="newListItem" url="/pages/fenxiao/myInfo" wx:if="{{true === isSalesmen}}" bindtap='toMyInfo'>
+          <view class="newItemLeft">
+            <span>我的财富</span>
+          </view>
+          <view>
+            <span wx:if="{{0 < totalMoney}}">{{app.globalData.currencySymbol}}{{mTool.fToY(totalMoney)}}</span>
+            <span class="poorMan" wx:else>你的财富值为 0，要努力噢~</span>
+            <image class="icoArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </view>
+        <navigator class="newListItem" url="/pages/fenxiao/become" wx:elif="{{false === isSalesmen}}">
+          <view class="newItemLeft">
+            <span>我的财富</span>
+          </view>
+          <view>
+            <span wx:if="{{0 < totalMoney}}">{{app.globalData.currencySymbol}}{{mTool.fToY(totalMoney)}}</span>
+            <span class="poorMan" wx:else>你的财富值为 0，要努力噢~</span>
+            <image class="icoArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </navigator>
+      </view>
+      <!--我的营销-->
+      <view class="myorder" wx:if="{{menusList['yingxiao'].isSelect || menusList['yingxiao'].isSelect===undefined}}">
+        <view class="listli" style="color:{{menusList['yingxiao'] && menusList['yingxiao'].defColor}}">
+          <!--<image src="{{userImagePath + menusList['dingdan'].cusIco}}"-->
+          <!--wx:if="{{menusList['dingdan'] && menusList['dingdan'].cusIco}}"></image>-->
+          <!--<image src="{{staticResPath}}/image/mobile/uniquecenter/order.png" wx:else></image>-->
+          {{menusList['yingxiao'] && menusList['yingxiao'].newName || "我的营销"}}
+        </view>
+        <view class="cont">
+          <!-- 会员卡 -->
+          <navigator class="navigator" url="/pages/mycards/cardlist" wx:if="{{listliShow[0]}}" wx:if="{{userCentre.vipCard}}">
+            <image src="{{userImagePath + menusList['vipCard'].cusIco}}" wx:if="{{menusList['vipCard'] && menusList['vipCard'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/huiyuanka.png" wx:else></image>
+            <text style='color:{{menusList["vipCard"] ? menusList["vipCard"].defColor  : ""}}'>{{menusList['vipCard'] && menusList['vipCard'].newName || "会员卡"}}</text>
+          </navigator>
+          <!-- 优惠券 -->
+          <navigator class="navigator" url="/pages/coupon/mycoupon" wx:if="{{listliShow[1]}}" wx:if="{{userCentre.coupon}}">
+            <image src="{{userImagePath + menusList['coupon'].cusIco}}" wx:if="{{menusList['coupon'] && menusList['coupon'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/youhuiquan.png" wx:else></image>
+            <text style='color:{{menusList["coupon"] ? menusList["coupon"].defColor  : ""}}'>{{menusList['coupon'] && menusList['coupon'].newName || "优惠券"}}</text>
+          </navigator>
+          <!-- 储值 -->
+          <navigator class="navigator" url="/pages/store/mystore" wx:if="{{listliShow[2]}}" wx:if="{{userCentre.chuzhi}}">
+            <image src="{{userImagePath + menusList['chuzhi'].cusIco}}" wx:if="{{menusList['chuzhi'] && menusList['chuzhi'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/chuzhijin.png" wx:else></image>
+            <!--<view class="zan-icon zan-icon-exchange"-->
+            <!--style="color:#353535;margin-right: 14rpx;font-size:32rpx;margin-left:-2rpx;"-->
+            <!--wx:else></view>-->
+            <text style='color:{{menusList["chuzhi"] ? menusList["chuzhi"].defColor  : ""}}'>{{menusList['chuzhi'] && menusList['chuzhi'].newName || "储值金"}}</text>
+          </navigator>
+          <!-- 积分 -->
+          <navigator class="navigator" url="/pages/uniquecenter/integratelist" wx:if="{{listliShow[3]}}" wx:if="{{userCentre.score}}">
+            <image src="{{userImagePath + menusList['score'].cusIco}}" wx:if="{{menusList['score'] && menusList['score'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/jifen.png" wx:else></image>
+            <!--<view class="zan-icon zan-icon-points"-->
+            <!--style="color:#353535;margin-right: 14rpx;font-size:32rpx;margin-left:-2rpx;"-->
+            <!--wx:else></view>-->
+            <text style='color:{{menusList["score"] ? menusList["score"].defColor  : ""}}'>{{menusList['score'] && menusList['score'].newName || "积分"}}</text>
+          </navigator>
+          <!-- 会员次卡 -->
+          <navigator class="navigator" url="/pages/secondCard/cardList" wx:if="{{userCentre.secondCard}}">
+            <image src="{{userImagePath + menusList['secondCard'].cusIco}}" wx:if="{{menusList['secondCard'] && menusList['secondCard'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/cika.png" wx:else></image>
+            <text style='color:{{menusList["secondCard"] ? menusList["secondCard"].defColor  : ""}}'>{{menusList['secondCard'] && menusList['secondCard'].newName || "会员次卡"}}</text>
+          </navigator>
+           <navigator class="navigator" url="/pages/giftcard/myGiftCard?mainTabType=2" wx:if="{{userCentre.giftCard}}">
+            <image src="{{userImagePath + menusList['giftCard'].cusIco}}" wx:if="{{menusList['giftCard'] && menusList['giftCard'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/giftcard.png" wx:else></image>
+            <text style='color:{{menusList["giftCard"] ? menusList["giftCard"].defColor  : ""}}'>{{menusList['giftCard'] && menusList['giftCard'].newName || "礼品卡"}}</text>
+          </navigator>
+        </view>
+      </view>
+      <!--个人列表选项-->
+      <view class="myorder" wx:if="{{menusList['myTools'].isSelect || menusList['myTools'].isSelect===undefined}}">
+        <view class="listli" style="color:{{menusList['myTools'] && menusList['myTools'].defColor}}">
+          <!--<image src="{{userImagePath + menusList['dingdan'].cusIco}}"-->
+          <!--wx:if="{{menusList['dingdan'] && menusList['dingdan'].cusIco}}"></image>-->
+          <!--<image src="{{staticResPath}}/image/mobile/uniquecenter/order.png" wx:else></image>-->
+          {{menusList['myTools'] && menusList['myTools'].newName || "我的工具"}}
+        </view>
+        <view class="cont">
+          <!--<view class="manage_cont" wx:if="{{!menusLoading}}">-->
+          <!-- 我的排队 -->
+          <navigator class="navigator" url="/pages/queue/queueContain" wx:if="{{userCentre.queue}}">
+            <image src="{{userImagePath + menusList['queue'].cusIco}}" wx:if="{{menusList['queue'] && menusList['queue'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/paidui.png" wx:else></image>
+            <text style='color:{{menusList["queue"] ? menusList["queue"].defColor  : ""}}'>{{menusList['queue'] && menusList['queue'].newName || "我的排队"}}</text>
+          </navigator>
+
+          <!-- 地址 -->
+          <navigator class="navigator" url="/pages/uniquecenter/addresslist" wx:if="{{listliShow[4]}}" wx:if="{{userCentre.address}}">
+            <image src="{{userImagePath + menusList['address'].cusIco}}" wx:if="{{menusList['address'] && menusList['address'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/dizhiguanli.png" wx:else></image>
+            <text style='color:{{menusList["address"] ? menusList["address"].defColor  : ""}}'>{{menusList['address'] && menusList['address'].newName || "地址管理"}}</text>
+          </navigator>
+          <!-- 购物车 -->
+          <navigator class="navigator" url="/pages/shoppingcar/shoppingcar" wx:if="{{listliShow[5]}}" wx:if="{{userCentre.shopCar}}">
+            <image src="{{userImagePath + menusList['shopCar'].cusIco}}" wx:if="{{menusList['shopCar'] && menusList['shopCar'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/gouwuche.png" wx:else></image>
+            <text style='color:{{menusList["shopCar"] ? menusList["shopCar"].defColor  : ""}}'>{{menusList['shopCar'] && menusList['shopCar'].newName || "购物车"}}</text>
+          </navigator>
+          <!-- 我的收藏 -->
+          <navigator class="navigator" url="/pages/myCollection/myCollection" wx:if="{{userCentre.myCollection}}">
+            <image src="{{userImagePath + menusList['myCollection'].cusIco}}" wx:if="{{menusList['myCollection'] && menusList['myCollection'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/shoucang.png" wx:else></image>
+            <text style='color:{{menusList["myCollection"] ? menusList["myCollection"].defColor  : ""}}'>{{menusList['myCollection'] && menusList['myCollection'].newName || "我的收藏"}}</text>
+          </navigator>
+          <!-- 我的足迹 -->
+          <navigator class="navigator" url="/pages/myTrack/myTrack" wx:if="{{userCentre.track}}">
+            <image src="{{userImagePath + menusList['myTrack'].cusIco}}" wx:if="{{menusList['myTrack'] && menusList['myTrack'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/zuji.png" wx:else></image>
+            <text style='color:{{menusList["myTrack"] ? menusList["myTrack"].defColor  : ""}}'>{{menusList['myTrack'] && menusList['myTrack'].newName || "我的足迹"}}</text>
+          </navigator>
+          <!-- 表单 -->
+          <navigator class="navigator" url="/pages/formRecord/formRecord" wx:if="{{userCentre.form}}">
+            <image src="{{userImagePath + menusList['submitForm'].cusIco}}" wx:if="{{menusList['submitForm'] && menusList['submitForm'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/biaodan.png" wx:else></image>
+            <text style='color:{{menusList["submitForm"] ? menusList["submitForm"].defColor  : ""}}'>{{menusList['submitForm'] && menusList['submitForm'].newName || "表单"}}</text>
+          </navigator>
+          <!-- 视频 -->
+          <navigator class="navigator" url="/pages/multMedia/myMultMedia" wx:if="{{userCentre.media}}">
+            <image src="{{userImagePath + menusList['multMedia'].cusIco}}" wx:if="{{menusList['multMedia'] && menusList['multMedia'].cusIco}}"></image>
+            <image src="{{staticResPath}}/image/admin/userCentre/shipin.png" wx:else></image>
+            <text style='color:{{menusList["multMedia"] ? menusList["multMedia"].defColor  : ""}}'>{{menusList['multMedia'] && menusList['multMedia'].newName || "视频"}}</text>
+          </navigator>
+        </view>
+      </view>
+      <!--小程序首页-->
+      <view class="manage_cont" wx:if="{{userCentre.indexPage}}">
+        <navigator class="newListItem" style='color:{{menusList["indexPage"] ? menusList["indexPage"].defColor  : ""}}' open-type="redirect" url="/pages/index/index" wx:if="{{listliShow[6]}}">
+          <view class="newItemLeft">
+            <!--<image src="{{userImagePath + menusList['indexPage'].cusIco}}"-->
+            <!--wx:if="{{menusList['indexPage'] && menusList['indexPage'].cusIco}}"></image>-->
+            <!--<image src="{{staticResPath}}/image/mobile/uniquecenter/index.png" wx:else></image>-->
+            <span>{{menusList['indexPage'] && menusList['indexPage'].newName || "小程序首页"}}</span>
+          </view>
+          <view>
+            <image class="icoArrow" src="{{staticResPath}}/image/mobile/uniquecenter/arrow.png"></image>
+          </view>
+        </navigator>
+      </view>
+      
+    </view>
+    <include src="../template/footer.wxml" />
+  </scroll-view>
+  <include src="/pages/template/copyright.wxml" />
+  <include src="/pages/template/authModal.wxml" />
+</view>
