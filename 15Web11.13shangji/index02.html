@@ -1,0 +1,79 @@
+<!-- 项目2  设计简易福彩投注程序 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设计简易福彩投注程序</title>
+    <link type="text/css" rel="stylesheet" href="css02.css">
+</head>
+<body>
+<div class="box">
+    <img src="ico_7l.gif" align="left">
+    <br/><br/><br/>
+    <h3 align="center">简易福彩投注程序</h3>
+    <table align="center">
+        <tr>
+            <td>
+                彩票号码&nbsp;<input type="text" id="lottery1">
+            </td>
+            <td>
+                <input type="button" onclick="Betting1()" value="投注">
+            </td>
+            <td rowspan="3">
+                <input type="button" style="width:50px;height:70px" onclick="Empty()" value="清空">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                彩票号码&nbsp;<input type="text" id="lottery2">
+            </td>
+            <td>
+                <input type="button" onclick="Betting2()" value="投注">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                彩票号码&nbsp;<input type="text" id="lottery3">
+            </td>
+            <td>
+                <input type="button" onclick="Betting3()" value="投注">
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script language="JavaScript">
+    var ran1 = document.getElementById("lottery1");
+    var ran2 = document.getElementById("lottery2");
+    var ran3 = document.getElementById("lottery3");
+
+    function Betting1() {
+        start(ran1);
+    }
+
+    function Betting2() {
+        start(ran2);
+    }
+
+    function Betting3() {
+        start(ran3);
+    }
+
+    function start(ran) {
+        var arr = [8];
+        for (i = 0; i < 8; i++) {
+            arr[i] = Math.round(Math.random() * 100);
+        }
+        ran.value = arr.join(" ");
+    }
+
+    function Empty() {
+        ran1.value = null;
+        ran2.value = null;
+        ran3.value = null;
+    }
+</script>
+</body>
+</html>

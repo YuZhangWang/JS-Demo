@@ -1,0 +1,8 @@
+/*项目2  设计简易福彩投注程序*/
+.box {
+    border-style: solid;
+    border-color: red;
+    border-width: 3px;
+    width: 450px;
+    height: 250px;
+}

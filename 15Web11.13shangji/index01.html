@@ -1,0 +1,35 @@
+<!-- 项目一 列表框图像浏览器 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表框图像浏览器</title>
+</head>
+<body>
+<p align="center">
+    <img src="img1.jpg" width="300" height="300" id="show">
+</p>
+
+<div align="center">
+    <form>
+        列表框图像浏览器
+        <select id="selection" onchange="changeImage()">
+            <option value="img1.jpg">选择图像</option>
+            <option value="img2.jpg">卡通图片2</option>
+            <option value="img3.jpg">卡通图片3</option>
+        </select>
+    </form>
+</div>
+
+<script language="JavaScript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    function changeImage() {
+        var index = $("selection").selectedIndex;
+        $("show").src = $("selection").options[index].value;
+    }
+</script>
+</body>
+</html>
